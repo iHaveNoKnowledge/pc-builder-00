@@ -30,42 +30,49 @@ const CustomizationProto01 = () => {
           return (
             <React.Fragment key={index}>
               {item.id ? (
-                // เลือกสินค้าแล้ว
-
-                <ListItem
-                  sx={{
-                    ":not(:last-child)": {
-                      borderBottom: "0.2em solid rgba(0,0,0,0.20)"
-                    }
-                  }}
-                >
-                  <ListItemButton
-                    onClick={(e) => {
-                      handleChange(item.category);
-                    }}
-                  >
-                    <ListItemAvatar>
-                      {/* <Avatar sx={{ borderRadius: "0" }}> */}
-                      {/* <ImageIcon /> */}
-                      <Box
-                        component="img"
-                        src={item.img}
-                        alt={item.title}
-                        sx={{ objectFit: "contain", width: 50 }}
-                      ></Box>
-                      {/* </Avatar> */}
-                    </ListItemAvatar>
-                    <ListItemText primary={item.title} secondary="" />
-                  </ListItemButton>
-                </ListItem>
+          
+                // เลือกสินค้าแล้ว  
+                // <div >    
+                  // <ListItem
+                  // sx={{
+                  //   ":not(:last-child)": {
+                  //     borderBottom: "0.2em solid rgba(0,0,0,0.20)"
+                  //   },
+                  //   marginLeft: "0.5em",
+                  //   // backgroundColor:"#FFFF"
+                  // }}
+                  // >
+                  //   <ListItemButton
+                  //     // sx={{borderLeft: "1em solid #42528A"}}
+                  //     onClick={(e) => {
+                  //       handleChange(item.category);
+                  //     }}
+                  //   >
+                  //     <ListItemAvatar>
+                  //       {/* <Avatar sx={{ borderRadius: "0" }}> */}
+                  //       {/* <ImageIcon /> */}
+                  //       <Box
+                  //         component="img"
+                  //         src={item.img}
+                  //         alt={item.title}
+                  //         sx={{ objectFit: "contain", width: 50 }}
+                  //       ></Box>
+                  //       {/* </Avatar> */}
+                  //     </ListItemAvatar>
+                  //     <ListItemText primary={item.title} secondary="" />
+                  //   </ListItemButton>
+                  // </ListItem>
+                  <ListItem sx={{border:"1px dashed green"}}>vv</ListItem>
+                // </div> 
+                
               ) : (
-                // ยังไม่เลือกสินค้า
 
+                // ยังไม่เลือกสินค้า
                 <ListItem
                   sx={{
                     ":not(:last-child)": {
                       borderBottom: "0.2em solid rgba(0,0,0,0.20)"
-                    }
+                    },
                   }}
                 >
                   <ListItemButton
