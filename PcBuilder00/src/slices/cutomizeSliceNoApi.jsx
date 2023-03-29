@@ -160,7 +160,8 @@ export const customizeSlice = createSlice({
           selectAmount:0,
           socket:"",
           typeRAM:"",
-          category: action.payload
+          category: action.payload,
+          img:""
         };
       }
     },

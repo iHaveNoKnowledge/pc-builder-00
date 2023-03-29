@@ -1,11 +1,3 @@
-.MuiListItemButton-root.Mui-selected,
-.MuiListItemButton-root:hover {
-    background-color: rgb(216, 0, 0);
-    }
-.Mui-selected {
-    background-color: brown;
-}
-
 .borderLine {
     transform: skew(-10deg);
     border-radius: 10px 1px 10px 0px;
@@ -13,11 +5,18 @@
 }
 
 .borderLine:not(:last-child) {
-    border-bottom: 0.2em solid rgba(0, 0, 0, 0.20);
+    border-bottom: 0.4em solid rgba(0, 0, 0, 0.20);
     
 }
 
 .borderLine * {
     transform: skew(1deg);
     
+}
+
+.listItemStyle {
+    border-left: 0.8em solid #42528A;
+    margin:-1px;
+    border-radius: 5px 1px;
+    background-color: white;
 }
