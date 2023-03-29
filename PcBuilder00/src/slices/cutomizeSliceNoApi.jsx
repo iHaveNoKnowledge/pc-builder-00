@@ -157,6 +157,9 @@ export const customizeSlice = createSlice({
           id: null,
           title: "",
           price: null,
+          selectAmount:0,
+          socket:"",
+          typeRAM:"",
           category: action.payload
         };
       }

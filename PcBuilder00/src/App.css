@@ -3,9 +3,11 @@
   /* text-align: center; */
   box-sizing: border-box;
   padding: 0;
+  
 }
 html {
   font-size: 75.5%;
+  background-color: rgb(211, 211, 211);
 }
 /* .flexible {
   flex-grow: 1;

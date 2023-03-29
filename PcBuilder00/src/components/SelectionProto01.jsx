@@ -16,7 +16,7 @@ import { Divider } from "@mui/material";
 import {
   addProduct,
   removeProduct,
-  setMax
+  setMax,
 } from "../slices/cutomizeSliceNoApi";
 
 // const useStyles = makeStyles({
@@ -47,7 +47,7 @@ export default function SelectionProto01() {
       category: "CPU",
       socket: "AM4",
       img:
-        "https://media-cdn.bnn.in.th/263562/730143309936-00-square_medium.jpg"
+        "https://media-cdn.bnn.in.th/263562/730143309936-00-square_medium.jpg",
     },
     {
       id: 11,
@@ -55,7 +55,7 @@ export default function SelectionProto01() {
       category: "CPU",
       socket: "AM4",
       img:
-        "https://media-cdn.bnn.in.th/52122/AMD-CPU-Ryzen7-5800X-3.8GHz-8C-16T-AM4-gen5-1-square_medium.jpg"
+        "https://media-cdn.bnn.in.th/52122/AMD-CPU-Ryzen7-5800X-3.8GHz-8C-16T-AM4-gen5-1-square_medium.jpg",
     },
     {
       id: 12,
@@ -63,7 +63,7 @@ export default function SelectionProto01() {
       category: "CPU",
       socket: "1700",
       img:
-        "https://media-cdn.bnn.in.th/164968/intel-core-i5-12400-1-square_medium.jpg"
+        "https://media-cdn.bnn.in.th/164968/intel-core-i5-12400-1-square_medium.jpg",
     },
     {
       id: 13,
@@ -71,7 +71,7 @@ export default function SelectionProto01() {
       category: "CPU",
       socket: "1700",
       img:
-        "https://media-cdn.bnn.in.th/264216/intel-core-i9-13900F-1-square_medium.jpg"
+        "https://media-cdn.bnn.in.th/264216/intel-core-i9-13900F-1-square_medium.jpg",
     },
     {
       id: 14,
@@ -81,16 +81,18 @@ export default function SelectionProto01() {
       typeRAM: "DDR4",
       slot: 2,
       img:
-        "https://media-cdn.bnn.in.th/19033/Asus-Mainboard-PRIME-A320M-K-DDR4-AM4-1-square_medium.jpg"
+        "https://media-cdn.bnn.in.th/19033/Asus-Mainboard-PRIME-A320M-K-DDR4-AM4-1-square_medium.jpg",
     },
 
     {
       id: 15,
       title: "Mainboard02_AMD",
       category: "Mainboard",
-      socket: "AM4",
+      socket: "AM5",
       typeRAM: "DDR5",
-      slot: 2
+      slot: 2,
+      img:
+        "https://media-cdn.bnn.in.th/257878/gigabyte-b650i-aorus-ultra-1-square_medium.jpg",
     },
     {
       id: 16,
@@ -98,7 +100,9 @@ export default function SelectionProto01() {
       category: "Mainboard",
       socket: "1700",
       typeRAM: "DDR4",
-      slot: 2
+      slot: 2,
+      img:
+        "https://media-cdn.bnn.in.th/171658/asrock-b660m-hdv-ddr4-1-square_medium.jpg",
     },
     {
       id: 17,
@@ -106,7 +110,9 @@ export default function SelectionProto01() {
       category: "Mainboard",
       socket: "1700",
       typeRAM: "DDR5",
-      slot: 2
+      slot: 2,
+      img:
+        "https://www.jib.co.th/img_master/product/medium/2022110817133356180_1.jpg",
     },
     {
       id: 18,
@@ -114,16 +120,20 @@ export default function SelectionProto01() {
       category: "Mainboard",
       socket: "AM4",
       typeRAM: "DDR4",
-      slot: 4
+      slot: 4,
+      img:
+        "https://media-cdn.bnn.in.th/17709/AsRock-Mainboard-B550-Steel-Legend-AM4-1-square_medium.jpg",
     },
 
     {
       id: 19,
       title: "Mainboard02_AMD 4slot",
       category: "Mainboard",
-      socket: "AM4",
+      socket: "AM5",
       typeRAM: "DDR5",
-      slot: 4
+      slot: 4,
+      img:
+        "https://media-cdn.bnn.in.th/241066/asrock-x670e-pg-lightning-am5-1-square_medium.jpg",
     },
     {
       id: 20,
@@ -131,7 +141,9 @@ export default function SelectionProto01() {
       category: "Mainboard",
       socket: "1700",
       typeRAM: "DDR4",
-      slot: 4
+      slot: 4,
+      img:
+        "https://media-cdn.bnn.in.th/156972/asus-prime-z690-p-d4-csm-1-square_medium.jpg",
     },
     {
       id: 21,
@@ -139,30 +151,61 @@ export default function SelectionProto01() {
       category: "Mainboard",
       socket: "1700",
       typeRAM: "DDR5",
-      slot: 4
+      slot: 4,
+      img:
+        "https://media-cdn.bnn.in.th/258336/msi-mag-z790-tomahawk-wifi-d5-1-square_medium.jpg",
     },
     {
       id: 22,
       title: "RAM01_single",
       category: "RAM",
       count: "1",
-      typeRAM: "DDR4"
+      typeRAM: "DDR4",
+      img:
+        "https://media-cdn.bnn.in.th/106735/zadak-moab-aura2-rgb-ddr4-1-square_medium.jpg",
     },
     {
       id: 23,
       title: "RAM02_single",
       category: "RAM",
       count: "1",
-      typeRAM: "DDR5"
+      typeRAM: "DDR5",
+      img:"https://media-cdn.bnn.in.th/279728/zadak-ddr5-spark-rgb-white-1-square_medium.jpg"
     },
     {
       id: 24,
       title: "RAM01_duo",
       category: "RAM",
       count: "2",
-      typeRAM: "DDR4"
+      typeRAM: "DDR4",
+      img:
+        "https://media-cdn.bnn.in.th/106729/zadak-moab-aura2-rgb-ddr4-1-square_medium.jpg",
     },
-    { id: 25, title: "RAM01_duo", category: "RAM", count: "2", typeRAM: "DDR5" }
+    {
+      id: 25,
+      title: "RAM01_duo",
+      category: "RAM",
+      count: "2",
+      typeRAM: "DDR5",
+      img:
+        "https://media-cdn.bnn.in.th/277595/consair-vengeance-rgb-ddr5-kit-black-1-square_medium.jpg",
+    },
+    {
+      id: 26,
+      title: "CPU03_AMD",
+      category: "CPU",
+      socket: "AM5",
+      img:
+        "https://media-cdn.bnn.in.th/280791/amd-ryzen9-7900x3d-1-square_medium.jpg",
+    },
+    {
+      id: 27,
+      title: "CPU04_AMD",
+      category: "CPU",
+      socket: "AM5",
+      img:
+        "https://media-cdn.bnn.in.th/240481/amd-ryzen9-7950x-1-square_medium.jpg",
+    },
   ];
 
   ////dispatchZone!!!!!!!!!
@@ -256,7 +299,6 @@ export default function SelectionProto01() {
             <Grid item xs={8} sm={6} md={4} key={index}>
               <Card sx={{ border: "1px dashed green" }}>
                 <CardActionArea
-                  
                   onClick={(e) => {
                     handleChange(
                       item.id,
@@ -281,7 +323,7 @@ export default function SelectionProto01() {
                       sx={{
                         display: "flex",
 
-                        bgcolor: "background.paper"
+                        bgcolor: "background.paper",
                       }}
                     >
                       <Typography variant="body1" sx={{ flexGrow: "1" }}>
@@ -333,5 +375,3 @@ export default function SelectionProto01() {
     </>
   );
 }
-
-
