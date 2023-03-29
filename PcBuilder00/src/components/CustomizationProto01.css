@@ -1,0 +1,11 @@
+.MuiListItemButton-root.Mui-selected,
+.MuiListItemButton-root:hover {
+    background-color: rgb(216, 0, 0);
+    }
+.Mui-selected {
+    background-color: brown;
+}
+
+.borderLine:not(:last-child) {
+    border-bottom: 0.2em solid rgba(0, 0, 0, 0.20);
+}
