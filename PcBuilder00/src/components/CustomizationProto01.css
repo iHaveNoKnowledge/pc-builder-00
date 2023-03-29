@@ -6,6 +6,18 @@
     background-color: brown;
 }
 
+.borderLine {
+    transform: skew(-10deg);
+    border-radius: 10px 1px 10px 0px;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.1);
+}
+
 .borderLine:not(:last-child) {
     border-bottom: 0.2em solid rgba(0, 0, 0, 0.20);
+    
+}
+
+.borderLine * {
+    transform: skew(1deg);
+    
 }
