@@ -16,7 +16,7 @@ import {
   Divider
 } from "@mui/material";
 import { changeCategory } from "../slices/categorySlice";
-import { removeProduct } from "../slices/cutomizeSliceNoApi";
+import { removeProduct, incAmount, decAmount } from "../slices/cutomizeSliceNoApi";
 import "./CustomizationProto01.css";
 
 const CustomizationProto01 = () => {
@@ -32,6 +32,15 @@ const CustomizationProto01 = () => {
   const handleChange = (category) => {
     console.log("handleChanged", category);
     dispatch(changeCategory(category));
+  };
+
+  const handleIncAmt = (category) => {
+    dispatch(incAmount(category));
+    console.log("เพิ่ม")
+  };
+
+  const handleDecAmt = (category) => {
+    dispatch(decAmount(category));
   };
 
   const handleClear = (category) => {
@@ -78,7 +87,7 @@ const CustomizationProto01 = () => {
                           <Box
                             onClick={(e) => {
                               e.stopPropagation();
-                              dispatch(handleClear(item.category));
+                              handleClear(item.category);
                             }}
                             sx={{
                               padding: "0.1px 15px",
@@ -94,7 +103,7 @@ const CustomizationProto01 = () => {
                       </Box>
 
 
-                      <Box sx={{ display: "flex", width:"100%"}}>
+                      <Box sx={{ display: "flex", width:"100%", gap:"4px"}}>
 {/* ////////////////////////ก้อนซ้าย/////////////////////////////// */}
                         <Box sx={{flexGrow:"1"}}>
 
@@ -104,15 +113,26 @@ const CustomizationProto01 = () => {
                                   component="img"
                                   src={item.img}
                                   alt={item.title}
-                                  sx={{ objectFit: "contain", width: 56 }}
+                                  sx={{ objectFit: "contain", width: 40 }}
                                 ></Box>
                               </ListItemAvatar>
                             </Box>
                             
                             <Box sx={{display:"flex", justifyContent:"space-between"}}>
-                              <Box className="textButton"  onClick={(e)=>{alert("ลดลง")}}>-</Box>
+                              <Box className="textButton"  onClick={(e)=>{
+                                e.stopPropagation();
+                                handleDecAmt(item.category);
+                              }}>
+                                -
+                              </Box>
+                              {/* จำนวนสินค้า */}
                               <Box style={{marginTop:"5px"}}>{item.count? item.count: item.selectAmount}</Box>
-                              <Box className="textButton"  onClick={(e)=>{alert("เพิ่มขึ้น")}}>+</Box>
+                              <Box className="textButton"  onClick={(e)=>{
+                                e.stopPropagation();
+                                handleIncAmt(item.category)
+                                }}>
+                                  +
+                                </Box>
                             </Box>
                             
                             <div>ss</div>
@@ -121,7 +141,7 @@ const CustomizationProto01 = () => {
 
 {/* ////////////////////////ก้อนขวา/////////////////////////////// */}
                         {/* //// ย่อย1 //// */}
-                        <Box sx={{flexGrow:"4"}}>
+                        <Box sx={{flexGrow:"5"}}>
                           <Box
                             sx={{ display: "flex"}}
                           >
@@ -133,9 +153,9 @@ const CustomizationProto01 = () => {
                               {item.title}
                             </Box>
 
-                            <Box variant="caption">
+                            <Typography variant="caption">
                               Stock: INT
-                            </Box>
+                            </Typography>
                           </Box>  
                             
                           <Divider />

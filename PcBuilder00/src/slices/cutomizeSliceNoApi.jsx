@@ -138,7 +138,7 @@ export const customizeSlice = createSlice({
           ...state.partData[categoryIndex],
           id: action.payload.id,
           title:action.payload.title,
-          selectAmount: action.payload.count ? action.payload.count: 1,
+          selectAmount: action.payload.count ? action.payload.count*1: 1,
           socket: action.payload.socket,
           category: action.payload.category,
           typeRAM: action.payload.typeRAM,
@@ -180,9 +180,31 @@ export const customizeSlice = createSlice({
           max: action.payload
         };
       }
+    },
+
+    incAmount: (state, action) => {
+     
+      const index = state.partData.findIndex((item)=>item.category === action.payload);
+      if(index !== -1) {
+        state.partData[index] = {
+          ...state.partData[index],
+          selectAmount: state.partData[index].selectAmount + 1
+        };   
+      }
+    },
+
+    decAmount: (state, action) => {
+      console.log("decAmount ใน store ทำงาน")
+      const index = state.partData.findIndex((item)=>item.category === action.payload);
+      if(index !== -1) {
+        state.partData[index] = {
+          ...state.partData[index],
+          selectAmount: state.partData[index].selectAmount - 1
+        };
+      }
     }
   }
 });
 
-export const { addProduct, removeProduct, setMax } = customizeSlice.actions;
+export const { addProduct, removeProduct, setMax, incAmount, decAmount } = customizeSlice.actions;
 export default customizeSlice.reducer;

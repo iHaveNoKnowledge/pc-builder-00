@@ -15,7 +15,6 @@ import Box from "@mui/material/Box";
 import { Divider } from "@mui/material";
 import {
   addProduct,
-  removeProduct,
   setMax,
 } from "../slices/cutomizeSliceNoApi";
 
@@ -159,7 +158,7 @@ export default function SelectionProto01() {
       id: 22,
       title: "RAM01_single",
       category: "RAM",
-      count: "1",
+      count: 1,
       typeRAM: "DDR4",
       img:
         "https://media-cdn.bnn.in.th/106735/zadak-moab-aura2-rgb-ddr4-1-square_medium.jpg",
@@ -168,7 +167,7 @@ export default function SelectionProto01() {
       id: 23,
       title: "RAM02_single",
       category: "RAM",
-      count: "1",
+      count: 1,
       typeRAM: "DDR5",
       img:"https://media-cdn.bnn.in.th/279728/zadak-ddr5-spark-rgb-white-1-square_medium.jpg"
     },
@@ -176,7 +175,7 @@ export default function SelectionProto01() {
       id: 24,
       title: "RAM01_duo",
       category: "RAM",
-      count: "2",
+      count: 2,
       typeRAM: "DDR4",
       img:
         "https://media-cdn.bnn.in.th/106729/zadak-moab-aura2-rgb-ddr4-1-square_medium.jpg",
@@ -185,7 +184,7 @@ export default function SelectionProto01() {
       id: 25,
       title: "RAM01_duo",
       category: "RAM",
-      count: "2",
+      count: 2,
       typeRAM: "DDR5",
       img:
         "https://media-cdn.bnn.in.th/277595/consair-vengeance-rgb-ddr5-kit-black-1-square_medium.jpg",
