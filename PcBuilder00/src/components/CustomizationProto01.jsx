@@ -57,7 +57,7 @@ const CustomizationProto01 = () => {
                         handleChange(item.category);
                       } }
                       sx={{
-                        transform: "skew(8deg)",
+                        
                         display: "flex",
                         flexDirection: "column",
                         padding: "0px",
@@ -82,7 +82,7 @@ const CustomizationProto01 = () => {
                             }}
                             sx={{
                               padding: "0.1px 15px",
-                              backgroundColor: "red",
+                              backgroundColor: 'rgb(220,47,47)',
                               color: "white",
                               // textAlign:"justify",
                               paddingBottom:"2px",
@@ -99,7 +99,7 @@ const CustomizationProto01 = () => {
                         <Box sx={{flexGrow:"1"}}>
 
                             <Box>
-                              <ListItemAvatar sx={{ transform: "skew(-1deg)" }}>
+                              <ListItemAvatar >
                                 <Box
                                   component="img"
                                   src={item.img}
@@ -168,14 +168,13 @@ const CustomizationProto01 = () => {
                   <ListItem className="listItemStyle">
                     <ListItemButton
                       disableGutters={true}
-                      sx={{ transform: "skew(10deg)" }}
                       onClick={(e) => {
                         handleChange(item.category);
                       } }
                     >
                       <ListItemAvatar>
                         <Avatar
-                          sx={{ borderRadius: "0", transform: "skew(-2deg)" }}
+                          sx={{ borderRadius: "0"}}
                         >
                           <ImageIcon />
                         </Avatar>
