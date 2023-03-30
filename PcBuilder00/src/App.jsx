@@ -32,7 +32,7 @@ function App() {
           </Grid>
 
           <Grid item xs={4} sm={8} md={8}>
-            <Box sx={{ pl: 1 }}>
+            <Box sx={{ pl: 2 }}>
               {/* <Selection /> */}
               {/* <SelectionProto00 /> */}
               <SelectionProto01 />

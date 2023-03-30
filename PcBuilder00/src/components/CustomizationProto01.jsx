@@ -13,6 +13,7 @@ import {
   Button,
   Grid,
   CardContent,
+  Divider
 } from "@mui/material";
 import { changeCategory } from "../slices/categorySlice";
 import { removeProduct } from "../slices/cutomizeSliceNoApi";
@@ -40,7 +41,7 @@ const CustomizationProto01 = () => {
 
   return (
     <>
-      <List sx={{ width: "100%" }}>
+      <List sx={{ width: "97%" ,paddingLeft:"8px"}}>
         {categories.map((item, index) => {
           return (
             <React.Fragment key={index}>
@@ -59,85 +60,104 @@ const CustomizationProto01 = () => {
                         transform: "skew(8deg)",
                         display: "flex",
                         flexDirection: "column",
-                        paddingTop: "0px",
-                        width: "100%",
-                        alignItems:"start",
+                        padding: "0px",
+
                       }}
                     >
-                      <Box sx={{ alignSelf: "end" }}>
-                        <Box
-                          onClick={(e) => {
-                            console.log("ปุ่มแดงๆ");
-                            e.stopPropagation();
-                            dispatch(handleClear(item.category));
-                          } }
-                          sx={{
-                            padding: "0.1px 10px",
-                            backgroundColor: "red",
-                            color: "white",
-                          }}
-                        >
-                          x
-                        </Box>
+                      
+                      <Box sx={{display:"flex", width:"100%", flexGrow:1}}>
+                        
+                          <Box sx={{ flexGrow: 1 }}>
+                            <div>{item.selectAmount}{item.max !== null && (
+                                  <>
+                                    /{item.max}
+                                  </>
+                            )}</div>
+                          </Box>
+
+                          <Box
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              dispatch(handleClear(item.category));
+                            }}
+                            sx={{
+                              padding: "0.1px 15px",
+                              backgroundColor: "red",
+                              color: "white",
+                              // textAlign:"justify",
+                              paddingBottom:"2px",
+                              
+                            }}
+                          >
+                            x
+                          </Box>
                       </Box>
 
 
-                      <Box sx={{ display: "flex" ,width:"100%"}}>
-                        <Typography sx={{}}>
-                          <Box
-                            sx={{ display: "flex", flexDirection: "column" }}
-                          >
-                            <ListItemAvatar sx={{ transform: "skew(-1deg)" }}>
-                              <Box
-                                component="img"
-                                src={item.img}
-                                alt={item.title}
-                                sx={{ objectFit: "contain", width: 40 }}
-                              ></Box>
-                            </ListItemAvatar>
+                      <Box sx={{ display: "flex", width:"100%"}}>
+{/* ////////////////////////ก้อนซ้าย/////////////////////////////// */}
+                        <Box sx={{flexGrow:"1"}}>
+
+                            <Box>
+                              <ListItemAvatar sx={{ transform: "skew(-1deg)" }}>
+                                <Box
+                                  component="img"
+                                  src={item.img}
+                                  alt={item.title}
+                                  sx={{ objectFit: "contain", width: 56 }}
+                                ></Box>
+                              </ListItemAvatar>
+                            </Box>
+                            
+                            <Box sx={{display:"flex", justifyContent:"space-between"}}>
+                              <Box className="textButton"  onClick={(e)=>{alert("ลดลง")}}>-</Box>
+                              <Box style={{marginTop:"5px"}}>{item.count? item.count: item.selectAmount}</Box>
+                              <Box className="textButton"  onClick={(e)=>{alert("เพิ่มขึ้น")}}>+</Box>
+                            </Box>
+                            
                             <div>ss</div>
-                            <div>ss</div>
-                          </Box>
-                        </Typography>
+                          
+                        </Box>
 
 {/* ////////////////////////ก้อนขวา/////////////////////////////// */}
-                        <Typography sx={{flexGrow:"1" }}>
+                        {/* //// ย่อย1 //// */}
+                        <Box sx={{flexGrow:"4"}}>
                           <Box
-                            sx={{ display: "flex", flexDirection: "column" }}
+                            sx={{ display: "flex"}}
                           >
 
-                            {/* //// ย่อย1 //// */}
                             <Box
-                              sx={{ display: "flex",  }}
+                              variant="subtitle1"
+                              sx={{flexGrow:"1",  fontWeight:"bolder"}}
                             >
-                              <Typography
-                                sx={{ flexGrow:"1", minWidth: 0 }}
-                              >
-                                {item.title}
-                              </Typography>
-                              <Typography variant="caption">
-                                Stock: INT
-                              </Typography>
+                              {item.title}
                             </Box>
 
-                             {/* //// ย่อย2 //// */}
-                            <Box>
-                              <Typography
-                                disableRipple
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  console.log("innerBtnActivated");
-                                } }
-                              >
-                                Morbi arcu ligula, sodales nec odio sit amet, accumsan dolor.
-                              </Typography>
+                            <Box variant="caption">
+                              Stock: INT
                             </Box>
-
-                            {/* //// ย่อย3 //// */}
-                            <Box sx={{alignSelf: "end"}}>฿ 999</Box>
+                          </Box>  
+                            
+                          <Divider />
+                          {/* //// ย่อย2 //// */}
+                          <Box>
+                            <Typography
+                              disableRipple
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                console.log("innerBtnActivated");
+                              } }
+                            >
+                              Morbi arcu Lorem
+                            </Typography>
                           </Box>
-                        </Typography>
-                      </Box>
+                            
+                          {/* //// ย่อย3 //// */}
+                          <Typography variant="subtitle1" sx={{ marginLeft:"70%"}}>฿ 999</Typography>
+                            
+                          </Box>
+                        </Box>
+
 
                     </ListItemButton>
                   </ListItem>

@@ -212,11 +212,11 @@ export default function SelectionProto01() {
   const dispatch = useDispatch();
 
   //นี่คือ dispatch ข้างในบรรจุ action
-  const handleChange = (id, title, category, socket, typeRAM, slot, img) => {
-    dispatch(addProduct({ id, title, category, socket, typeRAM, img }));
-    // if (category === "Mainboard") {
-    //   dispatch(setMax(slot));
-    // }
+  const handleChange = (id, title, category, socket, typeRAM, slot, img, count) => {
+    dispatch(addProduct({ id, title, category, socket, typeRAM, img , count}));
+    if (category === "Mainboard") {
+      dispatch(setMax(slot));
+    }
     console.log("stateparts: ", parts);
   };
 
@@ -307,7 +307,8 @@ export default function SelectionProto01() {
                       item.socket,
                       item.typeRAM,
                       item.slot,
-                      item.img
+                      item.img,
+                      item.count
                     );
                   }}
                 >

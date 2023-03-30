@@ -6,7 +6,6 @@ const initialState = {
       id: null,
       title: "",
       category: "CPU",
-      slot: null,
       socket: "",
       max: 1,
       selectAmount: 0,
@@ -136,14 +135,17 @@ export const customizeSlice = createSlice({
       );
       if (categoryIndex !== -1) {
         state.partData[categoryIndex] = {
+          ...state.partData[categoryIndex],
           id: action.payload.id,
-          title: action.payload.title,
-          selectAmount: 1,
+          title:action.payload.title,
+          selectAmount: action.payload.count ? action.payload.count: 1,
           socket: action.payload.socket,
           category: action.payload.category,
           typeRAM: action.payload.typeRAM,
           price: action.payload.price,
-          img: action.payload.img
+          img: action.payload.img,
+
+          
         };
       }
     },
@@ -154,6 +156,7 @@ export const customizeSlice = createSlice({
       );
       if (index !== -1) {
         state.partData[index] = {
+          ...state.partData[index],
           id: null,
           title: "",
           price: null,
@@ -161,7 +164,9 @@ export const customizeSlice = createSlice({
           socket:"",
           typeRAM:"",
           category: action.payload,
-          img:""
+          img:"",
+          max: initialState.partData[index].max,
+          count: initialState.partData[index].count
         };
       }
     },
@@ -171,6 +176,7 @@ export const customizeSlice = createSlice({
       const index = state.partData.findIndex((item) => item.category === "RAM");
       if (index !== -1) {
         state.partData[index] = {
+          ...state.partData[index],
           max: action.payload
         };
       }
