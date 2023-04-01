@@ -138,14 +138,14 @@ export const customizeSlice = createSlice({
           ...state.partData[categoryIndex],
           id: action.payload.id,
           title:action.payload.title,
-          selectAmount: action.payload.count ? action.payload.count*1: 1,
+          selectAmount: 1,
           socket: action.payload.socket,
           category: action.payload.category,
           typeRAM: action.payload.typeRAM,
           price: action.payload.price,
           img: action.payload.img,
-
-          
+          count: action.payload.count ? action.payload.count : 1, 
+    
         };
       }
     },
@@ -171,25 +171,42 @@ export const customizeSlice = createSlice({
       }
     },
 
+    //actionนี้ถูกใช้หลังจากเช็คว่าไอเท็มที่แอดมา เป็น mainboard หรือไม่ ถ้ามีให้ใช้ action oี้
     setMax: (state, action) => {
       console.log("setMax: ", action.payload);
       const index = state.partData.findIndex((item) => item.category === "RAM");
       if (index !== -1) {
-        state.partData[index] = {
-          ...state.partData[index],
-          max: action.payload
-        };
+        if (state.partData[index].max < action.payload) {
+          state.partData[index] = {
+            ...state.partData[index],
+            max: action.payload
+          };
+          } else if (state.partData[index].max === action.payload) {
+            state.partData[index].max = 4
+          } else if (state.partData[index].max > action.payload) {
+          state.partData[index].max = action.payload
+        }
+        if((state.partData[index].selectAmount*state.partData[index].count) > state.partData[index].max){
+          state.partData[index].selectAmount = 1
+        }
       }
+      
     },
 
     incAmount: (state, action) => {
      
       const index = state.partData.findIndex((item)=>item.category === action.payload);
       if(index !== -1) {
-        state.partData[index] = {
-          ...state.partData[index],
-          selectAmount: state.partData[index].selectAmount + 1
-        };   
+        if((state.partData[index].selectAmount*state.partData[index].count) < state.partData[index].max) {
+          console.log("เงี่ยไข1")
+          state.partData[index].selectAmount += 1 
+        } else if((state.partData[index].selectAmount*state.partData[index].count) === state.partData[index].max) {
+          console.log("เงี่ยไข2")
+          pass
+        } else {
+          console.log("เงี่ยไข3")
+          state.partData[index].selectAmount = 1
+        } 
       }
     },
 
@@ -197,10 +214,10 @@ export const customizeSlice = createSlice({
       console.log("decAmount ใน store ทำงาน")
       const index = state.partData.findIndex((item)=>item.category === action.payload);
       if(index !== -1) {
-        state.partData[index] = {
-          ...state.partData[index],
-          selectAmount: state.partData[index].selectAmount - 1
-        };
+        if(state.partData[index].selectAmount > 1) {
+          console.log("เงี่ยไข1")
+          state.partData[index].selectAmount -= 1 
+        } 
       }
     }
   }

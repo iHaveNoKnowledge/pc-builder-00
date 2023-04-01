@@ -43,9 +43,12 @@ const CustomizationProto01 = () => {
     dispatch(decAmount(category));
   };
 
-  const handleClear = (category) => {
+  const handleClear = (category, slot) => {
     console.log("clear data");
     dispatch(removeProduct(category));
+    if (category === "Mainboard") {
+      dispatch(setMax(slot));
+    }
   };
 
   return (
@@ -77,7 +80,7 @@ const CustomizationProto01 = () => {
                       <Box sx={{display:"flex", width:"100%", flexGrow:1}}>
                         
                           <Box sx={{ flexGrow: 1 }}>
-                            <div>{item.selectAmount}{item.max !== null && (
+                            <div>{(item.selectAmount*item.count)}{item.max !== null && (
                                   <>
                                     /{item.max}
                                   </>
@@ -87,7 +90,7 @@ const CustomizationProto01 = () => {
                           <Box
                             onClick={(e) => {
                               e.stopPropagation();
-                              handleClear(item.category);
+                              handleClear(item.category, item.slot);
                             }}
                             sx={{
                               padding: "0.1px 15px",
@@ -126,7 +129,7 @@ const CustomizationProto01 = () => {
                                 -
                               </Box>
                               {/* จำนวนสินค้า */}
-                              <Box style={{marginTop:"5px"}}>{item.count? item.count: item.selectAmount}</Box>
+                              <Box style={{marginTop:"5px"}}>{item.selectAmount}</Box>
                               <Box className="textButton"  onClick={(e)=>{
                                 e.stopPropagation();
                                 handleIncAmt(item.category)
