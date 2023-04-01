@@ -16,7 +16,7 @@ import {
   Divider
 } from "@mui/material";
 import { changeCategory } from "../slices/categorySlice";
-import { removeProduct, incAmount, decAmount } from "../slices/cutomizeSliceNoApi";
+import { removeProduct, incAmount, decAmount, updateSumAMount } from "../slices/cutomizeSliceNoApi";
 import "./CustomizationProto01.css";
 
 const CustomizationProto01 = () => {
@@ -36,11 +36,13 @@ const CustomizationProto01 = () => {
 
   const handleIncAmt = (category) => {
     dispatch(incAmount(category));
-    console.log("เพิ่ม")
+    console.log("เพิ่ม");
+    dispatch(updateSumAMount());
   };
 
   const handleDecAmt = (category) => {
     dispatch(decAmount(category));
+    dispatch(updateSumAMount());
   };
 
   const handleClear = (category, slot) => {
@@ -49,6 +51,7 @@ const CustomizationProto01 = () => {
     if (category === "Mainboard") {
       dispatch(setMax(slot));
     }
+    dispatch(updateSumAMount());
   };
 
   return (
@@ -77,9 +80,11 @@ const CustomizationProto01 = () => {
                       }}
                     >
                       
-                      <Box sx={{display:"flex", width:"100%", flexGrow:1}}>
+                      <Box sx={{display:"Flex", width:"100%"}}>
+
+                          <Box sx={{flexGrow:1}}></Box>
                         
-                          <Box sx={{ flexGrow: 1 }}>
+                          <Box sx={{ flexGrow:0.05}}>
                             <div>{(item.selectAmount*item.count)}{item.max !== null && (
                                   <>
                                     /{item.max}
@@ -87,6 +92,7 @@ const CustomizationProto01 = () => {
                             )}</div>
                           </Box>
 
+                          
                           <Box
                             onClick={(e) => {
                               e.stopPropagation();
@@ -103,6 +109,7 @@ const CustomizationProto01 = () => {
                           >
                             x
                           </Box>
+                          
                       </Box>
 
 
@@ -153,7 +160,8 @@ const CustomizationProto01 = () => {
                               variant="subtitle1"
                               sx={{flexGrow:"1",  fontWeight:"bolder"}}
                             >
-                              {item.title}
+                              SKU-000000
+                              {/* {item.title} */}
                             </Box>
 
                             <Typography variant="caption">

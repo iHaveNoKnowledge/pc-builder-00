@@ -16,6 +16,7 @@ import { Divider } from "@mui/material";
 import {
   addProduct,
   setMax,
+  updateSumAMount,
 } from "../slices/cutomizeSliceNoApi";
 
 // const useStyles = makeStyles({
@@ -215,8 +216,8 @@ export default function SelectionProto01() {
     dispatch(addProduct({ id, title, category, socket, typeRAM, img , count}));
     if (category === "Mainboard") {
       dispatch(setMax(slot));
-    }
-    console.log("stateparts: ", parts);
+    };
+    dispatch(updateSumAMount())
   };
 
   ////useSelector!!!!!!!!!!!!!!!

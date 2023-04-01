@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import {filter, map} from 'lodash';
 
 const initialState = {
   partData: [
@@ -121,7 +122,8 @@ const initialState = {
       max: null,
       selectAmount: 0
     }
-  ]
+  ],
+  sumAmount : 0,
 };
 
 export const customizeSlice = createSlice({
@@ -173,7 +175,6 @@ export const customizeSlice = createSlice({
 
     //actionนี้ถูกใช้หลังจากเช็คว่าไอเท็มที่แอดมา เป็น mainboard หรือไม่ ถ้ามีให้ใช้ action oี้
     setMax: (state, action) => {
-      console.log("setMax: ", action.payload);
       const index = state.partData.findIndex((item) => item.category === "RAM");
       if (index !== -1) {
         if (state.partData[index].max < action.payload) {
@@ -193,18 +194,14 @@ export const customizeSlice = createSlice({
       
     },
 
-    incAmount: (state, action) => {
-     
+    incAmount: (state, action) => {    
       const index = state.partData.findIndex((item)=>item.category === action.payload);
       if(index !== -1) {
         if((state.partData[index].selectAmount*state.partData[index].count) < state.partData[index].max) {
-          console.log("เงี่ยไข1")
           state.partData[index].selectAmount += 1 
-        } else if((state.partData[index].selectAmount*state.partData[index].count) === state.partData[index].max) {
-          console.log("เงี่ยไข2")
-          pass
+        } else if((state.partData[index].selectAmount*state.partData[index].count) === state.partData[index].max) {  
+          state.partData[index].selectAmount
         } else {
-          console.log("เงี่ยไข3")
           state.partData[index].selectAmount = 1
         } 
       }
@@ -215,13 +212,19 @@ export const customizeSlice = createSlice({
       const index = state.partData.findIndex((item)=>item.category === action.payload);
       if(index !== -1) {
         if(state.partData[index].selectAmount > 1) {
-          console.log("เงี่ยไข1")
+          
           state.partData[index].selectAmount -= 1 
         } 
       }
-    }
+    },
+
+    updateSumAMount: (state, action) =>{
+      const sumArr = map(state.partData, "selectAmount")
+      const sum = sumArr.reduce((acc, item)=>acc+item, state.sumAmount)
+      console.log("จำนวนรวม: ",sum)
+      }
   }
 });
 
-export const { addProduct, removeProduct, setMax, incAmount, decAmount } = customizeSlice.actions;
+export const { addProduct, removeProduct, setMax, incAmount, decAmount, updateSumAMount } = customizeSlice.actions;
 export default customizeSlice.reducer;
