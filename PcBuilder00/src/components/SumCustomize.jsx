@@ -21,7 +21,8 @@ import "./SumCustomize.css";
 
 const SumCustomize =()=>{
   const sumAmount = useSelector((state) => state.noApiCustomize.summations.sumAmount);
-  const category = useSelector((state) => state.category.category);
+  const sum_SRP = useSelector((state) => state.noApiCustomize.summations.sum_SRP);
+  const sumDiscount = useSelector((state) => state.noApiCustomize.summations.sumDiscount);
 
   const dispatch = useDispatch();
 

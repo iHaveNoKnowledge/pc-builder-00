@@ -16,7 +16,7 @@ import {
   Divider
 } from "@mui/material";
 import { changeCategory } from "../slices/categorySlice";
-import { removeProduct, incAmount, decAmount, updateSumAmount } from "../slices/cutomizeSliceNoApi";
+import { removeProduct, incAmount, decAmount, updateSumAmount, updateSumPrices } from "../slices/cutomizeSliceNoApi";
 import "./CustomizationProto01.css";
 import SumCustomize from "./SumCustomize";
 
@@ -39,11 +39,13 @@ const CustomizationProto01 = () => {
     dispatch(incAmount(category));
     console.log("เพิ่ม");
     dispatch(updateSumAmount());
+    dispatch(updateSumPrices());
   };
 
   const handleDecAmt = (category) => {
     dispatch(decAmount(category));
     dispatch(updateSumAmount());
+    dispatch(updateSumPrices());
   };
 
   const handleClear = (category, slot) => {
@@ -53,6 +55,7 @@ const CustomizationProto01 = () => {
       dispatch(setMax(slot));
     }
     dispatch(updateSumAmount());
+    dispatch(updateSumPrices());
   };
 
   return (

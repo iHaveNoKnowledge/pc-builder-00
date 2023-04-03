@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { filter, map } from "lodash";
+import { filter, map, chain, reduce, mapValues, value } from "lodash";
 
 const initialState = {
   partData: [
@@ -272,11 +272,20 @@ export const customizeSlice = createSlice({
     },
 
     updateSumPrices: (state, action) => {
-      console.log(state.summations.sumAmount);
-      const sumArr = map(state.partData, "selectAmount"); 
-      const sum = sumArr.reduce((acc, item) => acc + item, 0);
-      console.log("จำนวนรวม: ", sum);
-      state.summations.sumAmount = sumArr.reduce((acc, item) => acc + item, 0);
+      const sumPriceArr = state.partData.map((obj)=>{
+        return (obj.price)*obj.selectAmount
+      })
+
+      const sumDiscountArr = state.partData.map((obj)=>{
+        return obj.price-(obj.price*(1-obj.discount))*obj.selectAmount
+      })
+
+      console.log("afterreducr:", sumPriceArr)
+      state.summations.sumDiscount = sumDiscountArr.reduce((acc, item)=>acc + item, 0)
+      state.summations.sum_SRP = sumPriceArr.reduce((acc, item)=>acc + item, 0);
+      console.log("ราคาต้น",state.summations.sum_SRP);
+      console.log("ส่วนลด",state.summations.sumDiscount);
+     
     },
   },
 });
@@ -289,5 +298,6 @@ export const {
   decAmount,
   updateSumAmount,
   resetCustomized,
+  updateSumPrices,
 } = customizeSlice.actions;
 export default customizeSlice.reducer;

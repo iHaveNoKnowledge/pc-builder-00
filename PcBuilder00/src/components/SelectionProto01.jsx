@@ -17,6 +17,7 @@ import {
   addProduct,
   setMax,
   updateSumAmount,
+  updateSumPrices,
 } from "../slices/cutomizeSliceNoApi";
 
 // const useStyles = makeStyles({
@@ -302,6 +303,7 @@ export default function SelectionProto01() {
       dispatch(setMax(slot));
     }
     dispatch(updateSumAmount());
+    dispatch(updateSumPrices());
   };
 
   ////useSelector!!!!!!!!!!!!!!!
