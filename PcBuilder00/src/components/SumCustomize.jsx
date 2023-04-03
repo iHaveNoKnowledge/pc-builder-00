@@ -15,33 +15,39 @@ import {
   CardContent,
   Divider,
 } from "@mui/material";
-import {
-  removeProduct,
-  incAmount,
-  decAmount,
-  updateSumAMount,
-} from "../slices/cutomizeSliceNoApi";
+import { resetCustomized } from "../slices/cutomizeSliceNoApi";
+import "./SumCustomize.css";
 
 
 const SumCustomize =()=>{
   const sumAmount = useSelector((state) => state.noApiCustomize.sumAmount);
   const category = useSelector((state) => state.category.category);
 
+  const dispatch = useDispatch();
+
+  const handleReset = ()=>{
+    dispatch(resetCustomized())
+  }
+
   return (
     <>
-      <Box sx={{paddingBottom:"0.4em"}}>
-        <Box>
-          <Box>
-            <Box>สินค้ารวม : {sumAmount}, {category}</Box>
+      <Box >
+        <Box className="mainCard">
+          <Box sx={{display:"flex"}}>
+            <Box variant="subtitle1" sx={{flexGrow:1, fontWeight:"bolder"}}>สินค้ารวม : {sumAmount} </Box>
+            {/* <Box>ประเภทสินค้า : {category}</Box> */}
           </Box>
           <Box sx={{display:"flex"}}>
-            <Box sx={{flexGrow:1}}>Discount : <br/>฿999 </Box>&nbsp;
+            <Box sx={{flexGrow:1}}>Discount : <br/>฿999  </Box>&nbsp;
             <Box sx={{flexGrow:1}}>ราคารวม : <br/>฿999 </Box>&nbsp;
             <Box sx={{flexGrow:1}}>net: <br/>฿999 </Box>
           </Box>
           
         </Box>
         <Divider/>
+          <Box>
+            <Button onClick={(e)=>handleReset()}>Reset</Button>
+          </Box>
       </Box>
       
     </>

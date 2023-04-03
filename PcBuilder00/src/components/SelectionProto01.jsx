@@ -33,14 +33,52 @@ export default function SelectionProto01() {
   // const classes = useStyles();
   //initdata, data for local scope testing  !!!!!!!!!!!!!!
   const items = [
-    { id: 1, title: "sword01", category: "sword", slot: "2", price: 9110 },
-    { id: 2, title: "sword02", category: "sword", slot: "3", price: 10875 },
-    { id: 3, title: "shield01", category: "shield", price: 16960 },
-    { id: 4, title: "shield02", category: "shield", price: 8550 },
-    { id: 5, title: "upperHead01", category: "upHead", price: 7270 },
-    { id: 6, title: "upperHead02", category: "upHead", price: 16070 },
-    { id: 7, title: "card01", category: "card", price: 16545 },
-    { id: 8, title: "card02", category: "card", price: 12025 },
+    {
+      id: 1,
+      title: "sword01",
+      category: "sword",
+      slot: "2",
+      price: 2645,
+      discount: 0.8,
+    },
+    {
+      id: 2,
+      title: "sword02",
+      category: "sword",
+      slot: "3",
+      price: 9255,
+      discount: 0.8,
+    },
+    {
+      id: 3,
+      title: "shield01",
+      category: "shield",
+      price: 7210,
+      discount: 0.9,
+    },
+    {
+      id: 4,
+      title: "shield02",
+      category: "shield",
+      price: 14190,
+      discount: 0.85,
+    },
+    {
+      id: 5,
+      title: "upperHead01",
+      category: "upHead",
+      price: 10725,
+      discount: 0.7,
+    },
+    {
+      id: 6,
+      title: "upperHead02",
+      category: "upHead",
+      price: 3485,
+      discount: 0.63,
+    },
+    { id: 7, title: "card01", category: "card", price: 18045, discount: 0.81 },
+    { id: 8, title: "card02", category: "card", price: 10020, discount: 0.68 },
     {
       id: 9,
       title: "CPU01_AMD",
@@ -48,7 +86,8 @@ export default function SelectionProto01() {
       socket: "AM4",
       img:
         "https://media-cdn.bnn.in.th/263562/730143309936-00-square_medium.jpg",
-      price: 12630,
+      price: 19290,
+      discount: 0.53,
     },
     {
       id: 11,
@@ -57,7 +96,8 @@ export default function SelectionProto01() {
       socket: "AM4",
       img:
         "https://media-cdn.bnn.in.th/52122/AMD-CPU-Ryzen7-5800X-3.8GHz-8C-16T-AM4-gen5-1-square_medium.jpg",
-      price: 14445,
+      price: 5715,
+      discount: 0.51,
     },
     {
       id: 12,
@@ -66,7 +106,8 @@ export default function SelectionProto01() {
       socket: "1700",
       img:
         "https://media-cdn.bnn.in.th/164968/intel-core-i5-12400-1-square_medium.jpg",
-      price: 17740,
+      price: 1250,
+      discount: 0.75,
     },
     {
       id: 13,
@@ -75,7 +116,8 @@ export default function SelectionProto01() {
       socket: "1700",
       img:
         "https://media-cdn.bnn.in.th/264216/intel-core-i9-13900F-1-square_medium.jpg",
-      price: 18455,
+      price: 17270,
+      discount: 0.52,
     },
     {
       id: 14,
@@ -86,7 +128,8 @@ export default function SelectionProto01() {
       slot: 2,
       img:
         "https://media-cdn.bnn.in.th/19033/Asus-Mainboard-PRIME-A320M-K-DDR4-AM4-1-square_medium.jpg",
-      price: 2330,
+      price: 10560,
+      discount: 0.84,
     },
     {
       id: 15,
@@ -97,7 +140,8 @@ export default function SelectionProto01() {
       slot: 2,
       img:
         "https://media-cdn.bnn.in.th/257878/gigabyte-b650i-aorus-ultra-1-square_medium.jpg",
-      price: 15215,
+      price: 18765,
+      discount: 0.54,
     },
     {
       id: 16,
@@ -108,7 +152,8 @@ export default function SelectionProto01() {
       slot: 2,
       img:
         "https://media-cdn.bnn.in.th/171658/asrock-b660m-hdv-ddr4-1-square_medium.jpg",
-      price: 6885,
+      price: 16455,
+      discount: 0.84,
     },
     {
       id: 17,
@@ -119,7 +164,8 @@ export default function SelectionProto01() {
       slot: 2,
       img:
         "https://www.jib.co.th/img_master/product/medium/2022110817133356180_1.jpg",
-      price: 6780,
+      price: 9100,
+      discount: 0.59,
     },
     {
       id: 18,
@@ -130,7 +176,8 @@ export default function SelectionProto01() {
       slot: 4,
       img:
         "https://media-cdn.bnn.in.th/17709/AsRock-Mainboard-B550-Steel-Legend-AM4-1-square_medium.jpg",
-      price: 9370,
+      price: 10510,
+      discount: 0.58,
     },
     {
       id: 19,
@@ -141,7 +188,8 @@ export default function SelectionProto01() {
       slot: 4,
       img:
         "https://media-cdn.bnn.in.th/241066/asrock-x670e-pg-lightning-am5-1-square_medium.jpg",
-      price: 10980,
+      price: 11400,
+      discount: 0.88,
     },
     {
       id: 20,
@@ -152,7 +200,8 @@ export default function SelectionProto01() {
       slot: 4,
       img:
         "https://media-cdn.bnn.in.th/156972/asus-prime-z690-p-d4-csm-1-square_medium.jpg",
-      price: 15895,
+      price: 7290,
+      discount: 0.7,
     },
     {
       id: 21,
@@ -163,7 +212,8 @@ export default function SelectionProto01() {
       slot: 4,
       img:
         "https://media-cdn.bnn.in.th/258336/msi-mag-z790-tomahawk-wifi-d5-1-square_medium.jpg",
-      price: 10845,
+      price: 3790,
+      discount: 0.6,
     },
     {
       id: 22,
@@ -173,7 +223,8 @@ export default function SelectionProto01() {
       typeRAM: "DDR4",
       img:
         "https://media-cdn.bnn.in.th/106735/zadak-moab-aura2-rgb-ddr4-1-square_medium.jpg",
-      price: 17825,
+      price: 13560,
+      discount: 0.68,
     },
     {
       id: 23,
@@ -183,7 +234,8 @@ export default function SelectionProto01() {
       typeRAM: "DDR5",
       img:
         "https://media-cdn.bnn.in.th/279728/zadak-ddr5-spark-rgb-white-1-square_medium.jpg",
-      price: 11435,
+      price: 10780,
+      discount: 0.72,
     },
     {
       id: 24,
@@ -193,7 +245,8 @@ export default function SelectionProto01() {
       typeRAM: "DDR4",
       img:
         "https://media-cdn.bnn.in.th/106729/zadak-moab-aura2-rgb-ddr4-1-square_medium.jpg",
-      price: 6985,
+      price: 14920,
+      discount: 0.51,
     },
     {
       id: 25,
@@ -203,7 +256,8 @@ export default function SelectionProto01() {
       typeRAM: "DDR5",
       img:
         "https://media-cdn.bnn.in.th/277595/consair-vengeance-rgb-ddr5-kit-black-1-square_medium.jpg",
-      price: 7260,
+      price: 18745,
+      discount: 0.64,
     },
     {
       id: 26,
@@ -212,7 +266,8 @@ export default function SelectionProto01() {
       socket: "AM5",
       img:
         "https://media-cdn.bnn.in.th/280791/amd-ryzen9-7900x3d-1-square_medium.jpg",
-      price: 5325,
+      price: 14740,
+      discount: 0.92,
     },
     {
       id: 27,
@@ -221,7 +276,8 @@ export default function SelectionProto01() {
       socket: "AM5",
       img:
         "https://media-cdn.bnn.in.th/240481/amd-ryzen9-7950x-1-square_medium.jpg",
-      price: 15900,
+      price: 17885,
+      discount: 0.7,
     },
   ];
 
@@ -380,7 +436,7 @@ export default function SelectionProto01() {
                     <Divider sx={{ pt: 1 }} />
                     <Box sx={{ display: "flex" }}>
                       <ListItemText
-                        primary="฿ 999 บาท"
+                        primary={ "฿ "+(Math.round(((item.price)*(item.discount))).toLocaleString())+".-"}
                         secondary={
                           <React.Fragment>
                             <Typography
@@ -389,7 +445,7 @@ export default function SelectionProto01() {
                               variant="caption"
                               color="text.secondary"
                             >
-                              ราคาปกติ ฿ 9,999 บาท
+                              ราคาปกติ ฿ {item.price.toLocaleString()}.-
                             </Typography>
                           </React.Fragment>
                         }

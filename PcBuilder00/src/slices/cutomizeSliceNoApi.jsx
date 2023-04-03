@@ -218,14 +218,18 @@ export const customizeSlice = createSlice({
       }
     },
 
-    updateSumAMount: (state, action) =>{
+    updateSumAMount: (state, action) => {
       const sumArr = map(state.partData, "selectAmount")
       const sum = sumArr.reduce((acc, item)=>acc+item, 0)
       console.log("จำนวนรวม: ",sum)
       state.sumAmount = sumArr.reduce((acc, item)=>acc+item, 0)
-      }
+    },
+
+    resetCustomized: (state, action) => {
+      state.partData = initialState.partData
+    }
   }
 });
 
-export const { addProduct, removeProduct, setMax, incAmount, decAmount, updateSumAMount } = customizeSlice.actions;
+export const { addProduct, removeProduct, setMax, incAmount, decAmount, updateSumAMount, resetCustomized } = customizeSlice.actions;
 export default customizeSlice.reducer;
