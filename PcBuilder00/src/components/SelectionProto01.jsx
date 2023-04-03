@@ -16,7 +16,7 @@ import { Divider } from "@mui/material";
 import {
   addProduct,
   setMax,
-  updateSumAMount,
+  updateSumAmount,
 } from "../slices/cutomizeSliceNoApi";
 
 // const useStyles = makeStyles({
@@ -223,8 +223,8 @@ export default function SelectionProto01() {
       typeRAM: "DDR4",
       img:
         "https://media-cdn.bnn.in.th/106735/zadak-moab-aura2-rgb-ddr4-1-square_medium.jpg",
-      price: 13560,
-      discount: 0.68,
+      price: 7460,
+      discount: 0.51,
     },
     {
       id: 23,
@@ -246,7 +246,7 @@ export default function SelectionProto01() {
       img:
         "https://media-cdn.bnn.in.th/106729/zadak-moab-aura2-rgb-ddr4-1-square_medium.jpg",
       price: 14920,
-      discount: 0.51,
+      discount: 0.52,
     },
     {
       id: 25,
@@ -293,13 +293,15 @@ export default function SelectionProto01() {
     typeRAM,
     slot,
     img,
-    count
+    count,
+    discount,
+    price
   ) => {
-    dispatch(addProduct({ id, title, category, socket, typeRAM, img, count }));
+    dispatch(addProduct({ id, title, category, socket, typeRAM, img, count , discount, price}));
     if (category === "Mainboard") {
       dispatch(setMax(slot));
     }
-    dispatch(updateSumAMount());
+    dispatch(updateSumAmount());
   };
 
   ////useSelector!!!!!!!!!!!!!!!
@@ -381,7 +383,6 @@ export default function SelectionProto01() {
 
   ////useEffect
   useEffect(() => {
-    console.log("ได้ไรมา", showProduct);
   }, [showProduct]);
 
   ////หน้าเว็บ
@@ -393,6 +394,7 @@ export default function SelectionProto01() {
             <Grid item xs={8} sm={6} md={4} key={index}>
               <Card sx={{ border: "1px dashed green" }}>
                 <CardActionArea
+                  
                   onClick={(e) => {
                     handleChange(
                       item.id,
@@ -402,7 +404,9 @@ export default function SelectionProto01() {
                       item.typeRAM,
                       item.slot,
                       item.img,
-                      item.count
+                      item.count,
+                      item.discount,
+                      item.price
                     );
                   }}
                 >
@@ -436,7 +440,7 @@ export default function SelectionProto01() {
                     <Divider sx={{ pt: 1 }} />
                     <Box sx={{ display: "flex" }}>
                       <ListItemText
-                        primary={ "฿ "+(Math.round(((item.price)*(item.discount))).toLocaleString())+".-"}
+                        primary={ "฿ "+(Math.round(((item.price)*(1-item.discount))).toLocaleString())+".-"}
                         secondary={
                           <React.Fragment>
                             <Typography
@@ -457,7 +461,7 @@ export default function SelectionProto01() {
                   ></Typography> */}
                   </CardContent>
                 </CardActionArea>
-                <CardActions>
+                <CardActions >
                   <Button size="small">Like</Button>
                   <Button size="small">Fav</Button>
                 </CardActions>

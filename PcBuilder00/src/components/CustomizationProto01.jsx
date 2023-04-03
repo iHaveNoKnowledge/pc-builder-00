@@ -16,7 +16,7 @@ import {
   Divider
 } from "@mui/material";
 import { changeCategory } from "../slices/categorySlice";
-import { removeProduct, incAmount, decAmount, updateSumAMount } from "../slices/cutomizeSliceNoApi";
+import { removeProduct, incAmount, decAmount, updateSumAmount } from "../slices/cutomizeSliceNoApi";
 import "./CustomizationProto01.css";
 import SumCustomize from "./SumCustomize";
 
@@ -38,12 +38,12 @@ const CustomizationProto01 = () => {
   const handleIncAmt = (category) => {
     dispatch(incAmount(category));
     console.log("เพิ่ม");
-    dispatch(updateSumAMount());
+    dispatch(updateSumAmount());
   };
 
   const handleDecAmt = (category) => {
     dispatch(decAmount(category));
-    dispatch(updateSumAMount());
+    dispatch(updateSumAmount());
   };
 
   const handleClear = (category, slot) => {
@@ -52,7 +52,7 @@ const CustomizationProto01 = () => {
     if (category === "Mainboard") {
       dispatch(setMax(slot));
     }
-    dispatch(updateSumAMount());
+    dispatch(updateSumAmount());
   };
 
   return (
@@ -69,7 +69,7 @@ const CustomizationProto01 = () => {
                   <ListItem className="listItemStyle">
                     <ListItemButton
                       disableGutters={true}
-                      disableRipple
+                      disableRipple={true}
                       onClick={(e) => {
                         e.stopPropagation();
                         handleChange(item.category);
@@ -177,7 +177,7 @@ const CustomizationProto01 = () => {
                           {/* //// ย่อย2 //// */}
                           <Box>
                             <Typography
-                              disableRipple
+                              disableripple={true}
                               onClick={(e) => {
                                 console.log("innerBtnActivated");
                               } }
@@ -187,7 +187,7 @@ const CustomizationProto01 = () => {
                           </Box>
                             
                           {/* //// ย่อย3 //// */}
-                          <Typography variant="subtitle1" sx={{ marginLeft:"70%"}}>฿ 999</Typography>
+                          <Typography variant="subtitle1" sx={{ marginLeft:"70%"}}>฿ {Math.round((item.price*(1-item.discount))*item.selectAmount).toLocaleString()}</Typography>
                             
                           </Box>
                         </Box>

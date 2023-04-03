@@ -15,18 +15,19 @@ import {
   CardContent,
   Divider,
 } from "@mui/material";
-import { resetCustomized } from "../slices/cutomizeSliceNoApi";
+import { resetCustomized, updateSumAmount} from "../slices/cutomizeSliceNoApi";
 import "./SumCustomize.css";
 
 
 const SumCustomize =()=>{
-  const sumAmount = useSelector((state) => state.noApiCustomize.sumAmount);
+  const sumAmount = useSelector((state) => state.noApiCustomize.summations.sumAmount);
   const category = useSelector((state) => state.category.category);
 
   const dispatch = useDispatch();
 
   const handleReset = ()=>{
     dispatch(resetCustomized())
+    dispatch(updateSumAmount())
   }
 
   return (
