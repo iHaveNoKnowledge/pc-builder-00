@@ -18,6 +18,7 @@ import {
 import { changeCategory } from "../slices/categorySlice";
 import { removeProduct, incAmount, decAmount, updateSumAMount } from "../slices/cutomizeSliceNoApi";
 import "./CustomizationProto01.css";
+import SumCustomize from "./SumCustomize";
 
 const CustomizationProto01 = () => {
   //useState
@@ -57,6 +58,8 @@ const CustomizationProto01 = () => {
   return (
     <>
       <List sx={{ width: "97%" ,paddingLeft:"8px"}}>
+        <SumCustomize />
+        
         {categories.map((item, index) => {
           return (
             <React.Fragment key={index}>
@@ -117,8 +120,8 @@ const CustomizationProto01 = () => {
 {/* ////////////////////////ก้อนซ้าย/////////////////////////////// */}
                         <Box sx={{flexGrow:"1"}}>
 
-                            <Box>
-                              <ListItemAvatar >
+                            <Box >
+                              <ListItemAvatar sx={{display:"flex", justifyContent:"center", alignItems:"center"}}>
                                 <Box
                                   component="img"
                                   src={item.img}
@@ -128,7 +131,7 @@ const CustomizationProto01 = () => {
                               </ListItemAvatar>
                             </Box>
                             
-                            <Box sx={{display:"flex", justifyContent:"space-between"}}>
+                            <Box  sx={{display:"flex", justifyContent:"space-between", bgcolor:"#c7c7c7", my:"2px", boxShadow:"1px 1px 1px 1px rgba(92, 92, 92, 1)", textAlign:"center"}}>
                               <Box className="textButton"  onClick={(e)=>{
                                 e.stopPropagation();
                                 handleDecAmt(item.category);
@@ -137,6 +140,7 @@ const CustomizationProto01 = () => {
                               </Box>
                               {/* จำนวนสินค้า */}
                               <Box style={{marginTop:"5px"}}>{item.selectAmount}</Box>
+
                               <Box className="textButton"  onClick={(e)=>{
                                 e.stopPropagation();
                                 handleIncAmt(item.category)
@@ -175,7 +179,6 @@ const CustomizationProto01 = () => {
                             <Typography
                               disableRipple
                               onClick={(e) => {
-                                e.stopPropagation();
                                 console.log("innerBtnActivated");
                               } }
                             >
@@ -203,6 +206,7 @@ const CustomizationProto01 = () => {
                         handleChange(item.category);
                       } }
                     >
+                    
                       <ListItemAvatar>
                         <Avatar
                           sx={{ borderRadius: "0"}}
@@ -212,6 +216,11 @@ const CustomizationProto01 = () => {
                       </ListItemAvatar>
                       <ListItemText primary={`${item.category}`} secondary="" />
                     </ListItemButton>
+                    <Box><div>{(item.selectAmount*item.count)?(item.selectAmount*item.count):0}{item.max !== null && (
+                                  <>
+                                    /{item.max}
+                                  </>
+                            )}</div></Box>
                   </ListItem>
                 </div>
               )}

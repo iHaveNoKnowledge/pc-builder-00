@@ -33,14 +33,14 @@ export default function SelectionProto01() {
   // const classes = useStyles();
   //initdata, data for local scope testing  !!!!!!!!!!!!!!
   const items = [
-    { id: 1, title: "sword01", category: "sword", slot: "2" },
-    { id: 2, title: "sword02", category: "sword", slot: "3" },
-    { id: 3, title: "shield01", category: "shield" },
-    { id: 4, title: "shield02", category: "shield" },
-    { id: 5, title: "upperHead01", category: "upHead" },
-    { id: 6, title: "upperHead02", category: "upHead" },
-    { id: 7, title: "card01", category: "card" },
-    { id: 8, title: "card02", category: "card" },
+    { id: 1, title: "sword01", category: "sword", slot: "2", price: 9110 },
+    { id: 2, title: "sword02", category: "sword", slot: "3", price: 10875 },
+    { id: 3, title: "shield01", category: "shield", price: 16960 },
+    { id: 4, title: "shield02", category: "shield", price: 8550 },
+    { id: 5, title: "upperHead01", category: "upHead", price: 7270 },
+    { id: 6, title: "upperHead02", category: "upHead", price: 16070 },
+    { id: 7, title: "card01", category: "card", price: 16545 },
+    { id: 8, title: "card02", category: "card", price: 12025 },
     {
       id: 9,
       title: "CPU01_AMD",
@@ -48,6 +48,7 @@ export default function SelectionProto01() {
       socket: "AM4",
       img:
         "https://media-cdn.bnn.in.th/263562/730143309936-00-square_medium.jpg",
+      price: 12630,
     },
     {
       id: 11,
@@ -56,6 +57,7 @@ export default function SelectionProto01() {
       socket: "AM4",
       img:
         "https://media-cdn.bnn.in.th/52122/AMD-CPU-Ryzen7-5800X-3.8GHz-8C-16T-AM4-gen5-1-square_medium.jpg",
+      price: 14445,
     },
     {
       id: 12,
@@ -64,6 +66,7 @@ export default function SelectionProto01() {
       socket: "1700",
       img:
         "https://media-cdn.bnn.in.th/164968/intel-core-i5-12400-1-square_medium.jpg",
+      price: 17740,
     },
     {
       id: 13,
@@ -72,6 +75,7 @@ export default function SelectionProto01() {
       socket: "1700",
       img:
         "https://media-cdn.bnn.in.th/264216/intel-core-i9-13900F-1-square_medium.jpg",
+      price: 18455,
     },
     {
       id: 14,
@@ -82,8 +86,8 @@ export default function SelectionProto01() {
       slot: 2,
       img:
         "https://media-cdn.bnn.in.th/19033/Asus-Mainboard-PRIME-A320M-K-DDR4-AM4-1-square_medium.jpg",
+      price: 2330,
     },
-
     {
       id: 15,
       title: "Mainboard02_AMD",
@@ -93,6 +97,7 @@ export default function SelectionProto01() {
       slot: 2,
       img:
         "https://media-cdn.bnn.in.th/257878/gigabyte-b650i-aorus-ultra-1-square_medium.jpg",
+      price: 15215,
     },
     {
       id: 16,
@@ -103,6 +108,7 @@ export default function SelectionProto01() {
       slot: 2,
       img:
         "https://media-cdn.bnn.in.th/171658/asrock-b660m-hdv-ddr4-1-square_medium.jpg",
+      price: 6885,
     },
     {
       id: 17,
@@ -113,6 +119,7 @@ export default function SelectionProto01() {
       slot: 2,
       img:
         "https://www.jib.co.th/img_master/product/medium/2022110817133356180_1.jpg",
+      price: 6780,
     },
     {
       id: 18,
@@ -123,8 +130,8 @@ export default function SelectionProto01() {
       slot: 4,
       img:
         "https://media-cdn.bnn.in.th/17709/AsRock-Mainboard-B550-Steel-Legend-AM4-1-square_medium.jpg",
+      price: 9370,
     },
-
     {
       id: 19,
       title: "Mainboard02_AMD 4slot",
@@ -134,6 +141,7 @@ export default function SelectionProto01() {
       slot: 4,
       img:
         "https://media-cdn.bnn.in.th/241066/asrock-x670e-pg-lightning-am5-1-square_medium.jpg",
+      price: 10980,
     },
     {
       id: 20,
@@ -144,6 +152,7 @@ export default function SelectionProto01() {
       slot: 4,
       img:
         "https://media-cdn.bnn.in.th/156972/asus-prime-z690-p-d4-csm-1-square_medium.jpg",
+      price: 15895,
     },
     {
       id: 21,
@@ -154,6 +163,7 @@ export default function SelectionProto01() {
       slot: 4,
       img:
         "https://media-cdn.bnn.in.th/258336/msi-mag-z790-tomahawk-wifi-d5-1-square_medium.jpg",
+      price: 10845,
     },
     {
       id: 22,
@@ -163,6 +173,7 @@ export default function SelectionProto01() {
       typeRAM: "DDR4",
       img:
         "https://media-cdn.bnn.in.th/106735/zadak-moab-aura2-rgb-ddr4-1-square_medium.jpg",
+      price: 17825,
     },
     {
       id: 23,
@@ -170,7 +181,9 @@ export default function SelectionProto01() {
       category: "RAM",
       count: 1,
       typeRAM: "DDR5",
-      img:"https://media-cdn.bnn.in.th/279728/zadak-ddr5-spark-rgb-white-1-square_medium.jpg"
+      img:
+        "https://media-cdn.bnn.in.th/279728/zadak-ddr5-spark-rgb-white-1-square_medium.jpg",
+      price: 11435,
     },
     {
       id: 24,
@@ -180,6 +193,7 @@ export default function SelectionProto01() {
       typeRAM: "DDR4",
       img:
         "https://media-cdn.bnn.in.th/106729/zadak-moab-aura2-rgb-ddr4-1-square_medium.jpg",
+      price: 6985,
     },
     {
       id: 25,
@@ -189,6 +203,7 @@ export default function SelectionProto01() {
       typeRAM: "DDR5",
       img:
         "https://media-cdn.bnn.in.th/277595/consair-vengeance-rgb-ddr5-kit-black-1-square_medium.jpg",
+      price: 7260,
     },
     {
       id: 26,
@@ -197,6 +212,7 @@ export default function SelectionProto01() {
       socket: "AM5",
       img:
         "https://media-cdn.bnn.in.th/280791/amd-ryzen9-7900x3d-1-square_medium.jpg",
+      price: 5325,
     },
     {
       id: 27,
@@ -205,6 +221,7 @@ export default function SelectionProto01() {
       socket: "AM5",
       img:
         "https://media-cdn.bnn.in.th/240481/amd-ryzen9-7950x-1-square_medium.jpg",
+      price: 15900,
     },
   ];
 
@@ -212,12 +229,21 @@ export default function SelectionProto01() {
   const dispatch = useDispatch();
 
   //นี่คือ dispatch ข้างในบรรจุ action
-  const handleChange = (id, title, category, socket, typeRAM, slot, img, count) => {
-    dispatch(addProduct({ id, title, category, socket, typeRAM, img , count}));
+  const handleChange = (
+    id,
+    title,
+    category,
+    socket,
+    typeRAM,
+    slot,
+    img,
+    count
+  ) => {
+    dispatch(addProduct({ id, title, category, socket, typeRAM, img, count }));
     if (category === "Mainboard") {
       dispatch(setMax(slot));
-    };
-    dispatch(updateSumAMount())
+    }
+    dispatch(updateSumAMount());
   };
 
   ////useSelector!!!!!!!!!!!!!!!
@@ -242,7 +268,8 @@ export default function SelectionProto01() {
   );
 
   ///สำหรับโชวสินค้าให้เลือกตามหมวดหมู่
-  const CPU = curItem.filter((item) => {
+  //กรองสินค้าCPU
+  const CPU_display = curItem.filter((item) => {
     if (socket_mb === "") {
       return item.category === "CPU";
     } else {
@@ -250,7 +277,8 @@ export default function SelectionProto01() {
     }
   });
 
-  const mainBoard = curItem.filter((item) => {
+  //กรองสินค้าMB
+  const mainBoard_display = curItem.filter((item) => {
     if (socket_CPU === "" && typeRAM_RAM === "") {
       return item.category === "Mainboard";
     } else if (socket_CPU === "" && typeRAM_RAM !== "") {
@@ -266,7 +294,8 @@ export default function SelectionProto01() {
     }
   });
 
-  const RAM = curItem.filter((item) => {
+  //กรองสินค้าRAM
+  const RAM_display = curItem.filter((item) => {
     if (typeRAM_mb === "") {
       return item.category === "RAM";
     } else {
@@ -274,13 +303,22 @@ export default function SelectionProto01() {
     }
   });
 
-  const unconditionalProduct = curItem.filter(
+  //arrayของสินค้าที่ไม่ต้องมีเงื่อนไข ไม่มีการกรอง
+  const unconditionProduct = curItem.filter(
     (item) =>
       item.category !== "CPU" &&
       item.category !== "Mainboard" &&
       item.category !== "RAM"
   );
-  const combineProduct = unconditionalProduct.concat(CPU, mainBoard, RAM);
+
+  ///นำ display ทั้งหมด มารวมกัน
+  const combineProduct = unconditionProduct.concat(
+    CPU_display,
+    mainBoard_display,
+    RAM_display
+  );
+
+  // นำ disply ทั้งกรองและไม่กรองมารวมกันแล้วหาตามประเภทที่ use เลือก
   const showProduct = combineProduct.filter(
     (item) => item.category === category
   );
@@ -323,7 +361,6 @@ export default function SelectionProto01() {
                     <Box
                       sx={{
                         display: "flex",
-
                         bgcolor: "background.paper",
                       }}
                     >

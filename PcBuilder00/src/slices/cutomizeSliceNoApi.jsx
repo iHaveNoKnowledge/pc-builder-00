@@ -220,8 +220,9 @@ export const customizeSlice = createSlice({
 
     updateSumAMount: (state, action) =>{
       const sumArr = map(state.partData, "selectAmount")
-      const sum = sumArr.reduce((acc, item)=>acc+item, state.sumAmount)
+      const sum = sumArr.reduce((acc, item)=>acc+item, 0)
       console.log("จำนวนรวม: ",sum)
+      state.sumAmount = sumArr.reduce((acc, item)=>acc+item, 0)
       }
   }
 });
