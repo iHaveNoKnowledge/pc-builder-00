@@ -40,9 +40,9 @@ const SumCustomize =()=>{
             {/* <Box>ประเภทสินค้า : {category}</Box> */}
           </Box>
           <Box sx={{display:"flex"}}>
-            <Box sx={{flexGrow:1}}>Discount : <br/>฿999  </Box>&nbsp;
-            <Box sx={{flexGrow:1}}>ราคารวม : <br/>฿999 </Box>&nbsp;
-            <Box sx={{flexGrow:1}}>net: <br/>฿999 </Box>
+            <Box sx={{flexGrow:1}}>Discount : <br/>฿{Math.round(sumDiscount)}  </Box>&nbsp;
+            <Box sx={{flexGrow:1}}>ราคารวม : <br/>฿{sum_SRP} </Box>&nbsp;
+            <Box sx={{flexGrow:1}}>net: <br/>฿{sum_SRP-Math.round(sumDiscount)} </Box>
           </Box>
           
         </Box>
