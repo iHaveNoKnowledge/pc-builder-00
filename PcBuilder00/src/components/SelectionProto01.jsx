@@ -401,12 +401,15 @@ export default function SelectionProto01() {
   const handleChangePage = (pageNum)=>{
     setCurPageNum(pageNum)
   }
+  const productPaginated = showProduct.slice(
+    (curPageNum-1)*cardsPerPage, curPageNum*cardsPerPage
+  )
 
   ////หน้าเว็บ
   return (
     <>
       <Grid container spacing="10" columns={{ xs: 4, sm: 12, md: 12 }}>
-        {showProduct.map((item, index) => {
+        {productPaginated.map((item, index) => {
           return (
             <Grid item xs={8} sm={6} md={4} key={index}>
               <Card sx={{ border: "1px dashed green" }}>
@@ -457,7 +460,7 @@ export default function SelectionProto01() {
                     <Divider sx={{ pt: 1 }} />
                     <Box sx={{ display: "flex" }}>
                       <ListItemText
-                        primary={ "฿ "+(Math.round(((item.price)*(1-item.discount))).toLocaleString())+".-"}
+                        primary={ "฿ "+ (Math.round(((item.price)*(1-item.discount))).toLocaleString()) + ".-"}
                         secondary={
                           <React.Fragment>
                             <Typography
@@ -472,10 +475,10 @@ export default function SelectionProto01() {
                         }
                       />
                     </Box>
-                    <Typography
+                    {/* <Typography
                     variant="body2"
                     color="text.secondary"
-                  >5555</Typography>
+                  >5555</Typography> */}
                   </CardContent>
                 </CardActionArea>
                 <CardActions >
@@ -490,9 +493,9 @@ export default function SelectionProto01() {
         
       </Grid>
 
-      <Stack className="pagination-card" spacing={2} sx={{mt:"10px"}}>
-        <Typography>Page: {curPageNum}</Typography>
-        <Pagination count={10} variant="outlined" shape="rounded" onChange={(event, pageNum)=>handleChangePage(pageNum)}/>
+      <Stack className="pagination-card" spacing={2} alignItems="center" sx={{mt:"12px"}}>
+        <Typography>Page: {curPageNum}/{totalPages}</Typography>
+        <Pagination sx={{}}  count={totalPages} variant="outlined" shape="rounded" onChange={(event, pageNum)=>handleChangePage(pageNum)}/>
       </Stack>  
 
         {/* <Box sx={{bgcolor:"white", marginTop:"14px"}} className="item-container">

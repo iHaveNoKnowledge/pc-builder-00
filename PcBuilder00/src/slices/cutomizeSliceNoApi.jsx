@@ -151,6 +151,7 @@ const initialState = {
       discount: 0,
     },
   ],
+  
   summations: { sumAmount: 0 , sum_SRP:0, sumDiscount:0, },
 };
 
