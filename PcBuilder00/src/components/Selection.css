@@ -1,0 +1,38 @@
+
+.pageBtn {
+    font-weight: 800;
+    background-color: rgb(200, 200, 200);
+    color: black;
+    margin: 20px 1px;
+    border-radius: 5%;
+    padding: 16px 20px;
+  }
+  
+  .pageBtn:hover {
+    color: black;
+    cursor: pointer;
+    box-shadow: 0px 0px 2px 5px #d0d0d0;
+    background-color: rgb(218, 218, 218);
+    border: 2px solid whitesmoke;
+  }
+  
+  /* .pageBtn:active {
+    color: #f1f1f1;
+    cursor: pointer;
+    background-color: rgb(50, 50, 50);
+    box-shadow: 10px 10px -10px -10px #2b2b2b;
+  } */
+
+  .item-container {
+    margin: 0rem, 2rem;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+
+  .pagination-card {
+    background-color: white;
+    padding: 8px 16px;
+    border-radius: 5px 1px;
+  }

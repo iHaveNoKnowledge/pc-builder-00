@@ -12,6 +12,8 @@ import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import ListItemText from "@mui/material/ListItemText";
 import Box from "@mui/material/Box";
+import Pagination from "@mui/material/Pagination";
+import Stack from "@mui/material/Stack";
 import { Divider } from "@mui/material";
 import {
   addProduct,
@@ -19,6 +21,7 @@ import {
   updateSumAmount,
   updateSumPrices,
 } from "../slices/cutomizeSliceNoApi";
+import "./Selection.css";
 
 // const useStyles = makeStyles({
 //   focusVisible: {},
@@ -282,6 +285,11 @@ export default function SelectionProto01() {
     },
   ];
 
+  ////useState!!!!!!!!!!!!!!!!!!!
+  const [curItem, setCurItem] = useState(items);
+
+  
+
   ////dispatchZone!!!!!!!!!
   const dispatch = useDispatch();
 
@@ -310,8 +318,7 @@ export default function SelectionProto01() {
   const category = useSelector((state) => state.category.category);
   const parts = useSelector((state) => state.noApiCustomize.partData);
 
-  ////useState!!!!!!!!!!!!!!!!!!!
-  const [curItem, setCurItem] = useState(items);
+
 
   ////เงื่อนไขcompatibility
   ///หาเงื่อนไข จากการเลือก mainboard
@@ -378,7 +385,7 @@ export default function SelectionProto01() {
     RAM_display
   );
 
-  // นำ disply ทั้งกรองและไม่กรองมารวมกันแล้วหาตามประเภทที่ use เลือก
+  // นำ disply ทั้งกรองและไม่กรองมารวมกันแล้วหาตามประเภทที่ user เลือก
   const showProduct = combineProduct.filter(
     (item) => item.category === category
   );
@@ -387,10 +394,18 @@ export default function SelectionProto01() {
   useEffect(() => {
   }, [showProduct]);
 
+  ////pagination////
+  const [curPageNum, setCurPageNum] = useState(1);
+  const cardsPerPage = 6;
+  const totalPages = Math.ceil(showProduct.length / cardsPerPage);
+  const handleChangePage = (pageNum)=>{
+    setCurPageNum(pageNum)
+  }
+
   ////หน้าเว็บ
   return (
     <>
-      <Grid container spacing="14" columns={{ xs: 4, sm: 12, md: 12 }}>
+      <Grid container spacing="10" columns={{ xs: 4, sm: 12, md: 12 }}>
         {showProduct.map((item, index) => {
           return (
             <Grid item xs={8} sm={6} md={4} key={index}>
@@ -457,10 +472,10 @@ export default function SelectionProto01() {
                         }
                       />
                     </Box>
-                    {/* <Typography
+                    <Typography
                     variant="body2"
                     color="text.secondary"
-                  ></Typography> */}
+                  >5555</Typography>
                   </CardContent>
                 </CardActionArea>
                 <CardActions >
@@ -471,7 +486,24 @@ export default function SelectionProto01() {
             </Grid>
           );
         })}
+        
+        
       </Grid>
+
+      <Stack className="pagination-card" spacing={2} sx={{mt:"10px"}}>
+        <Typography>Page: {curPageNum}</Typography>
+        <Pagination count={10} variant="outlined" shape="rounded" onChange={(event, pageNum)=>handleChangePage(pageNum)}/>
+      </Stack>  
+
+        {/* <Box sx={{bgcolor:"white", marginTop:"14px"}} className="item-container">
+          {[...Array(totalPages)].map((item, index)=>{
+            return (
+              <React.Fragment key={index}>
+                <button className="pageBtn">{index+1}</button>
+              </React.Fragment>
+            )
+          })}
+        </Box> */}
     </>
   );
 }
