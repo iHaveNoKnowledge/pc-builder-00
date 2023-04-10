@@ -291,7 +291,7 @@ export default function SelectionProto01() {
   ////useState!!!!!!!!!!!!!!!!!!!
   const [curItem, setCurItem] = useState(items);
 
-  
+
 
   ////dispatchZone!!!!!!!!!
   const dispatch = useDispatch();
@@ -309,7 +309,7 @@ export default function SelectionProto01() {
     discount,
     price
   ) => {
-    dispatch(addProduct({ id, title, category, socket, typeRAM, img, count , discount, price}));
+    dispatch(addProduct({ id, title, category, socket, typeRAM, img, count, discount, price }));
     if (category === "Mainboard") {
       dispatch(setMax(slot));
     }
@@ -325,100 +325,123 @@ export default function SelectionProto01() {
 
   ////เงื่อนไขcompatibility
   ///หาเงื่อนไข จากการเลือก mainboard
-  const { socket: socket_mb, typeRAM: typeRAM_mb } = parts.find(
-    (item) => item.category === "Mainboard"
+
+  const eiei = parts.find(
+    (item) => {
+      if (item.category === "Mainboard") {
+        console.log("หาไม่เจอ", item.listItems[0])
+        return item.listItems[0]
+      }
+    }
   );
 
   ///หาเงื่อนไข จากการเลือก CPU
-  const { socket: socket_CPU } = parts.find((item) => item.category === "CPU");
+  const { socket: socket_CPU } = parts.find((item) => {
+    if (item.category === "CPU") {
+      return item.listItems[0]
+    }
+
+  });
 
   ///หาเงื่อนไข จากการเลือก RAM
   const { typeRAM: typeRAM_RAM } = parts.find(
-    (item) => item.category === "RAM"
+    (item) => {
+      if (item.category === "RAM") {
+        return item.listItems[0]
+      }
+
+    }
   );
 
   ///สำหรับโชวสินค้าให้เลือกตามหมวดหมู่
   //กรองสินค้าCPU
-  const CPU_display = curItem.filter((item) => {
-    if (socket_mb === "") {
-      return item.category === "CPU";
-    } else {
-      return item.category === "CPU" && item.socket === socket_mb;
-    }
-  });
+  // const CPU_display = curItem.filter((item) => {
+  //   if (socket_mb === "") {
+  //     return item.category === "CPU";
+  //   } else {
+  //     return item.category === "CPU" && item.socket === socket_mb;
+  //   }
+  // });
 
   //กรองสินค้าMB
-  const mainBoard_display = curItem.filter((item) => {
-    if (socket_CPU === "" && typeRAM_RAM === "") {
-      return item.category === "Mainboard";
-    } else if (socket_CPU === "" && typeRAM_RAM !== "") {
-      return item.category === "Mainboard" && item.typeRAM === typeRAM_RAM;
-    } else if (socket_CPU !== "" && typeRAM_RAM === "") {
-      return item.category === "Mainboard" && item.socket === socket_CPU;
-    } else {
-      return (
-        item.category === "Mainboard" &&
-        item.socket === socket_CPU &&
-        item.typeRAM === typeRAM_RAM
-      );
+  const mainBoard_display2 = curItem.filter((item) => {
+    if (1 === 1) {
+      console.log("ได้ไรมา", eiei)
+      return item.category === "Mainboard"
     }
-  });
+  })
 
-  //กรองสินค้าRAM
-  const RAM_display = curItem.filter((item) => {
-    if (typeRAM_mb === "") {
-      return item.category === "RAM";
-    } else {
-      return item.category === "RAM" && item.typeRAM === typeRAM_mb;
-    }
-  });
+  // const mainBoard_display = curItem.filter((item) => {
+  //   if (socket_CPU === "" && typeRAM_RAM === "") {
+  //     return item.category === "Mainboard";
+  //   } else if (socket_CPU === "" && typeRAM_RAM !== "") {
+  //     return item.category === "Mainboard" && item.typeRAM === typeRAM_RAM;
+  //   } else if (socket_CPU !== "" && typeRAM_RAM === "") {
+  //     return item.category === "Mainboard" && item.socket === socket_CPU;
+  //   } else {
+  //     return (
+  //       item.category === "Mainboard" &&
+  //       item.socket === socket_CPU &&
+  //       item.typeRAM === typeRAM_RAM
+  //     );
+  //   }
+  // });
 
-  //arrayของสินค้าที่ไม่ต้องมีเงื่อนไข ไม่มีการกรอง
-  const unconditionProduct = curItem.filter(
-    (item) =>
-      item.category !== "CPU" &&
-      item.category !== "Mainboard" &&
-      item.category !== "RAM"
-  );
+  // //กรองสินค้าRAM
+  // const RAM_display = curItem.filter((item) => {
+  //   if (typeRAM_mb === "") {
+  //     return item.category === "RAM";
+  //   } else {
+  //     return item.category === "RAM" && item.typeRAM === typeRAM_mb;
+  //   }
+  // });
 
-  ///นำ display ทั้งหมด มารวมกัน
-  const combineProduct = unconditionProduct.concat(
-    CPU_display,
-    mainBoard_display,
-    RAM_display
-  );
+  // //arrayของสินค้าที่ไม่ต้องมีเงื่อนไข ไม่มีการกรอง
+  // const unconditionProduct = curItem.filter(
+  //   (item) =>
+  //     item.category !== "CPU" &&
+  //     item.category !== "Mainboard" &&
+  //     item.category !== "RAM"
+  // );
 
-  // นำ disply ทั้งกรองและไม่กรองมารวมกันแล้วหาตามประเภทที่ user เลือก
-  const showProduct = combineProduct.filter(
-    (item) => item.category === category
-  );
+  // ///นำ display ทั้งหมด มารวมกัน
+  // const combineProduct = unconditionProduct.concat(
+  //   CPU_display,
+  //   mainBoard_display,
+  //   RAM_display
+  // );
 
-  ////useEffect
-  useEffect(() => {
-  }, [showProduct]);
+  // // นำ disply ทั้งกรองและไม่กรองมารวมกันแล้วหาตามประเภทที่ user เลือก
+  // const showProduct = combineProduct.filter(
+  //   (item) => item.category === category
+  // );
 
-  ////pagination////
-  const [curPageNum, setCurPageNum] = useState(1);
-  const cardsPerPage = 6;
-  const totalPages = Math.ceil(showProduct.length / cardsPerPage);
-  const handleChangePage = (pageNum)=>{
-    setCurPageNum(pageNum)
-  }
-  const productPaginated = showProduct.slice(
-    (curPageNum-1)*cardsPerPage, curPageNum*cardsPerPage
-  )
+  // ////useEffect
+  // useEffect(() => {
+  // }, [showProduct]);
+
+  // ////pagination////
+  // const [curPageNum, setCurPageNum] = useState(1);
+  // const cardsPerPage = 6;
+  // const totalPages = Math.ceil(showProduct.length / cardsPerPage);
+  // const handleChangePage = (pageNum) => {
+  //   setCurPageNum(pageNum)
+  // }
+  // const productPaginated = showProduct.slice(
+  //   (curPageNum - 1) * cardsPerPage, curPageNum * cardsPerPage
+  // )
 
   ////หน้าเว็บ
   return (
     <>
-      <UserFilter/>
+      <UserFilter />
       <Grid container spacing="10" columns={{ xs: 4, sm: 12, md: 12 }}>
-        {productPaginated.map((item, index) => {
+        {mainBoard_display2.map((item, index) => {
           return (
             <Grid item xs={8} sm={6} md={4} key={index} >
-              <Card sx={{boxShadow: "2px 2px 2px 1px rgba(92, 92, 92, 0.5)" }}>
+              <Card sx={{ boxShadow: "2px 2px 2px 1px rgba(92, 92, 92, 0.5)" }}>
                 <CardActionArea
-                  
+
                   onClick={(e) => {
                     handleChange(
                       item.id,
@@ -454,8 +477,8 @@ export default function SelectionProto01() {
 
                       <Typography
                         variant="caption"
-                        // display="block"
-                        // gutterBottom
+                      // display="block"
+                      // gutterBottom
                       >
                         Stock: INT
                       </Typography>
@@ -464,7 +487,7 @@ export default function SelectionProto01() {
                     <Divider sx={{ pt: 1 }} />
                     <Box sx={{ display: "flex" }}>
                       <ListItemText
-                        primary={ "฿ "+ (Math.round(((item.price)*(1-item.discount))).toLocaleString()) + ".-"}
+                        primary={"฿ " + (Math.round(((item.price) * (1 - item.discount))).toLocaleString()) + ".-"}
                         secondary={
                           <React.Fragment>
                             <Typography
@@ -493,16 +516,16 @@ export default function SelectionProto01() {
             </Grid>
           );
         })}
-        
-        
+
+
       </Grid>
 
-      <Stack className="pagination-card" spacing={2} alignItems="center" sx={{mt:"6px"}}>
+      {/* <Stack className="pagination-card" spacing={2} alignItems="center" sx={{ mt: "6px" }}>
         <Typography>Page: {curPageNum}/{totalPages}</Typography>
-        <Pagination sx={{}}  count={totalPages} variant="outlined" shape="rounded" onChange={(event, pageNum)=>handleChangePage(pageNum)}/>
-      </Stack>  
+        <Pagination sx={{}} count={totalPages} variant="outlined" shape="rounded" onChange={(event, pageNum) => handleChangePage(pageNum)} />
+      </Stack> */}
 
-        {/* <Box sx={{bgcolor:"white", marginTop:"14px"}} className="item-container">
+      {/* <Box sx={{bgcolor:"white", marginTop:"14px"}} className="item-container">
           {[...Array(totalPages)].map((item, index)=>{
             return (
               <React.Fragment key={index}>

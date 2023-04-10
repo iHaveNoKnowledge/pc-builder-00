@@ -4,155 +4,241 @@ import { filter, map, chain, reduce, mapValues, value } from "lodash";
 const initialState = {
   partData: [
     {
-      id: null,
-      title: "",
       category: "CPU",
-      socket: "",
       max: 1,
-      selectAmount: 0,
-      img: "",
-      price: 0,
-      discount: 0,
+      typeAmount: 0,
+      listItems: [
+        {
+          id: null,
+          title: "",
+          socket: "",
+          max: 1,
+          selectAmount: 0,
+          img: "",
+          price: 0,
+          discount: 0,
+        }
+      ]
+
     },
     {
-      id: null,
-      title: "",
       category: "Mainboard",
-      slot: null,
-      socket: "",
-      typeRAM: "",
       max: 1,
-      selectAmount: 0,
-      img: "",
-      price: 0,
-      discount: 0,
+      typeAmount: 0,
+      listItems: [
+        {
+          id: null,
+          title: "",
+          category: "Mainboard",
+          slot: null,
+          socket: "",
+          typeRAM: "",
+
+          selectAmount: 0,
+          img: "",
+          price: 0,
+          discount: 0,
+        }
+      ]
+
     },
     {
-      id: null,
-      title: "",
       category: "RAM",
-      slot: null,
-      typeRAM: "",
       max: 4,
-      selectAmount: 0,
-      count: 1,
-      img: "",
-      price: 0,
-      discount: 0,
+      typeAmount: 0,
+      listItems: [{
+        id: null,
+        title: "",
+        category: "RAM",
+        slot: null,
+        typeRAM: "",
+
+        selectAmount: 0,
+        count: 1,
+        img: "",
+        price: 0,
+        discount: 0,
+      }]
+
     },
     {
-      id: null,
-      title: "",
       category: "VGA",
-      slot: null,
       max: null,
-      selectAmount: 0,
-      price: 0,
-      discount: 0,
+      typeAmount: 0,
+      listItems: [{
+        id: null,
+        title: "",
+        category: "VGA",
+        slot: null,
+
+        selectAmount: 0,
+        price: 0,
+        discount: 0,
+      }]
+
     },
     {
-      id: null,
-      title: "",
       category: "SSD",
-      slot: null,
       max: null,
-      selectAmount: 0,
-      price: 0,
-      discount: 0,
+      typeAmount: 0,
+      listItems: [{
+        id: null,
+        title: "",
+        category: "SSD",
+        slot: null,
+
+        selectAmount: 0,
+        price: 0,
+        discount: 0,
+      }]
+
     },
     {
-      id: null,
-      title: "",
       category: "HDD",
-      slot: null,
       max: null,
-      selectAmount: 0,
-      price: 0,
-      discount: 0,
+      typeAmount: 0,
+      listItems: [{
+        id: null,
+        title: "",
+        category: "HDD",
+        slot: null,
+
+        selectAmount: 0,
+        price: 0,
+        discount: 0,
+      }]
+
     },
     {
-      id: null,
-      title: "",
       category: "PSU",
-      slot: null,
       max: null,
-      selectAmount: 0,
-      price: 0,
-      discount: 0,
+      typeAmount: 0,
+      listItems: [{
+        id: null,
+        title: "",
+        category: "PSU",
+        slot: null,
+
+        selectAmount: 0,
+        price: 0,
+        discount: 0,
+      }]
+
     },
     {
-      id: null,
-      title: "",
       category: "Case",
-      slot: null,
       max: null,
-      selectAmount: 0,
-      price: 0,
-      discount: 0,
+      typeAmount: 0,
+      listItems: [{
+        id: null,
+        title: "",
+        category: "Case",
+        slot: null,
+
+        selectAmount: 0,
+        price: 0,
+        discount: 0,
+      }]
+
     },
     {
-      id: null,
-      title: "",
       category: "Cooling",
-      slot: null,
       max: null,
-      selectAmount: 0,
-      price: 0,
-      discount: 0,
+      typeAmount: 0,
+      listItems: [{
+        id: null,
+        title: "",
+        category: "Cooling",
+        slot: null,
+
+        selectAmount: 0,
+        price: 0,
+        discount: 0,
+      }]
+
     },
     {
-      id: null,
-      title: "",
       category: "Accesories DIY",
-      slot: null,
       max: null,
-      selectAmount: 0,
-      price: 0,
-      discount: 0,
+      typeAmount: 0,
+      listItems: [{
+        id: null,
+        title: "",
+        category: "Accesories DIY",
+        slot: null,
+
+        selectAmount: 0,
+        price: 0,
+        discount: 0,
+      }]
+
     },
     {
-      id: null,
-      title: "",
       category: "Monitor",
-      slot: null,
       max: null,
-      selectAmount: 0,
-      price: 0,
-      discount: 0,
+      typeAmount: 0,
+      listItems: [{
+        id: null,
+        title: "",
+        category: "Monitor",
+        slot: null,
+
+        selectAmount: 0,
+        price: 0,
+        discount: 0,
+      }]
+
     },
     {
-      id: null,
-      title: "",
       category: "Mouse",
-      slot: null,
       max: null,
-      selectAmount: 0,
-      price: 0,
-      discount: 0,
+      typeAmount: 0,
+      listItems: [{
+        id: null,
+        title: "",
+        category: "Mouse",
+        slot: null,
+        selectAmount: 0,
+        price: 0,
+        discount: 0,
+      }]
+
     },
     {
-      id: null,
-      title: "",
       category: "Keyboard",
-      slot: null,
       max: null,
-      selectAmount: 0,
-      price: 0,
-      discount: 0,
+      typeAmount: 0,
+      listItems: [{
+        id: null,
+        title: "",
+        category: "Keyboard",
+        slot: null,
+
+        selectAmount: 0,
+        price: 0,
+        discount: 0,
+      }]
+
     },
     {
-      id: null,
-      title: "",
       category: "OS",
-      slot: null,
       max: null,
-      selectAmount: 0,
-      price: 0,
-      discount: 0,
+      typeAmount: 0,
+      listItems: [{
+        id: null,
+        title: "",
+        category: "OS",
+        slot: null,
+
+        selectAmount: 0,
+        price: 0,
+        discount: 0,
+      }]
+
     },
   ],
-  
-  summations: { sumAmount: 0 , sum_SRP:0, sumDiscount:0, },
+
+  summations: { sumAmount: 0, sum_SRP: 0, sumDiscount: 0, },
 };
 
 export const customizeSlice = createSlice({
@@ -273,20 +359,20 @@ export const customizeSlice = createSlice({
     },
 
     updateSumPrices: (state, action) => {
-      const sumPriceArr = state.partData.map((obj)=>{
-        return (obj.price)*obj.selectAmount
+      const sumPriceArr = state.partData.map((obj) => {
+        return (obj.price) * obj.selectAmount
       })
 
-      const sumDiscountArr = state.partData.map((obj)=>{
-        return obj.price-(obj.price*(1-obj.discount))*obj.selectAmount
+      const sumDiscountArr = state.partData.map((obj) => {
+        return obj.price - (obj.price * (1 - obj.discount)) * obj.selectAmount
       })
 
       console.log("afterreducr:", sumPriceArr)
-      state.summations.sumDiscount = sumDiscountArr.reduce((acc, item)=>acc + item, 0)
-      state.summations.sum_SRP = sumPriceArr.reduce((acc, item)=>acc + item, 0);
-      console.log("ราคาต้น",state.summations.sum_SRP);
-      console.log("ส่วนลด",state.summations.sumDiscount);
-     
+      state.summations.sumDiscount = sumDiscountArr.reduce((acc, item) => acc + item, 0)
+      state.summations.sum_SRP = sumPriceArr.reduce((acc, item) => acc + item, 0);
+      console.log("ราคาต้น", state.summations.sum_SRP);
+      console.log("ส่วนลด", state.summations.sumDiscount);
+
     },
   },
 });
