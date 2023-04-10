@@ -411,12 +411,12 @@ export default function SelectionProto01() {
   ////หน้าเว็บ
   return (
     <>
-      <UserFilter></UserFilter>
+      <UserFilter/>
       <Grid container spacing="10" columns={{ xs: 4, sm: 12, md: 12 }}>
         {productPaginated.map((item, index) => {
           return (
-            <Grid item xs={8} sm={6} md={4} key={index}>
-              <Card sx={{ border: "1px dashed green" }}>
+            <Grid item xs={8} sm={6} md={4} key={index} >
+              <Card sx={{boxShadow: "2px 2px 2px 1px rgba(92, 92, 92, 0.5)" }}>
                 <CardActionArea
                   
                   onClick={(e) => {
@@ -497,7 +497,7 @@ export default function SelectionProto01() {
         
       </Grid>
 
-      <Stack className="pagination-card" spacing={2} alignItems="center" sx={{mt:"12px"}}>
+      <Stack className="pagination-card" spacing={2} alignItems="center" sx={{mt:"6px"}}>
         <Typography>Page: {curPageNum}/{totalPages}</Typography>
         <Pagination sx={{}}  count={totalPages} variant="outlined" shape="rounded" onChange={(event, pageNum)=>handleChangePage(pageNum)}/>
       </Stack>  

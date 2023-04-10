@@ -1,0 +1,7 @@
+.mainCardFilter {
+    background-color: #FFFFFF;
+    border-radius: 10px 10px 0px 0px;
+    padding: 8px 16px;
+    margin-block: 6px;
+    box-shadow: 2px 2px 2px 1px rgba(92, 92, 92, 0.5);
+}

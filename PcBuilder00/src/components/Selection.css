@@ -35,11 +35,5 @@
     background-color: white;
     padding: 8px 16px;
     border-radius: 0px 0px 10px 10px;
-  }
-
-  .pagination-card2 {
-    background-color: rgb(17, 17, 17);
-    padding: 8px 16px;
-    border-radius: 0px 0px 10px 10px;
-    color:white;
+    box-shadow: 2px 2px 2px 1px rgba(92, 92, 92, 0.5);
   }
