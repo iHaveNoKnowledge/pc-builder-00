@@ -22,6 +22,9 @@ import {
   updateSumPrices,
 } from "../slices/cutomizeSliceNoApi";
 import "./Selection.css";
+import UserFilter from "./UserFilter";
+
+
 
 // const useStyles = makeStyles({
 //   focusVisible: {},
@@ -408,6 +411,7 @@ export default function SelectionProto01() {
   ////หน้าเว็บ
   return (
     <>
+      <UserFilter></UserFilter>
       <Grid container spacing="10" columns={{ xs: 4, sm: 12, md: 12 }}>
         {productPaginated.map((item, index) => {
           return (
