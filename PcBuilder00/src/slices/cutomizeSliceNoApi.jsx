@@ -279,7 +279,11 @@ export const customizeSlice = createSlice({
             (item) => item.id === action.payload.id
           );
           if (isFoundItem) {
-            console.log("เจอซ้ำ", isFoundItem.title);
+            console.log("เจอซ้ำ", isFoundItem.id);
+            const foundItem = findIndex(currentType.listItems, {
+              id: isFoundItem,
+            });
+            console.log("foundItem:", foundItem);
           } else {
             console.log("ไม่เจอ", isFoundItem);
             const newArray = {
@@ -304,6 +308,16 @@ export const customizeSlice = createSlice({
           console.log("สินค้าเกินจำนวนที่กำหนด");
         }
       }
+
+      let totalAmount = 0; // Initialize the total amount to 0
+
+      // Loop through the listItems array of the RAM object
+      for (let i = 0; i < state.partData[categoryIndex].listItems.length; i++) {
+        let item = state.partData[categoryIndex].listItems[i];
+        totalAmount += item.selectAmount * (item.count ? item.count : 1); // Add the product of selectAmount and count to the total amount
+      }
+
+      state.partData[categoryIndex].typeAmount = totalAmount; // Assign the total amount to the typeAmount property of the RAM object
     },
 
     removeProduct: (state, action) => {

@@ -306,7 +306,6 @@ export default function SelectionProto01() {
     discount,
     price
   ) => {
-    dispatch(setTypeAmount({ category }));
     dispatch(
       addProduct({
         id,
@@ -325,6 +324,7 @@ export default function SelectionProto01() {
     }
     dispatch(updateSumAmount());
     dispatch(updateSumPrices());
+    // dispatch(setTypeAmount({ category }));
   };
 
   ////useSelector!!!!!!!!!!!!!!!
