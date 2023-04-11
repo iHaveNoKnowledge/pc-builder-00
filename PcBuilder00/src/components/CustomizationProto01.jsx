@@ -67,7 +67,7 @@ const CustomizationProto01 = () => {
         {categories.map((item, index) => {
           return (
             <React.Fragment key={index}>
-              {item.id ? (
+              {item.listItems[0] ? (
                 /////////////////////เลือกสินค้าแล้ว///////////////////////////////////////////////////////////
                 <div className="borderLine">
                   <ListItem className="listItemStyle">

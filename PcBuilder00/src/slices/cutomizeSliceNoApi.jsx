@@ -1,11 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { filter, map, chain, reduce, mapValues, value } from "lodash";
+import {
+  filter,
+  map,
+  chain,
+  reduce,
+  mapValues,
+  value,
+  findIndex,
+} from "lodash";
 
 const initialState = {
   partData: [
     {
       category: "CPU",
-      max: 1,
+      typeMax: 1,
       typeAmount: 0,
       listItems: [
         {
@@ -17,13 +25,12 @@ const initialState = {
           img: "",
           price: 0,
           discount: 0,
-        }
-      ]
-
+        },
+      ],
     },
     {
       category: "Mainboard",
-      max: 1,
+      typeMax: 1,
       typeAmount: 0,
       listItems: [
         {
@@ -33,212 +40,222 @@ const initialState = {
           slot: null,
           socket: "",
           typeRAM: "",
-
           selectAmount: 0,
           img: "",
           price: 0,
           discount: 0,
-        }
-      ]
-
+        },
+      ],
     },
     {
       category: "RAM",
-      max: 4,
+      typeMax: 4,
       typeAmount: 0,
-      listItems: [{
-        id: null,
-        title: "",
-        category: "RAM",
-        slot: null,
-        typeRAM: "",
+      listItems: [
+        {
+          id: null,
+          title: "",
+          category: "RAM",
+          slot: null,
+          typeRAM: "",
 
-        selectAmount: 0,
-        count: 1,
-        img: "",
-        price: 0,
-        discount: 0,
-      }]
-
+          selectAmount: 0,
+          count: 1,
+          img: "",
+          price: 0,
+          discount: 0,
+        },
+      ],
     },
     {
       category: "VGA",
-      max: null,
+      typeMax: null,
       typeAmount: 0,
-      listItems: [{
-        id: null,
-        title: "",
-        category: "VGA",
-        slot: null,
+      listItems: [
+        {
+          id: null,
+          title: "",
+          category: "VGA",
+          slot: null,
 
-        selectAmount: 0,
-        price: 0,
-        discount: 0,
-      }]
-
+          selectAmount: 0,
+          price: 0,
+          discount: 0,
+        },
+      ],
     },
     {
       category: "SSD",
-      max: null,
+      typeMax: null,
       typeAmount: 0,
-      listItems: [{
-        id: null,
-        title: "",
-        category: "SSD",
-        slot: null,
+      listItems: [
+        {
+          id: null,
+          title: "",
+          category: "SSD",
+          slot: null,
 
-        selectAmount: 0,
-        price: 0,
-        discount: 0,
-      }]
-
+          selectAmount: 0,
+          price: 0,
+          discount: 0,
+        },
+      ],
     },
     {
       category: "HDD",
-      max: null,
+      typeMax: null,
       typeAmount: 0,
-      listItems: [{
-        id: null,
-        title: "",
-        category: "HDD",
-        slot: null,
+      listItems: [
+        {
+          id: null,
+          title: "",
+          category: "HDD",
+          slot: null,
 
-        selectAmount: 0,
-        price: 0,
-        discount: 0,
-      }]
-
+          selectAmount: 0,
+          price: 0,
+          discount: 0,
+        },
+      ],
     },
     {
       category: "PSU",
-      max: null,
+      typeMax: null,
       typeAmount: 0,
-      listItems: [{
-        id: null,
-        title: "",
-        category: "PSU",
-        slot: null,
+      listItems: [
+        {
+          id: null,
+          title: "",
+          category: "PSU",
+          slot: null,
 
-        selectAmount: 0,
-        price: 0,
-        discount: 0,
-      }]
-
+          selectAmount: 0,
+          price: 0,
+          discount: 0,
+        },
+      ],
     },
     {
       category: "Case",
-      max: null,
+      typeMax: null,
       typeAmount: 0,
-      listItems: [{
-        id: null,
-        title: "",
-        category: "Case",
-        slot: null,
+      listItems: [
+        {
+          id: null,
+          title: "",
+          category: "Case",
+          slot: null,
 
-        selectAmount: 0,
-        price: 0,
-        discount: 0,
-      }]
-
+          selectAmount: 0,
+          price: 0,
+          discount: 0,
+        },
+      ],
     },
     {
       category: "Cooling",
-      max: null,
+      typeMax: null,
       typeAmount: 0,
-      listItems: [{
-        id: null,
-        title: "",
-        category: "Cooling",
-        slot: null,
+      listItems: [
+        {
+          id: null,
+          title: "",
+          category: "Cooling",
+          slot: null,
 
-        selectAmount: 0,
-        price: 0,
-        discount: 0,
-      }]
-
+          selectAmount: 0,
+          price: 0,
+          discount: 0,
+        },
+      ],
     },
     {
       category: "Accesories DIY",
-      max: null,
+      typeMax: null,
       typeAmount: 0,
-      listItems: [{
-        id: null,
-        title: "",
-        category: "Accesories DIY",
-        slot: null,
+      listItems: [
+        {
+          id: null,
+          title: "",
+          category: "Accesories DIY",
+          slot: null,
 
-        selectAmount: 0,
-        price: 0,
-        discount: 0,
-      }]
-
+          selectAmount: 0,
+          price: 0,
+          discount: 0,
+        },
+      ],
     },
     {
       category: "Monitor",
-      max: null,
+      typeMax: null,
       typeAmount: 0,
-      listItems: [{
-        id: null,
-        title: "",
-        category: "Monitor",
-        slot: null,
+      listItems: [
+        {
+          id: null,
+          title: "",
+          category: "Monitor",
+          slot: null,
 
-        selectAmount: 0,
-        price: 0,
-        discount: 0,
-      }]
-
+          selectAmount: 0,
+          price: 0,
+          discount: 0,
+        },
+      ],
     },
     {
       category: "Mouse",
-      max: null,
+      typeMax: null,
       typeAmount: 0,
-      listItems: [{
-        id: null,
-        title: "",
-        category: "Mouse",
-        slot: null,
-        selectAmount: 0,
-        price: 0,
-        discount: 0,
-      }]
-
+      listItems: [
+        {
+          id: null,
+          title: "",
+          category: "Mouse",
+          slot: null,
+          selectAmount: 0,
+          price: 0,
+          discount: 0,
+        },
+      ],
     },
     {
       category: "Keyboard",
-      max: null,
+      typeMax: null,
       typeAmount: 0,
-      listItems: [{
-        id: null,
-        title: "",
-        category: "Keyboard",
-        slot: null,
+      listItems: [
+        {
+          id: null,
+          title: "",
+          category: "Keyboard",
+          slot: null,
 
-        selectAmount: 0,
-        price: 0,
-        discount: 0,
-      }]
-
+          selectAmount: 0,
+          price: 0,
+          discount: 0,
+        },
+      ],
     },
     {
       category: "OS",
-      max: null,
+      typeMax: null,
       typeAmount: 0,
-      listItems: [{
-        id: null,
-        title: "",
-        category: "OS",
-        slot: null,
+      listItems: [
+        {
+          id: null,
+          title: "",
+          category: "OS",
+          slot: null,
 
-        selectAmount: 0,
-        price: 0,
-        discount: 0,
-      }]
-
+          selectAmount: 0,
+          price: 0,
+          discount: 0,
+        },
+      ],
     },
   ],
 
-  summations: { sumAmount: 0, sum_SRP: 0, sumDiscount: 0, },
+  summations: { sumAmount: 0, sum_SRP: 0, sumDiscount: 0 },
 };
 
 export const customizeSlice = createSlice({
@@ -247,24 +264,45 @@ export const customizeSlice = createSlice({
   reducers: {
     ////Main Action (1 action ต่อ 1 ปุ่ม)
     addProduct: (state, action) => {
-      console.log("แอดของไรมา", action.payload);
       const categoryIndex = state.partData.findIndex(
         (item) => item.category === action.payload.category
       );
+
       if (categoryIndex !== -1) {
-        state.partData[categoryIndex] = {
-          ...state.partData[categoryIndex],
-          id: action.payload.id,
-          title: action.payload.title,
-          selectAmount: 1,
-          socket: action.payload.socket,
-          category: action.payload.category,
-          typeRAM: action.payload.typeRAM,
-          price: action.payload.price,
-          discount: action.payload.discount,
-          img: action.payload.img,
-          count: action.payload.count ? action.payload.count : 1,
-        };
+        ////ตรวจสอบว่าเกินหรือไม่
+        ///currentType จะเป็นการเลือก สมาชิกที่ filter category มาแล้ว
+        const currentType = state.partData[categoryIndex];
+        if (currentType.typeAmount < currentType.typeMax) {
+          console.log("สินค้ายังไม่เกินกว่ากำหนด");
+          ////ตรวจสอบว่ามีแล้วหรือไม่ ถ้าเป็น true isFoundItem เป็น obj สมาชิก listItems, false จะเป็น undefined ต้องสร้าง obj ใหม่
+          const isFoundItem = currentType.listItems.find(
+            (item) => item.id === action.payload.id
+          );
+          if (isFoundItem) {
+            console.log("เจอซ้ำ", isFoundItem.title);
+          } else {
+            console.log("ไม่เจอ", isFoundItem);
+            const newArray = {
+              ...currentType.listItems[0],
+              id: action.payload.id,
+              title: action.payload.title,
+              selectAmount: 1,
+              socket: action.payload.socket,
+              category: action.payload.category,
+              typeRAM: action.payload.typeRAM,
+              price: action.payload.price,
+              discount: action.payload.discount,
+              img: action.payload.img,
+              count: action.payload.count ? action.payload.count : 1,
+            };
+            console.log("newArray มีค่า:", newArray);
+            currentType.listItems.push(newArray);
+          }
+        } else if (currentType.typeAmount === currentType.typeMax) {
+          console.log("สินค้าเท่ากับจำนวนที่กำหนดแล้ว");
+        } else {
+          console.log("สินค้าเกินจำนวนที่กำหนด");
+        }
       }
     },
 
@@ -326,6 +364,19 @@ export const customizeSlice = createSlice({
       state.partData = initialState.partData;
     },
 
+    setTypeAmount: (state, action) => {
+      const index = findIndex(state.partData, {
+        category: action.payload.category,
+      });
+
+      let sumAllItem = 0;
+      state.partData[index].listItems.map((item) => {
+        sumAllItem += item.selectAmount;
+      });
+      console.log("sumAllItem มีค่าเท่าไหร่", sumAllItem);
+      state.partData[index].typeAmount = sumAllItem;
+    },
+
     ////Sub Action (ใช้ ร่วมกับ action หลัก)
     //actionนี้ถูกใช้หลังจากเช็คว่าไอเท็มที่แอดมา เป็น mainboard หรือไม่ ถ้ามีให้ใช้ action
     setMax: (state, action) => {
@@ -360,19 +411,24 @@ export const customizeSlice = createSlice({
 
     updateSumPrices: (state, action) => {
       const sumPriceArr = state.partData.map((obj) => {
-        return (obj.price) * obj.selectAmount
-      })
+        return obj.price * obj.selectAmount;
+      });
 
       const sumDiscountArr = state.partData.map((obj) => {
-        return obj.price - (obj.price * (1 - obj.discount)) * obj.selectAmount
-      })
+        return obj.price - obj.price * (1 - obj.discount) * obj.selectAmount;
+      });
 
-      console.log("afterreducr:", sumPriceArr)
-      state.summations.sumDiscount = sumDiscountArr.reduce((acc, item) => acc + item, 0)
-      state.summations.sum_SRP = sumPriceArr.reduce((acc, item) => acc + item, 0);
+      console.log("afterreducr:", sumPriceArr);
+      state.summations.sumDiscount = sumDiscountArr.reduce(
+        (acc, item) => acc + item,
+        0
+      );
+      state.summations.sum_SRP = sumPriceArr.reduce(
+        (acc, item) => acc + item,
+        0
+      );
       console.log("ราคาต้น", state.summations.sum_SRP);
       console.log("ส่วนลด", state.summations.sumDiscount);
-
     },
   },
 });
@@ -386,5 +442,6 @@ export const {
   updateSumAmount,
   resetCustomized,
   updateSumPrices,
+  setTypeAmount,
 } = customizeSlice.actions;
 export default customizeSlice.reducer;

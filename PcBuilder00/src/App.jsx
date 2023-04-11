@@ -3,8 +3,9 @@ import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
 import CustomizationProto01 from "./components/CustomizationProto01";
+import CustomizationProto02 from "./components/CustomizationProto02";
 import SelectionProto01 from "./components/SelectionProto01";
-import {Box, Container, Grid} from "@mui/material";
+import { Box, Container, Grid } from "@mui/material";
 
 
 function App() {
@@ -28,7 +29,7 @@ function App() {
 
           <Grid item xs={4} sm={4} md={4}>
             {/* <Customization /> */}
-            <CustomizationProto01 />
+            <CustomizationProto02 />
           </Grid>
 
           <Grid item xs={4} sm={8} md={8}>
