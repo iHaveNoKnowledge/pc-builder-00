@@ -16,243 +16,85 @@ const initialState = {
       category: "CPU",
       typeMax: 1,
       typeAmount: 0,
-      listItems: [
-        {
-          id: null,
-          title: "",
-          socket: "",
-          max: 1,
-          selectAmount: 0,
-          img: "",
-          price: 0,
-          discount: 0,
-        },
-      ],
+      listItems: [],
     },
     {
       category: "Mainboard",
       typeMax: 1,
       typeAmount: 0,
-      listItems: [
-        {
-          id: null,
-          title: "",
-          category: "Mainboard",
-          slot: null,
-          socket: "",
-          typeRAM: "",
-          selectAmount: 0,
-          img: "",
-          price: 0,
-          discount: 0,
-        },
-      ],
+      listItems: [],
     },
     {
       category: "RAM",
       typeMax: 4,
       typeAmount: 0,
-      listItems: [
-        {
-          id: null,
-          title: "",
-          category: "RAM",
-          slot: null,
-          typeRAM: "",
-
-          selectAmount: 0,
-          count: 1,
-          img: "",
-          price: 0,
-          discount: 0,
-        },
-      ],
+      listItems: [],
     },
     {
       category: "VGA",
       typeMax: null,
       typeAmount: 0,
-      listItems: [
-        {
-          id: null,
-          title: "",
-          category: "VGA",
-          slot: null,
-
-          selectAmount: 0,
-          price: 0,
-          discount: 0,
-        },
-      ],
+      listItems: [],
     },
     {
       category: "SSD",
       typeMax: null,
       typeAmount: 0,
-      listItems: [
-        {
-          id: null,
-          title: "",
-          category: "SSD",
-          slot: null,
-
-          selectAmount: 0,
-          price: 0,
-          discount: 0,
-        },
-      ],
+      listItems: [],
     },
     {
       category: "HDD",
       typeMax: null,
       typeAmount: 0,
-      listItems: [
-        {
-          id: null,
-          title: "",
-          category: "HDD",
-          slot: null,
-
-          selectAmount: 0,
-          price: 0,
-          discount: 0,
-        },
-      ],
+      listItems: [],
     },
     {
       category: "PSU",
       typeMax: null,
       typeAmount: 0,
-      listItems: [
-        {
-          id: null,
-          title: "",
-          category: "PSU",
-          slot: null,
-
-          selectAmount: 0,
-          price: 0,
-          discount: 0,
-        },
-      ],
+      listItems: [],
     },
     {
       category: "Case",
       typeMax: null,
       typeAmount: 0,
-      listItems: [
-        {
-          id: null,
-          title: "",
-          category: "Case",
-          slot: null,
-
-          selectAmount: 0,
-          price: 0,
-          discount: 0,
-        },
-      ],
+      listItems: [],
     },
     {
       category: "Cooling",
       typeMax: null,
       typeAmount: 0,
-      listItems: [
-        {
-          id: null,
-          title: "",
-          category: "Cooling",
-          slot: null,
-
-          selectAmount: 0,
-          price: 0,
-          discount: 0,
-        },
-      ],
+      listItems: [],
     },
     {
       category: "Accesories DIY",
       typeMax: null,
       typeAmount: 0,
-      listItems: [
-        {
-          id: null,
-          title: "",
-          category: "Accesories DIY",
-          slot: null,
-
-          selectAmount: 0,
-          price: 0,
-          discount: 0,
-        },
-      ],
+      listItems: [],
     },
     {
       category: "Monitor",
       typeMax: null,
       typeAmount: 0,
-      listItems: [
-        {
-          id: null,
-          title: "",
-          category: "Monitor",
-          slot: null,
-
-          selectAmount: 0,
-          price: 0,
-          discount: 0,
-        },
-      ],
+      listItems: [],
     },
     {
       category: "Mouse",
       typeMax: null,
       typeAmount: 0,
-      listItems: [
-        {
-          id: null,
-          title: "",
-          category: "Mouse",
-          slot: null,
-          selectAmount: 0,
-          price: 0,
-          discount: 0,
-        },
-      ],
+      listItems: [],
     },
     {
       category: "Keyboard",
       typeMax: null,
       typeAmount: 0,
-      listItems: [
-        {
-          id: null,
-          title: "",
-          category: "Keyboard",
-          slot: null,
-
-          selectAmount: 0,
-          price: 0,
-          discount: 0,
-        },
-      ],
+      listItems: [],
     },
     {
       category: "OS",
       typeMax: null,
       typeAmount: 0,
-      listItems: [
-        {
-          id: null,
-          title: "",
-          category: "OS",
-          slot: null,
-
-          selectAmount: 0,
-          price: 0,
-          discount: 0,
-        },
-      ],
+      listItems: [],
     },
   ],
 
@@ -273,22 +115,20 @@ export const customizeSlice = createSlice({
         ////ตรวจสอบว่าเกินหรือไม่
         ///currentType จะเป็นการเลือก สมาชิกที่ filter category มาแล้ว
         const currentType = state.partData[categoryIndex];
+
         if (currentType.typeAmount < currentType.typeMax) {
           console.log("สินค้ายังไม่เกินกว่ากำหนด");
-          ////ตรวจสอบว่ามีแล้วหรือไม่ ถ้าเป็น true isFoundItem เป็น obj สมาชิก listItems, false จะเป็น undefined ต้องสร้าง obj ใหม่
+          ////ตรวจสอบว่ามีแล้วหรือไม่ ถ้าเป็น true isFoundItem เป็น obj ที่เป็นสมาชิก Arr listItems, false จะเป็น undefined ต้องสร้าง obj ใหม่
           const isFoundItem = currentType.listItems.find(
             (item) => item.id === action.payload.id
           );
           if (isFoundItem) {
             console.log("เจอซ้ำ", isFoundItem.id);
-            const foundItem = findIndex(currentType.listItems, {
-              id: isFoundItem,
-            });
-            console.log("foundItem:", foundItem);
+            isFoundItem.selectAmount += 1;
+            // console.log("foundItem:", foundItem);
           } else {
             console.log("ไม่เจอ", isFoundItem);
             const newArray = {
-              ...currentType.listItems[0],
               id: action.payload.id,
               title: action.payload.title,
               selectAmount: 1,
@@ -331,27 +171,31 @@ export const customizeSlice = createSlice({
         "Arrayในประเภทที่เลือก: ",
         JSON.stringify(categorizedListItem)
       );
-      // const itemTarget = find(
-      //   categorizedListItem,
-      //   (miniItem) => miniItem.id === action.payload.id
-      // );
+
+      const miniIndex = action.payload.miniIndex;
 
       if (index !== -1) {
-        // state.partData[index] = {
-        //   ...state.partData[index],
-        //   id: null,
-        //   title: "",
-        //   price: null,
-        //   selectAmount: 0,
-        //   socket: "",
-        //   typeRAM: "",
-        //   category: action.payload,
-        //   img: "",
-        //   max: initialState.partData[index].max,
-        //   count: initialState.partData[index].count,
-        // };
-        categorizedListItem.splice(index, 1);
+        console.log("indexที่เอามา splice: ", miniIndex);
+        categorizedListItem.splice(miniIndex, 1);
+        console.log(
+          "splice แล้วเหลือไร: ",
+          JSON.stringify(categorizedListItem)
+        );
       }
+
+      let totalAmount = 0; // Initialize the total amount to 0
+      for (let i = 0; i < categorizedListItem.length; i++) {
+        console.log(
+          "ติดไร: ",
+          JSON.stringify(categorizedListItem.listItems),
+          i
+        );
+        let item = categorizedListItem[i];
+        totalAmount += item.selectAmount * (item.count ? item.count : 1); // Add the product of selectAmount and count to the total amount
+      }
+
+      state.partData[index].typeAmount = totalAmount; // Assign the total amount to the typeAmount property of the RAM object
+      state.partData[index] = initialState.partData[index];
     },
 
     incAmount: (state, action) => {
@@ -408,20 +252,37 @@ export const customizeSlice = createSlice({
     //actionนี้ถูกใช้หลังจากเช็คว่าไอเท็มที่แอดมา เป็น mainboard หรือไม่ ถ้ามีให้ใช้ action
     setMax: (state, action) => {
       const index = state.partData.findIndex((item) => item.category === "RAM");
+
       if (index !== -1) {
-        if (state.partData[index].max < action.payload) {
-          state.partData[index] = {
-            ...state.partData[index],
-            max: action.payload,
-          };
-        } else if (state.partData[index].max === action.payload) {
-          state.partData[index].max = 4;
-        } else if (state.partData[index].max > action.payload) {
-          state.partData[index].max = action.payload;
+        if (action.payload) {
+          state.partData[index].typeMax = action.payload;
+        } else {
+          state.partData[index].typeMax = initialState.partData[index].typeMax;
         }
+
+        // if (state.partData[index].typeMax < action.payload) {
+        //   state.partData[index] = {
+        //     ...state.partData[index],
+        //     typeMax: action.payload,
+        //   };
+        // } else if (state.partData[index].typeMax === action.payload) {
+        //   state.partData[index].typeMax = 4;
+        // } else if (state.partData[index].typeMax > action.payload) {
+        //   state.partData[index].typeMax = action.payload;
+        // }
+
+        const categorizedListItem = state.partData[index].listItems;
+        let totalAmount = 0; // Initialize the total amount to 0
+        for (let i = 0; i < categorizedListItem.length; i++) {
+          let item = categorizedListItem.listItems[i];
+          totalAmount += item.selectAmount * (item.count ? item.count : 1); // Add the product of selectAmount and count to the total amount
+        }
+
+        state.partData[index].typeAmount = totalAmount; // Assign the total amount to the typeAmount property of the RAM object
+
         if (
           state.partData[index].selectAmount * state.partData[index].count >
-          state.partData[index].max
+          state.partData[index].typeMax
         ) {
           state.partData[index].selectAmount = 1;
         }

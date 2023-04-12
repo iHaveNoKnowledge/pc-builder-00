@@ -73,33 +73,47 @@ function PostCard({ items }) {
 
   ////เงื่อนไขcompatibility
   ///หาเงื่อนไข จากการเลือก mainboard
-
-  const mainboardCondition = parts.find((item) => {
+  let socket_mb, typeRAM_mb;
+  parts.find((item) => {
     if (item.category === "Mainboard") {
-      console.log("หาไม่เจอ", item.listItems[0]);
+      if (item.listItems.length !== 0) {
+        socket_mb = item.listItems[0].socket;
+        typeRAM_mb = item.listItems[0].typeRAM;
+      } else {
+        socket_mb = "";
+        typeRAM_mb = "";
+      }
       return item.listItems[0];
     }
   });
-  const {
-    socket: socket_mb,
-    typeRAM: typeRAM_mb,
-  } = mainboardCondition.listItems[0];
 
   ///หาเงื่อนไข จากการเลือก CPU
-  const cpuCondition = parts.find((item) => {
+  let socket_CPU;
+  parts.find((item) => {
     if (item.category === "CPU") {
+      if (item.listItems.length !== 0) {
+        socket_CPU = item.listItems[0].socket;
+      } else {
+        socket_CPU = "";
+      }
       return item;
     }
   });
-  const { socket: socket_CPU } = cpuCondition.listItems[0];
 
   ///หาเงื่อนไข จากการเลือก RAM
-  const ramCondition = parts.find((item) => {
+  let typeRAM_RAM = "xx";
+  parts.find((item) => {
     if (item.category === "RAM") {
+      if (item.listItems.length !== 0) {
+        typeRAM_RAM = item.listItems[0].typeRAM;
+      } else {
+        typeRAM_RAM = "";
+      }
       return item.listItems[0];
     }
   });
-  const { typeRAM: typeRAM_RAM } = ramCondition.listItems[0];
+
+  // const { typeRAM: typeRAM_RAM } = ramCondition.listItems[0];
 
   ///สำหรับโชวสินค้าให้เลือกตามหมวดหมู่
   //กรองสินค้าCPU
@@ -121,12 +135,16 @@ function PostCard({ items }) {
 
   const mainBoard_display = curItem.filter((item) => {
     if (socket_CPU === "" && typeRAM_RAM === "") {
+      console.log("เงื่อนไข1");
       return item.category === "Mainboard";
     } else if (socket_CPU === "" && typeRAM_RAM !== "") {
+      console.log("เงื่อนไข2", "cpu: ", socket_CPU, "ram: ", typeRAM_RAM);
       return item.category === "Mainboard" && item.typeRAM === typeRAM_RAM;
     } else if (socket_CPU !== "" && typeRAM_RAM === "") {
+      console.log("เงื่อนไข3");
       return item.category === "Mainboard" && item.socket === socket_CPU;
     } else {
+      console.log("เงื่อนไข4");
       return (
         item.category === "Mainboard" &&
         item.socket === socket_CPU &&

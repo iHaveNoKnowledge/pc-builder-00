@@ -22,6 +22,7 @@ import {
   decAmount,
   updateSumAmount,
   updateSumPrices,
+  setMax,
 } from "../slices/cutomizeSliceNoApi";
 import "./CustomizationProto01.css";
 import SumCustomize from "./SumCustomize";
@@ -55,9 +56,9 @@ const CustomizationProto02 = () => {
     dispatch(updateSumPrices());
   };
 
-  const handleClear = (category, slot, id) => {
+  const handleClear = (category, slot, id, miniIndex) => {
     console.log("clear data");
-    dispatch(removeProduct({ category, id }));
+    dispatch(removeProduct({ category, id, miniIndex }));
     if (category === "Mainboard") {
       dispatch(setMax(slot));
     }
@@ -73,12 +74,12 @@ const CustomizationProto02 = () => {
         {categories.map((item, index) => {
           return (
             <React.Fragment key={index}>
-              {item.listItems[1] ? (
+              {item.listItems[0] ? (
                 /////////////////////เลือกสินค้าแล้ว///////////////////////////////////////////////////////////
                 <div className="borderLine">
                   <div>{item.category}</div>
                   <div>
-                    {item.listItems.slice(1).map((miniItem, index) => {
+                    {item.listItems.map((miniItem, miniIndex) => {
                       return (
                         <div>
                           <ListItem className="listItemStyle">
@@ -114,7 +115,8 @@ const CustomizationProto02 = () => {
                                     handleClear(
                                       miniItem.category,
                                       miniItem.slot,
-                                      miniItem.id
+                                      miniItem.id,
+                                      miniIndex
                                     );
                                   }}
                                   sx={{
@@ -151,7 +153,7 @@ const CustomizationProto02 = () => {
                                         src={miniItem.img}
                                         alt={miniItem.title}
                                         sx={{ objectFit: "contain", width: 40 }}
-                                      ></Box>
+                                      />
                                     </ListItemAvatar>
                                   </Box>
 
