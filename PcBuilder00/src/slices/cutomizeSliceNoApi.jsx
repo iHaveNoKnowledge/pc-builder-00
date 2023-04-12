@@ -110,13 +110,29 @@ export const customizeSlice = createSlice({
       const categoryIndex = state.partData.findIndex(
         (item) => item.category === action.payload.category
       );
+      ///เก็บค่าใหม่ที่รับเข้ามาดองไว้ใน object ก่อน
+      const newArray = {
+        id: action.payload.id,
+        title: action.payload.title,
+        selectAmount: 1,
+        socket: action.payload.socket,
+        category: action.payload.category,
+        typeRAM: action.payload.typeRAM,
+        price: action.payload.price,
+        discount: action.payload.discount,
+        img: action.payload.img,
+        count: action.payload.count ? action.payload.count : 1,
+      };
+      console.log("newArray มีค่า:", newArray);
+      ////เช็คสมาชิกใหม่ว่า load เท่าไหร่
+      const typeMaxConsumtion = newArray.selectAmount * newArray.count;
+      console.log("ค่าโหลดเท่าไหร่: ", typeMaxConsumtion);
 
       if (categoryIndex !== -1) {
         ////ตรวจสอบว่าเกินหรือไม่
         ///currentType จะเป็นการเลือก สมาชิกที่ filter category มาแล้ว
         const currentType = state.partData[categoryIndex];
-
-        if (currentType.typeAmount < currentType.typeMax) {
+        if (currentType.typeAmount + typeMaxConsumtion < currentType.typeMax) {
           console.log("สินค้ายังไม่เกินกว่ากำหนด");
           ////ตรวจสอบว่ามีแล้วหรือไม่ ถ้าเป็น true isFoundItem เป็น obj ที่เป็นสมาชิก Arr listItems, false จะเป็น undefined ต้องสร้าง obj ใหม่
           const isFoundItem = currentType.listItems.find(
@@ -125,29 +141,20 @@ export const customizeSlice = createSlice({
           if (isFoundItem) {
             console.log("เจอซ้ำ", isFoundItem.id);
             isFoundItem.selectAmount += 1;
-            // console.log("foundItem:", foundItem);
           } else {
             console.log("ไม่เจอ", isFoundItem);
-            const newArray = {
-              id: action.payload.id,
-              title: action.payload.title,
-              selectAmount: 1,
-              socket: action.payload.socket,
-              category: action.payload.category,
-              typeRAM: action.payload.typeRAM,
-              price: action.payload.price,
-              discount: action.payload.discount,
-              img: action.payload.img,
-              count: action.payload.count ? action.payload.count : 1,
-            };
-            console.log("newArray มีค่า:", newArray);
             currentType.listItems.push(newArray);
           }
-        } else if (currentType.typeAmount === currentType.typeMax) {
+        } else if (
+          currentType.typeAmount + typeMaxConsumtion ===
+          currentType.typeMax
+        ) {
           console.log("สินค้าเท่ากับจำนวนที่กำหนดแล้ว");
+          currentType.listItems.push(newArray);
         } else {
           console.log("สินค้าเกินจำนวนที่กำหนด");
         }
+        console.log("หน้าตาเป็นไงแล้ว:", JSON.stringify(currentType.listItems));
       }
 
       let totalAmount = 0; // Initialize the total amount to 0
@@ -181,21 +188,16 @@ export const customizeSlice = createSlice({
           "splice แล้วเหลือไร: ",
           JSON.stringify(categorizedListItem)
         );
-      }
+        let totalAmount = 0; // Initialize the total amount to 0
+        for (let i = 0; i < categorizedListItem.length; i++) {
+          console.log("ติดไร: ", JSON.stringify(categorizedListItem.length), i);
+          let item = categorizedListItem[i];
+          totalAmount += item.selectAmount * (item.count ? item.count : 1); // Add the product of selectAmount and count to the total amount
+        }
 
-      let totalAmount = 0; // Initialize the total amount to 0
-      for (let i = 0; i < categorizedListItem.length; i++) {
-        console.log(
-          "ติดไร: ",
-          JSON.stringify(categorizedListItem.listItems),
-          i
-        );
-        let item = categorizedListItem[i];
-        totalAmount += item.selectAmount * (item.count ? item.count : 1); // Add the product of selectAmount and count to the total amount
+        state.partData[index].typeAmount = totalAmount; // Assign the total amount to the typeAmount property of the RAM object
+        state.partData[index] = initialState.partData[index];
       }
-
-      state.partData[index].typeAmount = totalAmount; // Assign the total amount to the typeAmount property of the RAM object
-      state.partData[index] = initialState.partData[index];
     },
 
     incAmount: (state, action) => {
