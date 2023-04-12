@@ -1,12 +1,10 @@
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
+import PostsList from "./features/posts/PostsList";
 import "./App.css";
 import CustomizationProto01 from "./components/CustomizationProto01";
 import CustomizationProto02 from "./components/CustomizationProto02";
 import SelectionProto01 from "./components/SelectionProto01";
 import { Box, Container, Grid } from "@mui/material";
-
 
 function App() {
   const [count, setCount] = useState(0);
@@ -40,6 +38,7 @@ function App() {
             </Box>
           </Grid>
         </Grid>
+        {/* <PostsList /> เอาไว้เทสดึง api */}
       </Container>
     </div>
   );

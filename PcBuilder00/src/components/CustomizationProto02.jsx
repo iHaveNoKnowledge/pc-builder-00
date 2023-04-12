@@ -55,9 +55,9 @@ const CustomizationProto02 = () => {
     dispatch(updateSumPrices());
   };
 
-  const handleClear = (category, slot) => {
+  const handleClear = (category, slot, id) => {
     console.log("clear data");
-    dispatch(removeProduct(category));
+    dispatch(removeProduct({ category, id }));
     if (category === "Mainboard") {
       dispatch(setMax(slot));
     }
@@ -113,7 +113,8 @@ const CustomizationProto02 = () => {
                                     e.stopPropagation();
                                     handleClear(
                                       miniItem.category,
-                                      miniItem.slot
+                                      miniItem.slot,
+                                      miniItem.id
                                     );
                                   }}
                                   sx={{

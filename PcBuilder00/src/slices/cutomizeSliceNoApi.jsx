@@ -7,6 +7,7 @@ import {
   mapValues,
   value,
   findIndex,
+  find,
 } from "lodash";
 
 const initialState = {
@@ -322,22 +323,34 @@ export const customizeSlice = createSlice({
 
     removeProduct: (state, action) => {
       const index = state.partData.findIndex(
-        (item) => item.category === action.payload
+        (item) => item.category === action.payload.category
       );
+      //categorizedList เป็น array เก็บค่าในหมวดหมู่นั้นๆ
+      const categorizedListItem = state.partData[index].listItems;
+      console.log(
+        "Arrayในประเภทที่เลือก: ",
+        JSON.stringify(categorizedListItem)
+      );
+      // const itemTarget = find(
+      //   categorizedListItem,
+      //   (miniItem) => miniItem.id === action.payload.id
+      // );
+
       if (index !== -1) {
-        state.partData[index] = {
-          ...state.partData[index],
-          id: null,
-          title: "",
-          price: null,
-          selectAmount: 0,
-          socket: "",
-          typeRAM: "",
-          category: action.payload,
-          img: "",
-          max: initialState.partData[index].max,
-          count: initialState.partData[index].count,
-        };
+        // state.partData[index] = {
+        //   ...state.partData[index],
+        //   id: null,
+        //   title: "",
+        //   price: null,
+        //   selectAmount: 0,
+        //   socket: "",
+        //   typeRAM: "",
+        //   category: action.payload,
+        //   img: "",
+        //   max: initialState.partData[index].max,
+        //   count: initialState.partData[index].count,
+        // };
+        categorizedListItem.splice(index, 1);
       }
     },
 
