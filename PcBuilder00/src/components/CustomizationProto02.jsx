@@ -59,9 +59,10 @@ const CustomizationProto02 = () => {
   const handleClear = (category, slot, id, miniIndex) => {
     console.log("clear data");
     dispatch(removeProduct({ category, id, miniIndex }));
-    if (category === "Mainboard") {
-      dispatch(setMax(slot));
-    }
+    // if (category === "Mainboard") {
+    //   dispatch(setMax(slot));
+    // }
+    dispatch(setMax(slot));
     dispatch(updateSumAmount());
     dispatch(updateSumPrices());
   };
@@ -103,9 +104,7 @@ const CustomizationProto02 = () => {
                                   <div>
                                     {/* {miniItem.selectAmount * miniItem.count} */}
                                     {item.typeAmount}
-                                    {item.typeMax !== null && (
-                                      <>/{item.typeMax}</>
-                                    )}
+                                    {item.typeMax !== null && <>/{item.typeMax}</>}
                                   </div>
                                 </Box>
 
@@ -163,8 +162,7 @@ const CustomizationProto02 = () => {
                                       justifyContent: "space-between",
                                       bgcolor: "#c7c7c7",
                                       my: "2px",
-                                      boxShadow:
-                                        "1px 1px 1px 1px rgba(92, 92, 92, 1)",
+                                      boxShadow: "1px 1px 1px 1px rgba(92, 92, 92, 1)",
                                       textAlign: "center",
                                     }}
                                   >
@@ -178,9 +176,7 @@ const CustomizationProto02 = () => {
                                       -
                                     </Box>
                                     {/* จำนวนสินค้า */}
-                                    <Box style={{ marginTop: "5px" }}>
-                                      {miniItem.selectAmount}
-                                    </Box>
+                                    <Box style={{ marginTop: "5px" }}>{miniItem.selectAmount}</Box>
 
                                     <Box
                                       className="textButton"
@@ -211,9 +207,7 @@ const CustomizationProto02 = () => {
                                       {/* {item.title} */}
                                     </Box>
 
-                                    <Typography variant="caption">
-                                      Stock: INT
-                                    </Typography>
+                                    <Typography variant="caption">Stock: INT</Typography>
                                   </Box>
 
                                   <Divider />
@@ -230,10 +224,7 @@ const CustomizationProto02 = () => {
                                   </Box>
 
                                   {/* //// ย่อย3 //// */}
-                                  <Typography
-                                    variant="subtitle1"
-                                    sx={{ marginLeft: "70%" }}
-                                  >
+                                  <Typography variant="subtitle1" sx={{ marginLeft: "70%" }}>
                                     ฿{" "}
                                     {Math.round(
                                       miniItem.price *
@@ -269,9 +260,7 @@ const CustomizationProto02 = () => {
                     </ListItemButton>
                     <Box>
                       <div>
-                        {item.selectAmount * item.count
-                          ? item.selectAmount * item.count
-                          : 0}
+                        {item.selectAmount * item.count ? item.selectAmount * item.count : 0}
                         {item.typeMax !== null && <>/{item.typeMax}</>}
                       </div>
                     </Box>

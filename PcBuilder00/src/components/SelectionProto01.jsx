@@ -57,6 +57,7 @@ function PostCard({ items }) {
         count,
         discount,
         price,
+        slot,
       })
     );
     if (category === "Mainboard") {
@@ -146,9 +147,7 @@ function PostCard({ items }) {
     } else {
       console.log("เงื่อนไข4");
       return (
-        item.category === "Mainboard" &&
-        item.socket === socket_CPU &&
-        item.typeRAM === typeRAM_RAM
+        item.category === "Mainboard" && item.socket === socket_CPU && item.typeRAM === typeRAM_RAM
       );
     }
   });
@@ -164,23 +163,14 @@ function PostCard({ items }) {
 
   //arrayของสินค้าที่ไม่ต้องมีเงื่อนไข ไม่มีการกรอง
   const unconditionProduct = curItem.filter(
-    (item) =>
-      item.category !== "CPU" &&
-      item.category !== "Mainboard" &&
-      item.category !== "RAM"
+    (item) => item.category !== "CPU" && item.category !== "Mainboard" && item.category !== "RAM"
   );
 
   ///นำ display ทั้งหมด มารวมกัน
-  const combineProduct = unconditionProduct.concat(
-    CPU_display,
-    mainBoard_display,
-    RAM_display
-  );
+  const combineProduct = unconditionProduct.concat(CPU_display, mainBoard_display, RAM_display);
 
   // นำ disply ทั้งกรองและไม่กรองมารวมกันแล้วหาตามประเภทที่ user เลือก
-  const showProduct = combineProduct.filter(
-    (item) => item.category === category
-  );
+  const showProduct = combineProduct.filter((item) => item.category === category);
 
   ////useEffect
   useEffect(() => {}, [showProduct]);
@@ -254,9 +244,7 @@ function PostCard({ items }) {
                       <ListItemText
                         primary={
                           "฿ " +
-                          Math.round(
-                            item.price * (1 - item.discount)
-                          ).toLocaleString() +
+                          Math.round(item.price * (1 - item.discount)).toLocaleString() +
                           ".-"
                         }
                         secondary={
@@ -289,12 +277,7 @@ function PostCard({ items }) {
         })}
       </Grid>
 
-      <Stack
-        className="pagination-card"
-        spacing={2}
-        alignItems="center"
-        sx={{ mt: "6px" }}
-      >
+      <Stack className="pagination-card" spacing={2} alignItems="center" sx={{ mt: "6px" }}>
         <Typography>
           Page: {curPageNum}/{totalPages}
         </Typography>
