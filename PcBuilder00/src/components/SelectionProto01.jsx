@@ -44,7 +44,8 @@ function PostCard({ items }) {
     img,
     count,
     discount,
-    price
+    price,
+    max
   ) => {
     dispatch(
       addProduct({
@@ -58,6 +59,7 @@ function PostCard({ items }) {
         discount,
         price,
         slot,
+        max,
       })
     );
     if (category === "Mainboard") {
@@ -177,6 +179,7 @@ function PostCard({ items }) {
 
   ////pagination////
   const [curPageNum, setCurPageNum] = useState(1);
+
   const cardsPerPage = 6;
   const totalPages = Math.ceil(showProduct.length / cardsPerPage);
   const handleChangePage = (pageNum) => {
@@ -186,6 +189,11 @@ function PostCard({ items }) {
     (curPageNum - 1) * cardsPerPage,
     curPageNum * cardsPerPage
   );
+  useEffect(() => {
+    if (curPageNum > totalPages) {
+      setCurPageNum(1);
+    }
+  }, [category]);
 
   ////หน้าเว็บ
   return (
@@ -208,7 +216,8 @@ function PostCard({ items }) {
                       item.img,
                       item.count,
                       item.discount,
-                      item.price
+                      item.price,
+                      item.max
                     );
                   }}
                 >
@@ -278,11 +287,15 @@ function PostCard({ items }) {
       </Grid>
 
       <Stack className="pagination-card" spacing={2} alignItems="center" sx={{ mt: "6px" }}>
-        <Typography>
-          Page: {curPageNum}/{totalPages}
-        </Typography>
+        {totalPages ? (
+          <Typography>
+            Page:{curPageNum} / {totalPages}
+          </Typography>
+        ) : (
+          ""
+        )}
         <Pagination
-          sx={{}}
+          style={{ marginTop: "8px" }}
           count={totalPages}
           variant="outlined"
           shape="rounded"

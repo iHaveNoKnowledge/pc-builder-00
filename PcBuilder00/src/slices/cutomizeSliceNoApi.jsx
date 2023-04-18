@@ -114,6 +114,7 @@ export const customizeSlice = createSlice({
         img: action.payload.img,
         count: action.payload.count ? action.payload.count : 1,
         slot: action.payload.slot,
+        max: action.payload.max,
       };
       console.log("newArray มีค่า:", newArray);
 
@@ -220,37 +221,53 @@ export const customizeSlice = createSlice({
         }
 
         state.partData[index].typeAmount = totalAmount; // Assign the total amount to the typeAmount property of the RAM object
-        state.partData[index] = initialState.partData[index];
+        // state.partData[index] = initialState.partData[index];
       }
     },
 
     incAmount: (state, action) => {
-      const index = state.partData.findIndex((item) => item.category === action.payload);
+      const index = state.partData.findIndex((item) => item.category === action.payload.category); //action.payload = category
+      const categorizedListItem = state.partData[index].listItems;
+      const miniIndex = action.payload.miniIndex;
       if (index !== -1) {
-        if (
-          state.partData[index].selectAmount * state.partData[index].count <
-          state.partData[index].max
-        ) {
-          state.partData[index].selectAmount += 1;
-        } else if (
-          state.partData[index].selectAmount * state.partData[index].count ===
-          state.partData[index].max
-        ) {
-          state.partData[index].selectAmount;
+        if (state.partData[index].typeAmount < state.partData[index].typeMax) {
+          categorizedListItem[miniIndex].selectAmount++;
+        } else if (state.partData[index].typeAmount === state.partData[index].typeMax) {
+          categorizedListItem[miniIndex].selectAmount;
         } else {
-          state.partData[index].selectAmount = 1;
+          categorizedListItem[miniIndex].selectAmount = 1;
         }
+        console.log("มีป่าวหว่า: ", JSON.stringify(categorizedListItem[miniIndex]));
       }
+
+      let totalAmount = 0; // Initialize the total amount to 0
+      // Loop through the listItems array of the RAM object
+      for (let i = 0; i < state.partData[index].listItems.length; i++) {
+        let item = state.partData[index].listItems[i];
+        totalAmount += item.selectAmount * (item.count ? item.count : 1); // Add the product of selectAmount and count to the total amount
+      }
+      state.partData[index].typeAmount = totalAmount; // Assign the total amount to the typeAmount property of the RAM object
     },
 
     decAmount: (state, action) => {
       console.log("decAmount ใน store ทำงาน");
-      const index = state.partData.findIndex((item) => item.category === action.payload);
+      const index = state.partData.findIndex((item) => item.category === action.payload.category);
+      const categorizedListItem = state.partData[index].listItems;
+      const miniIndex = action.payload.miniIndex;
+
       if (index !== -1) {
-        if (state.partData[index].selectAmount > 1) {
-          state.partData[index].selectAmount -= 1;
+        if (categorizedListItem[miniIndex].selectAmount > 1) {
+          categorizedListItem[miniIndex].selectAmount--;
         }
       }
+
+      let totalAmount = 0; // Initialize the total amount to 0
+      // Loop through the listItems array of the RAM object
+      for (let i = 0; i < state.partData[index].listItems.length; i++) {
+        let item = state.partData[index].listItems[i];
+        totalAmount += item.selectAmount * (item.count ? item.count : 1); // Add the product of selectAmount and count to the total amount
+      }
+      state.partData[index].typeAmount = totalAmount; // Assign the total amount to the typeAmount property of the RAM object
     },
 
     resetCustomized: (state, action) => {
@@ -279,14 +296,22 @@ export const customizeSlice = createSlice({
       if (index !== -1) {
         if (action.payload) {
           state.partData[index].typeMax = action.payload;
-          console.log("setMaxทำงาน:เงื่อนไขแรก ", state.partData[index], " ", action.payload);
+          console.log(
+            "setMaxทำงาน:เงื่อนไขแรก ",
+            JSON.stringify(state.partData[index]),
+            " ",
+            "slotที่ได้: ",
+            action.payload
+          );
         } else {
-          if (state.partData[1].listItems[0]) {
-            //มีเมนบอร์ดป่าว?
-            state.partData[index].typeMax = state.partData[1].listItems[0].slot; //มีก็set max slot ไว้
-          } else {
-            state.partData[index].typeMax = initialState.partData[index].typeMax; // ไม่มีก็set เป็นค่าเริ่มต้น
-          }
+          // if (state.partData[1].listItems[0]) {
+          //   //มีเมนบอร์ดป่าว?
+          //   console.log("มีเมนบอด: ");
+          //   state.partData[index].typeMax = state.partData[1].listItems[0].slot; //มีก็set max slot ไว้
+          // } else {
+          //   console.log("ไม่มีเมนบอด: ");
+          //   state.partData[index].typeMax = initialState.partData[index].typeMax; // ไม่มีก็set เป็นค่าเริ่มต้น
+          // }
         }
 
         // if (state.partData[index].typeMax < action.payload) {
@@ -300,20 +325,19 @@ export const customizeSlice = createSlice({
         //   state.partData[index].typeMax = action.payload;
         // }
 
-        const categorizedListItem = state.partData[index].listItems;
+        let categorizedListItem = state.partData[index].listItems;
+
         let totalAmount = 0; // Initialize the total amount to 0
         for (let i = 0; i < categorizedListItem.length; i++) {
-          let item = categorizedListItem.listItems[i];
+          let item = categorizedListItem[i];
           totalAmount += item.selectAmount * (item.count ? item.count : 1); // Add the product of selectAmount and count to the total amount
         }
 
         state.partData[index].typeAmount = totalAmount; // Assign the total amount to the typeAmount property of the RAM object
 
-        if (
-          state.partData[index].selectAmount * state.partData[index].count >
-          state.partData[index].typeMax
-        ) {
-          state.partData[index].selectAmount = 1;
+        if (state.partData[index].typeAmount > state.partData[index].typeMax) {
+          categorizedListItem = initialState.partData[index].listItems; //ใช้ไม่ได้
+          state.partData[index].listItems = initialState.partData[index].listItems; //อันนี้ได้
         }
       }
     },

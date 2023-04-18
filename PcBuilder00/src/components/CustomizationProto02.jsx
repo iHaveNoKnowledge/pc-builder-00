@@ -43,15 +43,16 @@ const CustomizationProto02 = () => {
     dispatch(changeCategory(category));
   };
 
-  const handleIncAmt = (category) => {
-    dispatch(incAmount(category));
+  const handleIncAmt = (category, miniIndex) => {
+    dispatch(incAmount({ category, miniIndex }));
     console.log("เพิ่ม");
     dispatch(updateSumAmount());
     dispatch(updateSumPrices());
   };
 
-  const handleDecAmt = (category) => {
-    dispatch(decAmount(category));
+  const handleDecAmt = (category, miniIndex) => {
+    dispatch(decAmount({ category, miniIndex }));
+    console.log("ลด");
     dispatch(updateSumAmount());
     dispatch(updateSumPrices());
   };
@@ -170,7 +171,7 @@ const CustomizationProto02 = () => {
                                       className="textButton"
                                       onClick={(e) => {
                                         e.stopPropagation();
-                                        handleDecAmt(miniItem.category);
+                                        handleDecAmt(miniItem.category, miniIndex);
                                       }}
                                     >
                                       -
@@ -182,7 +183,7 @@ const CustomizationProto02 = () => {
                                       className="textButton"
                                       onClick={(e) => {
                                         e.stopPropagation();
-                                        handleIncAmt(miniItem.category);
+                                        handleIncAmt(miniItem.category, miniIndex);
                                       }}
                                     >
                                       +
