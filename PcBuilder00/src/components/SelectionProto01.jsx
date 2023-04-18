@@ -43,8 +43,8 @@ function PostCard({ items }) {
     slot,
     img,
     count,
-    discount,
-    price,
+    promotionPrice,
+    srp,
     max
   ) => {
     dispatch(
@@ -56,8 +56,8 @@ function PostCard({ items }) {
         typeRAM,
         img,
         count,
-        discount,
-        price,
+        promotionPrice,
+        srp,
         slot,
         max,
       })
@@ -215,8 +215,8 @@ function PostCard({ items }) {
                       item.slot,
                       item.img,
                       item.count,
-                      item.discount,
-                      item.price,
+                      item.promotionPrice,
+                      item.srp,
                       item.max
                     );
                   }}
@@ -251,11 +251,7 @@ function PostCard({ items }) {
                     <Divider sx={{ pt: 1 }} />
                     <Box sx={{ display: "flex" }}>
                       <ListItemText
-                        primary={
-                          "฿ " +
-                          Math.round(item.price * (1 - item.discount)).toLocaleString() +
-                          ".-"
-                        }
+                        primary={"฿ " + item.promotionPrice.toLocaleString() + ".-"}
                         secondary={
                           <React.Fragment>
                             <Typography
@@ -264,7 +260,7 @@ function PostCard({ items }) {
                               variant="caption"
                               color="text.secondary"
                             >
-                              ราคาปกติ ฿ {item.price.toLocaleString()}.-
+                              ราคาปกติ ฿ {item.srp.toLocaleString()}.-
                             </Typography>
                           </React.Fragment>
                         }

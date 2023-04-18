@@ -80,11 +80,11 @@ const CustomizationProto02 = () => {
                 /////////////////////เลือกสินค้าแล้ว///////////////////////////////////////////////////////////
                 <div className="borderLine">
                   <div>{item.category}</div>
-                  <div>
+                  <div className="listItemStyle">
                     {item.listItems.map((miniItem, miniIndex) => {
                       return (
-                        <div>
-                          <ListItem className="listItemStyle">
+                        <div key={miniIndex}>
+                          <ListItem>
                             <ListItemButton
                               disableGutters={true}
                               disableRipple={true}
@@ -227,16 +227,15 @@ const CustomizationProto02 = () => {
                                   {/* //// ย่อย3 //// */}
                                   <Typography variant="subtitle1" sx={{ marginLeft: "70%" }}>
                                     ฿{" "}
-                                    {Math.round(
-                                      miniItem.price *
-                                        (1 - miniItem.discount) *
-                                        miniItem.selectAmount
+                                    {(
+                                      miniItem.promotionPrice * miniItem.selectAmount
                                     ).toLocaleString()}
                                   </Typography>
                                 </Box>
                               </Box>
                             </ListItemButton>
                           </ListItem>
+                          {/* {miniItem.listItems.length > 1 && <Divider />} */}
                         </div>
                       );
                     })}
@@ -245,27 +244,29 @@ const CustomizationProto02 = () => {
               ) : (
                 ///////////////////////////// ยังไม่เลือกสินค้า ///////////////////////////////////////////////////
                 <div className="borderLine">
-                  <ListItem className="listItemStyle">
-                    <ListItemButton
-                      disableGutters={true}
-                      onClick={(e) => {
-                        handleChange(item.category);
-                      }}
-                    >
-                      <ListItemAvatar>
-                        <Avatar sx={{ borderRadius: "0" }}>
-                          <ImageIcon />
-                        </Avatar>
-                      </ListItemAvatar>
-                      <ListItemText primary={`${item.category}`} secondary="" />
-                    </ListItemButton>
-                    <Box>
-                      <div>
-                        {item.selectAmount * item.count ? item.selectAmount * item.count : 0}
-                        {item.typeMax !== null && <>/{item.typeMax}</>}
-                      </div>
-                    </Box>
-                  </ListItem>
+                  <div className="listItemStyle">
+                    <ListItem>
+                      <ListItemButton
+                        disableGutters={true}
+                        onClick={(e) => {
+                          handleChange(item.category);
+                        }}
+                      >
+                        <ListItemAvatar>
+                          <Avatar sx={{ borderRadius: "0" }}>
+                            <ImageIcon />
+                          </Avatar>
+                        </ListItemAvatar>
+                        <ListItemText primary={`${item.category}`} secondary="" />
+                      </ListItemButton>
+                      <Box>
+                        <div>
+                          {item.selectAmount * item.count ? item.selectAmount * item.count : 0}
+                          {item.typeMax !== null && <>/{item.typeMax}</>}
+                        </div>
+                      </Box>
+                    </ListItem>
+                  </div>
                 </div>
               )}
             </React.Fragment>
