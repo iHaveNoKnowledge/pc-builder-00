@@ -63,7 +63,7 @@ const CustomizationProto02 = () => {
     // if (category === "Mainboard") {
     //   dispatch(setMax(slot));
     // }
-    dispatch(setMax(slot));
+    dispatch(setMax());
     dispatch(updateSumAmount());
     dispatch(updateSumPrices());
   };

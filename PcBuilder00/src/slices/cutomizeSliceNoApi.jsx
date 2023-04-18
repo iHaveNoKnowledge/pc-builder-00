@@ -96,7 +96,7 @@ export const customizeSlice = createSlice({
   name: "customize",
   initialState,
   reducers: {
-    ////Main Action (1 action ต่อ 1 ปุ่ม)
+    //////////////////Main Action (1 action ต่อ 1 ปุ่ม)///////////////////////////////////////////////
     addProduct: (state, action) => {
       const categoryIndex = state.partData.findIndex(
         (item) => item.category === action.payload.category
@@ -125,32 +125,6 @@ export const customizeSlice = createSlice({
       if (categoryIndex !== -1) {
         const currentType = state.partData[categoryIndex]; ///currentType จะเป็นการเลือก สมาชิกที่ filter category มาแล้ว
         const isFoundItem = currentType.listItems.find((item) => item.id === action.payload.id); ////ตรวจสอบว่ามีแล้วหรือไม่ ถ้าเป็น true isFoundItem เป็น obj ที่เป็นสมาชิก Arr listItems, false จะเป็น undefined ต้องสร้าง obj ใหม่
-        //ระบบเก่า ////ตรวจสอบว่าเกินหรือไม่
-
-        // if (currentType.typeAmount + typeMaxConsumtion < currentType.typeMax) {
-        //   console.log("สินค้ายังไม่เกินกว่ากำหนด");
-        //   ////ตรวจสอบว่ามีแล้วหรือไม่ ถ้าเป็น true isFoundItem เป็น obj ที่เป็นสมาชิก Arr listItems, false จะเป็น undefined ต้องสร้าง obj ใหม่
-        //   const isFoundItem = currentType.listItems.find(
-        //     (item) => item.id === action.payload.id
-        //   );
-        //   if (isFoundItem) {
-        //     console.log("เจอซ้ำ", isFoundItem.id);
-        //     isFoundItem.selectAmount += 1;
-        //   } else {
-        //     console.log("ไม่เจอ", isFoundItem);
-        //     currentType.listItems.push(newArray);
-        //   }
-        // } else if (
-        //   currentType.typeAmount + typeMaxConsumtion ===
-        //   currentType.typeMax
-        // ) {
-        //   console.log("สินค้าเท่ากับจำนวนที่กำหนดแล้ว");
-        //   currentType.listItems.push(newArray);
-        // } else {
-        //   console.log("สินค้าเกินจำนวนที่กำหนด");
-        // }
-        // console.log("หน้าตาเป็นไงแล้ว:", JSON.stringify(currentType.listItems));
-
         if (currentType.typeMax) {
           if (currentType.typeAmount === 0) {
             currentType.listItems.push(newArray);
@@ -171,8 +145,6 @@ export const customizeSlice = createSlice({
                   console.log("ไม่เจอ", isFoundItem);
                   currentType.listItems.push(newArray);
                 }
-              } else if (currentType.typeAmount + typeMaxConsumtion === currentType.typeMax) {
-                console.log("สินค้าเท่ากับจำนวนที่กำหนดแล้ว");
               } else {
                 console.log("สินค้าเกินจำนวนที่กำหนด");
               }
@@ -287,7 +259,7 @@ export const customizeSlice = createSlice({
       state.partData[index].typeAmount = sumAllItem;
     },
 
-    ////Sub Action (ใช้ ร่วมกับ action หลัก)
+    ///////////////////Sub Action (ใช้ ร่วมกับ action หลัก)/////////////////////////////////
     //actionนี้ถูกใช้หลังจากเช็คว่าไอเท็มที่แอดมา เป็น mainboard หรือไม่ ถ้ามีให้ใช้ action
     setMax: (state, action) => {
       const index = state.partData.findIndex((item) => item.category === "RAM");
@@ -304,6 +276,7 @@ export const customizeSlice = createSlice({
             action.payload
           );
         } else {
+          state.partData[index].typeMax = initialState.partData[index].typeMax;
           // if (state.partData[1].listItems[0]) {
           //   //มีเมนบอร์ดป่าว?
           //   console.log("มีเมนบอด: ");
@@ -343,27 +316,36 @@ export const customizeSlice = createSlice({
     },
 
     updateSumAmount: (state, action) => {
-      console.log(state.summations.sumAmount);
-      const sumArr = map(state.partData, "selectAmount"); // lodash นะ อย่า งง ตอนแรกลืมว่า syntax ไร
-      const sum = sumArr.reduce((acc, item) => acc + item, 0);
-      console.log("จำนวนรวม: ", sum);
-      state.summations.sumAmount = sumArr.reduce((acc, item) => acc + item, 0);
+      // ////อันเดิม
+      // console.log("updateSumAmount: ", state.summations.sumAmount);
+      // const sumArr = map(state.partData, "selectAmount"); // lodash นะ อย่า งง ตอนแรกลืมว่า syntax ไร
+      // const sum = sumArr.reduce((acc, item) => acc + item, 0);
+      // console.log("จำนวนรวม: ", sum);
+      // state.summations.sumAmount = sumArr.reduce((acc, item) => acc + item, 0);
+
+      let sumAllAmount = 0;
+      map(state.partData, (item) => {
+        map(item.listItems, (miniItem) => {
+          sumAllAmount += miniItem.selectAmount;
+        });
+      });
+      console.log("จำนวนทั้งหมด: ", sumAllAmount);
+      state.summations.sumAmount = sumAllAmount;
     },
 
     updateSumPrices: (state, action) => {
-      const sumPriceArr = state.partData.map((obj) => {
-        return obj.price * obj.selectAmount;
-      });
-
-      const sumDiscountArr = state.partData.map((obj) => {
-        return obj.price - obj.price * (1 - obj.discount) * obj.selectAmount;
-      });
-
-      console.log("afterreducr:", sumPriceArr);
-      state.summations.sumDiscount = sumDiscountArr.reduce((acc, item) => acc + item, 0);
-      state.summations.sum_SRP = sumPriceArr.reduce((acc, item) => acc + item, 0);
-      console.log("ราคาต้น", state.summations.sum_SRP);
-      console.log("ส่วนลด", state.summations.sumDiscount);
+      // ////อันเดิม
+      // const sumPriceArr = state.partData.map((obj) => {
+      //   return obj.price * obj.selectAmount;
+      // });
+      // const sumDiscountArr = state.partData.map((obj) => {
+      //   return obj.price - obj.price * (1 - obj.discount) * obj.selectAmount;
+      // });
+      // console.log("afterreducr:", sumPriceArr);
+      // state.summations.sumDiscount = sumDiscountArr.reduce((acc, item) => acc + item, 0);
+      // state.summations.sum_SRP = sumPriceArr.reduce((acc, item) => acc + item, 0);
+      // console.log("ราคาต้น", state.summations.sum_SRP);
+      // console.log("ส่วนลด", state.summations.sumDiscount);
     },
   },
 });
