@@ -89,7 +89,7 @@ const initialState = {
     },
   ],
 
-  summations: { sumAmount: 0, sum_SRP: 0, sumDiscount: 0 },
+  summations: { sumAmount: 0, sum_SRP: 0, sumDiscount: 0, sumPrice: 0 },
 };
 
 export const customizeSlice = createSlice({
@@ -346,6 +346,22 @@ export const customizeSlice = createSlice({
       // state.summations.sum_SRP = sumPriceArr.reduce((acc, item) => acc + item, 0);
       // console.log("ราคาต้น", state.summations.sum_SRP);
       // console.log("ส่วนลด", state.summations.sumDiscount);
+
+      let sumAll_SRP_Prices = 0;
+      let sumAllDiscount = 0;
+      let sumAllPrices = 0;
+      map(state.partData, (item) => {
+        map(item.listItems, (miniItem) => {
+          sumAllPrices += miniItem.promotionPrice * miniItem.selectAmount;
+          sumAllDiscount += (miniItem.srp - miniItem.promotionPrice) * miniItem.selectAmount;
+          sumAll_SRP_Prices += miniItem.srp * miniItem.selectAmount;
+        });
+      });
+
+      console.log("ราคาทั้งหมด: ", sumAllPrices);
+      state.summations.sum_SRP = sumAll_SRP_Prices;
+      state.summations.sumDiscount = sumAllDiscount;
+      state.summations.sumPrice = sumAllPrices;
     },
   },
 });
