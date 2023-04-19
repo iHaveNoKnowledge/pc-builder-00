@@ -50,7 +50,7 @@ const SumCustomize = () => {
             </Box>
             &nbsp;
             <Box sx={{ flexGrow: 1, flexBasis: 0 }}>
-              ราคาสุทธิ: <br />฿{sum_SRP - Math.round(sumDiscount)}{" "}
+              ราคาสุทธิ : <br />฿{sum_SRP - Math.round(sumDiscount)}{" "}
             </Box>
           </Box>
         </Box>

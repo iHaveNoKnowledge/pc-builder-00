@@ -1,5 +1,5 @@
 .App {
-  font-family: sans-serif;
+  font-family: 'Chakra Petch', sans-serif;
   /* text-align: center; */
   box-sizing: border-box;
   padding: 0;
@@ -9,6 +9,7 @@ html {
   font-size: 80.5%;
   background-color: rgb(211, 211, 211);
 }
+html{ zoom: 90%; }
 /* .flexible {
   flex-grow: 1;
 } */

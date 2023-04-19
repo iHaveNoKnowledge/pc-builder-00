@@ -226,6 +226,7 @@ function PostCard({ items }) {
                     // image="https://res.cloudinary.com/itcity-production/image/upload/f_auto,q_auto,w_400/v1654663622/product/product-master/uvmlmnvqxiob28e35bp9.png"
                     image={item.img}
                     title={item.title}
+                    sx={{ height: "250px" }}
                   />
 
                   <CardContent>
@@ -251,11 +252,18 @@ function PostCard({ items }) {
                     <Divider sx={{ pt: 1 }} />
                     <Box sx={{ display: "flex" }}>
                       <ListItemText
-                        primary={"฿ " + item.promotionPrice.toLocaleString() + ".-"}
+                        sx={{ fontSize: "2rem" }}
+                        primary={
+                          <>
+                            <Typography sx={{ fontSize: "1.2rem", fontWeight: "bolder" }}>
+                              {"฿ " + item.promotionPrice.toLocaleString() + ".-"}
+                            </Typography>
+                          </>
+                        }
                         secondary={
                           <React.Fragment>
                             <Typography
-                              sx={{ display: "inline" }}
+                              sx={{ display: "inline", fontSize: "0.9rem" }}
                               component="span"
                               variant="caption"
                               color="text.secondary"
