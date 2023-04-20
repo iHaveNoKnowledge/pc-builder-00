@@ -72,7 +72,7 @@ const CustomizationProto02 = () => {
     <>
       <List sx={{ width: "97%", paddingLeft: "8px" }}>
         <SumCustomize />
-        <div>ปัจจุบันเลือกไร: {currentCategory}</div>
+        {/* <div>ปัจจุบันเลือกไร: {currentCategory}</div> */}
         <Box>
           {categories.map((item, index) => {
             return (
@@ -80,7 +80,7 @@ const CustomizationProto02 = () => {
                 {item.listItems[0] ? (
                   /////////////////////เลือกสินค้าแล้ว///////////////////////////////////////////////////////////
                   <div className="borderLine">
-                    <div>{item.category}</div>
+                    {/* <div>{item.category}</div> โชว์ประเภทเหนือและนอก card ที่แสดง รายการสินค้าที่เลือก*/}
                     <div className="listItemStyle">
                       {item.listItems.map((miniItem, miniIndex) => {
                         return (

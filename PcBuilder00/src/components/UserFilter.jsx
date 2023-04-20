@@ -8,8 +8,14 @@ import Button from "@mui/material/Button";
 import Autocomplete from "@mui/material/Autocomplete";
 import Box from "@mui/material/Box";
 import "./UserFilter.css";
+import { useDispatch, useSelector } from "react-redux";
+import { changeTextSearch } from "../slices/userFilterSlice";
 
 const UserFilter = () => {
+  const dispatch = useDispatch();
+  const currentCategory = useSelector((state) => state.category.category);
+  const searchTyped = useSelector((state) => state.userFilter.textSearch);
+
   const initData = [
     { id: 1, name: "John" },
     { id: 2, name: "Jane" },
@@ -21,18 +27,18 @@ const UserFilter = () => {
 
   const handleSearch = (event) => {
     event.preventDefault();
-    if (query === "") {
-      setData(initData);
-    } else {
-      const filteredData = data.filter((item) =>
-        item.name.toLowerCase().includes(query.toLowerCase())
-      );
-      setData(filteredData);
-    }
+    // if (query === "") {
+    //   setData(initData);
+    // } else {
+    //   const filteredData = data.filter((item) =>
+    //     item.name.toLowerCase().includes(query.toLowerCase())
+    //   );
+    //   setData(filteredData);
+    // }
   };
 
   useEffect(() => {
-    console.log("rerender");
+    dispatch(changeTextSearch(query));
   }, [query]);
 
   return (
@@ -61,7 +67,7 @@ const UserFilter = () => {
               setQuery(event.target.value);
               console.log(event.target.value);
             }}
-            label="Product"
+            label={`Product ${currentCategory}`}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -73,18 +79,20 @@ const UserFilter = () => {
             onBlur={(e) => setIsSeleced(false)}
             onFocus={(e) => setIsSeleced(true)}
           />
-          <Button
-            type="submit"
-            variant="contained"
-            sx={{
-              height: "27.5px",
-              display: "flex",
-              justifyContent: "center",
-              flexDirection: "row",
-            }}
-          >
-            ค้นหา
-          </Button>
+          <Box style={{ display: "flex", alignItems: "end" }}>
+            <Button
+              type="submit"
+              variant="contained"
+              sx={{
+                height: "27.5px",
+                display: "flex",
+                justifyContent: "center",
+                flexDirection: "row",
+              }}
+            >
+              ค้นหา
+            </Button>
+          </Box>
         </form>
       </Box>
 

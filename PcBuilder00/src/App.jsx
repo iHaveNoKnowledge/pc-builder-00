@@ -7,21 +7,13 @@ import SelectionProto01 from "./components/SelectionProto01";
 import { Box, Container, Grid } from "@mui/material";
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
     <div className="App">
       <Container disableGutters sx={{ minHeight: "auto" }}>
         {/* outergrid */}
-        <Grid container columns={{ xs: 4, sm: 12, md: 12 }}>
+        <Grid container columns={{ xs: 4, sm: 12, md: 12 }} rowHeight={25}>
           {/* TOPPICK QUICK SET ZONE */}
-          <Grid
-            item
-            xs={12}
-            sm={12}
-            md={12}
-            sx={{ border: "1px dashed rgba(0, 153, 51,1)" }}
-          >
+          <Grid item xs={12} sm={12} md={12} sx={{ border: "1px dashed rgba(0, 153, 51,1)" }}>
             <Box sx={{ px: 1 }}>TOPPICK has state fromserver</Box>
           </Grid>
 

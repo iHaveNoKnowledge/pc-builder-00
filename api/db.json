@@ -266,7 +266,9 @@
       "socket": "AM4",
       "img": "https://media-cdn.bnn.in.th/263562/730143309936-00-square_medium.jpg",
       "srp": 19290,
-      "promotionPrice": 9066
+      "promotionPrice": 9066,
+      "series": "AMD Ryzen 3000 Series",
+      "model": "Ryzen 5 3600"
     },
     {
       "id": 11,
@@ -275,7 +277,9 @@
       "socket": "AM4",
       "img": "https://media-cdn.bnn.in.th/52122/AMD-CPU-Ryzen7-5800X-3.8GHz-8C-16T-AM4-gen5-1-square_medium.jpg",
       "srp": 5715,
-      "promotionPrice": 2800
+      "promotionPrice": 2800,
+      "series": "AMD Ryzen 5000 Series",
+      "model": "Ryzen 7 5800X"
     },
     {
       "id": 12,
@@ -284,7 +288,9 @@
       "socket": "1700",
       "img": "https://media-cdn.bnn.in.th/164968/intel-core-i5-12400-1-square_medium.jpg",
       "srp": 1250,
-      "promotionPrice": 313
+      "promotionPrice": 313,
+      "series": "Intel Core 12th Gen Processors",
+      "model": "Core i5-12400"
     },
     {
       "id": 13,
@@ -293,7 +299,9 @@
       "socket": "1700",
       "img": "https://media-cdn.bnn.in.th/264216/intel-core-i9-13900F-1-square_medium.jpg",
       "srp": 17270,
-      "promotionPrice": 8290
+      "promotionPrice": 8290,
+      "series": "Intel Core 13th Gen Processors",
+      "model": "Core i9-13900F"
     },
     {
       "id": 14,
@@ -304,7 +312,13 @@
       "slot": 2,
       "img": "https://media-cdn.bnn.in.th/19033/Asus-Mainboard-PRIME-A320M-K-DDR4-AM4-1-square_medium.jpg",
       "srp": 10560,
-      "promotionPrice": 1690
+      "promotionPrice": 1690,
+      "for": "AMD",
+      "chipset": "AMD A320",
+      "formFactor": "Micro-ATX",
+      "cpuSeries": "AMD Ryzen 2000, 3000 Series Desktop Processors",
+      "pcieGen": "1 x PCIe 3.0 x16 Slot , 2 x PCIe 2.0 x1 Slots",
+      "maxBus": "DDR4 Support up to 3200(OC) MHz"
     },
     {
       "id": 15,
@@ -315,7 +329,13 @@
       "slot": 2,
       "img": "https://media-cdn.bnn.in.th/257878/gigabyte-b650i-aorus-ultra-1-square_medium.jpg",
       "srp": 18765,
-      "promotionPrice": 8632
+      "promotionPrice": 8632,
+      "for": "AMD",
+      "chipset": "AMD B650",
+      "formFactor": "Mini-ITX Form Factor",
+      "cpuSeries": "Ryzen 7000 Series Processors",
+      "pcieGen": "1x PCIe 4.0 x16 slot",
+      "maxBus": "DDR5 Support up to 6400(OC) MHz"
     },
     {
       "id": 16,
@@ -326,7 +346,13 @@
       "slot": 2,
       "img": "https://media-cdn.bnn.in.th/171658/asrock-b660m-hdv-ddr4-1-square_medium.jpg",
       "srp": 16455,
-      "promotionPrice": 2633
+      "promotionPrice": 2633,
+      "for": "INTEL",
+      "chipset": "Intel B660",
+      "formFactor": "Micro-ATX Form Factor",
+      "cpuSeries": "12th Gen Intel Core Processors",
+      "pcieGen": "1x PCIe 4.0 x16 slot, 2x PCIe 3.0 x1 slot",
+      "maxBus": "DDR4 support up to 5066(OC) MHz"
     },
     {
       "id": 17,
@@ -348,7 +374,13 @@
       "slot": 4,
       "img": "https://media-cdn.bnn.in.th/17709/AsRock-Mainboard-B550-Steel-Legend-AM4-1-square_medium.jpg",
       "srp": 10510,
-      "promotionPrice": 4414
+      "promotionPrice": 4414,
+      "for": "AMD",
+      "chipset": "AMD B550",
+      "formFactor": "ATX",
+      "cpuSeries": "AMD Ryzen 3000, 5000 Series Desktop Processors (not Support 3000G Series)",
+      "pcieGen": "1x PCIe 4.0 x16, 1x PCIe 3.0 x16, 2x PCIe 3.0 x1, 1x M.2 Key E for WiFi",
+      "maxBus": "supports DDR4 4733+(OC)-3466(OC)/3200/2933/2667/2400/2133 MHz"
     },
     {
       "id": 19,

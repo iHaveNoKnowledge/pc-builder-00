@@ -226,7 +226,7 @@ function PostCard({ items }) {
                     // image="https://res.cloudinary.com/itcity-production/image/upload/f_auto,q_auto,w_400/v1654663622/product/product-master/uvmlmnvqxiob28e35bp9.png"
                     image={item.img}
                     title={item.title}
-                    sx={{ height: "250px" }}
+                    // sx={{ height: "300px" }}
                   />
 
                   <CardContent>
