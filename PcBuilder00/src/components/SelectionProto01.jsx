@@ -25,6 +25,7 @@ import {
 import "./Selection.css";
 import UserFilter from "./UserFilter";
 import { useGetPostsQuery } from "../features/api/dataApiSlice";
+import { getCategorizedData } from "../slices/userFilterSlice";
 
 function PostCard({ items }) {
   ////useState!!!!!!!!!!!!!!!!!!!
@@ -168,14 +169,17 @@ function PostCard({ items }) {
     (item) => item.category !== "CPU" && item.category !== "Mainboard" && item.category !== "RAM"
   );
 
-  ///นำ display ทั้งหมด มารวมกัน
+  ///นำ display ทั้งหมดที่มีการกรองและไม่มีการกรอง มารวมกัน
   const combineProduct = unconditionProduct.concat(CPU_display, mainBoard_display, RAM_display);
 
-  // นำ disply ทั้งกรองและไม่กรองมารวมกันแล้วหาตามประเภทที่ user เลือก
+  // นำ display ทั้งหมดมา filter เฉพาะ ประเภทที่ user เลือก
   const showProduct = combineProduct.filter((item) => item.category === category);
 
   ////useEffect
-  useEffect(() => {}, [showProduct]);
+  useEffect(() => {
+    console.log("ผลจากโชว์โปรดักส์");
+    dispatch(getCategorizedData(showProduct));
+  }, [showProduct]);
 
   ////pagination////
   const [curPageNum, setCurPageNum] = useState(1);
@@ -185,10 +189,12 @@ function PostCard({ items }) {
   const handleChangePage = (pageNum) => {
     setCurPageNum(pageNum);
   };
+
   const productPaginated = showProduct.slice(
     (curPageNum - 1) * cardsPerPage,
     curPageNum * cardsPerPage
   );
+
   useEffect(() => {
     if (curPageNum > totalPages) {
       setCurPageNum(1);
@@ -310,7 +316,7 @@ function PostCard({ items }) {
   );
 }
 
-////ส่วนนี้เป็นส่วน dynamic display based on api state
+////////////////////////ส่วนนี้เป็นส่วน dynamic display based on api state/////////////////////////////////
 function SelectionProto01() {
   ///เอา ค่า boolean status api มา ในหลายๆกรณี
   const {

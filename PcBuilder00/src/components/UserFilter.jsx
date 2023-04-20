@@ -15,26 +15,16 @@ const UserFilter = () => {
   const dispatch = useDispatch();
   const currentCategory = useSelector((state) => state.category.category);
   const searchTyped = useSelector((state) => state.userFilter.textSearch);
+  const filterOption = useSelector((state) => state.userFilter.categorizedData);
+  console.log("filterOptionคือไร:", filterOption);
 
-  const initData = [
-    { id: 1, name: "John" },
-    { id: 2, name: "Jane" },
-    { id: 3, name: "Bob" },
-  ];
+  const initData = ["AM4", "1700", "AM5"];
   const [query, setQuery] = useState("");
   const [data, setData] = useState([]);
   const [isSelected, setIsSeleced] = useState(false);
 
   const handleSearch = (event) => {
     event.preventDefault();
-    // if (query === "") {
-    //   setData(initData);
-    // } else {
-    //   const filteredData = data.filter((item) =>
-    //     item.name.toLowerCase().includes(query.toLowerCase())
-    //   );
-    //   setData(filteredData);
-    // }
   };
 
   useEffect(() => {
@@ -44,21 +34,9 @@ const UserFilter = () => {
   return (
     <Box className="mainCardFilter">
       <Box>
-        {/* <input
-            type="text"
-            placeholder="Search"
-            value={query}
-            onChange={(event) => setQuery(event.target.value)}
-        />
-        <button onClick={handleSearch}>Search</button>
-        <ul>
-            {data.map((item) => (
-            <li key={item.id}>{item.name}</li>
-            ))}
-        </ul> */}
-
         <form onSubmit={handleSearch} style={{ display: "flex" }}>
           <TextField
+            fullWidth
             placeholder="ค้นหาสินค้า"
             type="search"
             id="input-with-icon-textfield"
@@ -85,9 +63,8 @@ const UserFilter = () => {
               variant="contained"
               sx={{
                 height: "27.5px",
-                display: "flex",
-                justifyContent: "center",
-                flexDirection: "row",
+                borderRadius: "0px",
+                backgroundColor: "#42528A",
               }}
             >
               ค้นหา
@@ -96,29 +73,41 @@ const UserFilter = () => {
         </form>
       </Box>
 
-      <Box>
-        <Stack spacing={2} sx={{ width: 500, marginInline: "auto", mt: "14px" }}>
-          <Autocomplete
-            id="size-small-filled"
-            size="small"
-            options={initData}
-            getOptionLabel={(option) => option.name}
-            // defaultValue={top100Films[0]}
-            renderTags={(value, getTagProps) =>
-              value.map((option, index) => (
-                <Chip
-                  variant="outlined"
-                  label={option.name}
-                  size="small"
-                  {...getTagProps({ index })}
-                />
-              ))
-            }
-            renderInput={(params) => (
-              <TextField {...params} variant="filled" label="FilterName" placeholder="Favorites" />
-            )}
-          />
-        </Stack>
+      <Box sx={{ display: "flex", flexDirection: "row" }}>
+        {filterOption.map((item, index) => {
+          return (
+            <Box key={index} sx={{ flexGrow: 1, mx: "10px", mt: "10px", flexBasis: 0 }}>
+              <Autocomplete
+                // sx={{ width: "71%" }} ปรับ เท่านี้มากสุดละ ไม่งั้น drop down มันจะเบี้ยว
+                disablePortal={true}
+                id="size-small-filled"
+                size="small"
+                options={item}
+                getOptionLabel={(option) => option}
+                // defaultValue={top100Films[0]}
+                renderTags={(value, getTagProps) =>
+                  value.map((option, index) => (
+                    <Chip
+                      variant="outlined"
+                      label={option}
+                      size="small"
+                      {...getTagProps({ index })}
+                    />
+                  ))
+                }
+                //ส่วนinput
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    variant="filled"
+                    label="FilterName"
+                    placeholder="Favorites"
+                  />
+                )}
+              />
+            </Box>
+          );
+        })}
       </Box>
     </Box>
   );
