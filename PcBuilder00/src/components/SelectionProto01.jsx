@@ -14,7 +14,7 @@ import ListItemText from "@mui/material/ListItemText";
 import Box from "@mui/material/Box";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
-import { Divider } from "@mui/material";
+import { Divider, Alert } from "@mui/material";
 import {
   addProduct,
   setMax,
@@ -177,8 +177,9 @@ function PostCard({ items }) {
 
   ////useEffect
   useEffect(() => {
-    console.log("ผลจากโชว์โปรดักส์");
-    dispatch(getCategorizedData(showProduct));
+    console.log("ผลจากโชว์โปรดักส์รวมหมด: ");
+    console.log("ประเภทปัจจุบัน: ", category);
+    dispatch(getCategorizedData({ showProduct, category }));
   }, [showProduct]);
 
   ////pagination////

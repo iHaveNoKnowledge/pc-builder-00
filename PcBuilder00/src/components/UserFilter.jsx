@@ -12,21 +12,39 @@ import { useDispatch, useSelector } from "react-redux";
 import { changeTextSearch } from "../slices/userFilterSlice";
 
 const UserFilter = () => {
+  ////useSelector
   const dispatch = useDispatch();
   const currentCategory = useSelector((state) => state.category.category);
   const searchTyped = useSelector((state) => state.userFilter.textSearch);
-  const filterOption = useSelector((state) => state.userFilter.categorizedData);
-  console.log("filterOptionคือไร:", filterOption);
+  const filterOptions = useSelector((state) => state.userFilter.categorizedData);
+  console.log("filterOptionคือไร:", filterOptions);
 
+  const filters = filterOptions.map((item) => item.value);
+  ////usestate
   const initData = ["AM4", "1700", "AM5"];
   const [query, setQuery] = useState("");
-  const [data, setData] = useState([]);
+  const [selectedFilter, setSelectedFilter] = useState(filters);
   const [isSelected, setIsSeleced] = useState(false);
 
+  // ////useEffect
+  // useEffect(() => {
+  //   setSelectedFilter(() => {});
+  // }, []);
+  console.log("ฟิลเตอร์เริ่มต้น", selectedFilter);
+
+  ////handleFunctions
   const handleSearch = (event) => {
     event.preventDefault();
   };
 
+  const handleChagnge = (event, filterName) => {
+    setSelectedFilter();
+
+    const array2 = { ...filterOptions.value, [filterName]: event.target.textContent };
+    console.log("อันใหม่หน้าตาเป็นงี้: ", JSON.stringify(selectedFilter));
+  };
+
+  ////useEffect
   useEffect(() => {
     dispatch(changeTextSearch(query));
   }, [query]);
@@ -54,8 +72,8 @@ const UserFilter = () => {
               ),
             }}
             variant="standard"
-            onBlur={(e) => setIsSeleced(false)}
-            onFocus={(e) => setIsSeleced(true)}
+            // onBlur={(e) => setIsSeleced(false)}
+            // onFocus={(e) => setIsSeleced(true)}
           />
           <Box style={{ display: "flex", alignItems: "end" }}>
             <Button
@@ -74,40 +92,51 @@ const UserFilter = () => {
       </Box>
 
       <Box sx={{ display: "flex", flexDirection: "row" }}>
-        {filterOption.map((item, index) => {
-          return (
-            <Box key={index} sx={{ flexGrow: 1, mx: "10px", mt: "10px", flexBasis: 0 }}>
-              <Autocomplete
-                // sx={{ width: "71%" }} ปรับ เท่านี้มากสุดละ ไม่งั้น drop down มันจะเบี้ยว
-                disablePortal={true}
-                id="size-small-filled"
-                size="small"
-                options={item}
-                getOptionLabel={(option) => option}
-                // defaultValue={top100Films[0]}
-                renderTags={(value, getTagProps) =>
-                  value.map((option, index) => (
-                    <Chip
-                      variant="outlined"
-                      label={option}
-                      size="small"
-                      {...getTagProps({ index })}
-                    />
-                  ))
-                }
-                //ส่วนinput
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    variant="filled"
-                    label="FilterName"
-                    placeholder="Favorites"
+        {filterOptions ? (
+          <>
+            {filterOptions.map((item, index) => {
+              return (
+                <Box key={index} sx={{ flexGrow: 1, mx: "10px", mt: "10px", flexBasis: 0 }}>
+                  <Autocomplete
+                    onChange={(e) => handleChagnge(e, item.filterName)}
+                    // sx={{ width: "71%" }} ปรับ เท่านี้มากสุดละ ไม่งั้น drop down มันจะเบี้ยว
+                    disablePortal={true}
+                    id="size-small-filled"
+                    size="small"
+                    options={item.value}
+                    getOptionLabel={(options) => options}
+                    // defaultValue={top100Films[0]}
+                    renderTags={(value, getTagProps) =>
+                      value.map((option, index) => (
+                        <Chip
+                          variant="outlined"
+                          label={option}
+                          size="small"
+                          {...getTagProps({ index })}
+                        />
+                      ))
+                    }
+                    //ส่วนหัวข้อinput
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        variant="filled"
+                        label={`${item.filterName}`}
+                        placeholder="Favorites"
+                      />
+                    )}
                   />
-                )}
-              />
+                </Box>
+              );
+            })}
+          </>
+        ) : (
+          <>
+            <Box sx={{ display: "flex" }}>
+              <Box sx={{ flexGrow: 1, height: "54.18px" }}></Box>
             </Box>
-          );
-        })}
+          </>
+        )}
       </Box>
     </Box>
   );

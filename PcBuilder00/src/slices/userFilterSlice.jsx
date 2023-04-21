@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   textSearch: null,
-  filter: null,
+  filters: { CPU: { brand: "", model: "", socket: "" }, Mainboard: {}, RAM: {} },
   categorizedData: null,
 };
 
@@ -20,11 +20,22 @@ export const filterSlice = createSlice({
     },
     getCategorizedData: (state, action) => {
       //ใช้รับ showData จาก selectionProto
-      console.log("getCategorizedDatawได้ไรมา:", action.payload);
-      const cpuBrandOption = [...new Set(action.payload.map((item) => item.brand))];
-      const cpuModelOption = [...new Set(action.payload.map((item) => item.model))];
-      const cpuSocketOption = [...new Set(action.payload.map((item) => item.socket))];
-      state.categorizedData = [cpuBrandOption, cpuModelOption, cpuSocketOption];
+      const { showProduct: option, category } = action.payload;
+      console.log("getCategorizedDatawได้ไรมา:", category);
+
+      state.categorizedData = null;
+
+      if (category === "CPU") {
+        const cpuBrandOption = [...new Set(option.map((item) => item.brand))];
+        const cpuModelOption = [...new Set(option.map((item) => item.model))];
+        const cpuSocketOption = [...new Set(option.map((item) => item.socket))];
+        state.categorizedData = [
+          { filterName: "Brand", value: cpuBrandOption },
+          { filterName: "Model", value: cpuModelOption },
+          { filterName: "Socket", value: cpuSocketOption },
+        ];
+      } else if (category === "Mainboard") {
+      }
     },
   },
 });
