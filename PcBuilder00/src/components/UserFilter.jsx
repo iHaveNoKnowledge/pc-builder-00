@@ -16,20 +16,30 @@ const UserFilter = () => {
   const dispatch = useDispatch();
   const currentCategory = useSelector((state) => state.category.category);
   const searchTyped = useSelector((state) => state.userFilter.textSearch);
-  const filterOptions = useSelector((state) => state.userFilter.categorizedData);
-  console.log("filterOptionคือไร:", filterOptions);
+  const filterOptions = useSelector((state) => state.userFilter.filterOptions);
+  const filters = useSelector((state) => state.userFilter.filters);
 
-  const filters = filterOptions.map((item) => item.value);
+  ////useEffect
+  useEffect(() => {
+    ///เปลี่ยนsetFilter ให้เป็นไปตาม category
+    setSelectedFilter(filters[currentCategory]);
+  }, [currentCategory]);
+
+  console.log("จำนวนfilter จาก category", currentCategory, filters[currentCategory]);
+
+  let times = [];
+  for (let properties in filters[currentCategory]) {
+    times.push(properties);
+  }
+  console.log("มีกี่อันสรุป", times);
+
+  const currentFilter = filters[currentCategory];
+
   ////usestate
-  const initData = ["AM4", "1700", "AM5"];
   const [query, setQuery] = useState("");
-  const [selectedFilter, setSelectedFilter] = useState(filters);
+  const [selectedFilter, setSelectedFilter] = useState(currentFilter);
   const [isSelected, setIsSeleced] = useState(false);
 
-  // ////useEffect
-  // useEffect(() => {
-  //   setSelectedFilter(() => {});
-  // }, []);
   console.log("ฟิลเตอร์เริ่มต้น", selectedFilter);
 
   ////handleFunctions
@@ -38,9 +48,10 @@ const UserFilter = () => {
   };
 
   const handleChagnge = (event, filterName) => {
-    setSelectedFilter();
+    setSelectedFilter((prev) => {
+      return { ...prev, [filterName.toLowerCase()]: event.target.textContent };
+    });
 
-    const array2 = { ...filterOptions.value, [filterName]: event.target.textContent };
     console.log("อันใหม่หน้าตาเป็นงี้: ", JSON.stringify(selectedFilter));
   };
 
@@ -96,7 +107,7 @@ const UserFilter = () => {
           <>
             {filterOptions.map((item, index) => {
               return (
-                <Box key={index} sx={{ flexGrow: 1, mx: "10px", mt: "10px", flexBasis: 0 }}>
+                <Box key={index} sx={{ flexGrow: 1, mx: "2px", mt: "10px", flexBasis: 0 }}>
                   <Autocomplete
                     onChange={(e) => handleChagnge(e, item.filterName)}
                     // sx={{ width: "71%" }} ปรับ เท่านี้มากสุดละ ไม่งั้น drop down มันจะเบี้ยว
@@ -104,6 +115,7 @@ const UserFilter = () => {
                     id="size-small-filled"
                     size="small"
                     options={item.value}
+                    value={selectedFilter[times[index]]}
                     getOptionLabel={(options) => options}
                     // defaultValue={top100Films[0]}
                     renderTags={(value, getTagProps) =>
@@ -118,12 +130,7 @@ const UserFilter = () => {
                     }
                     //ส่วนหัวข้อinput
                     renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        variant="filled"
-                        label={`${item.filterName}`}
-                        placeholder="Favorites"
-                      />
+                      <TextField {...params} variant="filled" label={`${item.filterName}`} />
                     )}
                   />
                 </Box>
