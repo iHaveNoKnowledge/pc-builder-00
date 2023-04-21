@@ -9,7 +9,8 @@ import Autocomplete from "@mui/material/Autocomplete";
 import Box from "@mui/material/Box";
 import "./UserFilter.css";
 import { useDispatch, useSelector } from "react-redux";
-import { changeTextSearch } from "../slices/userFilterSlice";
+import { changeTextSearch, updateFilters } from "../slices/userFilterSlice";
+import { isEqual } from "lodash";
 
 const UserFilter = () => {
   ////useSelector
@@ -22,6 +23,11 @@ const UserFilter = () => {
   ////useEffect
   useEffect(() => {
     ///เปลี่ยนsetFilter ให้เป็นไปตาม category
+    setSelectedFilter((prev) => {
+      for (let x in prev) {
+        prev[x];
+      }
+    });
     setSelectedFilter(filters[currentCategory]);
   }, [currentCategory]);
 
@@ -31,7 +37,7 @@ const UserFilter = () => {
   for (let properties in filters[currentCategory]) {
     times.push(properties);
   }
-  console.log("มีกี่อันสรุป", times);
+  console.log("แปลงหัวข้อfilter เป็น array", times);
 
   const currentFilter = filters[currentCategory];
 
@@ -40,19 +46,21 @@ const UserFilter = () => {
   const [selectedFilter, setSelectedFilter] = useState(currentFilter);
   const [isSelected, setIsSeleced] = useState(false);
 
-  console.log("ฟิลเตอร์เริ่มต้น", selectedFilter);
+  console.log("stateของfilterปัจจุบัน", selectedFilter);
 
   ////handleFunctions
   const handleSearch = (event) => {
     event.preventDefault();
   };
 
-  const handleChagnge = (event, filterName) => {
-    setSelectedFilter((prev) => {
-      return { ...prev, [filterName.toLowerCase()]: event.target.textContent };
-    });
-
+  const handleChange = (event, filterName, selectedFilter, currentCategory) => {
     console.log("อันใหม่หน้าตาเป็นงี้: ", JSON.stringify(selectedFilter));
+    dispatch(updateFilters({ selectedFilter, currentCategory }));
+
+    filterName = filterName.charAt(0).toLowerCase() + filterName.slice(1);
+    setSelectedFilter((prev) => {
+      return { ...prev, [filterName]: event.target.textContent };
+    });
   };
 
   ////useEffect
@@ -109,14 +117,16 @@ const UserFilter = () => {
               return (
                 <Box key={index} sx={{ flexGrow: 1, mx: "2px", mt: "10px", flexBasis: 0 }}>
                   <Autocomplete
-                    onChange={(e) => handleChagnge(e, item.filterName)}
+                    onChange={(e) =>
+                      handleChange(e, item.filterName, selectedFilter, currentCategory)
+                    }
                     // sx={{ width: "71%" }} ปรับ เท่านี้มากสุดละ ไม่งั้น drop down มันจะเบี้ยว
                     disablePortal={true}
                     id="size-small-filled"
                     size="small"
                     options={item.value}
                     value={selectedFilter[times[index]]}
-                    getOptionLabel={(options) => options}
+                    getOptionLabel={(options) => `${options}`}
                     // defaultValue={top100Films[0]}
                     renderTags={(value, getTagProps) =>
                       value.map((option, index) => (

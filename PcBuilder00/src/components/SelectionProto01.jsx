@@ -74,6 +74,7 @@ function PostCard({ items }) {
   ////useSelector!!!!!!!!!!!!!!!
   const category = useSelector((state) => state.category.category);
   const parts = useSelector((state) => state.noApiCustomize.partData);
+  const filters = useSelector((state) => state.userFilter.filters);
 
   ////เงื่อนไขcompatibility
   ///หาเงื่อนไข จากการเลือก mainboard
@@ -175,6 +176,19 @@ function PostCard({ items }) {
   // นำ display ทั้งหมดมา filter เฉพาะ ประเภทที่ user เลือก
   const showProduct = combineProduct.filter((item) => item.category === category);
 
+  // นำ flter มา filter showproduct
+  const filterProducts = (products, filters) => {
+    const filteredProducts = products.filter(
+      (product) =>
+        (!filters.brand || product.brand === filters.brand) &&
+        (!filters.model || product.model === filters.model) &&
+        (!filters.socket || product.socket === filters.socket)
+    );
+    return filteredProducts;
+  };
+  const showProductWithFilter = filterProducts(showProduct, filters);
+  console.log("showProduct", showProduct);
+
   ////useEffect
   useEffect(() => {
     console.log("ผลจากโชว์โปรดักส์รวมหมด: ");
@@ -191,7 +205,7 @@ function PostCard({ items }) {
     setCurPageNum(pageNum);
   };
 
-  const productPaginated = showProduct.slice(
+  const productPaginated = showProductWithFilter.slice(
     (curPageNum - 1) * cardsPerPage,
     curPageNum * cardsPerPage
   );

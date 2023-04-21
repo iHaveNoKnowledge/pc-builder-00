@@ -47,16 +47,26 @@ export const filterSlice = createSlice({
         const mbSlotOpt = [...new Set(option.map((item) => item.slot))].concat("");
         ///สร้าง option ให้ dropdown
         state.filterOptions = [
-          { filterName: "formFactor", value: mbFormFactorOpt },
-          { filterName: "brand", value: mbBrandOpt },
-          { filterName: "socket", value: mbSocketOpt },
-          { filterName: "chipset", value: mbChipsetOpt },
-          { filterName: "slot", value: mbSlotOpt },
+          { filterName: "FormFactor", value: mbFormFactorOpt },
+          { filterName: "Brand", value: mbBrandOpt },
+          { filterName: "Socket", value: mbSocketOpt },
+          { filterName: "Chipset", value: mbChipsetOpt },
+          { filterName: "Slot", value: mbSlotOpt },
         ];
       }
+    },
+
+    updateFilters: (state, action) => {
+      const { selectedFilter, currentCategory } = action.payload;
+      state.filters[currentCategory] = selectedFilter;
     },
   },
 });
 
-export const { changeTextSearch, createFilter, getCategorizedData } = filterSlice.actions;
+export const {
+  changeTextSearch,
+  createFilter,
+  getCategorizedData,
+  updateFilters,
+} = filterSlice.actions;
 export default filterSlice.reducer;
