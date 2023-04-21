@@ -33,6 +33,7 @@ const UserFilter = () => {
 
   console.log("จำนวนfilter จาก category", currentCategory, filters[currentCategory]);
 
+  /////////อันนี้ต้องย้ายไปใช้ที่ selection ///////////////////// เพราะ filter ปกติเป็น object ไม่ใช่ array โค้ก filter เลยไม่ติด
   let times = [];
   for (let properties in filters[currentCategory]) {
     times.push(properties);

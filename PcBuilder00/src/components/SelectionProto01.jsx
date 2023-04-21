@@ -187,7 +187,7 @@ function PostCard({ items }) {
     return filteredProducts;
   };
   const showProductWithFilter = filterProducts(showProduct, filters);
-  console.log("showProduct", showProduct);
+  console.log("showProduct", filters);
 
   ////useEffect
   useEffect(() => {
