@@ -140,7 +140,7 @@ const UserFilter = () => {
                     //   handleChange(e, item.filterName, selectedFilter, currentCategory)
                     // }
                     onChange={(event, newValue) => handleChange2(item.filterName, newValue)}
-                    clearOnBlur={true}
+                    // clearOnBlur={true}
                     size="small"
                     options={options}
                     value={selectedValue}

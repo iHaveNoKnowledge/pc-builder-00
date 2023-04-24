@@ -89,7 +89,11 @@ export const filterSlice = createSlice({
         const { filterName, newValue, currentCategory } = action.payload;
         // const x = { ...state.selectedValueCopy, [filterName]: newValue };
         // state.selectedValueCopy = x;
-        state.filters[currentCategory] = { ...state.filters[currentCategory], ...newValue };
+        state.filters[currentCategory] = {
+          ...state.filters[currentCategory],
+          [filterName]: newValue,
+        };
+        console.log("แอดใหม่ได้ไรมา", state.filters[currentCategory]);
       }
     },
   },
