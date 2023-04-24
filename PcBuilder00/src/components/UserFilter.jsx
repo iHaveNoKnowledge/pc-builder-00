@@ -9,7 +9,7 @@ import Autocomplete from "@mui/material/Autocomplete";
 import Box from "@mui/material/Box";
 import "./UserFilter.css";
 import { useDispatch, useSelector } from "react-redux";
-import { changeTextSearch, updateFilters } from "../slices/userFilterSlice";
+import { changeTextSearch, updateFilters, setSelectedValuesCopy } from "../slices/userFilterSlice";
 
 const UserFilter = () => {
   ////useSelector
@@ -18,6 +18,7 @@ const UserFilter = () => {
   const searchTyped = useSelector((state) => state.userFilter.textSearch);
   const filterOptions = useSelector((state) => state.userFilter.filterOptions);
   const filters = useSelector((state) => state.userFilter.filters);
+  const selectedValuesCopy = useSelector((state) => state.userFilter.selectedValueCopy);
 
   const currentFilters = filters[currentCategory];
 
@@ -38,8 +39,8 @@ const UserFilter = () => {
 
   ////สำหรับใช้ action updateStateFilters
   useEffect(() => {
-    dispatch(updateFilters({ selectedValues, currentCategory }));
-  }, [selectedValues]);
+    dispatch(updateFilters({ selectedValuesCopy, currentCategory }));
+  }, [selectedValuesCopy]);
 
   console.log("stateของfilterปัจจุบัน", selectedFilter);
 
@@ -62,11 +63,13 @@ const UserFilter = () => {
       ...prevValues,
       [filterName]: newValue,
     }));
+    dispatch(setSelectedValuesCopy({ filterName, newValue, currentCategory }));
   };
 
   ////useEffect ใช้สำหรับเลือก ชุดของ filter ว่าจะเอา filter ชุดไหนโดยอิงตามตัวแปร currentCategory(ประเภทสินค้าที่เลือก)
   useEffect(() => {
     setSelectedValues({});
+    dispatch(setSelectedValuesCopy());
     ///เปลี่ยนsetFilter ให้เป็นไปตาม category
     // setSelectedFilter((prev) => {
     //   for (let x in prev) {f
@@ -75,8 +78,7 @@ const UserFilter = () => {
     // });
     console.log("filters[currentCategory]", filters[currentCategory]);
     setSelectedFilter(filters[currentCategory]);
-    console.log("selectedValuesที่เลือกมาเป็นไง", selectedValues);
-    setSelectedValues({});
+    console.log("selectedValuesที่เลือกมาเป็นไง", selectedValuesCopy);
   }, [currentCategory]);
 
   ////useEffect !!!สำหรับ search filter
@@ -130,7 +132,7 @@ const UserFilter = () => {
           <>
             {filterOptions.map((item, index) => {
               const options = item.value.flat();
-              const selectedValue = selectedValues[item.filterName] || "";
+              const selectedValue = selectedValuesCopy[item.filterName] || "";
               return (
                 <Box key={index} sx={{ flexGrow: 1, mx: "2px", mt: "10px", flexBasis: 0 }}>
                   <Autocomplete
@@ -138,6 +140,7 @@ const UserFilter = () => {
                     //   handleChange(e, item.filterName, selectedFilter, currentCategory)
                     // }
                     onChange={(event, newValue) => handleChange2(item.filterName, newValue)}
+                    clearOnBlur={true}
                     size="small"
                     options={options}
                     value={selectedValue}

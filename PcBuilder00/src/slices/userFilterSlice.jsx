@@ -9,6 +9,7 @@ const initialState = {
   },
   filterOptions: null,
   expression: "",
+  selectedValueCopy: {},
 };
 
 export const filterSlice = createSlice({
@@ -81,6 +82,16 @@ export const filterSlice = createSlice({
     clearFilter: (state, action) => {
       state.filters = initialState.filters;
     },
+
+    setSelectedValuesCopy: (state, action) => {
+      console.log("destrucไม่ได้", action.payload);
+      if (action.payload) {
+        const { filterName, newValue, currentCategory } = action.payload;
+        // const x = { ...state.selectedValueCopy, [filterName]: newValue };
+        // state.selectedValueCopy = x;
+        state.filters[currentCategory] = { ...state.filters[currentCategory], ...newValue };
+      }
+    },
   },
 });
 
@@ -90,5 +101,6 @@ export const {
   getCategorizedData,
   updateFilters,
   clearFilter,
+  setSelectedValuesCopy,
 } = filterSlice.actions;
 export default filterSlice.reducer;
