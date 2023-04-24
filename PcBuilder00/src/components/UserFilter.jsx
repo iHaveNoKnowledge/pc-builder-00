@@ -10,7 +10,6 @@ import Box from "@mui/material/Box";
 import "./UserFilter.css";
 import { useDispatch, useSelector } from "react-redux";
 import { changeTextSearch, updateFilters } from "../slices/userFilterSlice";
-import { isEqual } from "lodash";
 
 const UserFilter = () => {
   ////useSelector
@@ -20,7 +19,7 @@ const UserFilter = () => {
   const filterOptions = useSelector((state) => state.userFilter.filterOptions);
   const filters = useSelector((state) => state.userFilter.filters);
 
-  ////useEffect
+  ////useEffect ใช้สำหรับเลือก ชุดของ filter ว่าจะเอา filter ชุดไหนโดยอิงตามตัวแปร currentCategory(ประเภทสินค้าที่เลือก)
   useEffect(() => {
     ///เปลี่ยนsetFilter ให้เป็นไปตาม category
     setSelectedFilter((prev) => {
@@ -31,7 +30,7 @@ const UserFilter = () => {
     setSelectedFilter(filters[currentCategory]);
   }, [currentCategory]);
 
-  console.log("จำนวนfilter จาก category", currentCategory, filters[currentCategory]);
+  const currentFilter = filters[currentCategory];
 
   /////////อันนี้ต้องย้ายไปใช้ที่ selection ///////////////////// เพราะ filter ปกติเป็น object ไม่ใช่ array โค้ก filter เลยไม่ติด
   let times = [];
@@ -40,11 +39,10 @@ const UserFilter = () => {
   }
   console.log("แปลงหัวข้อfilter เป็น array", times);
 
-  const currentFilter = filters[currentCategory];
-
   ////usestate
   const [query, setQuery] = useState("");
   const [selectedFilter, setSelectedFilter] = useState(currentFilter);
+  console.log("เรามี filter ชุดไหนcurrentFilter ", currentFilter);
   const [isSelected, setIsSeleced] = useState(false);
 
   console.log("stateของfilterปัจจุบัน", selectedFilter);
@@ -58,7 +56,7 @@ const UserFilter = () => {
     console.log("อันใหม่หน้าตาเป็นงี้: ", JSON.stringify(selectedFilter));
     dispatch(updateFilters({ selectedFilter, currentCategory }));
 
-    filterName = filterName.charAt(0).toLowerCase() + filterName.slice(1);
+    // filterName = filterName.charAt(0).toLowerCase() + filterName.slice(1);
     setSelectedFilter((prev) => {
       return { ...prev, [filterName]: event.target.textContent };
     });

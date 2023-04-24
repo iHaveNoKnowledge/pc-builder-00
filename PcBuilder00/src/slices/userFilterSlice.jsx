@@ -8,6 +8,7 @@ const initialState = {
     RAM: { brand: "", type: "", count: "" },
   },
   filterOptions: null,
+  expression: "",
 };
 
 export const filterSlice = createSlice({
@@ -35,9 +36,9 @@ export const filterSlice = createSlice({
         const cpuSocketOption = [...new Set(option.map((item) => item.socket))].concat("");
         ///สร้าง option ให้ dropdown
         state.filterOptions = [
-          { filterName: "Brand", value: cpuBrandOption },
-          { filterName: "Model", value: cpuModelOption },
-          { filterName: "Socket", value: cpuSocketOption },
+          { filterName: "brand", value: cpuBrandOption },
+          { filterName: "model", value: cpuModelOption },
+          { filterName: "socket", value: cpuSocketOption },
         ];
       } else if (category === "Mainboard") {
         const mbFormFactorOpt = [...new Set(option.map((item) => item.formFactor))].concat("");
@@ -47,11 +48,11 @@ export const filterSlice = createSlice({
         const mbSlotOpt = [...new Set(option.map((item) => item.slot))].concat("");
         ///สร้าง option ให้ dropdown
         state.filterOptions = [
-          { filterName: "FormFactor", value: mbFormFactorOpt },
-          { filterName: "Brand", value: mbBrandOpt },
-          { filterName: "Socket", value: mbSocketOpt },
-          { filterName: "Chipset", value: mbChipsetOpt },
-          { filterName: "Slot", value: mbSlotOpt },
+          { filterName: "formFactor", value: mbFormFactorOpt },
+          { filterName: "brand", value: mbBrandOpt },
+          { filterName: "socket", value: mbSocketOpt },
+          { filterName: "chipset", value: mbChipsetOpt },
+          { filterName: "slot", value: mbSlotOpt },
         ];
       }
     },
@@ -59,6 +60,16 @@ export const filterSlice = createSlice({
     updateFilters: (state, action) => {
       const { selectedFilter, currentCategory } = action.payload;
       state.filters[currentCategory] = selectedFilter;
+
+      //   (state.filterOptions) => {
+      //     let expression2 = "";
+      //     for (let i = 0; i < state.filterOptions.length; i++) {
+      //       expression2 += `(!filters.${state.filterOptions[i]} || product.${state.filterOptions[i]} === filters.${state.filterOptions[i]})`;
+      //       if (i + 1 !== state.filterOptions.length) {
+      //         expression2 += " && ";
+      //       }
+      //     }
+      //     state.expression = expression2;
     },
   },
 });
