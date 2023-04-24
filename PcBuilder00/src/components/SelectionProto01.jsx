@@ -140,16 +140,12 @@ function PostCard({ items }) {
 
   const mainBoard_display = curItem.filter((item) => {
     if (socket_CPU === "" && typeRAM_RAM === "") {
-      console.log("เงื่อนไข1");
       return item.category === "Mainboard";
     } else if (socket_CPU === "" && typeRAM_RAM !== "") {
-      console.log("เงื่อนไข2", "cpu: ", socket_CPU, "ram: ", typeRAM_RAM);
       return item.category === "Mainboard" && item.typeRAM === typeRAM_RAM;
     } else if (socket_CPU !== "" && typeRAM_RAM === "") {
-      console.log("เงื่อนไข3");
       return item.category === "Mainboard" && item.socket === socket_CPU;
     } else {
-      console.log("เงื่อนไข4");
       return (
         item.category === "Mainboard" && item.socket === socket_CPU && item.typeRAM === typeRAM_RAM
       );
@@ -187,12 +183,9 @@ function PostCard({ items }) {
     return filteredProducts;
   };
   const showProductWithFilter = filterProducts(showProduct, filters);
-  console.log("showProduct", filters);
 
   ////useEffect
   useEffect(() => {
-    console.log("ผลจากโชว์โปรดักส์รวมหมด: ");
-    console.log("ประเภทปัจจุบัน: ", category);
     dispatch(getCategorizedData({ showProduct, category }));
   }, [showProduct]);
 

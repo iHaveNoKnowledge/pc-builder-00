@@ -19,31 +19,27 @@ const UserFilter = () => {
   const filterOptions = useSelector((state) => state.userFilter.filterOptions);
   const filters = useSelector((state) => state.userFilter.filters);
 
-  ////useEffect ใช้สำหรับเลือก ชุดของ filter ว่าจะเอา filter ชุดไหนโดยอิงตามตัวแปร currentCategory(ประเภทสินค้าที่เลือก)
-  useEffect(() => {
-    ///เปลี่ยนsetFilter ให้เป็นไปตาม category
-    setSelectedFilter((prev) => {
-      for (let x in prev) {
-        prev[x];
-      }
-    });
-    setSelectedFilter(filters[currentCategory]);
-  }, [currentCategory]);
-
-  const currentFilter = filters[currentCategory];
+  const currentFilters = filters[currentCategory];
 
   /////////อันนี้ต้องย้ายไปใช้ที่ selection ///////////////////// เพราะ filter ปกติเป็น object ไม่ใช่ array โค้ก filter เลยไม่ติด
-  let times = [];
-  for (let properties in filters[currentCategory]) {
-    times.push(properties);
-  }
-  console.log("แปลงหัวข้อfilter เป็น array", times);
+
+  // let OrderFilterName = [];
+  // for (let properties in filters[currentCategory]) {
+  //   OrderFilterName.push(properties);
+  // }
+  // console.log("แปลงหัวข้อfilter เป็น array", OrderFilterName);
 
   ////usestate
   const [query, setQuery] = useState("");
-  const [selectedFilter, setSelectedFilter] = useState(currentFilter);
-  console.log("เรามี filter ชุดไหนcurrentFilter ", currentFilter);
+  const [selectedFilter, setSelectedFilter] = useState(currentFilters);
+  console.log("เรามี filter ชุดไหนcurrentFilters ", currentFilters);
   const [isSelected, setIsSeleced] = useState(false);
+  const [selectedValues, setSelectedValues] = useState({});
+
+  ////สำหรับใช้ action updateStateFilters
+  useEffect(() => {
+    dispatch(updateFilters({ selectedValues, currentCategory }));
+  }, [selectedValues]);
 
   console.log("stateของfilterปัจจุบัน", selectedFilter);
 
@@ -53,20 +49,42 @@ const UserFilter = () => {
   };
 
   const handleChange = (event, filterName, selectedFilter, currentCategory) => {
-    console.log("อันใหม่หน้าตาเป็นงี้: ", JSON.stringify(selectedFilter));
-    dispatch(updateFilters({ selectedFilter, currentCategory }));
-
-    // filterName = filterName.charAt(0).toLowerCase() + filterName.slice(1);
     setSelectedFilter((prev) => {
       return { ...prev, [filterName]: event.target.textContent };
     });
+
+    console.log("อันใหม่หน้าตาเป็นงี้: ", JSON.stringify(selectedFilter));
+    // filterName = filterName.charAt(0).toLowerCase() + filterName.slice(1);
   };
 
-  ////useEffect
+  const handleChange2 = (filterName, newValue) => {
+    setSelectedValues((prevValues) => ({
+      ...prevValues,
+      [filterName]: newValue,
+    }));
+  };
+
+  ////useEffect ใช้สำหรับเลือก ชุดของ filter ว่าจะเอา filter ชุดไหนโดยอิงตามตัวแปร currentCategory(ประเภทสินค้าที่เลือก)
+  useEffect(() => {
+    setSelectedValues({});
+    ///เปลี่ยนsetFilter ให้เป็นไปตาม category
+    // setSelectedFilter((prev) => {
+    //   for (let x in prev) {f
+    //     prev[x];
+    //   }
+    // });
+    console.log("filters[currentCategory]", filters[currentCategory]);
+    setSelectedFilter(filters[currentCategory]);
+    console.log("selectedValuesที่เลือกมาเป็นไง", selectedValues);
+    setSelectedValues({});
+  }, [currentCategory]);
+
+  ////useEffect !!!สำหรับ search filter
   useEffect(() => {
     dispatch(changeTextSearch(query));
   }, [query]);
 
+  console.log("filterOptionsหน้าตาเปนไง:", filterOptions);
   return (
     <Box className="mainCardFilter">
       <Box>
@@ -90,8 +108,6 @@ const UserFilter = () => {
               ),
             }}
             variant="standard"
-            // onBlur={(e) => setIsSeleced(false)}
-            // onFocus={(e) => setIsSeleced(true)}
           />
           <Box style={{ display: "flex", alignItems: "end" }}>
             <Button
@@ -113,30 +129,21 @@ const UserFilter = () => {
         {filterOptions ? (
           <>
             {filterOptions.map((item, index) => {
+              const options = item.value.flat();
+              const selectedValue = selectedValues[item.filterName] || "";
               return (
                 <Box key={index} sx={{ flexGrow: 1, mx: "2px", mt: "10px", flexBasis: 0 }}>
                   <Autocomplete
-                    onChange={(e) =>
-                      handleChange(e, item.filterName, selectedFilter, currentCategory)
-                    }
-                    // sx={{ width: "71%" }} ปรับ เท่านี้มากสุดละ ไม่งั้น drop down มันจะเบี้ยว
-                    disablePortal={true}
-                    id="size-small-filled"
+                    // onChange={(e) =>
+                    //   handleChange(e, item.filterName, selectedFilter, currentCategory)
+                    // }
+                    onChange={(event, newValue) => handleChange2(item.filterName, newValue)}
                     size="small"
-                    options={item.value}
-                    value={selectedFilter[times[index]]}
-                    getOptionLabel={(options) => `${options}`}
-                    // defaultValue={top100Films[0]}
-                    renderTags={(value, getTagProps) =>
-                      value.map((option, index) => (
-                        <Chip
-                          variant="outlined"
-                          label={option}
-                          size="small"
-                          {...getTagProps({ index })}
-                        />
-                      ))
-                    }
+                    options={options}
+                    value={selectedValue}
+                    getOptionLabel={(option) => `${option}`}
+                    defaultValue={item.value[0]}
+                    isOptionEqualToValue={(option, value) => option === value}
                     //ส่วนหัวข้อinput
                     renderInput={(params) => (
                       <TextField {...params} variant="filled" label={`${item.filterName}`} />

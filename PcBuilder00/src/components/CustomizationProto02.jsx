@@ -24,6 +24,7 @@ import {
   updateSumPrices,
   setMax,
 } from "../slices/cutomizeSliceNoApi";
+import { clearFilter } from "../slices/userFilterSlice";
 import "./CustomizationProto01.css";
 import SumCustomize from "./SumCustomize";
 
@@ -41,6 +42,7 @@ const CustomizationProto02 = () => {
   const handleChange = (category) => {
     console.log("handleChanged", category);
     dispatch(changeCategory(category));
+    if (currentCategory !== category) dispatch(clearFilter());
   };
 
   const handleIncAmt = (category, miniIndex) => {

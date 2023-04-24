@@ -17,7 +17,6 @@ export const filterSlice = createSlice({
   reducers: {
     changeTextSearch: (state, action) => {
       state.textSearch = action.payload;
-      console.log("เสิชว่าไร: ", state.textSearch);
     },
     createFilter: (state, action) => {
       //ยังไม่รู้จะใช้ยังไง
@@ -26,7 +25,6 @@ export const filterSlice = createSlice({
     getCategorizedData: (state, action) => {
       //ใช้รับ showData จาก selectionProto
       const { showProduct: option, category } = action.payload;
-      console.log("getCategorizedDatawได้ไรมา:", category);
 
       state.filterOptions = null;
 
@@ -52,24 +50,36 @@ export const filterSlice = createSlice({
           { filterName: "brand", value: mbBrandOpt },
           { filterName: "socket", value: mbSocketOpt },
           { filterName: "chipset", value: mbChipsetOpt },
-          { filterName: "slot", value: mbSlotOpt },
+          { filterName: "Slot", value: mbSlotOpt },
         ];
       }
     },
 
     updateFilters: (state, action) => {
-      const { selectedFilter, currentCategory } = action.payload;
-      state.filters[currentCategory] = selectedFilter;
+      console.log(
+        "dispatchUpdateFilters selectedValues:",
+        action.payload.selectedValues,
+        "currentCategory:",
+        action.payload.currentCategory
+      );
+      const { selectedValues, currentCategory } = action.payload;
+      console.log("selectedValuesได้ไรมา", selectedValues);
+      state.filters[currentCategory] = { ...state.filters[currentCategory], ...selectedValues };
+      console.log("setแล้วเป็นไง", JSON.stringify(state.filters[currentCategory]));
 
-      //   (state.filterOptions) => {
-      //     let expression2 = "";
-      //     for (let i = 0; i < state.filterOptions.length; i++) {
-      //       expression2 += `(!filters.${state.filterOptions[i]} || product.${state.filterOptions[i]} === filters.${state.filterOptions[i]})`;
-      //       if (i + 1 !== state.filterOptions.length) {
-      //         expression2 += " && ";
-      //       }
-      //     }
-      //     state.expression = expression2;
+      // Generate filter expression dynamically
+      let expression = Object.keys(state.filters)
+        .map((filter) => {
+          return `(!state.filters.${filter} || product.${filter} === state.filters.${filter})`;
+        })
+        .join(" && ");
+
+      // Update the expression state
+      state.expression = expression;
+    },
+
+    clearFilter: (state, action) => {
+      state.filters = initialState.filters;
     },
   },
 });
@@ -79,5 +89,6 @@ export const {
   createFilter,
   getCategorizedData,
   updateFilters,
+  clearFilter,
 } = filterSlice.actions;
 export default filterSlice.reducer;
