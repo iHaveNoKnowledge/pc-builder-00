@@ -466,7 +466,8 @@
       "totalCapacity": "8 GB",
       "effect": "RGB",
       "latency": "16-18-18-38",
-      "color": "Black"
+      "color": "Black",
+      "brand": "Zadak"
     },
     {
       "id": 23,
@@ -483,7 +484,8 @@
       "totalCapacity": "16 GB",
       "effect": "RGB",
       "latency": "38-38-38-84",
-      "color": "White"
+      "color": "White",
+      "brand": "Zadak"
     },
     {
       "id": 24,
@@ -500,7 +502,8 @@
       "totalCapacity": "16 GB",
       "effect": "RGB",
       "latency": "16-18-18-38",
-      "color": "Black"
+      "color": "Black",
+      "brand": "Zadak"
     },
     {
       "id": 25,
@@ -517,7 +520,8 @@
       "totalCapacity": "32 GB",
       "effect": "RGB",
       "latency": "36-36-36-76",
-      "color": "Black"
+      "color": "Black",
+      "brand": "Corsair"
     },
     {
       "id": 26,

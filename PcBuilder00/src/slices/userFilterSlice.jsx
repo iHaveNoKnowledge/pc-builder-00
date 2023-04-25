@@ -51,7 +51,7 @@ export const filterSlice = createSlice({
           { filterName: "brand", value: mbBrandOpt },
           { filterName: "socket", value: mbSocketOpt },
           { filterName: "chipset", value: mbChipsetOpt },
-          { filterName: "Slot", value: mbSlotOpt },
+          { filterName: "slot", value: mbSlotOpt },
         ];
       }
     },
