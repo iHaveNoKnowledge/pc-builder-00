@@ -10,17 +10,24 @@ import Box from "@mui/material/Box";
 import "./UserFilter.css";
 import { useDispatch, useSelector } from "react-redux";
 import { changeTextSearch, updateFilters, setSelectedValuesCopy } from "../slices/userFilterSlice";
+import { Typography } from "@mui/material";
 
 const UserFilter = () => {
-  ////useSelector
+  ////Static Variable
+
+  ////useDispatch
   const dispatch = useDispatch();
+  ////useSelector
   const currentCategory = useSelector((state) => state.category.category);
   const searchTyped = useSelector((state) => state.userFilter.textSearch);
   const filterOptions = useSelector((state) => state.userFilter.filterOptions);
-  const filters = useSelector((state) => state.userFilter.filters);
+  const filters = useSelector((state) => state.userFilter.filtersSet);
   const selectedValuesCopy = useSelector((state) => state.userFilter.selectedValueCopy);
 
-  const currentFilters = filters[currentCategory];
+  console.log("พังเหรอวะ", filters[0].selectedOption);
+  const currentFilters = filters.find((filterItem) => {
+    return filterItem.name === currentCategory.toLowerCase();
+  });
 
   /////////อันนี้ต้องย้ายไปใช้ที่ selection ///////////////////// เพราะ filter ปกติเป็น object ไม่ใช่ array โค้ก filter เลยไม่ติด
 
@@ -32,8 +39,8 @@ const UserFilter = () => {
 
   ////usestate
   const [query, setQuery] = useState("");
-  const [selectedFilter, setSelectedFilter] = useState(currentFilters);
-  console.log("เรามี filter ชุดไหนcurrentFilters ", currentFilters);
+  // const [selectedFilter, setSelectedFilter] = useState(currentFilters.filters);
+  console.log("เรามี filter ชุดไหนcurrentFilters ", currentFilters.filters);
   const [isSelected, setIsSeleced] = useState(false);
   const [selectedValues, setSelectedValues] = useState({});
 
@@ -42,27 +49,24 @@ const UserFilter = () => {
     dispatch(updateFilters({ selectedValuesCopy, currentCategory }));
   }, [selectedValuesCopy]);
 
-  console.log("stateของfilterปัจจุบัน", selectedFilter);
-
   ////handleFunctions
   const handleSearch = (event) => {
     event.preventDefault();
   };
 
   const handleChange = (event, filterName, selectedFilter, currentCategory) => {
-    setSelectedFilter((prev) => {
-      return { ...prev, [filterName]: event.target.textContent };
-    });
-
-    console.log("อันใหม่หน้าตาเป็นงี้: ", JSON.stringify(selectedFilter));
-    // filterName = filterName.charAt(0).toLowerCase() + filterName.slice(1);
+    // setSelectedFilter((prev) => {
+    //   return { ...prev, [filterName]: event.target.textContent };
+    // });
+    // console.log("อันใหม่หน้าตาเป็นงี้: ", JSON.stringify(selectedFilter));
+    // // filterName = filterName.charAt(0).toLowerCase() + filterName.slice(1);
   };
 
   const handleChange2 = (filterName, newValue) => {
-    setSelectedValues((prevValues) => ({
-      ...prevValues,
-      [filterName]: newValue,
-    }));
+    // setSelectedValues((prevValues) => ({
+    //   ...prevValues,
+    //   [filterName]: newValue,
+    // }));
     dispatch(setSelectedValuesCopy({ filterName, newValue, currentCategory }));
   };
 
@@ -77,7 +81,7 @@ const UserFilter = () => {
     //   }
     // });
     console.log("filters[currentCategory]", filters[currentCategory]);
-    setSelectedFilter(filters[currentCategory]);
+    // setSelectedFilter(filters[currentCategory]);
     console.log("selectedValuesที่เลือกมาเป็นไง", selectedValuesCopy);
   }, [currentCategory]);
 
@@ -127,33 +131,47 @@ const UserFilter = () => {
         </form>
       </Box>
 
-      <Box sx={{ display: "flex", flexDirection: "row" }}>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-around",
+          marginY: "10px",
+          flexWrap: "wrap",
+        }}
+      >
         {filterOptions ? (
           <>
-            {filterOptions.map((item, index) => {
-              const options = item.value.flat();
-              const selectedValue = selectedValuesCopy[item.filterName] || "";
-              return (
-                <Box key={index} sx={{ flexGrow: 1, mx: "2px", mt: "10px", flexBasis: 0 }}>
-                  <Autocomplete
-                    // onChange={(e) =>
-                    //   handleChange(e, item.filterName, selectedFilter, currentCategory)
-                    // }
-                    onChange={(event, newValue) => handleChange2(item.filterName, newValue)}
-                    // clearOnBlur={true}
-                    size="small"
-                    options={options}
-                    value={selectedValue}
-                    getOptionLabel={(option) => `${option}`}
-                    defaultValue={item.value[0]}
-                    isOptionEqualToValue={(option, value) => option === value}
-                    //ส่วนหัวข้อinput
-                    renderInput={(params) => (
-                      <TextField {...params} variant="filled" label={`${item.filterName}`} />
-                    )}
-                  />
-                </Box>
-              );
+            {filters.map((item, index) => {
+              if (item.name === currentCategory.toLowerCase()) {
+                return (
+                  <>
+                    {item.filters.map((item2, index2) => {
+                      return (
+                        <>
+                          <Box className="dropDown">
+                            <Box style={{ textAlign: "center" }}>
+                              <Typography variant="h6" fontWeight={{ sm: "600" }}>
+                                {item2.name.charAt(0).toUpperCase() + item2.name.slice(1)}
+                              </Typography>
+                            </Box>
+                            <select onChange={(e) => {}}>
+                              <option value="">Please Select</option>
+                              {item2.choice.map((option, indexOption) => {
+                                return (
+                                  <>
+                                    <option value={option}>{option}</option>
+                                  </>
+                                );
+                              })}
+                            </select>
+                          </Box>
+                        </>
+                      );
+                    })}
+                  </>
+                );
+              }
             })}
           </>
         ) : (

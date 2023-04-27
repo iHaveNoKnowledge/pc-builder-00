@@ -173,16 +173,16 @@ function PostCard({ items }) {
   const showProduct = combineProduct.filter((item) => item.category === category);
 
   // นำ flter มา filter showproduct
-  const filterProducts = (products, filters) => {
-    const filteredProducts = products.filter(
-      (product) =>
-        (!filters.brand || product.brand === filters.brand) &&
-        (!filters.model || product.model === filters.model) &&
-        (!filters.socket || product.socket === filters.socket)
-    );
-    return filteredProducts;
-  };
-  const showProductWithFilter = filterProducts(showProduct, filters);
+  // const filterProducts = (products, filters) => {
+  //   const filteredProducts = products.filter(
+  //     (product) =>
+  //       (!filters.brand || product.brand === filters.brand) &&
+  //       (!filters.model || product.model === filters.model) &&
+  //       (!filters.socket || product.socket === filters.socket)
+  //   );
+  //   return filteredProducts;
+  // };
+  // const showProductWithFilter = filterProducts(showProduct, filters);
 
   ////useEffect
   useEffect(() => {
@@ -198,7 +198,7 @@ function PostCard({ items }) {
     setCurPageNum(pageNum);
   };
 
-  const productPaginated = showProductWithFilter.slice(
+  const productPaginated = showProduct.slice(
     (curPageNum - 1) * cardsPerPage,
     curPageNum * cardsPerPage
   );

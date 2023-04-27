@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   textSearch: null,
-  filters: {
+  selectedOption: {
     CPU: { brand: "", model: "", socket: "" },
     Mainboard: { formFactor: "", brand: "", socket: "", chipset: "", slot: "" },
     RAM: { brand: "", type: "", count: "" },
@@ -10,6 +10,37 @@ const initialState = {
   filterOptions: null,
   expression: "",
   selectedValueCopy: {},
+  filtersSet: [
+    {
+      name: "cpu",
+      filters: [
+        { name: "brand", choice: [] },
+        { name: "model", choice: [] },
+        { name: "socket", choice: [] },
+      ],
+      selectedOption: { brand: "", model: "", socket: "" },
+    },
+    {
+      name: "mainboard",
+      filters: [
+        { name: "formFactor", choice: [] },
+        { name: "brand", choice: [] },
+        { name: "socket", choice: [] },
+        { name: "chipset", choice: [] },
+        { name: "slot", choice: [] },
+      ],
+      state: { formFactor: "", brand: "", socket: "", chipset: "", slot: "" },
+    },
+    {
+      name: "ram",
+      filters: [
+        { name: "brand", choice: [] },
+        { name: "type", choice: [] },
+        { name: "count", choice: [] },
+      ],
+      selectedOptionState: { brand: "", type: "", count: "" },
+    },
+  ],
 };
 
 export const filterSlice = createSlice({
@@ -25,26 +56,30 @@ export const filterSlice = createSlice({
     },
     getCategorizedData: (state, action) => {
       //ใช้รับ showData จาก selectionProto
-      const { showProduct: option, category } = action.payload;
+      const { showProduct: categorizedData, category } = action.payload;
 
       state.filterOptions = null;
 
       if (category === "CPU") {
-        const cpuBrandOption = [...new Set(option.map((item) => item.brand))].concat("");
-        const cpuModelOption = [...new Set(option.map((item) => item.model))].concat("");
-        const cpuSocketOption = [...new Set(option.map((item) => item.socket))].concat("");
+        const cpuBrandOptions = [...new Set(categorizedData.map((item) => item.brand))];
+        const cpuModelOptions = [...new Set(categorizedData.map((item) => item.model))];
+        const cpuSocketOptions = [...new Set(categorizedData.map((item) => item.socket))];
         ///สร้าง option ให้ dropdown
         state.filterOptions = [
-          { filterName: "brand", value: cpuBrandOption },
-          { filterName: "model", value: cpuModelOption },
-          { filterName: "socket", value: cpuSocketOption },
+          { filterName: "brand", value: cpuBrandOptions },
+          { filterName: "model", value: cpuModelOptions },
+          { filterName: "socket", value: cpuSocketOptions },
         ];
+
+        state.filtersSet[0].filters[0].choice = cpuBrandOptions;
+        state.filtersSet[0].filters[1].choice = cpuModelOptions;
+        state.filtersSet[0].filters[2].choice = cpuSocketOptions;
       } else if (category === "Mainboard") {
-        const mbFormFactorOpt = [...new Set(option.map((item) => item.formFactor))].concat("");
-        const mbBrandOpt = [...new Set(option.map((item) => item.brand))].concat("");
-        const mbSocketOpt = [...new Set(option.map((item) => item.socket))].concat("");
-        const mbChipsetOpt = [...new Set(option.map((item) => item.chipset))].concat("");
-        const mbSlotOpt = [...new Set(option.map((item) => item.slot))].concat("");
+        const mbFormFactorOpt = [...new Set(categorizedData.map((item) => item.formFactor))];
+        const mbBrandOpt = [...new Set(categorizedData.map((item) => item.brand))];
+        const mbSocketOpt = [...new Set(categorizedData.map((item) => item.socket))];
+        const mbChipsetOpt = [...new Set(categorizedData.map((item) => item.chipset))];
+        const mbSlotOpt = [...new Set(categorizedData.map((item) => item.slot))];
         ///สร้าง option ให้ dropdown
         state.filterOptions = [
           { filterName: "formFactor", value: mbFormFactorOpt },
@@ -53,6 +88,11 @@ export const filterSlice = createSlice({
           { filterName: "chipset", value: mbChipsetOpt },
           { filterName: "slot", value: mbSlotOpt },
         ];
+        state.filtersSet[1].filters[0].choice = mbFormFactorOpt;
+        state.filtersSet[1].filters[1].choice = mbBrandOpt;
+        state.filtersSet[1].filters[2].choice = mbSocketOpt;
+        state.filtersSet[1].filters[3].choice = mbChipsetOpt;
+        state.filtersSet[1].filters[4].choice = mbSlotOpt;
       }
     },
 
@@ -64,19 +104,19 @@ export const filterSlice = createSlice({
         action.payload.currentCategory
       );
       const { selectedValues, currentCategory } = action.payload;
-      console.log("selectedValuesได้ไรมา", selectedValues);
-      state.filters[currentCategory] = { ...state.filters[currentCategory], ...selectedValues };
-      console.log("setแล้วเป็นไง", JSON.stringify(state.filters[currentCategory]));
+      const filterTarget = state.filtersSet.find(
+        (filterItem) => filterItem.name === currentCategory.toLowerCase()
+      );
 
-      // Generate filter expression dynamically
-      let expression = Object.keys(state.filters)
-        .map((filter) => {
-          return `(!state.filters.${filter} || product.${filter} === state.filters.${filter})`;
-        })
-        .join(" && ");
+      // // Generate filter expression dynamically
+      // let expression = Object.keys(filterTarget)
+      //   .map((filter) => {
+      //     return `(!state.filters.${filter} || product.${filter} === state.filters.${filter})`;
+      //   })
+      //   .join(" && ");
 
-      // Update the expression state
-      state.expression = expression;
+      // // Update the expression state
+      // state.expression = expression;
     },
 
     clearFilter: (state, action) => {
@@ -87,13 +127,11 @@ export const filterSlice = createSlice({
       console.log("destrucไม่ได้", action.payload);
       if (action.payload) {
         const { filterName, newValue, currentCategory } = action.payload;
-        // const x = { ...state.selectedValueCopy, [filterName]: newValue };
-        // state.selectedValueCopy = x;
-        state.filters[currentCategory] = {
-          ...state.filters[currentCategory],
-          [filterName]: newValue,
-        };
-        console.log("แอดใหม่ได้ไรมา", state.filters[currentCategory]);
+        const filterTarget = state.filtersSet.find(
+          (filterItem) => filterItem.name === currentCategory.toLowerCase()
+        );
+        console.log("เข้าได้ป่าวหว่า", { ...filterTarget.selectedOption });
+        Object.assign(filterTarget.selectedOption, { [filterName]: newValue });
       }
     },
   },

@@ -11,3 +11,12 @@
     color: white;
   }
   
+.dropDown {
+    color:rgb(68, 68, 68)
+}
+
+.dropDown select{
+   border: solid 1px rgb(180, 180, 180);
+   color:rgb(85, 85, 85);
+   padding: 
+}
