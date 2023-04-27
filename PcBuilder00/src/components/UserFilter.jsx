@@ -70,6 +70,11 @@ const UserFilter = () => {
     dispatch(setSelectedValuesCopy({ filterName, newValue, currentCategory }));
   };
 
+  const handleChangeOption = (e, currentCategory, keyName) => {
+    const value = e.target.value;
+    dispatch(setSelectedValuesCopy({ value, currentCategory, keyName }));
+  };
+
   ////useEffect ใช้สำหรับเลือก ชุดของ filter ว่าจะเอา filter ชุดไหนโดยอิงตามตัวแปร currentCategory(ประเภทสินค้าที่เลือก)
   useEffect(() => {
     setSelectedValues({});
@@ -130,7 +135,7 @@ const UserFilter = () => {
           </Box>
         </form>
       </Box>
-
+      <Box>{JSON.stringify(filters[0].selectedOptionState.brand)}</Box>
       <Box
         sx={{
           display: "flex",
@@ -155,7 +160,13 @@ const UserFilter = () => {
                                 {item2.name.charAt(0).toUpperCase() + item2.name.slice(1)}
                               </Typography>
                             </Box>
-                            <select onChange={(e) => {}}>
+                            <select
+                              onChange={(e) => {
+                                const keyName = item2.name;
+
+                                handleChangeOption(e, currentCategory, keyName);
+                              }}
+                            >
                               <option value="">Please Select</option>
                               {item2.choice.map((option, indexOption) => {
                                 return (

@@ -18,7 +18,7 @@ const initialState = {
         { name: "model", choice: [] },
         { name: "socket", choice: [] },
       ],
-      selectedOption: { brand: "", model: "", socket: "" },
+      selectedOptionState: { brand: "", model: "", socket: "" },
     },
     {
       name: "mainboard",
@@ -29,7 +29,7 @@ const initialState = {
         { name: "chipset", choice: [] },
         { name: "slot", choice: [] },
       ],
-      state: { formFactor: "", brand: "", socket: "", chipset: "", slot: "" },
+      selectedOptionState: { formFactor: "", brand: "", socket: "", chipset: "", slot: "" },
     },
     {
       name: "ram",
@@ -120,18 +120,21 @@ export const filterSlice = createSlice({
     },
 
     clearFilter: (state, action) => {
-      state.filters = initialState.filters;
+      state.filtersSet.map((item, index) => {
+        item.selectedOptionState = initialState.filtersSet[index].selectedOptionState;
+      });
     },
 
     setSelectedValuesCopy: (state, action) => {
       console.log("destrucไม่ได้", action.payload);
       if (action.payload) {
-        const { filterName, newValue, currentCategory } = action.payload;
+        const { value: newValue, currentCategory, keyName } = action.payload;
+
         const filterTarget = state.filtersSet.find(
           (filterItem) => filterItem.name === currentCategory.toLowerCase()
         );
         console.log("เข้าได้ป่าวหว่า", { ...filterTarget.selectedOption });
-        Object.assign(filterTarget.selectedOption, { [filterName]: newValue });
+        Object.assign(filterTarget.selectedOptionState, { [keyName]: newValue });
       }
     },
   },
