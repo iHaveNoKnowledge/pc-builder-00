@@ -2,10 +2,37 @@
 .mainCardFilter {
     background-color: #FFFFFF;
     border-radius: 10px 10px 0px 0px;
-    padding: 8px 16px;
+    padding: 8px 16px 15px;
     margin-block: 6px;
     box-shadow: 2px 2px 2px 1px rgba(92, 92, 92, 0.5);
+    position:relative;
 }
+
+.resetBtn {
+    background-color: pink;
+    display: flex;
+    justify-content: flex-end;
+    position: absolute;
+    left: 90.5%;
+    bottom: 0%;
+    transition: width 0.01s ,left 0.5s ease-in-out;
+    animation-direction: reverse;
+    width: 40px;
+    height:20px;
+    text-align: right;
+}
+
+.resetBtn:hover {
+   left:0;
+   width: 100%;
+    /* padding-right: 100%; */
+   
+    width: 100%;
+    animation-direction: reverse;
+    
+    
+}
+
 
 .my-option {
     background-color: blue;
@@ -14,9 +41,12 @@
   
 .dropDown {
     color:rgb(68, 68, 68);
+   
 }
 
 .dropDown select{
    border: solid 1px rgb(180, 180, 180);
    color:rgb(85, 85, 85);
+   height: 25px;
+   border-radius: 2px;
 }

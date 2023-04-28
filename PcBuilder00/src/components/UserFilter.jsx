@@ -43,11 +43,6 @@ const UserFilter = () => {
     dispatch(setSelectedValuesCopy({ value, currentCategory, keyName }));
   };
 
-  ////useEffect ใช้สำหรับเลือก ชุดของ filter ว่าจะเอา filter ชุดไหนโดยอิงตามตัวแปร currentCategory(ประเภทสินค้าที่เลือก)
-  // useEffect(() => { น่าจะไม่ได้ใช้
-  //   dispatch(setSelectedValuesCopy());
-  // }, [currentCategory]);
-
   ////useEffect !!!สำหรับ search filter
   useEffect(() => {
     dispatch(changeTextSearch(query));
@@ -93,19 +88,20 @@ const UserFilter = () => {
           </Box>
         </form>
       </Box>
-      <Box>{JSON.stringify(filters[0].selectedOptionState)}</Box>
+      {/* <Box>{JSON.stringify(filters[0].selectedOptionState)}</Box>
       <Box>{JSON.stringify(filters[1].selectedOptionState)}</Box>
-      <Box>{JSON.stringify(filters[2].selectedOptionState)}</Box>
+      <Box>{JSON.stringify(filters[2].selectedOptionState)}</Box> */}
       <Box>
         <Grid
           sx={{
-            mb: "10px",
-            pt: "10px",
+            pt: "5px",
+            mb: "5px",
 
             boxSizing: "border-box",
           }}
           container
-          spacing={2}
+          rowSpacing={0}
+          columnSpacing={1}
         >
           {filterOptions ? (
             <>
@@ -155,6 +151,9 @@ const UserFilter = () => {
             </>
           )}
         </Grid>
+      </Box>
+      <Box className="resetBtn">
+        <Box>reset</Box>
       </Box>
     </Box>
   );
