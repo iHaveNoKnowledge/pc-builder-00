@@ -5,7 +5,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import Stack from "@mui/material/Stack";
 import Chip from "@mui/material/Chip";
 import Button from "@mui/material/Button";
-import Autocomplete from "@mui/material/Autocomplete";
+import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import "./UserFilter.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -135,63 +135,68 @@ const UserFilter = () => {
           </Box>
         </form>
       </Box>
-      <Box>{JSON.stringify(filters[0].selectedOptionState.brand)}</Box>
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-around",
-          marginY: "10px",
-          flexWrap: "wrap",
-        }}
-      >
-        {filterOptions ? (
-          <>
-            {filters.map((item, index) => {
-              if (item.name === currentCategory.toLowerCase()) {
-                return (
-                  <>
-                    {item.filters.map((item2, index2) => {
-                      return (
-                        <>
-                          <Box className="dropDown">
-                            <Box style={{ textAlign: "center" }}>
-                              <Typography variant="h6" fontWeight={{ sm: "600" }}>
-                                {item2.name.charAt(0).toUpperCase() + item2.name.slice(1)}
-                              </Typography>
-                            </Box>
-                            <select
-                              onChange={(e) => {
-                                const keyName = item2.name;
+      {/* <Box>{JSON.stringify(filters[0].selectedOptionState)}</Box>
+      <Box>{JSON.stringify(filters[1].selectedOptionState)}</Box>
+      <Box>{JSON.stringify(filters[2].selectedOptionState)}</Box> */}
+      <Box>
+        <Grid
+          sx={{
+            mb: "10px",
+            pt: "10px",
 
-                                handleChangeOption(e, currentCategory, keyName);
-                              }}
-                            >
-                              <option value="">Please Select</option>
-                              {item2.choice.map((option, indexOption) => {
-                                return (
-                                  <>
-                                    <option value={option}>{option}</option>
-                                  </>
-                                );
-                              })}
-                            </select>
-                          </Box>
-                        </>
-                      );
-                    })}
-                  </>
-                );
-              }
-            })}
-          </>
-        ) : (
-          <>
-            <Box sx={{ display: "flex" }}>
-              <Box sx={{ flexGrow: 1, height: "54.18px" }}></Box>
-            </Box>
-          </>
-        )}
+            boxSizing: "border-box",
+          }}
+          container
+          spacing={2}
+        >
+          {filterOptions ? (
+            <>
+              {filters.map((item, index) => {
+                if (item.name === currentCategory.toLowerCase()) {
+                  return (
+                    <>
+                      {item.filters.map((item2, index2) => {
+                        return (
+                          <>
+                            <Grid className="dropDown" item xs={4}>
+                              <Box style={{ textAlign: "center" }}>
+                                <Typography variant="h6" fontWeight={{ sm: "600" }}>
+                                  {item2.name.charAt(0).toUpperCase() + item2.name.slice(1)}
+                                </Typography>
+                              </Box>
+                              <select
+                                style={{ width: "100%" }}
+                                onChange={(e) => {
+                                  const keyName = item2.name;
+                                  handleChangeOption(e, currentCategory, keyName);
+                                }}
+                              >
+                                <option value="">Please Select</option>
+                                {item2.choice.map((option, indexOption) => {
+                                  return (
+                                    <>
+                                      <option value={option}>{option}</option>
+                                    </>
+                                  );
+                                })}
+                              </select>
+                            </Grid>
+                          </>
+                        );
+                      })}
+                    </>
+                  );
+                }
+              })}
+            </>
+          ) : (
+            <>
+              <Box sx={{ display: "flex" }}>
+                <Box sx={{ flexGrow: 1, height: "54.18px" }}></Box>
+              </Box>
+            </>
+          )}
+        </Grid>
       </Box>
     </Box>
   );
