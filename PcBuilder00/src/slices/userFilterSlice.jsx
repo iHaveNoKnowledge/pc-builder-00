@@ -8,7 +8,9 @@ const initialState = {
     RAM: { brand: "", type: "", count: "" },
   },
   filterOptions: null,
-  expression: "",
+  expression: ` (!selectedOpts.brand || product.brand === selectedOpts.brand) &&
+  (!selectedOpts.model || product.model === selectedOpts.model) &&
+  (!selectedOpts.socket || product.socket === selectedOpts.socket)`,
   selectedValueCopy: {},
   filtersSet: [
     {
@@ -40,6 +42,17 @@ const initialState = {
       ],
       selectedOptionState: { brand: "", type: "", count: "" },
     },
+    { name: "vga", filters: [], selectedOptionState: {} },
+    { name: "ssd", filters: [], selectedOptionState: {} },
+    { name: "hdd", filters: [], selectedOptionState: {} },
+    { name: "psu", filters: [], selectedOptionState: {} },
+    { name: "case", filters: [], selectedOptionState: {} },
+    { name: "cooling", filters: [], selectedOptionState: {} },
+    { name: "accesories diy", filters: [], selectedOptionState: {} },
+    { name: "monitor", filters: [], selectedOptionState: {} },
+    { name: "mouse", filters: [], selectedOptionState: {} },
+    { name: "keyboard", filters: [], selectedOptionState: {} },
+    { name: "os", filters: [], selectedOptionState: {} },
   ],
 };
 
@@ -66,9 +79,9 @@ export const filterSlice = createSlice({
         const cpuSocketOptions = [...new Set(categorizedData.map((item) => item.socket))];
         ///สร้าง option ให้ dropdown
         state.filterOptions = [
-          { filterName: "brand", value: cpuBrandOptions },
-          { filterName: "model", value: cpuModelOptions },
-          { filterName: "socket", value: cpuSocketOptions },
+          { filterName: "brand", value: cpuBrandOptions.sort() },
+          { filterName: "model", value: cpuModelOptions.sort() },
+          { filterName: "socket", value: cpuSocketOptions.sort() },
         ];
 
         state.filtersSet[0].filters[0].choice = cpuBrandOptions;
@@ -82,11 +95,11 @@ export const filterSlice = createSlice({
         const mbSlotOpt = [...new Set(categorizedData.map((item) => item.slot))];
         ///สร้าง option ให้ dropdown
         state.filterOptions = [
-          { filterName: "formFactor", value: mbFormFactorOpt },
-          { filterName: "brand", value: mbBrandOpt },
-          { filterName: "socket", value: mbSocketOpt },
-          { filterName: "chipset", value: mbChipsetOpt },
-          { filterName: "slot", value: mbSlotOpt },
+          { filterName: "formFactor", value: mbFormFactorOpt.sort() },
+          { filterName: "brand", value: mbBrandOpt.sort() },
+          { filterName: "socket", value: mbSocketOpt.sort() },
+          { filterName: "chipset", value: mbChipsetOpt.sort() },
+          { filterName: "slot", value: mbSlotOpt.sort() },
         ];
         state.filtersSet[1].filters[0].choice = mbFormFactorOpt;
         state.filtersSet[1].filters[1].choice = mbBrandOpt;
@@ -96,28 +109,26 @@ export const filterSlice = createSlice({
       }
     },
 
-    updateFilters: (state, action) => {
-      console.log(
-        "dispatchUpdateFilters selectedValues:",
-        action.payload.selectedValues,
-        "currentCategory:",
-        action.payload.currentCategory
-      );
-      const { selectedValues, currentCategory } = action.payload;
-      const filterTarget = state.filtersSet.find(
-        (filterItem) => filterItem.name === currentCategory.toLowerCase()
-      );
+    // updateFilters: (state, action) => {
+    //   console.log(
+    //     "dispatchUpdateFilters selectedValues:",
+    //     action.payload.selectedValues,
+    //     "currentCategory:",
+    //     action.payload.currentCategory
+    //   );
+    //   const { selectedValues, currentCategory } = action.payload;
+    //   const filterTarget = state.filtersSet.find(
+    //     (filterItem) => filterItem.name === currentCategory.toLowerCase()
+    //   );
 
-      // // Generate filter expression dynamically
-      // let expression = Object.keys(filterTarget)
-      //   .map((filter) => {
-      //     return `(!state.filters.${filter} || product.${filter} === state.filters.${filter})`;
-      //   })
-      //   .join(" && ");
+    //   // Generate filter expression dynamically
+    //   let expression = Object.keys(filterTarget)
+    //     .map((filter) => {
+    //       return `(!state.filters.${filter} || product.${filter} === state.filters.${filter})`;
+    //     })
+    //     .join(" && ");
 
-      // // Update the expression state
-      // state.expression = expression;
-    },
+    // },
 
     clearFilter: (state, action) => {
       state.filtersSet.map((item, index) => {
@@ -125,16 +136,29 @@ export const filterSlice = createSlice({
       });
     },
 
+    ////
     setSelectedValuesCopy: (state, action) => {
       console.log("destrucไม่ได้", action.payload);
       if (action.payload) {
         const { value: newValue, currentCategory, keyName } = action.payload;
-
         const filterTarget = state.filtersSet.find(
           (filterItem) => filterItem.name === currentCategory.toLowerCase()
         );
-        console.log("เข้าได้ป่าวหว่า", { ...filterTarget.selectedOption });
         Object.assign(filterTarget.selectedOptionState, { [keyName]: newValue });
+
+        // Generate filter expression dynamically
+        // Object.keys(objParam)กรณีอยากloop obj แต่ obj มัน loop ไม่ได้
+        // Object.keys(objParam)ดึงค่า เฉพาะ key จาก objParam มาแล้วเรียงเปน arrayใหม่
+        let expression = Object.keys(filterTarget.selectedOptionState)
+          .map((filter) => {
+            return `(!selectedOpts.${filter} || product.${filter} === selectedOpts.${filter})`;
+          })
+          .join(" && ");
+        // Update the expression state
+        state.expression = expression;
+        console.log("จะได้ expressionแบบไหน", expression);
+      } else {
+        console.log("ไม่มี Payload ของ action");
       }
     },
   },

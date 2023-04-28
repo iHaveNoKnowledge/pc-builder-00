@@ -74,7 +74,8 @@ function PostCard({ items }) {
   ////useSelector!!!!!!!!!!!!!!!
   const category = useSelector((state) => state.category.category);
   const parts = useSelector((state) => state.noApiCustomize.partData);
-  const filters = useSelector((state) => state.userFilter.filters);
+  const filters = useSelector((state) => state.userFilter.filtersSet);
+  const expression = useSelector((state) => state.userFilter.expression);
 
   ////เงื่อนไขcompatibility
   ///หาเงื่อนไข จากการเลือก mainboard
@@ -173,37 +174,39 @@ function PostCard({ items }) {
   const showProduct = combineProduct.filter((item) => item.category === category);
 
   // นำ flter มา filter showproduct
-  // const filterProducts = (products, filters) => {
-  //   const filteredProducts = products.filter(
-  //     (product) =>
-  //       (!filters.brand || product.brand === filters.brand) &&
-  //       (!filters.model || product.model === filters.model) &&
-  //       (!filters.socket || product.socket === filters.socket)
-  //   );
-  //   return filteredProducts;
-  // };
-  // const showProductWithFilter = filterProducts(showProduct, filters);
+  const filterProducts = (products, selectedOpts, expression) => {
+    console.log("ไม่มี brand ได้ไง", expression);
+    const filteredProducts = products.filter(
+      (product) => eval(expression)
+      // (!selectedOpts.brand || product.brand === selectedOpts.brand) &&
+      // (!selectedOpts.model || product.model === selectedOpts.model) &&
+      // (!selectedOpts.socket || product.socket === selectedOpts.socket)
+    );
 
-  ////useEffect
-  useEffect(() => {
-    dispatch(getCategorizedData({ showProduct, category }));
-  }, [showProduct]);
+    return filteredProducts;
+  };
+  const { selectedOptionState: selectedOpts } = filters.find(
+    (filter) => filter.name === category.toLowerCase()
+  );
+  console.log("หายหมด", expression);
+  const showProductWithFilter = filterProducts(showProduct, selectedOpts, expression);
 
   ////pagination////
   const [curPageNum, setCurPageNum] = useState(1);
 
   const cardsPerPage = 6;
-  const totalPages = Math.ceil(showProduct.length / cardsPerPage);
+  const totalPages = Math.ceil(showProductWithFilter.length / cardsPerPage);
   const handleChangePage = (pageNum) => {
     setCurPageNum(pageNum);
   };
 
-  const productPaginated = showProduct.slice(
+  const productPaginated = showProductWithFilter.slice(
     (curPageNum - 1) * cardsPerPage,
     curPageNum * cardsPerPage
   );
-
+  ////useEffect //ถ้าuseEffect รับ showProduct ตัวนี้ไป param2 มันจะ inf loop จนพัง
   useEffect(() => {
+    dispatch(getCategorizedData({ showProduct, category }));
     if (curPageNum > totalPages) {
       setCurPageNum(1);
     }

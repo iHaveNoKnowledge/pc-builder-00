@@ -287,17 +287,6 @@ export const customizeSlice = createSlice({
           // }
         }
 
-        // if (state.partData[index].typeMax < action.payload) {
-        //   state.partData[index] = {
-        //     ...state.partData[index],
-        //     typeMax: action.payload,
-        //   };
-        // } else if (state.partData[index].typeMax === action.payload) {
-        //   state.partData[index].typeMax = 4;
-        // } else if (state.partData[index].typeMax > action.payload) {
-        //   state.partData[index].typeMax = action.payload;
-        // }
-
         let categorizedListItem = state.partData[index].listItems;
 
         let totalAmount = 0; // Initialize the total amount to 0
@@ -316,13 +305,6 @@ export const customizeSlice = createSlice({
     },
 
     updateSumAmount: (state, action) => {
-      // ////อันเดิม
-      // console.log("updateSumAmount: ", state.summations.sumAmount);
-      // const sumArr = map(state.partData, "selectAmount"); // lodash นะ อย่า งง ตอนแรกลืมว่า syntax ไร
-      // const sum = sumArr.reduce((acc, item) => acc + item, 0);
-      // console.log("จำนวนรวม: ", sum);
-      // state.summations.sumAmount = sumArr.reduce((acc, item) => acc + item, 0);
-
       let sumAllAmount = 0;
       map(state.partData, (item) => {
         map(item.listItems, (miniItem) => {
@@ -334,19 +316,6 @@ export const customizeSlice = createSlice({
     },
 
     updateSumPrices: (state, action) => {
-      // ////อันเดิม
-      // const sumPriceArr = state.partData.map((obj) => {
-      //   return obj.price * obj.selectAmount;
-      // });
-      // const sumDiscountArr = state.partData.map((obj) => {
-      //   return obj.price - obj.price * (1 - obj.discount) * obj.selectAmount;
-      // });
-      // console.log("afterreducr:", sumPriceArr);
-      // state.summations.sumDiscount = sumDiscountArr.reduce((acc, item) => acc + item, 0);
-      // state.summations.sum_SRP = sumPriceArr.reduce((acc, item) => acc + item, 0);
-      // console.log("ราคาต้น", state.summations.sum_SRP);
-      // console.log("ส่วนลด", state.summations.sumDiscount);
-
       let sumAll_SRP_Prices = 0;
       let sumAllDiscount = 0;
       let sumAllPrices = 0;

@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
 import SearchIcon from "@mui/icons-material/Search";
-import Stack from "@mui/material/Stack";
-import Chip from "@mui/material/Chip";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -24,18 +22,9 @@ const UserFilter = () => {
   const filters = useSelector((state) => state.userFilter.filtersSet);
   const selectedValuesCopy = useSelector((state) => state.userFilter.selectedValueCopy);
 
-  console.log("พังเหรอวะ", filters[0].selectedOption);
   const currentFilters = filters.find((filterItem) => {
     return filterItem.name === currentCategory.toLowerCase();
   });
-
-  /////////อันนี้ต้องย้ายไปใช้ที่ selection ///////////////////// เพราะ filter ปกติเป็น object ไม่ใช่ array โค้ก filter เลยไม่ติด
-
-  // let OrderFilterName = [];
-  // for (let properties in filters[currentCategory]) {
-  //   OrderFilterName.push(properties);
-  // }
-  // console.log("แปลงหัวข้อfilter เป็น array", OrderFilterName);
 
   ////usestate
   const [query, setQuery] = useState("");
@@ -44,30 +33,9 @@ const UserFilter = () => {
   const [isSelected, setIsSeleced] = useState(false);
   const [selectedValues, setSelectedValues] = useState({});
 
-  ////สำหรับใช้ action updateStateFilters
-  useEffect(() => {
-    dispatch(updateFilters({ selectedValuesCopy, currentCategory }));
-  }, [selectedValuesCopy]);
-
   ////handleFunctions
   const handleSearch = (event) => {
     event.preventDefault();
-  };
-
-  const handleChange = (event, filterName, selectedFilter, currentCategory) => {
-    // setSelectedFilter((prev) => {
-    //   return { ...prev, [filterName]: event.target.textContent };
-    // });
-    // console.log("อันใหม่หน้าตาเป็นงี้: ", JSON.stringify(selectedFilter));
-    // // filterName = filterName.charAt(0).toLowerCase() + filterName.slice(1);
-  };
-
-  const handleChange2 = (filterName, newValue) => {
-    // setSelectedValues((prevValues) => ({
-    //   ...prevValues,
-    //   [filterName]: newValue,
-    // }));
-    dispatch(setSelectedValuesCopy({ filterName, newValue, currentCategory }));
   };
 
   const handleChangeOption = (e, currentCategory, keyName) => {
@@ -76,19 +44,9 @@ const UserFilter = () => {
   };
 
   ////useEffect ใช้สำหรับเลือก ชุดของ filter ว่าจะเอา filter ชุดไหนโดยอิงตามตัวแปร currentCategory(ประเภทสินค้าที่เลือก)
-  useEffect(() => {
-    setSelectedValues({});
-    dispatch(setSelectedValuesCopy());
-    ///เปลี่ยนsetFilter ให้เป็นไปตาม category
-    // setSelectedFilter((prev) => {
-    //   for (let x in prev) {f
-    //     prev[x];
-    //   }
-    // });
-    console.log("filters[currentCategory]", filters[currentCategory]);
-    // setSelectedFilter(filters[currentCategory]);
-    console.log("selectedValuesที่เลือกมาเป็นไง", selectedValuesCopy);
-  }, [currentCategory]);
+  // useEffect(() => { น่าจะไม่ได้ใช้
+  //   dispatch(setSelectedValuesCopy());
+  // }, [currentCategory]);
 
   ////useEffect !!!สำหรับ search filter
   useEffect(() => {
@@ -135,9 +93,9 @@ const UserFilter = () => {
           </Box>
         </form>
       </Box>
-      {/* <Box>{JSON.stringify(filters[0].selectedOptionState)}</Box>
+      <Box>{JSON.stringify(filters[0].selectedOptionState)}</Box>
       <Box>{JSON.stringify(filters[1].selectedOptionState)}</Box>
-      <Box>{JSON.stringify(filters[2].selectedOptionState)}</Box> */}
+      <Box>{JSON.stringify(filters[2].selectedOptionState)}</Box>
       <Box>
         <Grid
           sx={{
@@ -154,10 +112,10 @@ const UserFilter = () => {
               {filters.map((item, index) => {
                 if (item.name === currentCategory.toLowerCase()) {
                   return (
-                    <>
+                    <React.Fragment key={index}>
                       {item.filters.map((item2, index2) => {
                         return (
-                          <>
+                          <React.Fragment key={index2}>
                             <Grid className="dropDown" item xs={4}>
                               <Box style={{ textAlign: "center" }}>
                                 <Typography variant="h6" fontWeight={{ sm: "600" }}>
@@ -174,17 +132,17 @@ const UserFilter = () => {
                                 <option value="">Please Select</option>
                                 {item2.choice.map((option, indexOption) => {
                                   return (
-                                    <>
-                                      <option value={option}>{option}</option>
-                                    </>
+                                    <option value={option} key={indexOption}>
+                                      {option}
+                                    </option>
                                   );
                                 })}
                               </select>
                             </Grid>
-                          </>
+                          </React.Fragment>
                         );
                       })}
-                    </>
+                    </React.Fragment>
                   );
                 }
               })}
