@@ -111,7 +111,7 @@ const UserFilter = () => {
           rowSpacing={0}
           columnSpacing={1}
         >
-          {filterOptions ? (
+          {filters ? (
             <>
               {filters.map((item, index) => {
                 if (item.name === currentCategory.toLowerCase()) {

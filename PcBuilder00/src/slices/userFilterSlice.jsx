@@ -87,24 +87,33 @@ export const filterSlice = createSlice({
         state.filtersSet[0].filters[1].choices = cpuModelOptions;
         state.filtersSet[0].filters[2].choices = cpuSocketOptions;
       } else if (category === "Mainboard") {
-        const mbFormFactorOpt = [...new Set(categorizedData.map((item) => item.formFactor))];
-        const mbBrandOpt = [...new Set(categorizedData.map((item) => item.brand))];
-        const mbSocketOpt = [...new Set(categorizedData.map((item) => item.socket))];
-        const mbChipsetOpt = [...new Set(categorizedData.map((item) => item.chipset))];
-        const mbSlotOpt = [...new Set(categorizedData.map((item) => item.slot))];
+        const mbFormFactorOpts = [...new Set(categorizedData.map((item) => item.formFactor))];
+        const mbBrandOpts = [...new Set(categorizedData.map((item) => item.brand))];
+        const mbSocketOpts = [...new Set(categorizedData.map((item) => item.socket))];
+        const mbChipsetOpts = [...new Set(categorizedData.map((item) => item.chipset))];
+        const mbSlotOpts = [...new Set(categorizedData.map((item) => item.slot))];
         ///สร้าง option ให้ dropdown
         state.filterOptions = [
-          { filterName: "formFactor", value: mbFormFactorOpt.sort() },
-          { filterName: "brand", value: mbBrandOpt.sort() },
-          { filterName: "socket", value: mbSocketOpt.sort() },
-          { filterName: "chipset", value: mbChipsetOpt.sort() },
-          { filterName: "slot", value: Number(mbSlotOpt.sort()) },
+          { filterName: "formFactor", value: mbFormFactorOpts.sort() },
+          { filterName: "brand", value: mbBrandOpts.sort() },
+          { filterName: "socket", value: mbSocketOpts.sort() },
+          { filterName: "chipset", value: mbChipsetOpts.sort() },
+          { filterName: "slot", value: Number(mbSlotOpts.sort()) },
         ];
-        state.filtersSet[1].filters[0].choices = mbFormFactorOpt;
-        state.filtersSet[1].filters[1].choices = mbBrandOpt;
-        state.filtersSet[1].filters[2].choices = mbSocketOpt;
-        state.filtersSet[1].filters[3].choices = mbChipsetOpt;
-        state.filtersSet[1].filters[4].choices = mbSlotOpt;
+        state.filtersSet[1].filters[0].choices = mbFormFactorOpts;
+        state.filtersSet[1].filters[1].choices = mbBrandOpts;
+        state.filtersSet[1].filters[2].choices = mbSocketOpts;
+        state.filtersSet[1].filters[3].choices = mbChipsetOpts;
+        state.filtersSet[1].filters[4].choices = mbSlotOpts;
+      } else if (category === "RAM") {
+        const ramBrandOpts = [...new Set(categorizedData.map((item) => item.brand))];
+        const ramTypeOpts = [...new Set(categorizedData.map((item) => item.typeRAM))];
+        const ramCountOpts = [...new Set(categorizedData.map((item) => item.count))];
+        const optsPerFilter = [ramBrandOpts, ramTypeOpts, ramCountOpts];
+        state.filtersSet[2].filters.map((filter, index) => {
+          console.log(`${JSON.stringify(filter.choices)} = ${optsPerFilter[index]}`);
+          return (filter.choices = [...optsPerFilter[index]]);
+        });
       }
     },
 
@@ -117,15 +126,24 @@ export const filterSlice = createSlice({
     ////
     setSelectedValuesCopy: (state, action) => {
       console.log("destrucไม่ได้", action.payload);
+
       if (action.payload) {
-        const { value: newValue, currentCategory, keyName } = action.payload;
+        const { value, currentCategory, keyName } = action.payload;
+        const numTypeKey = ["slot", "count"];
+        const testResult = numTypeKey.find((item) => item === keyName);
+        let newValue = value;
+
+        if (testResult) {
+          newValue = Number(value);
+        }
+
         const filterTarget = state.filtersSet.find(
           (filterSetItem) => filterSetItem.name === currentCategory.toLowerCase()
         );
         Object.assign(filterTarget.selectedOptionState, { [keyName]: newValue });
 
         // Generate filter expression dynamically
-        // Object.keys(objParam)กรณีอยากloop obj แต่ obj มัน loop ไม่ได้
+        // กรณีอยากloop obj แต่ obj มัน loop ไม่ได้ ใช้ตัวนี้-> Object.keys(objParam)
         // Object.keys(objParam)ดึงค่า เฉพาะ key จาก objParam มาแล้วเรียงเปน arrayใหม่
         let expression = Object.keys(filterTarget.selectedOptionState)
           .map((filter) => {

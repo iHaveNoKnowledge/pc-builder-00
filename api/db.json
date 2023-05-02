@@ -26,7 +26,7 @@
       "srp": 19290,
       "promotionPrice": 9066,
       "series": "AMD Ryzen 3000 Series",
-      "model": "Ryzen 5 3600",
+      "model": "Ryzen 5",
       "brand": "AMD"
     },
     {
@@ -38,7 +38,7 @@
       "srp": 5715,
       "promotionPrice": 2800,
       "series": "AMD Ryzen 5000 Series",
-      "model": "Ryzen 7 5800X",
+      "model": "Ryzen 7",
       "brand": "AMD"
     },
     {
@@ -50,7 +50,7 @@
       "srp": 1250,
       "promotionPrice": 313,
       "series": "Intel Core 12th Gen Processors",
-      "model": "Core i5-12400",
+      "model": "Core i5",
       "brand": "INTEL"
     },
     {
@@ -62,7 +62,7 @@
       "srp": 17270,
       "promotionPrice": 8290,
       "series": "Intel Core 13th Gen Processors",
-      "model": "Core i9-13900F",
+      "model": "Core i9",
       "brand": "INTEL"
     },
     {
@@ -290,7 +290,7 @@
       "srp": 14740,
       "promotionPrice": 1179,
       "series": "AMD Ryzen 7000 Series",
-      "model": "Ryzen 9 7900X3D",
+      "model": "Ryzen 9",
       "brand": "AMD"
     },
     {
@@ -302,7 +302,7 @@
       "srp": 17885,
       "promotionPrice": 5366,
       "series": "AMD Ryzen 7000 Series",
-      "model": "Ryzen 9 7900X",
+      "model": "Ryzen 9",
       "brand": "AMD"
     }
   ]
