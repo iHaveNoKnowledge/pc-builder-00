@@ -94,10 +94,10 @@ const UserFilter = () => {
           </Box>
         </form>
       </Box>
+      {/* เอาไว้ดูค่าใน state สำหรับ dev
       <Box>{JSON.stringify(filtersSet[0].selectedOptionState)}</Box>
       <Box>{JSON.stringify(filtersSet[1].selectedOptionState)}</Box>
-      <Box>{JSON.stringify(filtersSet[2].selectedOptionState)}</Box>
-
+      <Box>{JSON.stringify(filtersSet[2].selectedOptionState)}</Box> */}
       <Box>
         <Grid
           sx={{
@@ -162,7 +162,7 @@ const UserFilter = () => {
           )}
         </Grid>
       </Box>
-      {filtersSet ? (
+      {currentFilters ? (
         <>
           <Box className="resetBtn">
             <Box>

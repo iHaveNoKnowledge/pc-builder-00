@@ -116,7 +116,6 @@ export const customizeSlice = createSlice({
         slot: action.payload.slot,
         max: action.payload.max,
       };
-      console.log("newArray มีค่า:", newArray);
 
       ////เช็คสมาชิกใหม่ว่า load เท่าไหร่
       const typeMaxConsumtion = newArray.selectAmount * newArray.count;
