@@ -20,16 +20,15 @@ const UserFilter = () => {
   const currentCategory = useSelector((state) => state.category.category);
   const searchTyped = useSelector((state) => state.userFilter.textSearch);
   const filterOptions = useSelector((state) => state.userFilter.filterOptions);
-  const filters = useSelector((state) => state.userFilter.filtersSet);
+  const filtersSet = useSelector((state) => state.userFilter.filtersSet);
 
-  const currentFilters = filters.find((filterItem) => {
+  const currentFilters = filtersSet.find((filterItem) => {
     return filterItem.name === currentCategory.toLowerCase();
   });
 
   ////usestate
   const [query, setQuery] = useState("");
   // const [selectedFilter, setSelectedFilter] = useState(currentFilters.filters);
-  console.log("เรามี filter ชุดไหนcurrentFilters ", currentFilters.filters);
   const [currentOpt, setCuerrentOpt] = useState([]);
   ////useRef
   const selectRef = useRef(null);
@@ -39,7 +38,8 @@ const UserFilter = () => {
   // };
 
   ////handleFunctions
-  const handleSearch = (event) => {
+  const handleSearch = (e) => {
+    console.log("ค้นห่าสินค้า", e.target);
     event.preventDefault();
   };
 
@@ -55,7 +55,6 @@ const UserFilter = () => {
     dispatch(changeTextSearch(query));
   }, [query]);
 
-  console.log("filterOptionsหน้าตาเปนไง:", filterOptions);
   return (
     <Box className="mainCardFilter">
       <Box>
@@ -95,9 +94,9 @@ const UserFilter = () => {
           </Box>
         </form>
       </Box>
-      <Box>{JSON.stringify(filters[0].selectedOptionState)}</Box>
-      <Box>{JSON.stringify(filters[1].selectedOptionState)}</Box>
-      <Box>{JSON.stringify(filters[2].selectedOptionState)}</Box>
+      <Box>{JSON.stringify(filtersSet[0].selectedOptionState)}</Box>
+      <Box>{JSON.stringify(filtersSet[1].selectedOptionState)}</Box>
+      <Box>{JSON.stringify(filtersSet[2].selectedOptionState)}</Box>
 
       <Box>
         <Grid
@@ -111,9 +110,9 @@ const UserFilter = () => {
           rowSpacing={0}
           columnSpacing={1}
         >
-          {filters ? (
+          {filtersSet ? (
             <>
-              {filters.map((item, index) => {
+              {filtersSet.map((item, index) => {
                 if (item.name === currentCategory.toLowerCase()) {
                   return (
                     <React.Fragment key={index}>
@@ -124,7 +123,8 @@ const UserFilter = () => {
                             <Grid className="dropDown" item xs={4}>
                               <Box style={{ textAlign: "center" }}>
                                 <Typography variant="h6" fontWeight={{ sm: "600" }}>
-                                  {item2.name.charAt(0).toUpperCase() + item2.name.slice(1)}
+                                  {/* {item2.name.charAt(0).toUpperCase() + item2.name.slice(1)} */}
+                                  {item2.displayName}
                                 </Typography>
                               </Box>
                               <select
@@ -162,7 +162,7 @@ const UserFilter = () => {
           )}
         </Grid>
       </Box>
-      {filterOptions ? (
+      {filtersSet ? (
         <>
           <Box className="resetBtn">
             <Box>

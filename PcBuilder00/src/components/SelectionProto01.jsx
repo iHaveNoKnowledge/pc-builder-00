@@ -73,9 +73,12 @@ function PostCard({ items }) {
 
   ////useSelector!!!!!!!!!!!!!!!
   const category = useSelector((state) => state.category.category);
+
   const parts = useSelector((state) => state.noApiCustomize.partData);
+
   const filters = useSelector((state) => state.userFilter.filtersSet);
   const expression = useSelector((state) => state.userFilter.expression);
+  const textSearch = useSelector((state) => state.userFilter.textSearch);
 
   ////เงื่อนไขcompatibility
   ///หาเงื่อนไข จากการเลือก mainboard
@@ -107,7 +110,7 @@ function PostCard({ items }) {
   });
 
   ///หาเงื่อนไข จากการเลือก RAM
-  let typeRAM_RAM = "xx";
+  let typeRAM_RAM;
   parts.find((item) => {
     if (item.category === "RAM") {
       if (item.listItems.length !== 0) {
@@ -118,8 +121,6 @@ function PostCard({ items }) {
       return item.listItems[0];
     }
   });
-
-  // const { typeRAM: typeRAM_RAM } = ramCondition.listItems[0];
 
   ///สำหรับโชวสินค้าให้เลือกตามหมวดหมู่
   //กรองสินค้าCPU
@@ -132,13 +133,6 @@ function PostCard({ items }) {
   });
 
   //กรองสินค้าMB
-  // const mainBoard_display2 = curItem.filter((item) => {
-  //   if (1 === 1) {
-  //     console.log("ได้ไรมา", eiei)
-  //     return item.category === "Mainboard"
-  //   }
-  // })
-
   const mainBoard_display = curItem.filter((item) => {
     if (socket_CPU === "" && typeRAM_RAM === "") {
       return item.category === "Mainboard";
@@ -172,23 +166,23 @@ function PostCard({ items }) {
 
   // นำ display ทั้งหมดมา filter เฉพาะ ประเภทที่ user เลือก
   const showProduct = combineProduct.filter((item) => item.category === category);
+  const searchedShowProduct = showProduct.filter((item) => {
+    return (
+      item.title.toLowerCase().includes(textSearch.toLowerCase()) ||
+      (item.socket && item.socket.toLowerCase().includes(textSearch.toLowerCase()))
+    );
+  });
 
   // นำ flter มา filter showproduct
   const filterProducts = (products, selectedOpts, expression) => {
-    const filteredProducts = products.filter(
-      (product) => eval(expression)
-      // (!selectedOpts.brand || product.brand === selectedOpts.brand) &&
-      // (!selectedOpts.model || product.model === selectedOpts.model) &&
-      // (!selectedOpts.socket || product.socket === selectedOpts.socket)
-    );
-
+    const filteredProducts = products.filter((product) => eval(expression));
     return filteredProducts;
   };
   const { selectedOptionState: selectedOpts } = filters.find(
     (filter) => filter.name === category.toLowerCase()
   );
 
-  const showProductWithFilter = filterProducts(showProduct, selectedOpts, expression);
+  const showProductWithFilter = filterProducts(searchedShowProduct, selectedOpts, expression);
 
   ////pagination////
   const [curPageNum, setCurPageNum] = useState(1);

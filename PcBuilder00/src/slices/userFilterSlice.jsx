@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  textSearch: null,
+  textSearch: "",
   selectedOption: {
     CPU: { brand: "", model: "", socket: "" },
     Mainboard: { formFactor: "", brand: "", socket: "", chipset: "", slot: 0 },
@@ -15,31 +15,31 @@ const initialState = {
     {
       name: "cpu",
       filters: [
-        { name: "brand", choices: [] },
-        { name: "model", choices: [] },
-        { name: "socket", choices: [] },
+        { name: "brand", displayName: "Brand", choices: [] },
+        { name: "model", displayName: "Model", choices: [] },
+        { name: "socket", displayName: "Socket", choices: [] },
       ],
       selectedOptionState: { brand: "", model: "", socket: "" },
     },
     {
       name: "mainboard",
       filters: [
-        { name: "formFactor", choices: [] },
-        { name: "brand", choices: [] },
-        { name: "socket", choices: [] },
-        { name: "chipset", choices: [] },
-        { name: "slot", choices: [] },
+        { name: "formFactor", displayName: "FormFactor", choices: [] },
+        { name: "brand", displayName: "Brand", choices: [] },
+        { name: "socket", displayName: "Socket", choices: [] },
+        { name: "chipset", displayName: "Chipset", choices: [] },
+        { name: "slot", displayName: "Slot", choices: [] },
       ],
       selectedOptionState: { formFactor: "", brand: "", socket: "", chipset: "", slot: 0 },
     },
     {
       name: "ram",
       filters: [
-        { name: "brand", choices: [] },
-        { name: "type", choices: [] },
-        { name: "count", choices: [] },
+        { name: "brand", displayName: "Brand", choices: [] },
+        { name: "typeRAM", displayName: "Type", choices: [] },
+        { name: "count", displayName: "Count", choices: [] },
       ],
-      selectedOptionState: { brand: "", type: "", count: 0 },
+      selectedOptionState: { brand: "", typeRAM: "", count: 0 },
     },
     { name: "vga", filters: [], selectedOptionState: {} },
     { name: "ssd", filters: [], selectedOptionState: {} },
@@ -60,6 +60,7 @@ export const filterSlice = createSlice({
   initialState,
   reducers: {
     changeTextSearch: (state, action) => {
+      console.log("redux action: ", action.payload);
       state.textSearch = action.payload;
     },
     createFilter: (state, action) => {
@@ -110,10 +111,9 @@ export const filterSlice = createSlice({
         const ramTypeOpts = [...new Set(categorizedData.map((item) => item.typeRAM))];
         const ramCountOpts = [...new Set(categorizedData.map((item) => item.count))];
         const optsPerFilter = [ramBrandOpts, ramTypeOpts, ramCountOpts];
-        state.filtersSet[2].filters.map((filter, index) => {
-          console.log(`${JSON.stringify(filter.choices)} = ${optsPerFilter[index]}`);
-          return (filter.choices = [...optsPerFilter[index]]);
-        });
+        state.filtersSet[2].filters.map(
+          (filter, index) => (filter.choices = [...optsPerFilter[index]])
+        );
       }
     },
 
