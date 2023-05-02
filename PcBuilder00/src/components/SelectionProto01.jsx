@@ -175,7 +175,6 @@ function PostCard({ items }) {
 
   // นำ flter มา filter showproduct
   const filterProducts = (products, selectedOpts, expression) => {
-    console.log("ไม่มี brand ได้ไง", expression);
     const filteredProducts = products.filter(
       (product) => eval(expression)
       // (!selectedOpts.brand || product.brand === selectedOpts.brand) &&
@@ -188,7 +187,7 @@ function PostCard({ items }) {
   const { selectedOptionState: selectedOpts } = filters.find(
     (filter) => filter.name === category.toLowerCase()
   );
-  console.log("หายหมด", expression);
+
   const showProductWithFilter = filterProducts(showProduct, selectedOpts, expression);
 
   ////pagination////

@@ -4,43 +4,42 @@ const initialState = {
   textSearch: null,
   selectedOption: {
     CPU: { brand: "", model: "", socket: "" },
-    Mainboard: { formFactor: "", brand: "", socket: "", chipset: "", slot: "" },
-    RAM: { brand: "", type: "", count: "" },
+    Mainboard: { formFactor: "", brand: "", socket: "", chipset: "", slot: 0 },
+    RAM: { brand: "", type: "", count: 0 },
   },
   filterOptions: null,
   expression: ` (!selectedOpts.brand || product.brand === selectedOpts.brand) &&
   (!selectedOpts.model || product.model === selectedOpts.model) &&
   (!selectedOpts.socket || product.socket === selectedOpts.socket)`,
-  selectedValueCopy: {},
   filtersSet: [
     {
       name: "cpu",
       filters: [
-        { name: "brand", choice: [] },
-        { name: "model", choice: [] },
-        { name: "socket", choice: [] },
+        { name: "brand", choices: [] },
+        { name: "model", choices: [] },
+        { name: "socket", choices: [] },
       ],
       selectedOptionState: { brand: "", model: "", socket: "" },
     },
     {
       name: "mainboard",
       filters: [
-        { name: "formFactor", choice: [] },
-        { name: "brand", choice: [] },
-        { name: "socket", choice: [] },
-        { name: "chipset", choice: [] },
-        { name: "slot", choice: [] },
+        { name: "formFactor", choices: [] },
+        { name: "brand", choices: [] },
+        { name: "socket", choices: [] },
+        { name: "chipset", choices: [] },
+        { name: "slot", choices: [] },
       ],
-      selectedOptionState: { formFactor: "", brand: "", socket: "", chipset: "", slot: "" },
+      selectedOptionState: { formFactor: "", brand: "", socket: "", chipset: "", slot: 0 },
     },
     {
       name: "ram",
       filters: [
-        { name: "brand", choice: [] },
-        { name: "type", choice: [] },
-        { name: "count", choice: [] },
+        { name: "brand", choices: [] },
+        { name: "type", choices: [] },
+        { name: "count", choices: [] },
       ],
-      selectedOptionState: { brand: "", type: "", count: "" },
+      selectedOptionState: { brand: "", type: "", count: 0 },
     },
     { name: "vga", filters: [], selectedOptionState: {} },
     { name: "ssd", filters: [], selectedOptionState: {} },
@@ -84,9 +83,9 @@ export const filterSlice = createSlice({
           { filterName: "socket", value: cpuSocketOptions.sort() },
         ];
 
-        state.filtersSet[0].filters[0].choice = cpuBrandOptions;
-        state.filtersSet[0].filters[1].choice = cpuModelOptions;
-        state.filtersSet[0].filters[2].choice = cpuSocketOptions;
+        state.filtersSet[0].filters[0].choices = cpuBrandOptions;
+        state.filtersSet[0].filters[1].choices = cpuModelOptions;
+        state.filtersSet[0].filters[2].choices = cpuSocketOptions;
       } else if (category === "Mainboard") {
         const mbFormFactorOpt = [...new Set(categorizedData.map((item) => item.formFactor))];
         const mbBrandOpt = [...new Set(categorizedData.map((item) => item.brand))];
@@ -99,38 +98,17 @@ export const filterSlice = createSlice({
           { filterName: "brand", value: mbBrandOpt.sort() },
           { filterName: "socket", value: mbSocketOpt.sort() },
           { filterName: "chipset", value: mbChipsetOpt.sort() },
-          { filterName: "slot", value: mbSlotOpt.sort() },
+          { filterName: "slot", value: Number(mbSlotOpt.sort()) },
         ];
-        state.filtersSet[1].filters[0].choice = mbFormFactorOpt;
-        state.filtersSet[1].filters[1].choice = mbBrandOpt;
-        state.filtersSet[1].filters[2].choice = mbSocketOpt;
-        state.filtersSet[1].filters[3].choice = mbChipsetOpt;
-        state.filtersSet[1].filters[4].choice = mbSlotOpt;
+        state.filtersSet[1].filters[0].choices = mbFormFactorOpt;
+        state.filtersSet[1].filters[1].choices = mbBrandOpt;
+        state.filtersSet[1].filters[2].choices = mbSocketOpt;
+        state.filtersSet[1].filters[3].choices = mbChipsetOpt;
+        state.filtersSet[1].filters[4].choices = mbSlotOpt;
       }
     },
 
-    // updateFilters: (state, action) => {
-    //   console.log(
-    //     "dispatchUpdateFilters selectedValues:",
-    //     action.payload.selectedValues,
-    //     "currentCategory:",
-    //     action.payload.currentCategory
-    //   );
-    //   const { selectedValues, currentCategory } = action.payload;
-    //   const filterTarget = state.filtersSet.find(
-    //     (filterItem) => filterItem.name === currentCategory.toLowerCase()
-    //   );
-
-    //   // Generate filter expression dynamically
-    //   let expression = Object.keys(filterTarget)
-    //     .map((filter) => {
-    //       return `(!state.filters.${filter} || product.${filter} === state.filters.${filter})`;
-    //     })
-    //     .join(" && ");
-
-    // },
-
-    clearFilter: (state, action) => {
+    clearSelectedFilter: (state, action) => {
       state.filtersSet.map((item, index) => {
         item.selectedOptionState = initialState.filtersSet[index].selectedOptionState;
       });
@@ -142,7 +120,7 @@ export const filterSlice = createSlice({
       if (action.payload) {
         const { value: newValue, currentCategory, keyName } = action.payload;
         const filterTarget = state.filtersSet.find(
-          (filterItem) => filterItem.name === currentCategory.toLowerCase()
+          (filterSetItem) => filterSetItem.name === currentCategory.toLowerCase()
         );
         Object.assign(filterTarget.selectedOptionState, { [keyName]: newValue });
 
@@ -169,7 +147,7 @@ export const {
   createFilter,
   getCategorizedData,
   updateFilters,
-  clearFilter,
+  clearSelectedFilter,
   setSelectedValuesCopy,
 } = filterSlice.actions;
 export default filterSlice.reducer;

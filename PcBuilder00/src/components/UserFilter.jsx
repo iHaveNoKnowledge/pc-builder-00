@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
 import SearchIcon from "@mui/icons-material/Search";
@@ -9,6 +9,7 @@ import "./UserFilter.css";
 import { useDispatch, useSelector } from "react-redux";
 import { changeTextSearch, updateFilters, setSelectedValuesCopy } from "../slices/userFilterSlice";
 import { Typography } from "@mui/material";
+import { clearSelectedFilter } from "../slices/userFilterSlice";
 
 const UserFilter = () => {
   ////Static Variable
@@ -20,7 +21,6 @@ const UserFilter = () => {
   const searchTyped = useSelector((state) => state.userFilter.textSearch);
   const filterOptions = useSelector((state) => state.userFilter.filterOptions);
   const filters = useSelector((state) => state.userFilter.filtersSet);
-  const selectedValuesCopy = useSelector((state) => state.userFilter.selectedValueCopy);
 
   const currentFilters = filters.find((filterItem) => {
     return filterItem.name === currentCategory.toLowerCase();
@@ -30,8 +30,13 @@ const UserFilter = () => {
   const [query, setQuery] = useState("");
   // const [selectedFilter, setSelectedFilter] = useState(currentFilters.filters);
   console.log("เรามี filter ชุดไหนcurrentFilters ", currentFilters.filters);
-  const [isSelected, setIsSeleced] = useState(false);
-  const [selectedValues, setSelectedValues] = useState({});
+  const [currentOpt, setCuerrentOpt] = useState([]);
+  ////useRef
+  const selectRef = useRef(null);
+  // const handleResetSelect = () => {
+  //   console.log("selectRef:", selectRef.current);
+  //   selectRef.current.value = "x";
+  // };
 
   ////handleFunctions
   const handleSearch = (event) => {
@@ -40,6 +45,8 @@ const UserFilter = () => {
 
   const handleChangeOption = (e, currentCategory, keyName) => {
     const value = e.target.value;
+    const test = value == Number(value);
+    console.log("ตรวจType:", value, ":", typeof value, "ลบกันได้ไหม", test);
     dispatch(setSelectedValuesCopy({ value, currentCategory, keyName }));
   };
 
@@ -88,9 +95,10 @@ const UserFilter = () => {
           </Box>
         </form>
       </Box>
-      {/* <Box>{JSON.stringify(filters[0].selectedOptionState)}</Box>
+      <Box>{JSON.stringify(filters[0].selectedOptionState)}</Box>
       <Box>{JSON.stringify(filters[1].selectedOptionState)}</Box>
-      <Box>{JSON.stringify(filters[2].selectedOptionState)}</Box> */}
+      <Box>{JSON.stringify(filters[2].selectedOptionState)}</Box>
+
       <Box>
         <Grid
           sx={{
@@ -110,6 +118,7 @@ const UserFilter = () => {
                   return (
                     <React.Fragment key={index}>
                       {item.filters.map((item2, index2) => {
+                        const filterName = item2.name;
                         return (
                           <React.Fragment key={index2}>
                             <Grid className="dropDown" item xs={4}>
@@ -119,6 +128,7 @@ const UserFilter = () => {
                                 </Typography>
                               </Box>
                               <select
+                                value={item.selectedOptionState[filterName]}
                                 style={{ width: "100%" }}
                                 onChange={(e) => {
                                   const keyName = item2.name;
@@ -126,7 +136,7 @@ const UserFilter = () => {
                                 }}
                               >
                                 <option value="">Please Select</option>
-                                {item2.choice.map((option, indexOption) => {
+                                {item2.choices.map((option, indexOption) => {
                                   return (
                                     <option value={option} key={indexOption}>
                                       {option}
@@ -146,15 +156,30 @@ const UserFilter = () => {
           ) : (
             <>
               <Box sx={{ display: "flex" }}>
-                <Box sx={{ flexGrow: 1, height: "54.18px" }}></Box>
+                <Box sx={{ flexGrow: 1, height: "51.72px" }}></Box>
               </Box>
             </>
           )}
         </Grid>
       </Box>
-      <Box className="resetBtn">
-        <Box>reset</Box>
-      </Box>
+      {filterOptions ? (
+        <>
+          <Box className="resetBtn">
+            <Box>
+              <Button
+                disableRipple={true}
+                sx={{ p: 0, backgroundColor: "#42528A" }}
+                variant="contained"
+                onClick={() => dispatch(clearSelectedFilter())}
+              >
+                reset
+              </Button>
+            </Box>
+          </Box>
+        </>
+      ) : (
+        <></>
+      )}
     </Box>
   );
 };
