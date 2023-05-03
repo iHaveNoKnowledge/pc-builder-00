@@ -212,7 +212,7 @@ function PostCard({ items }) {
       <Grid container spacing="10" columns={{ xs: 4, sm: 12, md: 12 }}>
         {productPaginated.map((item, index) => {
           return (
-            <Grid item xs={8} sm={6} md={4} key={index}>
+            <Grid item xs={8} sm={4} md={4} key={index}>
               <Card sx={{ boxShadow: "2px 2px 2px 1px rgba(92, 92, 92, 0.5)" }}>
                 <CardActionArea
                   onClick={(e) => {
@@ -236,7 +236,7 @@ function PostCard({ items }) {
                     // image="https://res.cloudinary.com/itcity-production/image/upload/f_auto,q_auto,w_400/v1654663622/product/product-master/uvmlmnvqxiob28e35bp9.png"
                     image={item.img}
                     title={item.title}
-                    // sx={{ height: "300px" }}
+                    sx={{ height: "200px", objectFit: "contain" }}
                   />
 
                   <CardContent>
