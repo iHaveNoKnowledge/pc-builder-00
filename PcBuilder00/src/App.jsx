@@ -9,7 +9,7 @@ import { Box, Container, Grid } from "@mui/material";
 function App() {
   return (
     <div className="App">
-      <Container disableGutters sx={{ minHeight: "auto" }}>
+      <Container disableGutters sx={{ height: "auto", maxWidth: "100%" }}>
         {/* outergrid */}
         <Grid container columns={{ xs: 4, sm: 12, md: 12 }} rowHeight={25}>
           {/* TOPPICK QUICK SET ZONE */}

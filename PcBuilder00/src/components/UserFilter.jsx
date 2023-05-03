@@ -171,8 +171,8 @@ const UserFilter = () => {
               <Button
                 disableRipple={true}
                 sx={{ p: 0, backgroundColor: "#42528A" }}
-                variant="contained"
                 onClick={() => dispatch(clearSelectedFilter())}
+                variant="contained"
               >
                 reset
               </Button>

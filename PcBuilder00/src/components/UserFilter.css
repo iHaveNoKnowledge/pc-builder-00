@@ -8,13 +8,9 @@
     position:relative;
 }
 
-.resetBtn {
-    background-color: #42528A;
+.resetBtn {  
     display: flex;
     justify-content: flex-end;
-    position: absolute;
-    left: 89.21%;
-    bottom: 0%;
     transition: width 0.001s ,left 0.1s ease-in-out;
     /* width: 40px; */
     /* height:20px; */
