@@ -25,6 +25,8 @@ const UserFilter = () => {
   const currentFilters = filtersSet.find((filterItem) => {
     return filterItem.name === currentCategory.toLowerCase();
   });
+  //isOptAvailable?
+  const isFiltContained = Object.keys(currentFilters.selectedOptionState);
 
   ////usestate
   const [query, setQuery] = useState("");
@@ -110,7 +112,7 @@ const UserFilter = () => {
           rowSpacing={0}
           columnSpacing={1}
         >
-          {filtersSet ? (
+          {isFiltContained ? (
             <>
               {filtersSet.map((item, index) => {
                 if (item.name === currentCategory.toLowerCase()) {
@@ -162,7 +164,7 @@ const UserFilter = () => {
           )}
         </Grid>
       </Box>
-      {currentFilters ? (
+      {isFiltContained.length > 0 ? (
         <>
           <Box className="resetBtn">
             <Box>
