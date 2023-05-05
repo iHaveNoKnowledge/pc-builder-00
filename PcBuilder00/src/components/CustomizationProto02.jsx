@@ -180,7 +180,7 @@ const CustomizationProto02 = () => {
                                         -
                                       </Box>
                                       {/* จำนวนสินค้า */}
-                                      <Box style={{ marginTop: "5px" }}>
+                                      <Box style={{ marginTop: "2px" }}>
                                         {miniItem.selectAmount}
                                       </Box>
 
