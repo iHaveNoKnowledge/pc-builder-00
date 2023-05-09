@@ -10,6 +10,7 @@ const styles = StyleSheet.create({
     display: "flex",
     justifyContent: "center",
     fontFamily: "Chaka_Petch",
+    paddingBottom: "100px",
   },
   whiteBG2: {
     backgroundColor: "white",
@@ -122,7 +123,7 @@ const ReportA4 = () => {
               {/* lower Cluster */}
               <View style={styles.mainContent}>
                 <View>
-                  {[...Array(5)].map((item, index) => {
+                  {[...Array(50)].map((item, index) => {
                     return (
                       <View key={index}>
                         <Text>{index + 1}list item loopกินไก่ป่าว</Text>
