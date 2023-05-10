@@ -1,15 +1,16 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
 import CustomizationProto01 from "./components/CustomizationProto01";
 import CustomizationProto02 from "./components/CustomizationProto02";
 import SelectionProto01 from "./components/SelectionProto01";
 import ReportA4 from "./components/Documents/ReportA4";
+import TestReportA4 from "./components/Documents/testReportA4";
 import { Box, Container, Grid } from "@mui/material";
 import { Route, Routes, BrowserRouter, NavLink, useNavigate } from "react-router-dom";
 import { PDFViewer } from "@react-pdf/renderer";
 
 function App() {
-  // ReactPDF.renderToStream(<ReportA4 />);
+  useEffect(() => {}, [ReportA4]);
   return (
     <BrowserRouter>
       <div className="App">
@@ -35,9 +36,14 @@ function App() {
             </Grid>
 
             <Grid>
+              ทดลอง
               <PDFViewer style={{ width: "775px", height: "800px" }}>
                 <ReportA4 />
               </PDFViewer>
+            </Grid>
+
+            <Grid>
+              <TestReportA4 />
             </Grid>
           </Grid>
           {/* <PostsList /> เอาไว้เทสดึง api */}

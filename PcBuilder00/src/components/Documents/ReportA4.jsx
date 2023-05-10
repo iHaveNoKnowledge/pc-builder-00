@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Page, Text, View, Document, StyleSheet, Image, Font } from "@react-pdf/renderer";
 import x from "../../fonts/ChakraPetch-Medium.ttf";
-import logoIMG from "../../../public/itLogo-1.png";
+import logoIMG from "../../assets/itLogo-1.png";
 
 // Create styles
 
@@ -69,105 +69,179 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
     border: "0.015rem dashed blue",
   },
+  // page: {
+  //   display: "flex",
+  //   flexDirection: "column",
+  //   alignItems: "center",
+  //   justifyContent: "center",
+  //   backgroundColor: "#E4E4E4",
+  //   padding: 10,
+  // },
+  // table: {
+  //   display: "table",
+  //   width: "auto",
+  //   borderStyle: "solid",
+  //   borderWidth: 1,
+  //   borderRightWidth: 0,
+  //   borderBottomWidth: 0,
+  // },
+  // tableRow: {
+  //   display: "table-row",
+  //   flexDirection: "row",
+  //   borderBottomWidth: 1,
+  //   borderBottomColor: "#bfbfbf",
+  // },
+  // tableCell: {
+  //   display: "ta",
+  //   margin: "auto",
+  //   fontSize: "10px",
+  //   padding: "5px",
+  //   borderStyle: "solid",
+  //   borderWidth: "1px",
+  //   borderColor: "#bfbfbf",
+  // },
+  table: {
+    width: "auto",
+    borderStyle: "dashed",
+    borderWidth: 1,
+    borderRightWidth: 0,
+    borderBottomWidth: 0,
+    padding: "1.9cm 1.32cm 3.67cm 1.9cm",
+  },
+  tableRow: {
+    display: "flex",
+    margin: "auto",
+    flexDirection: "row",
+    borderStyle: "solid",
+    borderWidth: 1,
+    borderRightWidth: 0,
+    borderBottomWidth: 0,
+  },
+
+  tableRowIn: {
+    display: "flex",
+    flexDirection: "row",
+  },
+
+  tableCol: {
+    width: "25%",
+    borderStyle: "solid",
+    borderWidth: 1,
+    borderLeftWidth: 0,
+    borderTopWidth: 0,
+    display: "flex",
+    justifyContent: "center",
+  },
+
+  tableColIn: {
+    display: "flex",
+    justifyContent: "center",
+    // width: "25%",
+    borderStyle: "solid",
+    borderWidth: 1,
+    borderLeftWidth: 0,
+    borderTopWidth: 0,
+  },
+
+  tableColIMG: {
+    // verticalAlign: "middle",
+    // textAlign: "center",
+    width: "25%",
+    borderStyle: "solid",
+    borderWidth: 1,
+    borderLeftWidth: 0,
+    borderTopWidth: 0,
+    display: "flex",
+    justifyContent: "center",
+  },
+  // tableCell: { margin: "2.5px", fontSize: 10 },
+  tableCell: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    fontSize: 10,
+    margin: "2.5px",
+  },
+  tableCellIn: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    fontSize: 15,
+  },
 });
 
 // Create Document Component
 const ReportA4 = () => {
-  console.log("xxxxx", x);
   Font.register({
     family: "Chaka_Petch",
     src: x,
   });
+
+  const refTest1 = useRef();
+
+  useEffect(() => {
+    console.log("change", refTest1.current);
+  }, [refTest1.current]);
   return (
     <>
-      <Document>
-        <Page size="A4" style={styles.containner}>
-          <View style={{ padding: "20px" }}>
-            <View style={{ backgroundColor: "#fff", padding: "20px" }}>
-              {/* uppercluster */}
-              <View fixed>
-                <View style={styles.header}>
-                  <View style={styles.itemPrintFirstChild}>
-                    <Image src={logoIMG} style={{}} />
-                  </View>
-                  <Text style={styles.itemPrintMidChild}>สาขาบ้านหนองประดู่</Text>
-                  <View style={styles.itemPrintLastChild}>
-                    <View>
-                      <Text>Tel:</Text>
-                      <Text>_______________________</Text>
-                    </View>
-                    <View
-                      style={{
-                        borderLeft: "1px solid #000",
-                        marginLeft: "10px",
-                        paddingLeft: "10px",
-                      }}
-                    >
-                      <Text>Name:</Text>
-                      <Text>_______________________</Text>
-                    </View>
-                    <View
-                      style={{
-                        borderLeft: "1px solid #000",
-                        marginLeft: "10px",
-                        paddingLeft: "10px",
-                      }}
-                    >
-                      <Text>Sale:</Text>
-                      <Text>_______________________</Text>
-                    </View>
-                  </View>
+      <Document ref={refTest1}>
+        <Page size="A4" style={styles.page}>
+          <View style={styles.table}>
+            {/* TableHeader */}
+            <View style={styles.tableRow}>
+              <View style={styles.tableColIMG}>
+                <View style={styles.tableCell}>
+                  <Image
+                    src={logoIMG}
+                    style={{ backgroundColor: "#0033e6", padding: "3px 2px 1px 2.5px" }}
+                  ></Image>
                 </View>
               </View>
-
-              {/* lower Cluster */}
-              <View style={styles.mainContent}>
-                <View>
-                  {[...Array(50)].map((item, index) => {
-                    return (
-                      <View key={index}>
-                        <Text>{index + 1}list item loopกินไก่ป่าว</Text>
-                        {index !== 0 && index % 25 === 0 && (
-                          <View
-                            style={{
-                              position: "absolute",
-                              bottom: 0,
-                              left: 0,
-                              right: 0,
-                              borderTop: "1px solid #000",
-                            }}
-                          />
-                        )}
-                      </View>
-                    );
-                  })}
-                </View>
-
-                <View style={{ display: "flex", marginTop: "20px" }}>
-                  <View
-                    style={{
-                      border: "1px dashed red",
-                      flex: 1,
-                      height: "50px",
-                      marginRight: "10px",
-                    }}
-                  >
-                    <Text>1</Text>
+              <View style={styles.tableCol}>
+                <Text style={styles.tableCell}>
+                  Branch Details Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ducimus
+                  recusandae porro labore. Quod magni, minima eos eligendi
+                </Text>
+              </View>
+              <View style={styles.tableCol}>
+                <View style={styles.tableRowIn}>
+                  <View style={styles.tableColIn}>
+                    <Text style={styles.tableCellIn}>Tel:</Text>
                   </View>
-                  <View
-                    style={{
-                      border: "1px dashed red",
-                      flex: 1,
-                      height: "50px",
-                      marginRight: "10px",
-                    }}
-                  >
-                    <Text>2</Text>
-                  </View>
-                  <View style={{ border: "1px dashed red", flex: 1, height: "50px" }}>
-                    <Text>3</Text>
+                  <View style={styles.tableColIn}>
+                    <Text>______</Text>
                   </View>
                 </View>
+
+                <View style={styles.tableRowIn}>
+                  <View style={styles.tableColIn}>
+                    <Text style={styles.tableCellIn}>Name:</Text>
+                  </View>
+                  <View style={styles.tableColIn}>
+                    <Text>______</Text>
+                  </View>
+                </View>
+
+                <View style={styles.tableRowIn}>
+                  <View style={styles.tableColIn}>
+                    <Text style={styles.tableCellIn}>Sale:</Text>
+                  </View>
+                  <Text style={styles.tableColIn}>
+                    <Text>______</Text>
+                  </Text>
+                </View>
+              </View>
+            </View>
+            {/* TableContent */}
+            <View style={styles.tableRow}>
+              <View style={styles.tableCol}>
+                <Text style={styles.tableCell}>React-PDF</Text>
+              </View>
+              <View style={styles.tableCol}>
+                <Text style={styles.tableCell}>3 User </Text>
+              </View>
+              <View style={styles.tableCol}>
+                <Text style={styles.tableCell}>2019-02-20 - 2020-02-19</Text>
               </View>
             </View>
           </View>
