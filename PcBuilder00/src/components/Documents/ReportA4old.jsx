@@ -2,6 +2,13 @@ import React, { useState, useEffect, useRef } from "react";
 import { Page, Text, View, Document, StyleSheet, Image, Font } from "@react-pdf/renderer";
 import x from "../../fonts/ChakraPetch-Medium.ttf";
 import logoIMG from "../../assets/itLogo-1.png";
+import {
+  Table,
+  TableHeader,
+  TableCell,
+  TableBody,
+  DataTableCell,
+} from "@david.kucsai/react-pdf-table";
 
 // Create styles
 
@@ -70,11 +77,43 @@ const styles = StyleSheet.create({
     border: "0.015rem dashed blue",
   },
   page: {
-    backgroundColor: "#ffffff",
-    padding: 1,
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#E4E4E4",
+    padding: 10,
   },
+  // table: {
+  //   display: "table",
+  //   width: "auto",
+  //   borderStyle: "solid",
+  //   borderWidth: 1,
+  //   borderRightWidth: 0,
+  //   borderBottomWidth: 0,
+  // },
+  // tableRow: {
+  //   display: "table-row",
+  //   flexDirection: "row",
+  //   borderBottomWidth: 1,
+  //   borderBottomColor: "#bfbfbf",
+  // },
+  // tableCell: {
+  //   display: "ta",
+  //   margin: "auto",
+  //   fontSize: "10px",
+  //   padding: "5px",
+  //   borderStyle: "solid",
+  //   borderWidth: "1px",
+  //   borderColor: "#bfbfbf",
+  // },
   table: {
-    // padding: "1.9cm 1.32cm 3.67cm 1.9cm",
+    width: "auto",
+    borderStyle: "dashed",
+    borderWidth: 1,
+    borderRightWidth: 0,
+    borderBottomWidth: 0,
+    padding: "1.9cm 1.32cm 3.67cm 1.9cm",
   },
   tableRow: {
     display: "flex",
