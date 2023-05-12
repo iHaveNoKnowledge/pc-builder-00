@@ -15,12 +15,12 @@
     display: table;
     width: auto;
     border:1px solid #525252 ;
-    padding: 1.9cm 1.32cm 3.67cm 1.9cm;
+    margin: 1.9cm 1.32cm 3.67cm 1.9cm;
   }
   .tableRow {
     margin: auto;
     flex-direction: row;
-    border:1px solid #525252 
+    /* border:1px solid #525252  */
   }
 
   .tableCol {

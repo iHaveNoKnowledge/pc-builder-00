@@ -36,15 +36,13 @@ function App() {
             </Grid>
 
             <Grid>
-              ทดลอง
-              <PDFViewer style={{ width: "775px", height: "800px" }}>
-                <ReportA4 />
-              </PDFViewer>
+              ทดลองแบบใช้ library
+              {/* <PDFViewer style={{ width: "800px", height: "900px" }}> */}
+              <ReportA4 />
+              {/* </PDFViewer> */}
             </Grid>
 
-            <Grid>
-              <TestReportA4 />
-            </Grid>
+            <Grid>{/* ตัวทดลองแบบ pureJS<TestReportA4 /> */}</Grid>
           </Grid>
           {/* <PostsList /> เอาไว้เทสดึง api */}
         </Container>
