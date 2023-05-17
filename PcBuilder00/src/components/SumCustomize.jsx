@@ -36,21 +36,21 @@ const SumCustomize = () => {
         <Box className="mainCard">
           <Box sx={{ display: "flex" }}>
             <Box variant="subtitle1" sx={{ flexGrow: 1, fontWeight: "bolder" }}>
-              สินค้ารวม : {sumAmount}{" "}
+              สินค้ารวม : {sumAmount}
             </Box>
             {/* <Box>ประเภทสินค้า : {category}</Box> */}
           </Box>
           <Box sx={{ display: "flex", justifyContent: "center" }}>
             <Box sx={{ flexGrow: 1, flexBasis: 0 }}>
-              ส่วนลด : <br />฿{Math.round(sumDiscount)}{" "}
+              ส่วนลด : <br />฿{Math.round(sumDiscount)}
             </Box>
             &nbsp;
             <Box sx={{ flexGrow: 1, flexBasis: 0 }}>
-              ราคารวม : <br />฿{sum_SRP}{" "}
+              ราคารวม : <br />฿{sum_SRP}
             </Box>
             &nbsp;
             <Box sx={{ flexGrow: 1, flexBasis: 0 }}>
-              ราคาสุทธิ : <br />฿{sum_SRP - Math.round(sumDiscount)}{" "}
+              ราคาสุทธิ : <br />฿{sum_SRP - Math.round(sumDiscount)}
             </Box>
           </Box>
         </Box>

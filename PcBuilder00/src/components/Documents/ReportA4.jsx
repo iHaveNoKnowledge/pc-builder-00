@@ -105,29 +105,6 @@ const ReportA4 = () => {
   const subRef = useRef(null);
   console.log("componentย่อย", subRef.current);
 
-  // const xxxx = {
-  //   table: {
-  //     borderCollapse: "collapse",
-  //     border: "none",
-  //     backgroundColor: "black",
-  //   },
-  //   tr: {
-  //     borderCollapse: "collapse",
-  //     border: "none",
-  //     backgroundColor: "black",
-  //   },
-  //   td: {
-  //     borderCollapse: "collapse",
-  //     border: "none",
-  //     backgroundColor: "black",
-  //   },
-  //   span: {
-  //     borderCollapse: "collapse",
-  //     border: "none",
-  //     backgroundColor: "black",
-  //   },
-  // };
-
   const optionScreenShot = { scale: 2 };
 
   const screenShot = (element) => {

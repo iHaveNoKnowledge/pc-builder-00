@@ -117,7 +117,7 @@ export const customizeSlice = createSlice({
         max: action.payload.max,
       };
 
-      ////เช็คสมาชิกใหม่ว่า load เท่าไหร่
+      ////เช็คสมาชิกใหม่ว่า load เท่าไหร่ เนื่องจากมี max capa ทำให้ต้องดู load ว่าเกิน max capaหรือไม่
       const typeMaxConsumtion = newArray.selectAmount * newArray.count;
       console.log("ค่าโหลดของสินค้าที่ Add เท่าไหร่: ", typeMaxConsumtion);
 
@@ -184,7 +184,9 @@ export const customizeSlice = createSlice({
         console.log("indexที่เอามา splice: ", miniIndex);
         categorizedListItem.splice(miniIndex, 1);
         console.log("splice แล้วเหลือไร: ", JSON.stringify(categorizedListItem));
+
         let totalAmount = 0; // Initialize the total amount to 0
+        //ใช้ for loop เพื่อดึงค่า selectAmount(จำนวนสินค้าที่เลือกย่อย) ของสมาชิกที่เหลือแต่ละตัว เพื่อจะได้ไปรวมที่ typeAmount(รวมจำนวนสินค้าทั้งหมด)
         for (let i = 0; i < categorizedListItem.length; i++) {
           console.log("ติดไร: ", JSON.stringify(categorizedListItem.length), i);
           let item = categorizedListItem[i];
@@ -314,6 +316,7 @@ export const customizeSlice = createSlice({
       state.summations.sumAmount = sumAllAmount;
     },
 
+    //เรื่องราคาเหมารวมจบใน action เดียวเลย
     updateSumPrices: (state, action) => {
       let sumAll_SRP_Prices = 0;
       let sumAllDiscount = 0;
