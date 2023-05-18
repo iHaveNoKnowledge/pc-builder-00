@@ -11,8 +11,6 @@ import {
 } from "@react-pdf/renderer";
 import xx from "../../fonts/ChakraPetch-Medium.ttf";
 import logoIMG from "../../assets/itLogo-1.png";
-import jsPDF from "jspdf";
-import pdfMake from "pdfmake";
 import html2canvas from "html2canvas";
 
 //componentย่อย สำหรับใส่เนื้อหอย

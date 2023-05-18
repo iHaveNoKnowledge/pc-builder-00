@@ -8,6 +8,7 @@ import TestReportA4 from "./components/Documents/testReportA4";
 import { Box, Container, Grid } from "@mui/material";
 import { Route, Routes, BrowserRouter, NavLink, useNavigate } from "react-router-dom";
 import { PDFViewer } from "@react-pdf/renderer";
+import SaveBuildBtn from "./components/saveBuildForm";
 
 function App() {
   useEffect(() => {}, [ReportA4]);
@@ -36,13 +37,8 @@ function App() {
             </Grid>
 
             <Grid>
-              ทดลองแบบใช้ library
-              {/* <PDFViewer style={{ width: "800px", height: "900px" }}> */}
-              <ReportA4 />
-              {/* </PDFViewer> */}
+              <SaveBuildBtn />
             </Grid>
-
-            <Grid>{/* ตัวทดลองแบบ pureJS<TestReportA4 /> */}</Grid>
           </Grid>
           {/* <PostsList /> เอาไว้เทสดึง api */}
         </Container>
