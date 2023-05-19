@@ -26,6 +26,7 @@ import "./Selection.css";
 import UserFilter from "./UserFilter";
 import { useGetPostsQuery } from "../features/api/dataApiSlice";
 import { getCategorizedData } from "../slices/userFilterSlice";
+import Bottom from "./BottomComponent";
 
 function PostCard({ items }) {
   ////useState!!!!!!!!!!!!!!!!!!!
@@ -316,6 +317,8 @@ function PostCard({ items }) {
           onChange={(event, pageNum) => handleChangePage(pageNum)}
         />
       </Stack>
+
+      <Bottom />
     </>
   );
 }

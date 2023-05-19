@@ -7,6 +7,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import "./BottomComponent.css";
 
 export default function SaveBuildBtn() {
   const [open, setOpen] = React.useState(false);
@@ -137,9 +138,9 @@ export default function SaveBuildBtn() {
       console.log("แกกำลังกรอกเบอร์โทรศัพท์ ");
       if (value === "" || dataValidation) {
         setCustTelInput(value);
-        setInputData((prev) => {
-          return { ...prev, customerTel: value };
-        });
+        // setInputData((prev) => {
+        //   return { ...prev, customerTel: value };
+        // });
       }
     } else if (e.target.id === "custNameInput") {
       console.log("แกกำลังกรอกชื่อลูกค้า");
@@ -155,14 +156,14 @@ export default function SaveBuildBtn() {
     validate(custTelInput);
   }, [custTelInput]);
 
-  const digitDisplay = custTelInput.length > 1 ? "Digits" : "Digit";
+  const digitDisplay = custTelInput.length > 1 ? "digits" : "digit";
 
   return (
     <div>
-      <Button variant="outlined" onClick={handleClickOpen}>
+      <Button variant="contained" className="colorBtn" onClick={handleClickOpen}>
         Save
       </Button>
-      <Box>Stateมีค่า= {inputData ? JSON.stringify(inputData) : "ว่าง"}</Box>
+      {/* <Box>State inspector: {inputData ? JSON.stringify(inputData) : "ว่าง"}</Box> */}
 
       <Dialog open={open} onClose={handleClose} style={{ zoom: "115%" }}>
         {/* <DialogTitle>Subscribe</DialogTitle> */}
@@ -226,7 +227,7 @@ export default function SaveBuildBtn() {
                     เบอร์ติดต่อ{" "}
                     {custTelInput.length !== 0 ? (
                       <>
-                        current: {custTelInput.length} {digitDisplay}
+                        Current {digitDisplay}: {custTelInput.length}
                       </>
                     ) : (
                       ""

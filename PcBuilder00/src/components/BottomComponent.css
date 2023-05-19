@@ -1,0 +1,19 @@
+.mainCardBottom {
+    background-color: #FFFFFF;
+    border-radius: 0px 0px 10px 10px;
+    padding: 10px 16px 10px;
+    margin-block: 6px;
+    box-shadow: 2px 2px 2px 1px rgba(92, 92, 92, 0.5);
+    position:relative;
+    display: flex;
+    justify-content: space-around;
+}
+
+.colorBtn {
+    zoom: 110%;
+        height: 27.5px;
+        border-radius: 0px;
+        background-color: #42528A;
+        margin-inline: 10px;
+        border-radius: 0px 0px 10px 10px;
+}
