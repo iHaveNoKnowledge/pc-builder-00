@@ -92,6 +92,7 @@ const initialState = {
   summations: { sumAmount: 0, sum_SRP: 0, sumDiscount: 0, sumPrice: 0 },
 };
 
+///ใช้คำสั่ง createSlice จะได้ instance ที่เป็น slice โดย slice นี้จะมี reducer action ให้ส่งออกไปใช้ได้
 export const customizeSlice = createSlice({
   name: "customize",
   initialState,
@@ -337,6 +338,7 @@ export const customizeSlice = createSlice({
   },
 });
 
+///ส่งออกไปให้ component ต่างๆเพื่อรอถูกเรียกผ่าน dispatch() ////คนใช้คือ component////
 export const {
   addProduct,
   removeProduct,
@@ -348,4 +350,6 @@ export const {
   updateSumPrices,
   setTypeAmount,
 } = customizeSlice.actions;
+
+///ตัวที่ถูก export default จะเป็น reducer ซึ่งคนที่เอาไปใช้ต่อคือ store ////คนใช้คือ store////
 export default customizeSlice.reducer;
