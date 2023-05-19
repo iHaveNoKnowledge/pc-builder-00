@@ -11,7 +11,6 @@ import { PDFViewer } from "@react-pdf/renderer";
 import SaveBuildBtn from "./components/saveBuildForm";
 
 function App() {
-  useEffect(() => {}, [ReportA4]);
   return (
     <div className="App">
       <Container disableGutters sx={{ height: "auto", maxWidth: "100%" }}>

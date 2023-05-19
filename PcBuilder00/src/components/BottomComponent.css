@@ -9,11 +9,9 @@
     justify-content: space-around;
 }
 
-.colorBtn {
+.colorBottomBtn {
     zoom: 110%;
-        height: 27.5px;
-        border-radius: 0px;
-        background-color: #42528A;
-        margin-inline: 10px;
-        border-radius: 0px 0px 10px 10px;
+    height: 27.5px;
+                border-radius: 0px;
+                background-color: #42528A;
 }

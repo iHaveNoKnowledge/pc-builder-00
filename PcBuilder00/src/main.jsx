@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import "./index.css";
@@ -7,7 +7,7 @@ import { Provider } from "react-redux";
 import { ApiProvider } from "@reduxjs/toolkit/dist/query/react";
 import { apiSlice } from "./features/api/dataApiSlice";
 import { ThemeProvider, createTheme, styled } from "@mui/material/styles";
-import { BrowserRouter, Routes, Route, NavLink } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 
 const THEME = createTheme({
   typography: {
@@ -22,12 +22,13 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <ThemeProvider theme={THEME}>
           <BrowserRouter>
             <Routes>
-              <Route path="/" element={<App />}></Route>
+              <Route path="/build" element={<App />}></Route>
               <Route
                 path="/print"
                 element={
                   <>
                     <div>print</div>
+                    <a href="/build">กดดิ</a>
                   </>
                 }
               ></Route>

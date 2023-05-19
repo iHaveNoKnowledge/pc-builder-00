@@ -160,7 +160,15 @@ export default function SaveBuildBtn() {
 
   return (
     <div>
-      <Button variant="contained" className="colorBtn" onClick={handleClickOpen}>
+      <Button
+        variant="contained"
+        onClick={handleClickOpen}
+        sx={{
+          height: "27.5px",
+          borderRadius: "0px",
+          backgroundColor: "#42528A",
+        }}
+      >
         Save
       </Button>
       {/* <Box>State inspector: {inputData ? JSON.stringify(inputData) : "ว่าง"}</Box> */}
