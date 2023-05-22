@@ -280,7 +280,7 @@ export default function SaveBuildBtn() {
           <Button onClick={handleClose} variant="contained" color="error">
             Cancel
           </Button>
-          <Button disabled={!btnSwitch} onClick={handleSave} variant="contained">
+          <Button disabled={!btnSwitch} onClick={handleSave} variant="contained" color="success">
             Save
           </Button>
         </DialogActions>
