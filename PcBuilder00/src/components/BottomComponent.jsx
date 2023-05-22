@@ -1,9 +1,10 @@
 import React from "react";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
+import { AppBar, Toolbar, Button } from "@mui/material";
 import SaveBuildBtn from "./saveBuildForm";
 import "./BottomComponent.css";
 import { useNavigate } from "react-router-dom";
+import ReportDocument from "./ReportDocument";
 
 function Bottom() {
   const history = useNavigate();
@@ -21,13 +22,14 @@ function Bottom() {
       </Box>
 
       <Box>
-        <Button
+        {/* <Button
           variant="contained"
           sx={{ height: "27.5px", borderRadius: "0px", backgroundColor: "#42528A" }}
           onClick={() => history("/print")}
         >
           Report
-        </Button>
+        </Button> */}
+        <ReportDocument />
       </Box>
 
       <Box>
