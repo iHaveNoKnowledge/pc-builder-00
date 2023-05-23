@@ -15,13 +15,7 @@ import Box from "@mui/material/Box";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import { Divider, Alert } from "@mui/material";
-import {
-  addProduct,
-  setMax,
-  updateSumAmount,
-  updateSumPrices,
-  setTypeAmount,
-} from "../slices/cutomizeSliceNoApi";
+import { addProduct, setMax, updateSumAmount, updateSumPrices } from "../slices/cutomizeSliceNoApi";
 import "./Selection.css";
 import UserFilter from "./UserFilter";
 import { useGetPostsQuery } from "../features/api/dataApiSlice";
@@ -204,7 +198,7 @@ function PostCard({ items }) {
     if (curPageNum > totalPages) {
       setCurPageNum(1);
     }
-  }, [category]);
+  }, [category, parts]);
 
   ////หน้าเว็บ
   return (

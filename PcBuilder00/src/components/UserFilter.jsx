@@ -42,7 +42,7 @@ const UserFilter = () => {
   ////handleFunctions
   const handleSearch = (e) => {
     console.log("ค้นห่าสินค้า", e.target);
-    event.preventDefault();
+    e.preventDefault();
   };
 
   const handleChangeOption = (e, currentCategory, keyName) => {

@@ -24,7 +24,7 @@ import {
   updateSumPrices,
   setMax,
 } from "../slices/cutomizeSliceNoApi";
-import { clearSelectedFilter } from "../slices/userFilterSlice";
+import { clearSelectedFilter, getCategorizedData } from "../slices/userFilterSlice";
 import "./CustomizationProto01.css";
 import SumCustomize from "./SumCustomize";
 

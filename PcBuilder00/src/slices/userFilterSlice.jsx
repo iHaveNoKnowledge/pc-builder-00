@@ -67,6 +67,7 @@ export const filterSlice = createSlice({
       //ยังไม่รู้จะใช้ยังไง
       state.filter = action.payload;
     },
+
     getCategorizedData: (state, action) => {
       //ใช้รับ showData จาก selectionProto
       const { showProduct: categorizedData, category } = action.payload;
@@ -83,7 +84,6 @@ export const filterSlice = createSlice({
           { filterName: "model", value: cpuModelOptions.sort() },
           { filterName: "socket", value: cpuSocketOptions.sort() },
         ];
-
         state.filtersSet[0].filters[0].choices = cpuBrandOptions;
         state.filtersSet[0].filters[1].choices = cpuModelOptions;
         state.filtersSet[0].filters[2].choices = cpuSocketOptions;
