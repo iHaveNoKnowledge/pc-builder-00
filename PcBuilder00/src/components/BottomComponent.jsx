@@ -5,6 +5,7 @@ import SaveBuildBtn from "./saveBuildForm";
 import "./BottomComponent.css";
 import { useNavigate } from "react-router-dom";
 import ReportDocument from "./ReportDocument";
+import AddSN from "./ReportCashier/AddSN";
 
 function Bottom() {
   const history = useNavigate();
@@ -33,7 +34,7 @@ function Bottom() {
       </Box>
 
       <Box>
-        <Button
+        {/* <Button
           variant="contained"
           sx={{
             height: "27.5px",
@@ -41,8 +42,11 @@ function Bottom() {
             backgroundColor: "#42528A",
           }}
         >
+        
           Add S/N
-        </Button>
+         
+        </Button> */}
+        <AddSN />
       </Box>
     </Box>
   );
