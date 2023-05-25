@@ -23,6 +23,8 @@ import CloseIcon from "@mui/icons-material/Close";
 const AddSN = () => {
   const { register, handleSubmit, setValue, watch, reset } = useForm();
   const [open, setOpen] = React.useState(false);
+  const [openPrint, setOpenPrint] = React.useState(false);
+
   const [inputData, setInputData] = React.useState({
     buildedName: "",
     customerName: "",
@@ -244,7 +246,6 @@ const AddSN = () => {
                                 textAlign: "center",
                                 my: "4.5px",
                                 ml: "5.5vw",
-                                backgroundColor: "pink",
                               }}
                             >
                               <TextField
@@ -302,8 +303,28 @@ const AddSN = () => {
             <Button onClick={handleSave} variant="contained" color="success" type="submit">
               Save
             </Button>
-            <TableDocumentCashier />
           </DialogActions>
+          เดะ สร้าง state มา toggle ตรงนี้
+          <Dialog open={openPrint} maxWidth="none">
+            <DialogContent sx={{ width: "100vw" }}>
+              <AppBar sx={{ position: "relative", backgroundColor: "#42528A" }}>
+                <Toolbar>
+                  <IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
+                    <CloseIcon />
+                  </IconButton>
+                  <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
+                    Print
+                  </Typography>
+                  <Button autoFocus color="inherit" onClick={handleClose}>
+                    save
+                  </Button>
+                </Toolbar>
+              </AppBar>
+              <DialogContent>
+                <TableDocumentCashier />
+              </DialogContent>
+            </DialogContent>
+          </Dialog>
         </form>
       </Dialog>
     </div>

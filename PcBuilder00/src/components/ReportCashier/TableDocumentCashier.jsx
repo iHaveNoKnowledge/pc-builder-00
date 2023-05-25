@@ -1,6 +1,6 @@
 import React from "react";
 import { Page, Text, View, Document, Image, Font, StyleSheet } from "@react-pdf/renderer";
-import xx from "../../assets/fonts/ChakraPetch-Regular.ttf";
+import xx from "../../fonts/ChakraPetch-Regular.ttf";
 import xxx from "../../assets/itLogo-1.png";
 import { AppBar, Toolbar, Button, Dialog, IconButton, Typography, Slide, Box } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
@@ -215,38 +215,9 @@ const TableDocumentCashier = () => {
   };
 
   return (
-    <div>
-      <Button
-        variant="contained"
-        onClick={handleClickOpen}
-        sx={{
-          height: "27.5px",
-          borderRadius: "0px",
-          backgroundColor: "#42528A",
-        }}
-      >
-        Report
-      </Button>
-
-      <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
-        <AppBar sx={{ position: "relative", backgroundColor: "#42528A" }}>
-          <Toolbar>
-            <IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
-              <CloseIcon />
-            </IconButton>
-            <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-              Print
-            </Typography>
-            <Button autoFocus color="inherit" onClick={handleClose}>
-              save
-            </Button>
-          </Toolbar>
-        </AppBar>
-        <Box>
-          <PDFViewer style={viewerStyle}> {FinalizeDocument()}</PDFViewer>
-        </Box>
-      </Dialog>
-    </div>
+    <Box>
+      <PDFViewer style={viewerStyle}> {FinalizeDocument()}</PDFViewer>
+    </Box>
   );
 };
 
