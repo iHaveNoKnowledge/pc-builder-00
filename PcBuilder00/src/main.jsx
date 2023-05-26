@@ -31,19 +31,19 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <ThemeProvider theme={THEME}>
           <BrowserRouter>
             <Routes>
-              <Route path="/build" element={<App />}></Route>
+              <Route path="/" element={<App />} />
               <Route
-                path="/print"
+                path="/outOfService"
                 element={
                   <>
-                    <div>print</div>
-                    <a href="/build">กดดิ</a>
+                    <div>หน้าแรก</div>
+                    {/* <a href="/build">กดดิ</a>
                     <PDFViewer style={viewerStyle}>
                       <ReportDocument />
-                    </PDFViewer>
+                    </PDFViewer> */}
                   </>
                 }
-              ></Route>
+              />
             </Routes>
           </BrowserRouter>
         </ThemeProvider>
