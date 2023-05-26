@@ -6,6 +6,7 @@ import "./BottomComponent.css";
 import { useNavigate } from "react-router-dom";
 import ReportDocument from "./ReportDocument";
 import AddSN from "./ReportCashier/AddSN";
+import { useDispatch, useSelector } from "react-redux";
 
 function Bottom() {
   const history = useNavigate();

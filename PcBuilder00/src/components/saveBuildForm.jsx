@@ -8,74 +8,26 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import "./BottomComponent.css";
+import { useDispatch, useSelector } from "react-redux";
+import { saveSet } from "../slices/reportSlice";
 
 export default function SaveBuildBtn() {
+  const partData = useSelector((state) => state.noApiCustomize.partData);
+
+  const dispatch = useDispatch();
+
   const [open, setOpen] = React.useState(false);
   const [inputData, setInputData] = React.useState({
-    buildedName: "",
-    customerName: "",
-    customerTel: "",
-    salerName: "",
+    // setName: "",
+    // customerName: "",
+    // customerTel: "",
+    // salerName: "",
   });
-  const { buildedName, customerName, customerTel, salerName } = inputData;
-  const [selectedItem, setSelectedItem] = React.useState({
-    partData: [
-      {
-        category: "CPU",
-        typeMax: 1,
-        typeAmount: 0,
-        listItems: [
-          {
-            id: "1",
-            code: "CR6-001042",
-            description:
-              "GIGABYTE AORUS RADEON RX6900XT XTREME WATERFORCE WB 16GB GDDR6 256 bit CL 19-31/8/22",
-            selectAmount: 1,
-            srp: 77900.0,
-            promotionPrice: 77900.0,
-          },
-        ],
-      },
-      {
-        category: "Mainboard",
-        typeMax: 1,
-        typeAmount: 0,
-        listItems: [
-          {
-            id: "5",
-            code: "CR4-000751",
-            description: "GIGABYTE Z590 AORUS TACHYON DDR4 LGA1200 CL 19-31/8/22",
-            selectAmount: 1,
-            srp: 16100.0,
-            promotionPrice: 7990,
-          },
-        ],
-      },
-      {
-        category: "RAM",
-        typeMax: 4,
-        typeAmount: 0,
-        listItems: [
-          {
-            id: "21",
-            code: "ME1-000994",
-            description: "KINGSTON FURY IMPACT 8GB (8X1/3200) DDR4 (KF432S20IB/8) NB",
-            selectAmount: 1,
-            srp: 1150,
-            promotionPrice: 950,
-          },
-        ],
-      },
-    ],
-  });
+  const { setName, customerName, customerTel, salerName } = inputData;
 
   ////onclick เปิด Form ////////////////////////////////////////////////////////////////////
   const handleClickOpen = () => {
     setOpen(true);
-    ///ล้างค่า สำหรับทดสอบ
-    setInputData((prev) => {
-      return { ...prev, buildedName: "", customerName: "", customerTel: "", salerName: "" };
-    });
   };
 
   ////onclick ปิด Form ////////////////////////////////////////////////////////////////////
@@ -84,26 +36,30 @@ export default function SaveBuildBtn() {
   };
   ////onclick สำหรับกด save SPEC ////////////////////////////////////////////////////////////////////
   const handleSave = () => {
-    console.log("กด Save!!", buildedName);
-    setInputData((prev) => {
-      return {
-        ...prev,
-        buildedName: buildedNameInput,
-        customerName: custNameInput,
-        customerTel: custTelInput,
-        salerName: salerNameInput,
-      };
-    });
+    console.log("กด Save!!", inputData);
+    const updatedInputData = {
+      setName: setNameInput,
+      customerName: custNameInput,
+      customerTel: custTelInput,
+      salerName: salerNameInput,
+    };
+    console.log("ค่ามาไหม", inputData);
+    setInputData(updatedInputData);
 
-    setBuildedNameInput("");
+    // ตัวอย่างการใช้ค่า inputData ที่อัพเดตใหม่
+    console.log("บันทึกไรมา", updatedInputData.setName);
+    dispatch(saveSet({ updatedInputData, partData }));
+
+    setSetNameInput("");
     setSalerNameInput("");
     setCustNameInput("");
     setCustTelInput("");
+
     handleClose();
   };
 
-  ////BuildedName Input ไม่ต้องมี valid
-  const [buildedNameInput, setBuildedNameInput] = React.useState("");
+  ////SetName Input ไม่ต้องมี valid
+  const [setNameInput, setSetNameInput] = React.useState("");
   ////SalerName Input ไม่ต้องมี valid
   const [salerNameInput, setSalerNameInput] = React.useState("");
   ////CustName Input ไม่ต้องมี valid
@@ -147,8 +103,8 @@ export default function SaveBuildBtn() {
       setCustNameInput(value);
     } else if (e.target.id === "salerNameInput") {
       setSalerNameInput(value);
-    } else if (e.target.id === "buildedName") {
-      setBuildedNameInput(value);
+    } else if (e.target.id === "setName") {
+      setSetNameInput(value);
     }
   };
 
@@ -169,7 +125,7 @@ export default function SaveBuildBtn() {
           backgroundColor: "#42528A",
         }}
       >
-        Save
+        Save Set
       </Button>
       {/* <Box>State inspector: {inputData ? JSON.stringify(inputData) : "ว่าง"}</Box> */}
 
@@ -193,11 +149,11 @@ export default function SaveBuildBtn() {
               sx={{ mt: "0px" }}
               autoFocus
               margin="dense"
-              id="buildedName"
-              label={`{db.buildedName? db.buildedName : db.builedDefName }`}
+              id="setName"
+              label={`{db.setName? db.setName : db.builedDefName }`}
               fullWidth
               variant="filled"
-              value={buildedNameInput}
+              value={setNameInput}
               onChange={handleChange}
             />
           </Box>

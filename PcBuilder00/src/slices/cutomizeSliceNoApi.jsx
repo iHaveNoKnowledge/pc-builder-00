@@ -104,6 +104,8 @@ export const customizeSlice = createSlice({
       ///เก็บค่าใหม่ที่รับเข้ามาดองไว้ใน object ก่อน
       const newArray = {
         id: action.payload.id,
+        code: action.payload.code,
+        description: action.payload.description,
         title: action.payload.title,
         selectAmount: 1,
         socket: action.payload.socket,

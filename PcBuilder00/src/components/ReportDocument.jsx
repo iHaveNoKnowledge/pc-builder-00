@@ -20,6 +20,31 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 const ReportDocument = () => {
+  const partDataReport = useSelector((state) => state.report.partData);
+  const partDataReport2 = useSelector((state) => state.noApiCustomize.partData);
+  const reportInfo = useSelector((state) => state.report.info);
+  console.log("มีพาทไรบ้าง:", partDataReport);
+
+  let itemList = [];
+
+  //ใช้ partDataReport2 เพราะมัน update realtime ถ้าใช้ partDataReport มันจะอัพเดทเฉพาะตอนกดเซฟ ซับซ้อนจัด
+  partDataReport2.map((item1) => {
+    item1.listItems.map((item2) => {
+      itemList = [...itemList, item2];
+    });
+  });
+
+  console.log("ไอนี่แอดไม่ได้", itemList);
+
+  itemList.forEach((item) => {
+    // const times = item.selectAmount;
+    // item.sn = Array(times).fill("");
+    let x;
+    console.log("แอด", item);
+    x = { ...item, sn: "" };
+    console.log("หลังแอด", x);
+  });
+
   const [open, setOpen] = React.useState(false);
   ////onclick เปิด Form ////////////////////////////////////////////////////////////////////
   const handleClickOpen = () => {
@@ -105,7 +130,8 @@ const ReportDocument = () => {
               <Text style={{ fontSize: 10 }}>:</Text>
             </View>
             <View style={{ fontSize: 9, marginVertical: 1, marginLeft: 3, width: 130 }}>
-              <Text>รับตัวแปร Cus str ทำconditional display</Text>
+              {/* <Text>รับตัวแปร Cus str ทำconditional display</Text> */}
+              <Text>{reportInfo.customerName}</Text>
             </View>
           </View>
 
@@ -117,7 +143,8 @@ const ReportDocument = () => {
               <Text style={{ fontSize: 10 }}>:</Text>
             </View>
             <View style={{ fontSize: 9, marginVertical: 1, marginLeft: 3, width: 130 }}>
-              <Text>รับตัวแปร custel str ทำconditional display</Text>
+              {/* <Text>รับตัวแปร custel str ทำconditional display</Text> */}
+              <Text>{reportInfo.customerTel}</Text>
             </View>
           </View>
 
@@ -135,7 +162,8 @@ const ReportDocument = () => {
               <Text style={{ fontSize: 10 }}>:</Text>
             </View>
             <View style={{ fontSize: 9, marginVertical: 1, marginLeft: 3, width: 130 }}>
-              <Text>รับตัวแปร saler ทำconditional display </Text>
+              {/* <Text>รับตัวแปร saler ทำconditional display </Text> */}
+              <Text>{reportInfo.salerName} </Text>
             </View>
           </View>
         </View>
@@ -284,15 +312,12 @@ const ReportDocument = () => {
       <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
         <AppBar sx={{ position: "relative", backgroundColor: "#42528A" }}>
           <Toolbar>
+            <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
+              Print Customer Report / สำหรับลูกค้า
+            </Typography>
             <IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
               <CloseIcon />
             </IconButton>
-            <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-              Print
-            </Typography>
-            <Button autoFocus color="inherit" onClick={handleClose}>
-              save
-            </Button>
           </Toolbar>
         </AppBar>
         <Box>

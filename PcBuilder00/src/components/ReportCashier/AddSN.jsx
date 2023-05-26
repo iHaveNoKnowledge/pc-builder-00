@@ -128,6 +128,8 @@ const AddSN = () => {
     });
   });
 
+  console.log("ไอนี่แอดได้", itemList);
+
   itemList.forEach((item) => {
     const times = item.selectAmount;
     item.sn = Array(times).fill("");
@@ -330,7 +332,7 @@ const AddSN = () => {
           <AppBar sx={{ backgroundColor: "#ff8d29", color: "#303030" }}>
             <Toolbar sx={{ minHeight: "0px" }}>
               <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-                Print
+                Print Cashier Report / สำหรับ แคชเชียร์
               </Typography>
               <IconButton
                 edge="start"

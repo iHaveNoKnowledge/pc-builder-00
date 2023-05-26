@@ -41,7 +41,9 @@ function PostCard({ items }) {
     count,
     promotionPrice,
     srp,
-    max
+    max,
+    code,
+    description
   ) => {
     dispatch(
       addProduct({
@@ -56,6 +58,8 @@ function PostCard({ items }) {
         srp,
         slot,
         max,
+        code,
+        description,
       })
     );
     if (category === "Mainboard") {
@@ -181,7 +185,6 @@ function PostCard({ items }) {
 
   ////pagination////
   const [curPageNum, setCurPageNum] = useState(1);
-
   const cardsPerPage = 6;
   const totalPages = Math.ceil(showProductWithFilter.length / cardsPerPage);
   const handleChangePage = (pageNum) => {
@@ -206,10 +209,12 @@ function PostCard({ items }) {
       <UserFilter />
       <Grid container spacing="10" columns={{ xs: 4, sm: 12, md: 12 }}>
         {productPaginated.map((item, index) => {
+          const maxCardHeight = Math.max(...productPaginated.map((card) => card.height));
+          console.log("maxCardHeight", maxCardHeight);
           return (
             <Grid item xs={2} sm={4} md={4} key={index}>
               <Card sx={{ boxShadow: "2px 2px 2px 1px rgba(92, 92, 92, 0.5)" }}>
-                <CardActionArea
+                <Card
                   onClick={(e) => {
                     handleChange(
                       item.id,
@@ -222,7 +227,9 @@ function PostCard({ items }) {
                       item.count,
                       item.promotionPrice,
                       item.srp,
-                      item.max
+                      item.max,
+                      item.code,
+                      item.description
                     );
                   }}
                 >
@@ -234,14 +241,17 @@ function PostCard({ items }) {
                     sx={{ height: "200px", objectFit: "contain" }}
                   />
 
-                  <CardContent>
+                  <CardContent sx={{ height: "165px" }}>
                     <Box
                       sx={{
                         display: "flex",
                         bgcolor: "background.paper",
                       }}
                     >
-                      <Typography variant="body1" sx={{ flexGrow: "1" }}>
+                      <Typography
+                        variant="body1"
+                        sx={{ flexGrow: "1", fontSize: "1.2rem", fontWeight: "bolder" }}
+                      >
                         {item.code}
                       </Typography>
 
@@ -253,7 +263,13 @@ function PostCard({ items }) {
                         Stock: INT
                       </Typography>
                     </Box>
-                    <Typography variant="body2">{item.description}</Typography>
+                    <Typography
+                      textOverflow="clip"
+                      variant="body2"
+                      sx={{ height: "100px", overflowY: "auto" }}
+                    >
+                      {item.description}
+                    </Typography>
                     <Divider sx={{ pt: 1 }} />
                     <Box sx={{ display: "flex" }}>
                       <ListItemText
@@ -284,7 +300,7 @@ function PostCard({ items }) {
                     color="text.secondary"
                   >5555</Typography> */}
                   </CardContent>
-                </CardActionArea>
+                </Card>
                 <CardActions>
                   <Button size="small">Like</Button>
                   <Button size="small">Fav</Button>

@@ -34,7 +34,7 @@
     {
       "id": 11,
       "code": "CU2-000011",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque non eros dapibus, maximus tellus sollicitudin, iaculis ligula. Nullam ullamcorper metus sit amet orci consectetur interdum.",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "title": "CPU02_AMD",
       "category": "CPU",
       "socket": "AM4",
