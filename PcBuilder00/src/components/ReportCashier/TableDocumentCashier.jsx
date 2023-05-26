@@ -5,6 +5,7 @@ import xxx from "../../assets/itLogo-1.png";
 import { AppBar, Toolbar, Button, Dialog, IconButton, Typography, Slide, Box } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { PDFViewer } from "@react-pdf/renderer";
+import { useDispatch, useSelector } from "react-redux";
 
 Font.register({ family: "Chakra_Petch", src: xx });
 
@@ -328,7 +329,7 @@ const viewerStyle = {
   display: "block",
   margin: "0 auto",
   width: "70vw",
-  height: "90vh",
+  height: "100vh",
 };
 
 export default TableDocumentCashier;

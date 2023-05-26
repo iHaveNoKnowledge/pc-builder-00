@@ -242,7 +242,7 @@ function PostCard({ items }) {
                       }}
                     >
                       <Typography variant="body1" sx={{ flexGrow: "1" }}>
-                        SKU-000000
+                        {item.code}
                       </Typography>
 
                       <Typography
@@ -253,7 +253,7 @@ function PostCard({ items }) {
                         Stock: INT
                       </Typography>
                     </Box>
-                    <Typography variant="body2">{item.title}</Typography>
+                    <Typography variant="body2">{item.description}</Typography>
                     <Divider sx={{ pt: 1 }} />
                     <Box sx={{ display: "flex" }}>
                       <ListItemText

@@ -104,6 +104,17 @@ const AddSN = () => {
   const handleSave = () => {
     console.log("กด Save!! S/N");
     handleClose();
+    handlePrintClickOpen();
+  };
+
+  ////onclick เปิด PrintPage ////////////////////////////////////////////////////////////////////
+  const handlePrintClickOpen = () => {
+    setOpenPrint(true);
+  };
+
+  ////onclick ปิด PrintPage ////////////////////////////////////////////////////////////////////
+  const handlePrintClose = () => {
+    setOpenPrint(false);
   };
 
   let totalPrice = 0;
@@ -176,8 +187,17 @@ const AddSN = () => {
   };
 
   return (
-    <div>
-      <Button variant="outlined" onClick={handleClickOpen}>
+    <>
+      <Button
+        variant="contained"
+        onClick={handleClickOpen}
+        sx={{
+          height: "27.5px",
+          borderRadius: "0px",
+          backgroundColor: "#ff8d29",
+          color: "#303030",
+        }}
+      >
         Add SN
       </Button>
 
@@ -280,17 +300,15 @@ const AddSN = () => {
                   <Box>รวมทั้งสิ้น(รวมภาษี)</Box>
                 </Box>
                 <Box sx={{ flexGrow: 0.5, textAlign: "end" }}>
-                  <Box sx={{ pt: "2px" }}>
+                  <Box>
                     {(totalPrice - totalPrice * (7 / 107))
                       .toFixed(2)
                       .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                   </Box>
-                  <Box sx={{ pt: "2px" }}>
+                  <Box>
                     {(totalPrice * (7 / 107)).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                   </Box>
-                  <Box sx={{ pt: "2px" }}>
-                    {totalPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-                  </Box>
+                  <Box>{totalPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</Box>
                 </Box>
               </Box>
             </DialogContent>
@@ -301,33 +319,35 @@ const AddSN = () => {
               Cancel
             </Button>
             <Button onClick={handleSave} variant="contained" color="success" type="submit">
-              Save
+              Save and Print
             </Button>
           </DialogActions>
-          เดะ สร้าง state มา toggle ตรงนี้
-          <Dialog open={openPrint} maxWidth="none">
-            <DialogContent sx={{ width: "100vw" }}>
-              <AppBar sx={{ position: "relative", backgroundColor: "#42528A" }}>
-                <Toolbar>
-                  <IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
-                    <CloseIcon />
-                  </IconButton>
-                  <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-                    Print
-                  </Typography>
-                  <Button autoFocus color="inherit" onClick={handleClose}>
-                    save
-                  </Button>
-                </Toolbar>
-              </AppBar>
-              <DialogContent>
-                <TableDocumentCashier />
-              </DialogContent>
-            </DialogContent>
-          </Dialog>
         </form>
       </Dialog>
-    </div>
+      {/* เดะ สร้าง state มา toggle ตรงนี้ */}
+      <Dialog fullScreen open={openPrint}>
+        <DialogContent>
+          <AppBar sx={{ backgroundColor: "#ff8d29", color: "#303030" }}>
+            <Toolbar sx={{ minHeight: "0px" }}>
+              <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
+                Print
+              </Typography>
+              <IconButton
+                edge="start"
+                color="inherit"
+                onClick={handlePrintClose}
+                aria-label="close"
+              >
+                <CloseIcon />
+              </IconButton>
+            </Toolbar>
+          </AppBar>
+          <DialogContent sx={{ mt: "25px" }}>
+            <TableDocumentCashier />
+          </DialogContent>
+        </DialogContent>
+      </Dialog>
+    </>
   );
 };
 
