@@ -27,23 +27,23 @@ const ReportDocument = () => {
 
   let itemList = [];
 
-  //ใช้ partDataReport2 เพราะมัน update realtime ถ้าใช้ partDataReport มันจะอัพเดทเฉพาะตอนกดเซฟ ซับซ้อนจัด
+  //ใช้ partDataReport2 เพราะมัน update realtime ถ้าใช้ partDataReport มันจะอัพเดทเฉพาะตอนกดเซฟ
   partDataReport2.map((item1) => {
     item1.listItems.map((item2) => {
       itemList = [...itemList, item2];
     });
   });
 
-  console.log("ไอนี่แอดไม่ได้", itemList);
+  // console.log("ไอนี่แอดไม่ได้", itemList);
 
-  itemList.forEach((item) => {
-    // const times = item.selectAmount;
-    // item.sn = Array(times).fill("");
-    let x;
-    console.log("แอด", item);
-    x = { ...item, sn: "" };
-    console.log("หลังแอด", x);
-  });
+  // itemList.forEach((item) => {
+  //   // const times = item.selectAmount;
+  //   // item.sn = Array(times).fill("");
+  //   let x;
+  //   console.log("แอด", item);
+  //   x = { ...item, sn: "" };
+  //   console.log("หลังแอด", x);
+  // });
 
   const [open, setOpen] = React.useState(false);
   ////onclick เปิด Form ////////////////////////////////////////////////////////////////////
@@ -54,58 +54,6 @@ const ReportDocument = () => {
   ////onclick ปิด Form ////////////////////////////////////////////////////////////////////
   const handleClose = () => {
     setOpen(false);
-  };
-
-  const createTableHeader = () => {
-    return (
-      <View style={tableRowStyle} fixed>
-        <View style={firstTableColHeaderStyle}>
-          <Text style={tableCellHeaderStyle}>Column</Text>
-        </View>
-
-        <View style={tableColHeaderStyle}>
-          <Text style={tableCellHeaderStyle}>Column</Text>
-        </View>
-
-        <View style={tableColHeaderStyle}>
-          <Text style={tableCellHeaderStyle}>Column</Text>
-        </View>
-
-        <View style={tableColHeaderStyle}>
-          <Text style={tableCellHeaderStyle}>Column</Text>
-        </View>
-
-        <View style={tableColHeaderStyle}>
-          <Text style={tableCellHeaderStyle}>Column</Text>
-        </View>
-      </View>
-    );
-  };
-
-  const createTableRow = () => {
-    return (
-      <View style={tableRowStyle}>
-        <View style={firstTableColStyle}>
-          <Text style={tableCellStyle}>Element</Text>
-        </View>
-
-        <View style={tableColStyle}>
-          <Text style={tableCellStyle}>Element</Text>
-        </View>
-
-        <View style={tableColStyle}>
-          <Text style={tableCellStyle}>Element</Text>
-        </View>
-
-        <View style={tableColStyle}>
-          <Text style={tableCellStyle}>Element</Text>
-        </View>
-
-        <View style={tableColStyle}>
-          <Text style={tableCellStyle}>Element</Text>
-        </View>
-      </View>
-    );
   };
 
   const createMainTableHeader = () => {
@@ -216,7 +164,9 @@ const ReportDocument = () => {
     </View>
   );
 
-  const createTableRowITDYN = (x) => {
+  const createTableRowITDYN = (itemArr) => {
+    console.log("itemList", itemList);
+    const x = itemList.length;
     const formattedNumber = (x - (x - 1)).toString().padStart(6, "0");
     switch (true) {
       case x >= 1:
@@ -230,19 +180,24 @@ const ReportDocument = () => {
                   <Text>{WrapText("1")}</Text>
                 </View>
                 <View style={{ ...inlineStyle, ...inlineCode }}>
-                  <Text>{`XXX-${formattedNumber}`}</Text>
+                  {/* <Text>{`XXX-${formattedNumber}`}</Text> */}
+                  <Text>{`${itemList[0].code}`}</Text>
                 </View>
                 <View style={{ ...inlineStyle, ...inlineDescr }}>
-                  <Text>{WrapText("loremfa-rotate-180")}</Text>
+                  {/* <Text>{WrapText("loremfa-rotate-180")}</Text> */}
+                  <Text>{`${itemList[0].description}`}</Text>
                 </View>
                 <View style={{ ...inlineStyle, ...inlineQTY }}>
-                  <Text>{WrapText("99")}</Text>
+                  {/* <Text>{WrapText("99")}</Text> */}
+                  <Text>{`${itemList[0].selectAmount}`}</Text>
                 </View>
                 <View style={{ ...inlineStyle, ...inlinePrice }}>
-                  <Text>{WrapText("9999")}</Text>
+                  {/* <Text>{WrapText("9999")}</Text> */}
+                  <Text>{`${itemList[0].srp}`}</Text>
                 </View>
                 <View style={{ ...inlineStyle, ...inlineTotal }}>
-                  <Text>{WrapText("99999")}</Text>
+                  {/* <Text>{WrapText("99999")}</Text> */}
+                  <Text>{`${itemList[0].srp * itemList[0].selectAmount}`}</Text>
                 </View>
               </View>
             </View>
@@ -253,21 +208,27 @@ const ReportDocument = () => {
                 <View key={index}>
                   <View break={true} style={{ display: "flex", flexDirection: "row" }}>
                     <View style={{ ...inlineStyle, ...inlineOrder }}>
+                      {/* <Text>{WrapText(`${2 + index}`)}</Text> */}
                       <Text>{WrapText(`${2 + index}`)}</Text>
                     </View>
                     <View style={{ ...inlineStyle, ...inlineCode }}>
-                      <Text>{`XXX-${formattedNumberx}`}</Text>
+                      {/* <Text>{`XXX-${formattedNumberx}`}</Text> */}
+                      <Text>{`${itemList[index + 1].code}`}</Text>
                     </View>
                     <View style={{ ...inlineStyle, ...inlineDescr }}>
+                      {/* <Text>{WrapText("loremfa-rotate-180asdasd")}</Text> */}
                       <Text>{WrapText("loremfa-rotate-180asdasd")}</Text>
                     </View>
                     <View style={{ ...inlineStyle, ...inlineQTY }}>
+                      {/* <Text>{WrapText("99")}</Text> */}
                       <Text>{WrapText("99")}</Text>
                     </View>
                     <View style={{ ...inlineStyle, ...inlinePrice }}>
+                      {/* <Text>{WrapText("9999")}</Text> */}
                       <Text>{WrapText("9999")}</Text>
                     </View>
                     <View style={{ ...inlineStyle, ...inlineTotal }}>
+                      {/* <Text>{WrapText("99999")}</Text> */}
                       <Text>{WrapText("99999")}</Text>
                     </View>
                   </View>

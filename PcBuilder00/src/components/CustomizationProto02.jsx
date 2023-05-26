@@ -142,7 +142,7 @@ const CustomizationProto02 = () => {
                                   }}
                                 >
                                   {/* ////////////////////////ก้อนซ้าย/////////////////////////////// */}
-                                  <Box sx={{ flexGrow: "1" }}>
+                                  <Box sx={{ flexGrow: "1", width: "55px" }}>
                                     <Box>
                                       <ListItemAvatar
                                         sx={{
@@ -200,7 +200,7 @@ const CustomizationProto02 = () => {
 
                                   {/* ////////////////////////ก้อนขวา/////////////////////////////// */}
                                   {/* //// ย่อย1 //// */}
-                                  <Box sx={{ flexGrow: "5" }}>
+                                  <Box sx={{ flexGrow: "7", width: "40px" }}>
                                     <Box sx={{ display: "flex" }}>
                                       <Box
                                         variant="subtitle1"
@@ -209,7 +209,7 @@ const CustomizationProto02 = () => {
                                           fontWeight: "bolder",
                                         }}
                                       >
-                                        SKU-000000
+                                        {miniItem.code}
                                         {/* {item.title} */}
                                       </Box>
 
@@ -224,8 +224,9 @@ const CustomizationProto02 = () => {
                                         onClick={(e) => {
                                           console.log("innerBtnActivated");
                                         }}
+                                        noWrap={true}
                                       >
-                                        {miniItem.title}
+                                        {miniItem.description}
                                       </Typography>
                                     </Box>
 
