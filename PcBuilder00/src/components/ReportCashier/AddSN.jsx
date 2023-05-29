@@ -217,7 +217,6 @@ const AddSN = () => {
               sx={{
                 borderLeft: "10px solid #0033E6",
                 backgroundColor: "#4141",
-
                 flexDirection: "column",
               }}
             >
