@@ -5,6 +5,7 @@ import noApiCustomizeReducer from "./slices/cutomizeSliceNoApi";
 import { apiSlice } from "./features/api/dataApiSlice";
 import userFilterReducer from "./slices/userFilterSlice";
 import reportReducer from "./slices/reportSlice";
+import paginationReducer from "./slices/paginationSlice";
 
 export const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ export const store = configureStore({
     [apiSlice.reducerPath]: apiSlice.reducer,
     userFilter: userFilterReducer,
     report: reportReducer,
+    pagination: paginationReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(apiSlice.middleware),
 });

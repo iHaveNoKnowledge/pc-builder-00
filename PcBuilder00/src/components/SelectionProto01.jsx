@@ -21,6 +21,7 @@ import UserFilter from "./UserFilter";
 import { useGetPostsQuery } from "../features/api/dataApiSlice";
 import { getCategorizedData } from "../slices/userFilterSlice";
 import Bottom from "./BottomComponent";
+import { setDefault, setPageNum } from "../slices/paginationSlice";
 
 function PostCard({ items }) {
   ////useState!!!!!!!!!!!!!!!!!!!
@@ -184,22 +185,26 @@ function PostCard({ items }) {
   const showProductWithFilter = filterProducts(searchedShowProduct, selectedOpts, expression);
 
   ////pagination////
+  const curPageNum2 = useSelector((state) => state.pagination.currentPage);
   const [curPageNum, setCurPageNum] = useState(1);
   const cardsPerPage = 6;
   const totalPages = Math.ceil(showProductWithFilter.length / cardsPerPage);
   const handleChangePage = (pageNum) => {
     setCurPageNum(pageNum);
+    dispatch(setPageNum(pageNum));
   };
 
   const productPaginated = showProductWithFilter.slice(
-    (curPageNum - 1) * cardsPerPage,
-    curPageNum * cardsPerPage
+    (curPageNum2 - 1) * cardsPerPage,
+    curPageNum2 * cardsPerPage
   );
   ////useEffect //ถ้าuseEffect รับ showProduct ตัวนี้ไป param2 มันจะ inf loop จนพัง
   useEffect(() => {
     dispatch(getCategorizedData({ showProduct, category }));
-    if (curPageNum > totalPages) {
+    if (curPageNum2 > totalPages) {
+      console.log("หน้าปัจจุบัน", curPageNum2, ">", totalPages);
       setCurPageNum(1);
+      dispatch(setDefault());
     }
   }, [category, parts]);
 
@@ -314,7 +319,7 @@ function PostCard({ items }) {
       <Stack className="pagination-card" spacing={2} alignItems="center" sx={{ mt: "6px" }}>
         {totalPages ? (
           <Typography>
-            Page:{curPageNum} / {totalPages}
+            Page:{curPageNum2} / {totalPages}
           </Typography>
         ) : (
           ""
@@ -325,6 +330,8 @@ function PostCard({ items }) {
           variant="outlined"
           shape="rounded"
           onChange={(event, pageNum) => handleChangePage(pageNum)}
+          defaultPage={1}
+          page={curPageNum2}
         />
       </Stack>
 

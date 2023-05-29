@@ -27,6 +27,7 @@ import {
 import { clearSelectedFilter, getCategorizedData } from "../slices/userFilterSlice";
 import "./CustomizationProto01.css";
 import SumCustomize from "./SumCustomize";
+import { setDefault } from "../slices/paginationSlice";
 
 const CustomizationProto02 = () => {
   //useState
@@ -42,6 +43,7 @@ const CustomizationProto02 = () => {
   const handleChange = (category) => {
     console.log("handleChanged", category);
     dispatch(changeCategory(category));
+    dispatch(setDefault());
     if (currentCategory !== category) dispatch(clearSelectedFilter());
   };
 

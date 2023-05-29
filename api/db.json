@@ -315,7 +315,7 @@
     },
     {
       "id": 26,
-      "code": "ME1-000026",
+      "code": "CU2-000026",
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "title": "CPU03_AMD",
       "category": "CPU",
@@ -329,7 +329,7 @@
     },
     {
       "id": 27,
-      "code": "ME1-000027",
+      "code": "CU2-000027",
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "title": "CPU04_AMD",
       "category": "CPU",
