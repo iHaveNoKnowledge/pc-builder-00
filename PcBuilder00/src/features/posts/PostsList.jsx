@@ -1,7 +1,6 @@
 import React from "react";
 import { useGetPostsQuery } from "../api/dataApiSlice";
-import Alert from "@mui/material/Alert";
-import Stack from "@mui/material/Stack";
+import { Alert, Stack } from "@mui/material";
 
 const PostCard = ({ content }) => {
   ////ส่วนแสดงผลสิ่งที่เราจะ present ใน component นี้
@@ -28,6 +27,8 @@ function PostsList() {
     isError,
     error,
   } = useGetPostsQuery();
+
+  // postContentเป็นตัวแปรที่รอรับผลลัพธ์ จากสาม กรณี ด้านล่าง (isLoading,isSuccess,isError)
   let postContent;
 
   ////กรณีกำลังโหลด
