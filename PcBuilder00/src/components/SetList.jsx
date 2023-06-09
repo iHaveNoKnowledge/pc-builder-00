@@ -3,8 +3,6 @@ import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import {
-  List,
-  Divider,
   Collapse,
   Typography,
   Table,
@@ -12,6 +10,9 @@ import {
   TableRow,
   TableCell,
   TableBody,
+  TableContainer,
+  Paper,
+  IconButton,
 } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -21,6 +22,9 @@ import DialogTitle from "@mui/material/DialogTitle";
 import "./BottomComponent.css";
 import { useDispatch, useSelector } from "react-redux";
 import { saveSet } from "../slices/reportSlice";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import { useGetPostsQuery } from "../features/api/dataApiSlice";
 
 export default function SetList() {
   const partData = useSelector((state) => state.noApiCustomize.partData);
@@ -42,7 +46,7 @@ export default function SetList() {
 
   const itemList = [
     {
-      id: 1,
+      id: "1",
       timeStamp: "July 21, 1983 01:15:00",
       setName: "Inwza007",
       partData: [
@@ -52,8 +56,8 @@ export default function SetList() {
           typeAmount: 0,
           listItems: [
             {
-              id: "1",
-              code: "CR6-001042",
+              id: "9",
+              code: "CU2-000009",
               description:
                 "GIGABYTE AORUS RADEON RX6900XT XTREME WATERFORCE WB 16GB GDDR6 256 bit CL 19-31/8/22",
               selectAmount: 1,
@@ -68,8 +72,8 @@ export default function SetList() {
           typeAmount: 0,
           listItems: [
             {
-              id: "5",
-              code: "CR4-000751",
+              id: "14",
+              code: "CR4-000014",
               description: "GIGABYTE Z590 AORUS TACHYON DDR4 LGA1200 CL 19-31/8/22",
               selectAmount: 1,
               srp: 16100.0,
@@ -83,16 +87,16 @@ export default function SetList() {
           typeAmount: 0,
           listItems: [
             {
-              id: "21",
-              code: "ME1-000994",
+              id: "22",
+              code: "ME1-000022",
               description: "KINGSTON FURY IMPACT 8GB (8X1/3200) DDR4 (KF432S20IB/8) NB",
               selectAmount: 2,
               srp: 1000,
               promotionPrice: 950,
             },
             {
-              id: "292",
-              code: "ME1-000993",
+              id: "23",
+              code: "ME1-000023",
               description: "KINGSTON FURY BEAST16GB (8X2/3200) DDR4 (KF432C16BBK2/16)",
               selectAmount: 2,
               srp: 2190,
@@ -103,7 +107,7 @@ export default function SetList() {
       ],
     },
     {
-      id: 2,
+      id: "2",
       timeStamp: "Thursday, May 17 2023, 5:13:36 pm",
       setName: "Inwza008",
       partData: [
@@ -113,8 +117,17 @@ export default function SetList() {
           typeAmount: 0,
           listItems: [
             {
-              id: "1",
-              code: "CR6-001042",
+              id: "11",
+              code: "CU2-000011",
+              description:
+                "GIGABYTE AORUS RADEON RX6900XT XTREME WATERFORCE WB 16GB GDDR6 256 bit CL 19-31/8/22",
+              selectAmount: 1,
+              srp: 77900.0,
+              promotionPrice: 77900.0,
+            },
+            {
+              id: "12",
+              code: "CU2-000012",
               description:
                 "GIGABYTE AORUS RADEON RX6900XT XTREME WATERFORCE WB 16GB GDDR6 256 bit CL 19-31/8/22",
               selectAmount: 1,
@@ -173,7 +186,7 @@ export default function SetList() {
       ],
     },
     {
-      id: 3,
+      id: "3",
       timeStamp: "May 19 2023, 5:13:37 pm",
       setName: "PuadKhee",
       partData: [
@@ -234,7 +247,7 @@ export default function SetList() {
       ],
     },
     {
-      id: 4,
+      id: "4",
       timeStamp: "May 18 2023",
       setName: "Kimochi",
       partData: [
@@ -295,7 +308,7 @@ export default function SetList() {
       ],
     },
     {
-      id: 5,
+      id: "5",
       timeStamp: "May 18 2023, 5:13:43 pm",
       setName: "NekoNyanNyan",
       partData: [
@@ -357,6 +370,9 @@ export default function SetList() {
     },
   ];
 
+  const sortedItemList = itemList.sort((a, b) => new Date(b.timeStamp) - new Date(a.timeStamp));
+  const { data } = useGetPostsQuery();
+  console.log("test", data);
   return (
     <div>
       <Button
@@ -371,7 +387,7 @@ export default function SetList() {
         Set List
       </Button>
 
-      <Dialog open={open} onClose={handleClose} maxWidth="none">
+      <Dialog open={open} onClose={handleClose} maxWidth="md">
         <DialogTitle
           sx={{
             backgroundColor: "#414151",
@@ -380,140 +396,106 @@ export default function SetList() {
             px: "10px",
             pt: "20px",
             pb: "5px",
-            width: "1000px",
+            width: "880px",
+            position: "-webkit-sticky",
           }}
         >
           เลือก Set
         </DialogTitle>
-        <List>
-          <DialogContent
-            sx={{
-              borderLeft: "10px solid #0033E6",
-              backgroundColor: "#4141",
-              flexDirection: "column",
-            }}
-          >
-            <Box
-              sx={{
-                display: "flex",
-                fontSize: 16,
-                color: "#3d3d3d",
-                textAlign: "center",
-              }}
-            >
-              <Box sx={{ flexGrow: 0.2, width: "4.5%" }}>No.</Box>
-              <Box sx={{ flexGrow: 0.3, width: "14%" }}>SetName</Box>
-              <Box sx={{ flexGrow: 1, width: "50.5%" }}>Components</Box>
-              <Box sx={{ flexGrow: 0.2, width: "7%" }}>SaveDate</Box>
-            </Box>
-            <Divider />
-
-            {itemList.map((item, index) => {
-              let i = 0;
-              return (
-                <React.Fragment key={index}>
-                  <Box
-                    // container
-                    sx={{ display: "flex", textAlign: "center", my: "10px", fontSize: 14 }}
-                  >
-                    <Box sx={{ flexGrow: 0.2, width: "4.5%" }}>{item.id}</Box>
-                    <Box sx={{ flexGrow: 0.3, width: "14%" }}>{item.setName}</Box>
-                    <Box sx={{ flexGrow: 1, width: "50.5%" }}>
-                      {item.partData.map((item2) => (
-                        <>
-                          {item2.listItems.map((item3, index3) => {
-                            return (
-                              <Box
-                                component="span"
-                                sx={{ textOverflow: "ellipsis", overflow: "hidden" }}
-                              >
-                                {`${item2.category}: ${item3.code} `}
-                              </Box>
-                            );
-                          })}
-                        </>
-                      ))}
-                    </Box>
-                    <Box sx={{ flexGrow: 0.2, width: "7%" }}>
-                      {new Date(item.timeStamp).toLocaleDateString("th-TH")}
-                    </Box>
-                  </Box>
-                  <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-                    <Collapse in={open} timeout="auto" unmountOnExit>
-                      <Box sx={{ margin: 1 }}>
-                        <Typography variant="h6" gutterBottom component="div">
-                          ListItem
-                        </Typography>
-                        <Table size="small" aria-label="purchases">
-                          <TableHead>
-                            <TableRow>
-                              <TableCell>No.</TableCell>
-                              <TableCell>Code</TableCell>
-                              <TableCell>Description</TableCell>
-                            </TableRow>
-                          </TableHead>
-                          <TableBody>
-                            {item.partData.map((item2, index2) => {
-                              return item2.listItems.map((item3, index3) => {
-                                i += 1;
-                                return (
-                                  <>
-                                    <TableRow key={index3}>
-                                      <TableCell component="th" scope="row">
-                                        {i}
-                                      </TableCell>
-                                      <TableCell>{item3.code}</TableCell>
-                                      <TableCell>{item3.description}</TableCell>
-                                    </TableRow>
-                                  </>
-                                );
-                              });
-                            })}
-                          </TableBody>
-                        </Table>
-                      </Box>
-                    </Collapse>
-                  </TableCell>
-                  {/* <Box sx={{ overflow: "auto", maxHeight: "150px" }}>
-                    {item.sn.map((item2, index2) => {
-                      return (
-                        <React.Fragment key={index2}>
-                          <Box
-                            // container
-                            sx={{
-                              display: "flex",
-                              textAlign: "center",
-                              my: "4.5px",
-                              ml: "5.5vw",
-                            }}
-                          >
-                            <TextField
-                              size="small"
-                              id="filled-basic"
-                              label="S/N"
-                              variant="filled"
-                              sx={{ zoom: "80%", width: "450px" }}
-                              onKeyDown={(event) => handleKeyDown(event, index2, index, item2)}
-                              inputRef={(textField) => handleTextFieldRef(textField, index2, index)}
-                              {...register(`Item${index}SN${index2}`)}
-                              onChange={(event) => handleChange(event, index, index2)}
-                            />
-                            <Box>{item2}</Box>
+        <TableContainer component={Paper}>
+          <Table stickyHeader sx={{ maxWidth: "md" }}>
+            <TableHead>
+              <TableRow>
+                <TableCell></TableCell>
+                <TableCell align="left" colSpan={1}>
+                  ID
+                </TableCell>
+                <TableCell align="left" colSpan={1}>
+                  SetName
+                </TableCell>
+                {/* <TableCell align="center" colSpan={1}>
+                  Components
+                </TableCell> */}
+                <TableCell align="right" colSpan={1}>
+                  SaveDate
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {sortedItemList.map((item, index) => {
+                const [openSubTable, setOpenSubTable] = React.useState(false);
+                let i = 0;
+                return (
+                  <React.Fragment key={index}>
+                    <TableRow onClick={() => setOpenSubTable(!openSubTable)} hover>
+                      <TableCell style={{ width: 1 }}>
+                        <IconButton
+                          aria-label="expand row"
+                          size="small"
+                          onClick={() => setOpenSubTable(!openSubTable)}
+                        >
+                          {openSubTable ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+                        </IconButton>
+                      </TableCell>
+                      <TableCell align="left" style={{ width: 38 }}>
+                        {item.id}
+                      </TableCell>
+                      <TableCell align="left">{item.setName}</TableCell>
+                      <TableCell align="right">
+                        {new Date(item.timeStamp).toLocaleDateString("th-TH")}
+                      </TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+                        <Collapse in={openSubTable} timeout="auto" unmountOnExit>
+                          <Box sx={{ margin: 1 }}>
+                            <Typography variant="h6" gutterBottom component="div">
+                              ListItem
+                            </Typography>
+                            <Table size="small" aria-label="purchases">
+                              <TableHead>
+                                <TableRow>
+                                  <TableCell>No.</TableCell>
+                                  <TableCell>Code</TableCell>
+                                  <TableCell>Description</TableCell>
+                                  <TableCell>Price</TableCell>
+                                </TableRow>
+                              </TableHead>
+                              <TableBody>
+                                {item.partData.map((item2, index2) => {
+                                  return item2.listItems.map((item3, index3) => {
+                                    i += 1;
+                                    return (
+                                      <>
+                                        <TableRow key={index3}>
+                                          <TableCell component="th" scope="row">
+                                            {i}
+                                          </TableCell>
+                                          <TableCell>{item3.code}</TableCell>
+                                          <TableCell>{item3.description}</TableCell>
+                                          <TableCell>{}</TableCell>
+                                        </TableRow>
+                                      </>
+                                    );
+                                  });
+                                })}
+                              </TableBody>
+                            </Table>
                           </Box>
-                        </React.Fragment>
-                      );
-                    })}
-                  </Box> */}
-                  <Divider />
-                </React.Fragment>
-              );
-            })}
-          </DialogContent>
-        </List>
+                        </Collapse>
+                      </TableCell>
+                    </TableRow>
+                  </React.Fragment>
+                );
+              })}
+            </TableBody>
+          </Table>
+        </TableContainer>
         <DialogActions>
           <Button onClick={handleClose} variant="contained" color="error">
             Cancel
           </Button>
+
           <Button onClick={handleClose} variant="contained" color="success">
             Save
           </Button>

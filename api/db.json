@@ -18,7 +18,7 @@
   },
   "items2": [
     {
-      "id": 9,
+      "id": "9",
       "code": "CU2-000009",
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque non eros dapibus, maximus tellus sollicitudin, iaculis ligula. Nullam ullamcorper metus sit amet orci consectetur interdum. Aliquam nec erat congue, facilisis.",
       "title": "CPU01_AMD",
@@ -32,7 +32,7 @@
       "brand": "AMD"
     },
     {
-      "id": 11,
+      "id": "11",
       "code": "CU2-000011",
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "title": "CPU02_AMD",
@@ -46,7 +46,7 @@
       "brand": "AMD"
     },
     {
-      "id": 12,
+      "id": "12",
       "code": "CU2-000012",
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque non eros dapibus, maximus tellus sollicitudin, iaculis ligula.",
       "title": "CPU01_intel",
@@ -60,7 +60,7 @@
       "brand": "INTEL"
     },
     {
-      "id": 13,
+      "id": "13",
       "code": "CU2-000013",
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque non eros dapibus, maximus tellus sollicitudin, iaculis ligula.",
       "title": "CPU02_intel",
@@ -74,7 +74,7 @@
       "brand": "INTEL"
     },
     {
-      "id": 14,
+      "id": "14",
       "code": "CR4-000014",
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque non eros dapibus, maximus tellus sollicitudin, iaculis ligula.",
       "title": "Mainboard01_AMD",
@@ -94,7 +94,7 @@
       "brand": "brandex1"
     },
     {
-      "id": 15,
+      "id": "15",
       "code": "CR4-000015",
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque non eros dapibus, maximus tellus sollicitudin, iaculis ligula.",
       "title": "Mainboard02_AMD",
@@ -114,7 +114,7 @@
       "brand": "brandex2"
     },
     {
-      "id": 16,
+      "id": "16",
       "code": "CR4-000016",
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque non eros dapibus, maximus tellus sollicitudin, iaculis ligula.",
       "title": "Mainboard01_intel",
@@ -134,7 +134,7 @@
       "brand": "brandex1"
     },
     {
-      "id": 17,
+      "id": "17",
       "code": "CR4-000017",
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque non eros dapibus, maximus tellus sollicitudin, iaculis ligula.",
       "title": "Mainboard02_intel",
@@ -154,7 +154,7 @@
       "brand": "brandex2"
     },
     {
-      "id": 18,
+      "id": "18",
       "code": "CR4-000018",
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque non eros dapibus, maximus tellus sollicitudin, iaculis ligula.",
       "title": "Mainboard01_AMD 4slot",
@@ -174,7 +174,7 @@
       "brand": "brandex1"
     },
     {
-      "id": 19,
+      "id": "19",
       "code": "CR4-000019",
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sodales erat mauris, sit amet posuere erat ultrices in. In aliquet ultrices fermentum. Phasellus quis massa.",
       "title": "Mainboard02_AMD 4slot",
@@ -194,7 +194,7 @@
       "brand": "brandex2"
     },
     {
-      "id": 20,
+      "id": "20",
       "code": "CR4-000020",
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque sagittis scelerisque commodo. Duis lobortis elementum est, at vehicula nulla ultricies vitae. Integer id augue et metus dapibus gravida a non turpis. Duis vitae.",
       "title": "Mainboard01_intel 4slot",
@@ -214,7 +214,7 @@
       "brand": "brandex1"
     },
     {
-      "id": 21,
+      "id": "21",
       "code": "CR4-000020",
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque sagittis scelerisque commodo. Duis lobortis elementum est, at vehicula nulla ultricies vitae.",
       "title": "Mainboard02_intel 4slot",
@@ -234,7 +234,7 @@
       "brand": "brandex2"
     },
     {
-      "id": 22,
+      "id": "22",
       "code": "ME1-000022",
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "title": "RAM01_single",
@@ -254,7 +254,7 @@
       "brand": "Zadak"
     },
     {
-      "id": 23,
+      "id": "23",
       "code": "ME1-000023",
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "title": "RAM02_single",
@@ -274,7 +274,7 @@
       "brand": "Zadak"
     },
     {
-      "id": 24,
+      "id": "24",
       "code": "ME1-000024",
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "title": "RAM01_duo",
@@ -294,7 +294,7 @@
       "brand": "Zadak"
     },
     {
-      "id": 25,
+      "id": "25",
       "code": "ME1-000025",
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "title": "RAM02_duo",
@@ -314,7 +314,7 @@
       "brand": "Corsair"
     },
     {
-      "id": 26,
+      "id": "26",
       "code": "CU2-000026",
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "title": "CPU03_AMD",
@@ -328,7 +328,7 @@
       "brand": "AMD"
     },
     {
-      "id": 27,
+      "id": "27",
       "code": "CU2-000027",
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "title": "CPU04_AMD",
