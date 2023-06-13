@@ -29,7 +29,8 @@
       "promotionPrice": 9066,
       "series": "AMD Ryzen 3000 Series",
       "model": "Ryzen 5",
-      "brand": "AMD"
+      "brand": "AMD",
+      "qty": "1"
     },
     {
       "id": "11",
@@ -43,7 +44,8 @@
       "promotionPrice": 2800,
       "series": "AMD Ryzen 5000 Series",
       "model": "Ryzen 7",
-      "brand": "AMD"
+      "brand": "AMD",
+      "qty": "1"
     },
     {
       "id": "12",
@@ -57,7 +59,8 @@
       "promotionPrice": 313,
       "series": "Intel Core 12th Gen Processors",
       "model": "Core i5",
-      "brand": "INTEL"
+      "brand": "INTEL",
+      "qty": "1"
     },
     {
       "id": "13",
@@ -71,7 +74,8 @@
       "promotionPrice": 8290,
       "series": "Intel Core 13th Gen Processors",
       "model": "Core i9",
-      "brand": "INTEL"
+      "brand": "INTEL",
+      "qty": "1"
     },
     {
       "id": "14",
@@ -91,7 +95,8 @@
       "cpuSeries": "AMD Ryzen 2000, 3000 Series Desktop Processors",
       "pcieGen": "1 x PCIe 3.0 x16 Slot , 2 x PCIe 2.0 x1 Slots",
       "maxBus": "DDR4 Support up to 3200(OC) MHz",
-      "brand": "brandex1"
+      "brand": "brandex1",
+      "qty": "1"
     },
     {
       "id": "15",
@@ -111,7 +116,8 @@
       "cpuSeries": "Ryzen 7000 Series Processors",
       "pcieGen": "1x PCIe 4.0 x16 slot",
       "maxBus": "DDR5 Support up to 6400(OC) MHz",
-      "brand": "brandex2"
+      "brand": "brandex2",
+      "qty": "1"
     },
     {
       "id": "16",
@@ -131,7 +137,8 @@
       "cpuSeries": "12th Gen Intel Core Processors",
       "pcieGen": "1x PCIe 4.0 x16 slot, 2x PCIe 3.0 x1 slot",
       "maxBus": "DDR4 support up to 5066(OC) MHz",
-      "brand": "brandex1"
+      "brand": "brandex1",
+      "qty": "1"
     },
     {
       "id": "17",
@@ -151,7 +158,8 @@
       "cpuSeries": "Celeron , Core i3 , Core i5 , Core i7 , Core i9 , Pentium",
       "pcieGen": "1 x PCIe 5.0 x16",
       "maxBus": "4400 , 4800 , 5200 (OC) , 5600 (OC) , 6000 (OC)",
-      "brand": "brandex2"
+      "brand": "brandex2",
+      "qty": "1"
     },
     {
       "id": "18",
@@ -171,7 +179,8 @@
       "cpuSeries": "AMD Ryzen 3000, 5000 Series Desktop Processors (not Support 3000G Series)",
       "pcieGen": "1x PCIe 4.0 x16, 1x PCIe 3.0 x16, 2x PCIe 3.0 x1, 1x M.2 Key E for WiFi",
       "maxBus": "supports DDR4 4733+(OC)-3466(OC)/3200/2933/2667/2400/2133 MHz",
-      "brand": "brandex1"
+      "brand": "brandex1",
+      "qty": "1"
     },
     {
       "id": "19",
@@ -191,7 +200,8 @@
       "cpuSeries": "AMD Ryzen 7000 Series Processors",
       "pcieGen": "1x PCIe 5.0 x16 slot, 2x PCIe 4.0 x16 slot, 1x PCIe 4.0 x1 slot",
       "maxBus": "DDR5 support up to 6600(OC) MHz, support XMP and EXPO",
-      "brand": "brandex2"
+      "brand": "brandex2",
+      "qty": "1"
     },
     {
       "id": "20",
@@ -211,7 +221,8 @@
       "cpuSeries": "12th Gen Intel Core Processors",
       "pcieGen": "1x PCIe 5.0 slot, 1x PCIe 4.0 x16 slot, 2x PCIe 3.0 x16 slot, 1x PCIe 3.0 x1 slot",
       "maxBus": "DDR4 support up to 5333(OC) MHz",
-      "brand": "brandex1"
+      "brand": "brandex1",
+      "qty": "1"
     },
     {
       "id": "21",
@@ -231,7 +242,8 @@
       "cpuSeries": "13th Gen Intel Core Processors",
       "pcieGen": "1x PCIe 5.0 x16 slot, 1x PCIe 4.0 x16 slot (speed x4), 1x PCIe 3.0 x1 slot",
       "maxBus": "DDR4 Support up to 5333(OC) MHz",
-      "brand": "brandex2"
+      "brand": "brandex2",
+      "qty": "1"
     },
     {
       "id": "22",
@@ -251,7 +263,8 @@
       "effect": "RGB",
       "latency": "16-18-18-38",
       "color": "Black",
-      "brand": "Zadak"
+      "brand": "Zadak",
+      "qty": "1"
     },
     {
       "id": "23",
@@ -271,7 +284,8 @@
       "effect": "RGB",
       "latency": "38-38-38-84",
       "color": "White",
-      "brand": "Zadak"
+      "brand": "Zadak",
+      "qty": "1"
     },
     {
       "id": "24",
@@ -291,7 +305,8 @@
       "effect": "RGB",
       "latency": "16-18-18-38",
       "color": "Black",
-      "brand": "Zadak"
+      "brand": "Zadak",
+      "qty": "1"
     },
     {
       "id": "25",
@@ -311,7 +326,8 @@
       "effect": "RGB",
       "latency": "36-36-36-76",
       "color": "Black",
-      "brand": "Corsair"
+      "brand": "Corsair",
+      "qty": "1"
     },
     {
       "id": "26",
@@ -325,7 +341,8 @@
       "promotionPrice": 1179,
       "series": "AMD Ryzen 7000 Series",
       "model": "Ryzen 9",
-      "brand": "AMD"
+      "brand": "AMD",
+      "qty": "1"
     },
     {
       "id": "27",
@@ -339,7 +356,8 @@
       "promotionPrice": 5366,
       "series": "AMD Ryzen 7000 Series",
       "model": "Ryzen 9",
-      "brand": "AMD"
+      "brand": "AMD",
+      "qty": "1"
     }
   ]
 }

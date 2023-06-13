@@ -167,16 +167,14 @@ const UserFilter = () => {
       {isFiltContained.length > 0 ? (
         <>
           <Box className="resetBtn">
-            <Box>
-              <Button
-                disableRipple={true}
-                sx={{ p: 0, backgroundColor: "#42528A" }}
-                onClick={() => dispatch(clearSelectedFilter())}
-                variant="contained"
-              >
-                reset
-              </Button>
-            </Box>
+            <Button
+              disableRipple={true}
+              sx={{ p: 0, backgroundColor: "#42528A" }}
+              onClick={() => dispatch(clearSelectedFilter())}
+              variant="contained"
+            >
+              reset
+            </Button>
           </Box>
         </>
       ) : (

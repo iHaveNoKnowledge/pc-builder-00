@@ -12,17 +12,7 @@
     display: flex;
     justify-content: flex-end;
     transition: width 0.001s ,left 0.1s ease-in-out;
-    /* width: 40px; */
-    /* height:20px; */
-    /* text-align: right; */
 }
-
-/* .resetBtn:hover {
-   left:0;
-   width: 100%;
-   content: "Read this -";
-} */
-
 
 .my-option {
     background-color: blue;

@@ -32,7 +32,6 @@ export default function SetList() {
   const dispatch = useDispatch();
 
   const [open, setOpen] = React.useState(false);
-  const [inputData, setInputData] = React.useState({});
 
   ////onclick เปิด Dialog ////////////////////////////////////////////////////////////////////
   const handleClickOpen = () => {
@@ -40,7 +39,8 @@ export default function SetList() {
   };
 
   ////onclick ปิด Dialog ////////////////////////////////////////////////////////////////////
-  const handleClose = () => {
+  const handleClose = (e) => {
+    e.stopPropagation();
     setOpen(false);
   };
 
@@ -373,6 +373,10 @@ export default function SetList() {
   const sortedItemList = itemList.sort((a, b) => new Date(b.timeStamp) - new Date(a.timeStamp));
   const { data: posts } = useGetPostsQuery();
   console.log("testDataApi", posts);
+  React.useEffect(() => {
+    console.log("openเปลี่ยน");
+  }, [open]);
+
   return (
     <div>
       <Button
@@ -406,8 +410,8 @@ export default function SetList() {
           <Table stickyHeader sx={{ maxWidth: "md" }}>
             <TableHead>
               <TableRow>
-                <TableCell></TableCell>
-                <TableCell align="left" colSpan={1}>
+                <TableCell style={{ width: 1 }}></TableCell>
+                <TableCell align="left" colSpan={1} style={{ width: 38 }}>
                   ID
                 </TableCell>
                 <TableCell align="left" colSpan={1}>
@@ -416,33 +420,49 @@ export default function SetList() {
                 {/* <TableCell align="center" colSpan={1}>
                   Components
                 </TableCell> */}
-                <TableCell align="right" colSpan={1}>
+                <TableCell align="right" colSpan={1} style={{ width: 80 }}>
                   SaveDate
                 </TableCell>
+                <TableCell style={{ width: 80 }}></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {sortedItemList.map((item, index) => {
                 const [openSubTable, setOpenSubTable] = React.useState(false);
+                // setSubtables((prev) => {
+                //   return [...prev];
+                // });
                 let i = 0;
                 return (
                   <React.Fragment key={index}>
                     <TableRow onClick={() => setOpenSubTable(!openSubTable)} hover>
-                      <TableCell style={{ width: 1 }}>
+                      <TableCell style={{ backgroundColor: "#414151" }}>
                         <IconButton
                           aria-label="expand row"
                           size="small"
                           onClick={() => setOpenSubTable(!openSubTable)}
+                          sx={{ color: "white" }}
                         >
                           {openSubTable ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
                         </IconButton>
                       </TableCell>
-                      <TableCell align="left" style={{ width: 38 }}>
-                        {item.id}
-                      </TableCell>
+                      <TableCell align="left">{item.id}</TableCell>
                       <TableCell align="left">{item.setName}</TableCell>
                       <TableCell align="right">
                         {new Date(item.timeStamp).toLocaleDateString("th-TH")}
+                      </TableCell>
+                      <TableCell style={{ width: "auto" }} size="small">
+                        <Box className="resetBtn">
+                          <Button
+                            fullWidth
+                            disableRipple={true}
+                            sx={{ p: 0, backgroundColor: "#42528A" }}
+                            onClick={handleClose}
+                            variant="contained"
+                          >
+                            Select
+                          </Button>
+                        </Box>
                       </TableCell>
                     </TableRow>
                     <TableRow>
@@ -456,50 +476,50 @@ export default function SetList() {
                               <TableHead>
                                 <TableRow>
                                   <TableCell>No.</TableCell>
-                                  <TableCell>Code</TableCell>
+                                  <TableCell style={{ width: 80 }}>Code</TableCell>
                                   <TableCell align="left">Description</TableCell>
                                   <TableCell>AMT</TableCell>
+                                  <TableCell>StockAMT</TableCell>
                                   <TableCell>SRP</TableCell>
                                   <TableCell>Price</TableCell>
                                 </TableRow>
                               </TableHead>
                               <TableBody>
-                                {item.partData.map((item2, index2) => {
-                                  return item2.listItems.map((item3, index3) => {
+                                {item.partData.map((item2, index2) =>
+                                  item2.listItems.map((item3, index3) => {
                                     i += 1;
                                     return (
-                                      <>
-                                        <TableRow key={index3}>
-                                          <TableCell component="th" scope="row">
-                                            {i}
-                                          </TableCell>
-                                          <TableCell>{item3.code}</TableCell>
-                                          <TableCell>{item3.description}</TableCell>
-                                          <TableCell align="right">{item3.selectAmount}</TableCell>
-                                          <TableCell>
-                                            {posts
-                                              .find((post) => {
-                                                if (post.id === item3.id) {
-                                                  return post.srp.toLocaleString();
-                                                }
-                                              })
-                                              ?.srp.toLocaleString()}
-                                          </TableCell>
+                                      <TableRow key={index3}>
+                                        <TableCell component="th" scope="row">
+                                          {i}
+                                        </TableCell>
+                                        <TableCell>{item3.code}</TableCell>
+                                        <TableCell>{item3.description}</TableCell>
+                                        <TableCell align="right">{item3.selectAmount}</TableCell>
+                                        <TableCell></TableCell>
+                                        <TableCell>
+                                          {posts
+                                            .find((post, postIDX) => {
+                                              if (post.id === item3.id) {
+                                                return post.srp.toLocaleString();
+                                              }
+                                            })
+                                            ?.srp.toLocaleString()}
+                                        </TableCell>
 
-                                          <TableCell>
-                                            {posts
-                                              .find((post) => {
-                                                if (post.id === item3.id) {
-                                                  return post.promotionPrice;
-                                                }
-                                              })
-                                              ?.promotionPrice.toLocaleString()}
-                                          </TableCell>
-                                        </TableRow>
-                                      </>
+                                        <TableCell>
+                                          {posts
+                                            .find((post, postIDX) => {
+                                              if (post.id === item3.id) {
+                                                return post.promotionPrice;
+                                              }
+                                            })
+                                            ?.promotionPrice.toLocaleString()}
+                                        </TableCell>
+                                      </TableRow>
                                     );
-                                  });
-                                })}
+                                  })
+                                )}
                               </TableBody>
                             </Table>
                           </Box>
@@ -514,11 +534,7 @@ export default function SetList() {
         </TableContainer>
         <DialogActions>
           <Button onClick={handleClose} variant="contained" color="error">
-            Cancel
-          </Button>
-
-          <Button onClick={handleClose} variant="contained" color="success">
-            Save
+            Close
           </Button>
         </DialogActions>
       </Dialog>
