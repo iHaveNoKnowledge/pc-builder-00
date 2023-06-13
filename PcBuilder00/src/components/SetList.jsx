@@ -373,10 +373,9 @@ export default function SetList() {
   const sortedItemList = itemList.sort((a, b) => new Date(b.timeStamp) - new Date(a.timeStamp));
   const { data: posts } = useGetPostsQuery();
   console.log("testDataApi", posts);
-  React.useEffect(() => {
-    console.log("openเปลี่ยน");
-  }, [open]);
 
+  const openSubTableRefs = React.useRef([]);
+  const [openSubTables, setOpenSubTables] = React.useState([]);
   return (
     <div>
       <Button
@@ -415,7 +414,7 @@ export default function SetList() {
                   ID
                 </TableCell>
                 <TableCell align="left" colSpan={1}>
-                  SetName
+                  SetName {JSON.stringify(openSubTables)}
                 </TableCell>
                 {/* <TableCell align="center" colSpan={1}>
                   Components
@@ -428,22 +427,31 @@ export default function SetList() {
             </TableHead>
             <TableBody>
               {sortedItemList.map((item, index) => {
-                const [openSubTable, setOpenSubTable] = React.useState(false);
-                // setSubtables((prev) => {
-                //   return [...prev];
-                // });
+                const isOpen = openSubTables[index];
                 let i = 0;
                 return (
                   <React.Fragment key={index}>
-                    <TableRow onClick={() => setOpenSubTable(!openSubTable)} hover>
+                    <TableRow
+                      onClick={() => {
+                        const updatedOpenSubTables = [...openSubTables];
+                        updatedOpenSubTables[index] = !isOpen;
+                        setOpenSubTables(updatedOpenSubTables);
+                        console.log(openSubTables);
+                      }}
+                      hover
+                    >
                       <TableCell style={{ backgroundColor: "#414151" }}>
                         <IconButton
                           aria-label="expand row"
                           size="small"
-                          onClick={() => setOpenSubTable(!openSubTable)}
+                          onClick={() => {
+                            const updatedOpenSubTables = [...openSubTables];
+                            updatedOpenSubTables[index] = !isOpen;
+                            setOpenSubTables(updatedOpenSubTables);
+                          }}
                           sx={{ color: "white" }}
                         >
-                          {openSubTable ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+                          {isOpen ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
                         </IconButton>
                       </TableCell>
                       <TableCell align="left">{item.id}</TableCell>
@@ -467,7 +475,7 @@ export default function SetList() {
                     </TableRow>
                     <TableRow>
                       <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-                        <Collapse in={openSubTable} timeout="auto" unmountOnExit>
+                        <Collapse in={isOpen} timeout="auto" unmountOnExit>
                           <Box sx={{ margin: 1 }}>
                             <Typography variant="h6" gutterBottom component="div">
                               ListItem
@@ -476,7 +484,7 @@ export default function SetList() {
                               <TableHead>
                                 <TableRow>
                                   <TableCell>No.</TableCell>
-                                  <TableCell style={{ width: 80 }}>Code</TableCell>
+                                  <TableCell>Code</TableCell>
                                   <TableCell align="left">Description</TableCell>
                                   <TableCell>AMT</TableCell>
                                   <TableCell>StockAMT</TableCell>
