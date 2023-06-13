@@ -151,7 +151,7 @@ export default function SetList() {
           typeAmount: 0,
           listItems: [
             {
-              id: "5",
+              id: "15",
               code: "CR4-000751",
               description: "GIGABYTE Z590 AORUS TACHYON DDR4 LGA1200 CL 19-31/8/22",
               selectAmount: 1,
@@ -166,7 +166,7 @@ export default function SetList() {
           typeAmount: 0,
           listItems: [
             {
-              id: "21",
+              id: "24",
               code: "ME1-000994",
               description: "KINGSTON FURY IMPACT 8GB (8X1/3200) DDR4 (KF432S20IB/8) NB",
               selectAmount: 2,
@@ -174,7 +174,7 @@ export default function SetList() {
               promotionPrice: 950,
             },
             {
-              id: "292",
+              id: "25",
               code: "ME1-000993",
               description: "KINGSTON FURY BEAST16GB (8X2/3200) DDR4 (KF432C16BBK2/16)",
               selectAmount: 2,
@@ -196,10 +196,10 @@ export default function SetList() {
           typeAmount: 0,
           listItems: [
             {
-              id: "1",
-              code: "CR6-001042",
+              id: "9",
+              code: "CU2-000009",
               description:
-                "GIGABYTE AORUS RADEON RX6900XT XTREME WATERFORCE WB 16GB GDDR6 256 bit CL 19-31/8/22",
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque non eros dapibus, maximus tellus sollicitudin, iaculis ligula. Nullam ullamcorper metus sit amet orci consectetur interdum. Aliquam nec erat congue, facilisis.",
               selectAmount: 1,
               srp: 77900.0,
               promotionPrice: 77900.0,
@@ -212,7 +212,7 @@ export default function SetList() {
           typeAmount: 0,
           listItems: [
             {
-              id: "5",
+              id: "15",
               code: "CR4-000751",
               description: "GIGABYTE Z590 AORUS TACHYON DDR4 LGA1200 CL 19-31/8/22",
               selectAmount: 1,
@@ -227,7 +227,7 @@ export default function SetList() {
           typeAmount: 0,
           listItems: [
             {
-              id: "21",
+              id: "24",
               code: "ME1-000994",
               description: "KINGSTON FURY IMPACT 8GB (8X1/3200) DDR4 (KF432S20IB/8) NB",
               selectAmount: 2,
@@ -235,7 +235,7 @@ export default function SetList() {
               promotionPrice: 950,
             },
             {
-              id: "292",
+              id: "25",
               code: "ME1-000993",
               description: "KINGSTON FURY BEAST16GB (8X2/3200) DDR4 (KF432C16BBK2/16)",
               selectAmount: 2,
@@ -257,10 +257,10 @@ export default function SetList() {
           typeAmount: 0,
           listItems: [
             {
-              id: "1",
-              code: "CR6-001042",
+              id: "11",
+              code: "CU2-000011",
               description:
-                "GIGABYTE AORUS RADEON RX6900XT XTREME WATERFORCE WB 16GB GDDR6 256 bit CL 19-31/8/22",
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
               selectAmount: 1,
               srp: 77900.0,
               promotionPrice: 77900.0,
@@ -273,7 +273,7 @@ export default function SetList() {
           typeAmount: 0,
           listItems: [
             {
-              id: "5",
+              id: "15",
               code: "CR4-000751",
               description: "GIGABYTE Z590 AORUS TACHYON DDR4 LGA1200 CL 19-31/8/22",
               selectAmount: 1,
@@ -288,7 +288,7 @@ export default function SetList() {
           typeAmount: 0,
           listItems: [
             {
-              id: "21",
+              id: "24",
               code: "ME1-000994",
               description: "KINGSTON FURY IMPACT 8GB (8X1/3200) DDR4 (KF432S20IB/8) NB",
               selectAmount: 2,
@@ -296,7 +296,7 @@ export default function SetList() {
               promotionPrice: 950,
             },
             {
-              id: "292",
+              id: "25",
               code: "ME1-000993",
               description: "KINGSTON FURY BEAST16GB (8X2/3200) DDR4 (KF432C16BBK2/16)",
               selectAmount: 2,
@@ -318,10 +318,10 @@ export default function SetList() {
           typeAmount: 0,
           listItems: [
             {
-              id: "1",
-              code: "CR6-001042",
+              id: "12",
+              code: "CU2-000012",
               description:
-                "GIGABYTE AORUS RADEON RX6900XT XTREME WATERFORCE WB 16GB GDDR6 256 bit CL 19-31/8/22",
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque non eros dapibus, maximus tellus sollicitudin, iaculis ligula.",
               selectAmount: 1,
               srp: 77900.0,
               promotionPrice: 77900.0,
@@ -334,7 +334,7 @@ export default function SetList() {
           typeAmount: 0,
           listItems: [
             {
-              id: "5",
+              id: "15",
               code: "CR4-000751",
               description: "GIGABYTE Z590 AORUS TACHYON DDR4 LGA1200 CL 19-31/8/22",
               selectAmount: 1,
@@ -349,7 +349,7 @@ export default function SetList() {
           typeAmount: 0,
           listItems: [
             {
-              id: "21",
+              id: "24",
               code: "ME1-000994",
               description: "KINGSTON FURY IMPACT 8GB (8X1/3200) DDR4 (KF432S20IB/8) NB",
               selectAmount: 2,
@@ -357,7 +357,7 @@ export default function SetList() {
               promotionPrice: 950,
             },
             {
-              id: "292",
+              id: "25",
               code: "ME1-000993",
               description: "KINGSTON FURY BEAST16GB (8X2/3200) DDR4 (KF432C16BBK2/16)",
               selectAmount: 2,
@@ -371,8 +371,8 @@ export default function SetList() {
   ];
 
   const sortedItemList = itemList.sort((a, b) => new Date(b.timeStamp) - new Date(a.timeStamp));
-  const { data } = useGetPostsQuery();
-  console.log("test", data);
+  const { data: posts } = useGetPostsQuery();
+  console.log("testDataApi", posts);
   return (
     <div>
       <Button
@@ -457,7 +457,9 @@ export default function SetList() {
                                 <TableRow>
                                   <TableCell>No.</TableCell>
                                   <TableCell>Code</TableCell>
-                                  <TableCell>Description</TableCell>
+                                  <TableCell align="left">Description</TableCell>
+                                  <TableCell>AMT</TableCell>
+                                  <TableCell>SRP</TableCell>
                                   <TableCell>Price</TableCell>
                                 </TableRow>
                               </TableHead>
@@ -473,7 +475,26 @@ export default function SetList() {
                                           </TableCell>
                                           <TableCell>{item3.code}</TableCell>
                                           <TableCell>{item3.description}</TableCell>
-                                          <TableCell>{}</TableCell>
+                                          <TableCell align="right">{item3.selectAmount}</TableCell>
+                                          <TableCell>
+                                            {posts
+                                              .find((post) => {
+                                                if (post.id === item3.id) {
+                                                  return post.srp.toLocaleString();
+                                                }
+                                              })
+                                              ?.srp.toLocaleString()}
+                                          </TableCell>
+
+                                          <TableCell>
+                                            {posts
+                                              .find((post) => {
+                                                if (post.id === item3.id) {
+                                                  return post.promotionPrice;
+                                                }
+                                              })
+                                              ?.promotionPrice.toLocaleString()}
+                                          </TableCell>
                                         </TableRow>
                                       </>
                                     );
