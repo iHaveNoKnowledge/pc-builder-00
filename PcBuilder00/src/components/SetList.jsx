@@ -42,6 +42,9 @@ export default function SetList() {
   const handleClose = (e) => {
     e.stopPropagation();
     setOpen(false);
+    const updatedState = openSubTables.map(() => false);
+    // setOpenSubTables(updatedState);
+    setOpenSubTables([]);
   };
 
   const itemList = [
@@ -372,7 +375,6 @@ export default function SetList() {
 
   const sortedItemList = itemList.sort((a, b) => new Date(b.timeStamp) - new Date(a.timeStamp));
   const { data: posts } = useGetPostsQuery();
-  console.log("testDataApi", posts);
 
   const openSubTableRefs = React.useRef([]);
   const [openSubTables, setOpenSubTables] = React.useState([]);
@@ -435,8 +437,8 @@ export default function SetList() {
                       onClick={() => {
                         const updatedOpenSubTables = [...openSubTables];
                         updatedOpenSubTables[index] = !isOpen;
+                        console.log("isOpenคือไร:", isOpen);
                         setOpenSubTables(updatedOpenSubTables);
-                        console.log(openSubTables);
                       }}
                       hover
                     >
