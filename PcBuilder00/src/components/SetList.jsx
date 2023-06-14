@@ -25,6 +25,7 @@ import { saveSet } from "../slices/reportSlice";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { useGetPostsQuery } from "../features/api/dataApiSlice";
+import { addProduct, resetCustomized } from "../slices/cutomizeSliceNoApi";
 
 export default function SetList() {
   const partData = useSelector((state) => state.noApiCustomize.partData);
@@ -33,18 +34,36 @@ export default function SetList() {
 
   const [open, setOpen] = React.useState(false);
 
-  ////onclick เปิด Dialog ////////////////////////////////////////////////////////////////////
+  // !onclick เปิด Dialog //
   const handleClickOpen = () => {
     setOpen(true);
   };
 
-  ////onclick ปิด Dialog ////////////////////////////////////////////////////////////////////
+  // !onclick ปิด Dialog //
   const handleClose = (e) => {
     e.stopPropagation();
     setOpen(false);
     const updatedState = openSubTables.map(() => false);
     // setOpenSubTables(updatedState);
     setOpenSubTables([]);
+  };
+
+  const handleSelect = (e, index1) => {
+    e.stopPropagation();
+    dispatch(resetCustomized());
+    const itemsSet = itemList[index1].partData.flatMap((category) =>
+      category.listItems.map((item) => item)
+    );
+
+    const itemsSetID = itemsSet.map((item) => item.id);
+
+    const amountPerItem = itemsSet.map((item) => item.selectAmount);
+
+    const itemsToAdd = posts
+      .filter((item) => itemsSetID.includes(item.id))
+      .map((item, index) => ({ ...item, selectAmount: amountPerItem[index] }));
+
+    itemsToAdd.map((item) => dispatch(addProduct(item)));
   };
 
   const itemList = [
@@ -392,7 +411,7 @@ export default function SetList() {
         Set List
       </Button>
 
-      <Dialog open={open} onClose={handleClose} maxWidth="md">
+      <Dialog open={open} onClose={handleClose} maxWidth="lg">
         <DialogTitle
           sx={{
             backgroundColor: "#414151",
@@ -401,14 +420,14 @@ export default function SetList() {
             px: "10px",
             pt: "20px",
             pb: "5px",
-            width: "880px",
+            width: "1181px",
             position: "-webkit-sticky",
           }}
         >
           เลือก Set
         </DialogTitle>
         <TableContainer component={Paper}>
-          <Table stickyHeader sx={{ maxWidth: "md" }}>
+          <Table stickyHeader sx={{ maxWidth: "lg" }}>
             <TableHead>
               <TableRow>
                 <TableCell style={{ width: 1 }}></TableCell>
@@ -416,11 +435,8 @@ export default function SetList() {
                   ID
                 </TableCell>
                 <TableCell align="left" colSpan={1}>
-                  SetName {JSON.stringify(openSubTables)}
+                  SetName
                 </TableCell>
-                {/* <TableCell align="center" colSpan={1}>
-                  Components
-                </TableCell> */}
                 <TableCell align="right" colSpan={1} style={{ width: 80 }}>
                   SaveDate
                 </TableCell>
@@ -467,7 +483,7 @@ export default function SetList() {
                             fullWidth
                             disableRipple={true}
                             sx={{ p: 0, backgroundColor: "#42528A" }}
-                            onClick={handleClose}
+                            onClick={(e) => handleSelect(e, index)}
                             variant="contained"
                           >
                             Select
@@ -475,6 +491,7 @@ export default function SetList() {
                         </Box>
                       </TableCell>
                     </TableRow>
+                    {/* subtableZone */}
                     <TableRow>
                       <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
                         <Collapse in={isOpen} timeout="auto" unmountOnExit>
@@ -486,7 +503,7 @@ export default function SetList() {
                               <TableHead>
                                 <TableRow>
                                   <TableCell>No.</TableCell>
-                                  <TableCell>Code</TableCell>
+                                  <TableCell sx={{ minWidth: 75 }}>Code</TableCell>
                                   <TableCell align="left">Description</TableCell>
                                   <TableCell>AMT</TableCell>
                                   <TableCell>StockAMT</TableCell>

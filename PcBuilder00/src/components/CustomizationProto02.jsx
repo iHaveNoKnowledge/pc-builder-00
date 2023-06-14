@@ -82,7 +82,7 @@ const CustomizationProto02 = () => {
             return (
               <React.Fragment key={index}>
                 {item.listItems[0] ? (
-                  /////////////////////เลือกสินค้าแล้ว///////////////////////////////////////////////////////////
+                  //* เลือกสินค้าแล้ว///////////////////////////////////////////////////////////
                   <div className="borderLine">
                     {/* <div>{item.category}</div> โชว์ประเภทเหนือและนอก card ที่แสดง รายการสินค้าที่เลือก*/}
                     <div className="listItemStyle">
@@ -250,7 +250,7 @@ const CustomizationProto02 = () => {
                     </div>
                   </div>
                 ) : (
-                  ///////////////////////////// ยังไม่เลือกสินค้า ///////////////////////////////////////////////////
+                  //* ยังไม่เลือกสินค้า ///////////////////////////////////////////////////
                   <div className="borderLine">
                     <div className="listItemStyle">
                       <ListItem>

@@ -96,7 +96,7 @@ export const customizeSlice = createSlice({
   name: "customize",
   initialState,
   reducers: {
-    //////////////////Main Action (1 action ต่อ 1 ปุ่ม)///////////////////////////////////////////////
+    //Main Action (1 action ต่อ 1 ปุ่ม)///////////////////////////////////////////////
     addProduct: (state, action) => {
       const categoryIndex = state.partData.findIndex(
         (item) => item.category === action.payload.category
@@ -119,7 +119,7 @@ export const customizeSlice = createSlice({
         max: action.payload.max,
       };
 
-      ////เช็คสมาชิกใหม่ว่า load เท่าไหร่ เนื่องจากมี max capa ทำให้ต้องดู load ว่าเกิน max capaหรือไม่
+      //เช็คสมาชิกใหม่ว่า load เท่าไหร่ เนื่องจากมี max capa ทำให้ต้องดู load ว่าเกิน max capaหรือไม่
       const typeMaxConsumtion = newArray.selectAmount * newArray.count;
       console.log("ค่าโหลดของสินค้าที่ Add เท่าไหร่: ", typeMaxConsumtion);
 
@@ -173,6 +173,13 @@ export const customizeSlice = createSlice({
 
       state.partData[categoryIndex].typeAmount = totalAmount; // Assign the total amount to the typeAmount property of the RAM object
     },
+
+    //! เกมอาจจะเปลีย่นเล็กน้อยเหมือนจะไม่ได้ใช้
+    // batchAdd: (state, action) => {
+    //   const newSet = action.payload.itemsSet;
+    //   console.log("redux รับ set จาก list", newSet);
+    //   // state.partData = newSet;
+    // },
 
     removeProduct: (state, action) => {
       const index = state.partData.findIndex((item) => item.category === action.payload.category);
@@ -280,14 +287,14 @@ export const customizeSlice = createSlice({
           );
         } else {
           state.partData[index].typeMax = initialState.partData[index].typeMax;
-          // if (state.partData[1].listItems[0]) {
-          //   //มีเมนบอร์ดป่าว?
-          //   console.log("มีเมนบอด: ");
-          //   state.partData[index].typeMax = state.partData[1].listItems[0].slot; //มีก็set max slot ไว้
-          // } else {
-          //   console.log("ไม่มีเมนบอด: ");
-          //   state.partData[index].typeMax = initialState.partData[index].typeMax; // ไม่มีก็set เป็นค่าเริ่มต้น
-          // }
+          if (state.partData[1].listItems[0]) {
+            //มีเมนบอร์ดป่าว?
+            console.log("มีเมนบอด: ");
+            state.partData[index].typeMax = state.partData[1].listItems[0].slot; //มีก็set max slot ไว้
+          } else {
+            console.log("ไม่มีเมนบอด: ");
+            state.partData[index].typeMax = initialState.partData[index].typeMax; // ไม่มีก็set เป็นค่าเริ่มต้น
+          }
         }
 
         let categorizedListItem = state.partData[index].listItems;
@@ -349,5 +356,6 @@ export const {
   resetCustomized,
   updateSumPrices,
   setTypeAmount,
+  batchAdd,
 } = customizeSlice.actions;
 export default customizeSlice.reducer;
