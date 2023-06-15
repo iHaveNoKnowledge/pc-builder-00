@@ -269,7 +269,7 @@ export const customizeSlice = createSlice({
       state.partData[index].typeAmount = sumAllItem;
     },
 
-    ///////////////////Sub Action (ใช้ ร่วมกับ action หลัก)/////////////////////////////////
+    //Sub Action (ใช้ ร่วมกับ action หลัก)/////////////////////////////////
     //actionนี้ถูกใช้หลังจากเช็คว่าไอเท็มที่แอดมา เป็น mainboard หรือไม่ ถ้ามีให้ใช้ action
     setMax: (state, action) => {
       const index = state.partData.findIndex((item) => item.category === "RAM");

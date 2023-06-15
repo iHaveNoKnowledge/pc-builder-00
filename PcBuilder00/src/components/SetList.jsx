@@ -34,7 +34,7 @@ export default function SetList() {
 
   const [open, setOpen] = React.useState(false);
 
-  // !onclick เปิด Dialog //
+  // onclick เปิด Dialog //
   const handleClickOpen = () => {
     setOpen(true);
   };
