@@ -1,0 +1,70 @@
+src : https://database.guide/how-to-import-a-json-file-into-a-sql-server-table/
+
+SELECT items.* FROM OPENROWSET (
+	BULK 'D:\pratchaya\server\json_files\db.json',
+	SINGLE_CLOB) AS [Json]
+	CROSS APPLY OPENJSON (BulkColumn,'$.items2')
+	WITH (
+		code varchar(50),
+		productDescription varchar(50) '$.description',
+		title varchar(100),
+		category varchar(50)
+	) AS [items]
+
+--items.*(row1) itemsมันมาจากrow10
+--OPENROWSET() BULK เลือกไฟล์จาก path ซึ่งใน path ก็เป็น Json อยู่แล้วจะAS [Json] ทำไมไม่รู้ 
+--CROSS APPLY OPENJSON (BulkColumn,'$.items2')  เป็นการเข้าถึงค่าแบบ object notation
+--(LINE7-12) : WITH() บรรทัด 9 productDescription varchar(50)
+ --productDescription varchar(50)  = ชื่อคอลลั่มที่จะสร้างใหม่และ datatype(ขนาดเซล)  
+ --'$.description' = เลือกค่าจากตัวแปรภายใต้ items2  
+
+ ใช้ได้แล้ว
+ INSERT INTO TEST_PRODUCTS (code, productDescription, title, category, countITEM, socket, typeRam, slot, img, srp, promotionPrice, compatible, bus, capaPerRam, totalCapa, effect, latency, color, chipset, formFactor, cpuSeries,  pcieGen, maxBus, series, model, brand, qty)
+SELECT item['code'], item['productDescription'], item['title'], item['category'], item['count'], item['socket'], item['slot'], item['img'], item['srp'], item["promotionPrice"], item["compatible"], item["bus"], item["capaPerRam"], item["totalCapa"], item["effect"], item["latency"], item["color"], item["chipset"], item["formFactor"], item["cpuSeries"], item["pcieGen"], item["maxBus"], item["series"], item["model"], item["brand"], item["qty"]
+FROM OPENROWSET (
+    BULK 'D:\pratchaya\server\json_files\db.json',
+    SINGLE_CLOB) AS [Json]
+CROSS APPLY OPENJSON (BulkColumn,'$.items2')
+WITH (
+    code varchar(50),
+    productDescription varchar(MAX) '$.description',
+    title varchar(100),
+    category varchar(50)
+) AS [items];
+
+
+//// แบบเติมยังไม่ครบ
+
+INSERT INTO TEST_PRODUCTS (code, productDescription, title, category, countItem, socket, typeRam, slot, img, srp, promotionPrice, compatible, bus, capaPerRam, totalCapa, effect, latency, color, chipset, formFactor, cpuSeries,  pcieGen, maxBus, series, model, brand, qty)
+SELECT [item].code, [item].productDescription, [item].title, [item].category, [item].countItem, [item].socket, [item].typeRam, [item].slot, [item].img, [item].srp, [item].promotionPrice, [item].compatible, [item].bus, [item].capaPerRam, [item].totalCapa, [item].effect, [item].latency, [item].color, [item].chipset, [item].formFactor, [item].cpuSeries, [item].pcieGen, [item].maxBus, [item].series, [item].model, [item].brand, [item].qty
+FROM OPENROWSET (
+    BULK 'D:\pratchaya\server\json_files\db.json',
+    SINGLE_CLOB) AS [Json]
+CROSS APPLY OPENJSON (BulkColumn,'$.items2')
+WITH (
+    code varchar(50),
+    productDescription varchar(MAX) '$.description',
+    title varchar(100),
+    category varchar(50),
+	countItem int '$.count',
+	socket varchar(50),
+	typeRam varchar(6),
+	slot int,
+	img varbinary(max),
+	srp decimal(10, 2),
+	promotionPrice decimal(10, 2),
+	compatible varchar(50),
+	bus varchar(50),
+	capaPerRam varchar(50),
+	totalCapa varchar(50),
+	effect varchar(50),
+	latency varchar(50),
+	color varchar(50),
+	chipset varchar(50),
+	formFactor varchar(50),
+	cpuSeries varchar(50),
+	pcieGen varchar(50),
+	maxBus varchar(50)
+
+) AS [items];
+
