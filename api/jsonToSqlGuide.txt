@@ -68,3 +68,40 @@ WITH (
 
 ) AS [items];
 
+ตัวนี้ใช้ได้ 19/06/2023 อันที่แล้วพังเพราะ ชื่อตารางไม่ตรงกับไฟล์ JSON ที่ import เข้ามา
+INSERT INTO TEST_PRODUCTS (code, productDescription, title, category, countItem, socket, typeRam, slot, img, srp, promotionPrice, compatible, bus, capacityPerRAM, totalCapacity, effect, latency, color, chipset, formFactor, cpuSeries,  pcieGen, maxBus, series, model, brand, qty)
+SELECT [items].code, [items].productDescription, [items].title, [items].category, [items].countItem, [items].socket, [items].typeRam, [items].slot, [items].img, [items].srp, [items].promotionPrice, [items].compatible, [items].bus, [items].capacityPerRAM, [items].totalCapacity, [items].effect, [items].latency, [items].color, [items].chipset, [items].formFactor, [items].cpuSeries, [items].pcieGen, [items].maxBus, [items].series, [items].model, [items].brand, [items].qty
+FROM OPENROWSET (
+    BULK 'D:\pratchaya\server\json_files\db.json',
+    SINGLE_CLOB) AS [Json]
+CROSS APPLY OPENJSON (BulkColumn,'$.items2')
+WITH (
+    code varchar(50),
+    productDescription varchar(MAX) '$.description',
+    title varchar(100),
+    category varchar(50),
+	countItem int '$.count',
+	socket varchar(50),
+	typeRam varchar(6) '$.typeRAM',
+	slot int,
+	img varchar(max),
+	srp decimal(10, 2),
+	promotionPrice decimal(10, 2),
+	compatible varchar(50) '$.for',
+	bus varchar(50),
+	capacityPerRAM varchar(50) ,
+	totalCapacity varchar(50),
+	effect varchar(50),
+	latency varchar(50),
+	color varchar(50),
+	chipset varchar(50),
+	formFactor varchar(50),
+	cpuSeries varchar(50),
+	pcieGen varchar(50),
+	maxBus varchar(50),
+	series varchar(max),
+	model varchar(100),
+	brand varchar(100),
+	qty int
+) AS [items];
+
