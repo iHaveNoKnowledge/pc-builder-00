@@ -9,8 +9,24 @@ import { Box, Container, Grid } from "@mui/material";
 import { Route, Routes, BrowserRouter, NavLink, useNavigate } from "react-router-dom";
 import { PDFViewer } from "@react-pdf/renderer";
 import SaveBuildBtn from "./components/saveBuildForm";
+import axios from "axios";
 
 function App() {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("http://192.168.0.25:9000/api/testProducts")
+      .then((response) => {
+        const x = response.data.recordsets.flat();
+        console.log("จากเซิฟ", x);
+        setData(x);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
+
   return (
     <div className="App">
       <Container disableGutters sx={{ height: "auto", maxWidth: "100%" }}>
@@ -34,7 +50,7 @@ function App() {
             </Box>
           </Grid>
         </Grid>
-        {/* <PostsList /> เอาไว้เทสดึง api */}
+        <div>{JSON.stringify(data)}</div>
       </Container>
     </div>
   );

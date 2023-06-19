@@ -18,7 +18,7 @@ import { Divider, Alert } from "@mui/material";
 import { addProduct, setMax, updateSumAmount, updateSumPrices } from "../slices/cutomizeSliceNoApi";
 import "./Selection.css";
 import UserFilter from "./UserFilter";
-import { useGetPostsQuery } from "../features/api/dataApiSlice";
+import { useGetPostsQuery, useGetDbItemQuery } from "../features/api/dataApiSlice";
 import { getCategorizedData } from "../slices/userFilterSlice";
 import Bottom from "./BottomComponent";
 import { setDefault, setPageNum } from "../slices/paginationSlice";
@@ -30,7 +30,7 @@ function PostCard({ items }) {
   ////dispatchZone!!!!!!!!!
   const dispatch = useDispatch();
 
-  //นี่คือ dispatch ข้างในบรรจุ action
+  // *นี่คือ dispatch ข้างในบรรจุ action
   const handleChange = (
     id,
     title,
@@ -71,7 +71,7 @@ function PostCard({ items }) {
     // dispatch(setTypeAmount({ category }));
   };
 
-  ////useSelector!!!!!!!!!!!!!!!
+  //* useSelector!!!!!!!!!!!!!!!
   const category = useSelector((state) => state.category.category);
 
   const parts = useSelector((state) => state.noApiCustomize.partData);
@@ -80,7 +80,7 @@ function PostCard({ items }) {
   const expression = useSelector((state) => state.userFilter.expression);
   const textSearch = useSelector((state) => state.userFilter.textSearch);
 
-  ////เงื่อนไขcompatibility
+  //* เงื่อนไขcompatibility
   ///หาเงื่อนไข จากการเลือก mainboard
   let socket_mb, typeRAM_mb;
   parts.find((item) => {
@@ -96,7 +96,7 @@ function PostCard({ items }) {
     }
   });
 
-  ///หาเงื่อนไข จากการเลือก CPU
+  ///* หาเงื่อนไข จากการเลือก CPU
   let socket_CPU;
   parts.find((item) => {
     if (item.category === "CPU") {
@@ -109,7 +109,7 @@ function PostCard({ items }) {
     }
   });
 
-  ///หาเงื่อนไข จากการเลือก RAM
+  ///* หาเงื่อนไข จากการเลือก RAM
   let typeRAM_RAM;
   parts.find((item) => {
     if (item.category === "RAM") {
@@ -122,8 +122,8 @@ function PostCard({ items }) {
     }
   });
 
-  ///สำหรับโชวสินค้าให้เลือกตามหมวดหมู่
-  //กรองเอาเฉพาะสินค้าCPU
+  ///**  สำหรับโชวสินค้าให้เลือกตามหมวดหมู่
+  //* กรองเอาเฉพาะสินค้าCPU
   const CPU_display = curItem.filter((item) => {
     //ตรวจสอบว่า เมนบอร์ดตอนนี้ถูกเลือกหรือยัง ถ้าถูกเลือกแล้ว จะทำให้ CPU ที่โชว์นั้นต้องโชว์อย่างมีเงื่อนไข
     if (socket_mb === "") {
@@ -137,7 +137,7 @@ function PostCard({ items }) {
     }
   });
 
-  //กรองสินค้าMB
+  //* กรองสินค้าMB
   const mainBoard_display = curItem.filter((item) => {
     if (socket_CPU === "" && typeRAM_RAM === "") {
       return item.category === "Mainboard";
@@ -152,7 +152,7 @@ function PostCard({ items }) {
     }
   });
 
-  //กรองสินค้าRAM
+  //* กรองสินค้าRAM
   const RAM_display = curItem.filter((item) => {
     if (typeRAM_mb === "") {
       return item.category === "RAM";
@@ -161,15 +161,15 @@ function PostCard({ items }) {
     }
   });
 
-  //arrayของสินค้าที่ไม่ต้องมีเงื่อนไข ไม่มีการกรอง
+  //* arrayของสินค้าที่ไม่ต้องมีเงื่อนไข ไม่มีการกรอง
   const unconditionProduct = curItem.filter(
     (item) => item.category !== "CPU" && item.category !== "Mainboard" && item.category !== "RAM"
   );
 
-  ///นำ display ทั้งหมดที่มีการกรองและไม่มีการกรอง มารวมกัน
+  //* นำ display ทั้งหมดที่มีการกรองและไม่มีการกรอง มารวมกัน
   const combineProduct = unconditionProduct.concat(CPU_display, mainBoard_display, RAM_display);
 
-  // นำ display ทั้งหมดมา filter เฉพาะ ประเภทที่ user เลือก
+  //* นำ display ทั้งหมดมา filter เฉพาะ ประเภทที่ user เลือก
   const showProduct = combineProduct.filter((item) => item.category === category);
   const searchedShowProduct = showProduct.filter((item) => {
     return (
@@ -178,7 +178,7 @@ function PostCard({ items }) {
     );
   });
 
-  // นำ flter มา filter showproduct
+  //* นำ flter มา filter showproduct
   const filterProducts = (products, selectedOpts, expression) => {
     const filteredProducts = products.filter((product) => eval(expression));
     return filteredProducts;
@@ -189,7 +189,7 @@ function PostCard({ items }) {
 
   const showProductWithFilter = filterProducts(searchedShowProduct, selectedOpts, expression);
 
-  ////pagination////
+  //* pagination////
   const curPageNum2 = useSelector((state) => state.pagination.currentPage);
   const [curPageNum, setCurPageNum] = useState(1);
   const cardsPerPage = 6;
@@ -203,7 +203,7 @@ function PostCard({ items }) {
     (curPageNum2 - 1) * cardsPerPage,
     curPageNum2 * cardsPerPage
   );
-  ////useEffect //ถ้าuseEffect รับ showProduct ตัวนี้ไป param2 มันจะ inf loop จนพัง
+  //* useEffect //ถ้าuseEffect รับ showProduct ตัวนี้ไป param2 มันจะ inf loop จนพัง
   useEffect(() => {
     dispatch(getCategorizedData({ showProduct, category }));
     if (curPageNum2 > totalPages) {
@@ -345,9 +345,9 @@ function PostCard({ items }) {
   );
 }
 
-////////////////////////ส่วนนี้เป็นส่วน dynamic display based on api state/////////////////////////////////
+//****************************  ส่วนนี้เป็นส่วน dynamic display based on api state/////////////////////////////////
 function SelectionProto01() {
-  ///เอา ค่า boolean status api มา ในหลายๆกรณี
+  ///* เอา ค่า boolean status api มา ในหลายๆกรณี
   const {
     data: posts, //dataที่ได้จาก api เก็บไว้ในตัวแปร posts
     isLoading,
@@ -355,11 +355,14 @@ function SelectionProto01() {
     isError,
     error,
   } = useGetPostsQuery();
-  let postContent;
+  // const posts = data.recordsets.flatmap((recordset) => recordset.map((data) => data));
 
-  ////กรณีกำลังโหลด
+  // const posts = data.recordsets.flat();
+  let postContent;
+  console.log("data เป็นไง", posts, "postsได้ยัง: ");
+  //** กรณีกำลังโหลด
   if (isLoading) {
-    ///ให้เก็บหน้า html ไว้ใน postContent ดังนี้เอาไว้ return ภายหลัง
+    ///* ให้เก็บหน้า html ไว้ใน postContent ดังนี้เอาไว้ return ภายหลัง
     postContent = (
       <div className="d-flex justify-content-center">
         <div className="spinner-border" role="status">
@@ -367,21 +370,24 @@ function SelectionProto01() {
         </div>
       </div>
     );
-    ////กรณีโหลดสำเร็จ
+    //** กรณีโหลดสำเร็จ
   } else if (isSuccess) {
     ///เอา [posts] ซึ่งเป็น array data ที่ได้จากการ fetchจาก endpoints ที่เราเลือก มาใน dataApiSLice เอามาทำการ map() แล้วส่งไป เป็น prop ให้ตัวหลักข้างบนที่เราจะแสดงผล
     postContent = <PostCard items={posts} />;
 
-    ////กรณีError
+    //** กรณีError
   } else if (isError) {
-    ///postContent เก็บ div ก้อนนึง ทำหน้าที่โชว alert
+    ///* postContent เก็บ div ก้อนนึง ทำหน้าที่โชว alert
     postContent = (
-      <Stack sx={{ width: "100%" }} spacing={2}>
-        <Alert severity="error">{error}</Alert>
-      </Stack>
+      <div>
+        <Stack sx={{ width: "100%" }} spacing={2}>
+          <Alert severity="error">{error}</Alert>
+        </Stack>
+        <div>Error</div>
+      </div>
     );
   }
-  ///อะไรเกิดขึ้นมันจะมา return เพื่อแสดงผลตรงนี้
+  ///* อะไรเกิดขึ้นมันจะมา return เพื่อแสดงผลตรงนี้
   return <div>{postContent}</div>;
 }
 export default SelectionProto01;

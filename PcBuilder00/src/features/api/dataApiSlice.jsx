@@ -1,4 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+
+//* อันนี้ Fetch จาก JSON server
 export const apiSlice = createApi({
   reducerPath: "apiSlice",
   baseQuery: fetchBaseQuery({
@@ -12,7 +14,22 @@ export const apiSlice = createApi({
   }),
 });
 
+export const apiSliceDb = createApi({
+  reducerPath: "apiSliceDb",
+  baseQuery: fetchBaseQuery({
+    baseUrl: "http://192.168.0.25:9000/api",
+  }),
+  endpoints: (builder) => ({
+    getDbItem: builder.query({
+      query: () => "/testProducts",
+    }),
+  }),
+});
+
+//* อันนี้ Fetch จาก JSON server
+
 export const { useGetPostsQuery } = apiSlice;
+export const { useGetDbItemQuery } = apiSliceDb;
 
 ///source
 ///https://www.positronx.io/react-fetch-data-with-redux-toolkit-rtk-query-tutorial/

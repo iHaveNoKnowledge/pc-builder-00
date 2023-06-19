@@ -2,7 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import categoryReducer from "./slices/categorySlice";
 import customizeReducer from "./slices/customizeSlice";
 import noApiCustomizeReducer from "./slices/cutomizeSliceNoApi";
-import { apiSlice } from "./features/api/dataApiSlice";
+import { apiSlice, apiSliceDb } from "./features/api/dataApiSlice";
 import userFilterReducer from "./slices/userFilterSlice";
 import reportReducer from "./slices/reportSlice";
 import paginationReducer from "./slices/paginationSlice";
@@ -13,9 +13,11 @@ export const store = configureStore({
     customize: customizeReducer,
     noApiCustomize: noApiCustomizeReducer,
     [apiSlice.reducerPath]: apiSlice.reducer,
+    [apiSliceDb.reducerPath]: apiSliceDb.reducer,
     userFilter: userFilterReducer,
     report: reportReducer,
     pagination: paginationReducer,
   },
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(apiSlice.middleware),
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(apiSlice.middleware, apiSliceDb.middleware),
 });
