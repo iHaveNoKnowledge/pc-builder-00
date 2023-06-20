@@ -25,7 +25,7 @@ import { setDefault, setPageNum } from "../slices/paginationSlice";
 
 function PostCard({ items }) {
   ////useState!!!!!!!!!!!!!!!!!!!
-  const [curItem, setCurItem] = useState(items);
+  const [curItem, setCurItem] = useState(items.recordset);
 
   ////dispatchZone!!!!!!!!!
   const dispatch = useDispatch();
@@ -36,7 +36,7 @@ function PostCard({ items }) {
     title,
     category,
     socket,
-    typeRAM,
+    typeRam,
     slot,
     img,
     count,
@@ -44,7 +44,7 @@ function PostCard({ items }) {
     srp,
     max,
     code,
-    description
+    productDescription
   ) => {
     dispatch(
       addProduct({
@@ -52,7 +52,7 @@ function PostCard({ items }) {
         title,
         category,
         socket,
-        typeRAM,
+        typeRam,
         img,
         count,
         promotionPrice,
@@ -60,7 +60,7 @@ function PostCard({ items }) {
         slot,
         max,
         code,
-        description,
+        productDescription,
       })
     );
     if (category === "Mainboard") {
@@ -68,7 +68,10 @@ function PostCard({ items }) {
     }
     dispatch(updateSumAmount());
     dispatch(updateSumPrices());
-    // dispatch(setTypeAmount({ category }));
+    console.log(`productDescription: ${productDescription}
+    count: ${count}
+    typeRam: ${typeRam}
+    `);
   };
 
   //* useSelector!!!!!!!!!!!!!!!
@@ -87,7 +90,7 @@ function PostCard({ items }) {
     if (item.category === "Mainboard") {
       if (item.listItems.length !== 0) {
         socket_mb = item.listItems[0].socket;
-        typeRAM_mb = item.listItems[0].typeRAM;
+        typeRAM_mb = item.listItems[0].typeRam;
       } else {
         socket_mb = "";
         typeRAM_mb = "";
@@ -114,7 +117,7 @@ function PostCard({ items }) {
   parts.find((item) => {
     if (item.category === "RAM") {
       if (item.listItems.length !== 0) {
-        typeRAM_RAM = item.listItems[0].typeRAM;
+        typeRAM_RAM = item.listItems[0].typeRam;
       } else {
         typeRAM_RAM = "";
       }
@@ -142,12 +145,13 @@ function PostCard({ items }) {
     if (socket_CPU === "" && typeRAM_RAM === "") {
       return item.category === "Mainboard";
     } else if (socket_CPU === "" && typeRAM_RAM !== "") {
-      return item.category === "Mainboard" && item.typeRAM === typeRAM_RAM;
+      console.log(`CPUยังไม่เลือก แต่เลือก RAM`);
+      return item.category === "Mainboard" && item.typeRam === typeRAM_RAM;
     } else if (socket_CPU !== "" && typeRAM_RAM === "") {
       return item.category === "Mainboard" && item.socket === socket_CPU;
     } else {
       return (
-        item.category === "Mainboard" && item.socket === socket_CPU && item.typeRAM === typeRAM_RAM
+        item.category === "Mainboard" && item.socket === socket_CPU && item.typeRam === typeRAM_RAM
       );
     }
   });
@@ -157,7 +161,7 @@ function PostCard({ items }) {
     if (typeRAM_mb === "") {
       return item.category === "RAM";
     } else {
-      return item.category === "RAM" && item.typeRAM === typeRAM_mb;
+      return item.category === "RAM" && item.typeRam === typeRAM_mb;
     }
   });
 
@@ -213,7 +217,7 @@ function PostCard({ items }) {
     }
   }, [category, parts]);
 
-  ////หน้าเว็บ
+  //** หน้าเว็บ
   return (
     <>
       <UserFilter />
@@ -231,15 +235,15 @@ function PostCard({ items }) {
                       item.title,
                       item.category,
                       item.socket,
-                      item.typeRAM,
+                      item.typeRam,
                       item.slot,
                       item.img,
-                      item.count,
+                      item.countItem,
                       item.promotionPrice,
                       item.srp,
                       item.max,
                       item.code,
-                      item.description
+                      item.productDescription
                     );
                   }}
                 >
@@ -278,7 +282,7 @@ function PostCard({ items }) {
                       variant="body2"
                       sx={{ height: "100px", overflowY: "auto" }}
                     >
-                      {item.description}
+                      {item.productDescription}
                     </Typography>
                     <Divider sx={{ pt: 1 }} />
                     <Box sx={{ display: "flex" }}>
@@ -354,12 +358,25 @@ function SelectionProto01() {
     isSuccess,
     isError,
     error,
-  } = useGetPostsQuery();
+    refetch,
+  } = useGetDbItemQuery(undefined, {
+    refetchOnMountOrArgChange: true,
+  });
+
+  // useEffect(() => {
+  //   const socket = subscribeDbItem((newData) => {
+  //     console.log("newData:คือไร", newData);
+  //   });
+  //   return () => {
+  //     socket.close();
+  //   };
+  // }, []);
   // const posts = data.recordsets.flatmap((recordset) => recordset.map((data) => data));
 
   // const posts = data.recordsets.flat();
   let postContent;
   console.log("data เป็นไง", posts, "postsได้ยัง: ");
+
   //** กรณีกำลังโหลด
   if (isLoading) {
     ///* ให้เก็บหน้า html ไว้ใน postContent ดังนี้เอาไว้ return ภายหลัง

@@ -19,7 +19,7 @@ function App() {
       .get("http://192.168.0.25:9000/api/testProducts")
       .then((response) => {
         const x = response.data.recordsets.flat();
-        console.log("จากเซิฟ", x);
+        console.log("จากเซิฟ", response.data.recordset);
         setData(x);
       })
       .catch((error) => {

@@ -101,16 +101,17 @@ export const customizeSlice = createSlice({
       const categoryIndex = state.partData.findIndex(
         (item) => item.category === action.payload.category
       );
+      console.log("ใน slice", action.payload);
       ///เก็บค่าใหม่ที่รับเข้ามาดองไว้ใน object ก่อน
       const newArray = {
         id: action.payload.id,
         code: action.payload.code,
-        description: action.payload.description,
+        productDescription: action.payload.productDescription,
         title: action.payload.title,
         selectAmount: 1,
         socket: action.payload.socket,
         category: action.payload.category,
-        typeRAM: action.payload.typeRAM,
+        typeRam: action.payload.typeRam,
         promotionPrice: action.payload.promotionPrice,
         srp: action.payload.srp,
         img: action.payload.img,

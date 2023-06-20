@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import ImageIcon from "@mui/icons-material/Image";
 import {
@@ -28,6 +28,7 @@ import { clearSelectedFilter, getCategorizedData } from "../slices/userFilterSli
 import "./CustomizationProto01.css";
 import SumCustomize from "./SumCustomize";
 import { setDefault } from "../slices/paginationSlice";
+import { useGetDbItemQuery } from "../features/api/dataApiSlice"; //เอามาreFetch ใช้ไม่ได้ตามคาด
 
 const CustomizationProto02 = () => {
   //useState
@@ -40,6 +41,7 @@ const CustomizationProto02 = () => {
   const dispatch = useDispatch();
 
   //function
+  const { refetch } = useGetDbItemQuery();
   const handleChange = (category) => {
     console.log("handleChanged", category);
     dispatch(changeCategory(category));
@@ -143,7 +145,7 @@ const CustomizationProto02 = () => {
                                     gap: "4px",
                                   }}
                                 >
-                                  {/* ////////////////////////ก้อนซ้าย/////////////////////////////// */}
+                                  {/* //ก้อนซ้าย/////////////////////////////// */}
                                   <Box sx={{ flexGrow: "1", width: "55px" }}>
                                     <Box>
                                       <ListItemAvatar
@@ -200,7 +202,7 @@ const CustomizationProto02 = () => {
                                     <div>ss</div>
                                   </Box>
 
-                                  {/* ////////////////////////ก้อนขวา/////////////////////////////// */}
+                                  {/* /ก้อนขวา/////////////////////////////// */}
                                   {/* //// ย่อย1 //// */}
                                   <Box sx={{ flexGrow: "7", width: "40px" }}>
                                     <Box sx={{ display: "flex" }}>
@@ -228,7 +230,7 @@ const CustomizationProto02 = () => {
                                         }}
                                         noWrap={true}
                                       >
-                                        {miniItem.description}
+                                        {miniItem.productDescription}
                                       </Typography>
                                     </Box>
 

@@ -24,7 +24,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { saveSet } from "../slices/reportSlice";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import { useGetPostsQuery } from "../features/api/dataApiSlice";
+import { useGetPostsQuery, useGetDbItemQuery } from "../features/api/dataApiSlice";
 import { addProduct, resetCustomized } from "../slices/cutomizeSliceNoApi";
 
 export default function SetList() {
@@ -393,7 +393,8 @@ export default function SetList() {
   ];
 
   const sortedItemList = itemList.sort((a, b) => new Date(b.timeStamp) - new Date(a.timeStamp));
-  const { data: posts } = useGetPostsQuery();
+  const { data } = useGetDbItemQuery();
+  const posts = data.recordset;
 
   const openSubTableRefs = React.useRef([]);
   const [openSubTables, setOpenSubTables] = React.useState([]);
