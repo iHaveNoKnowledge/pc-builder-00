@@ -14,18 +14,19 @@ import axios from "axios";
 function App() {
   const [data, setData] = useState([]);
 
-  useEffect(() => {
-    axios
-      .get("http://192.168.0.25:9000/api/testProducts")
-      .then((response) => {
-        const x = response.data.recordsets.flat();
-        console.log("จากเซิฟ", response.data.recordset);
-        setData(x);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }, []);
+  //! สำหรับเทส API ด้วย AXIOS
+  //! useEffect(() => {
+  //!   axios
+  //!     .get("http://192.168.0.25:9000/api/testProducts")
+  //!     .then((response) => {
+  //!       const x = response.data.recordsets.flat();
+  //!       console.log("จากเซิฟ", response.data.recordset);
+  //!       setData(x);
+  //!     })
+  //!     .catch((error) => {
+  //!       console.error(error);
+  //!     });
+  //! }, []);
 
   return (
     <div className="App">
@@ -50,7 +51,7 @@ function App() {
             </Box>
           </Grid>
         </Grid>
-        <div>{JSON.stringify(data)}</div>
+        {/* <div>{JSON.stringify(data)}</div> */}
       </Container>
     </div>
   );
