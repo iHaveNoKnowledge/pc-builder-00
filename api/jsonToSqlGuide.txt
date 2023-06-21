@@ -1,5 +1,5 @@
+••••Add Json to SQL••••
 src : https://database.guide/how-to-import-a-json-file-into-a-sql-server-table/
-
 SELECT items.* FROM OPENROWSET (
 	BULK 'D:\pratchaya\server\json_files\db.json',
 	SINGLE_CLOB) AS [Json]
@@ -104,4 +104,6 @@ WITH (
 	brand varchar(100),
 	qty int
 ) AS [items];
+
+
 

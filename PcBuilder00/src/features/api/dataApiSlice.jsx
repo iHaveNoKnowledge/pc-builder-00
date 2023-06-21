@@ -17,7 +17,7 @@ export const apiSlice = createApi({
 
 // // สร้าง WebSocket connection
 // const socket = new WebSocket("ws://192.168.0.25:9000/ws");
-
+//* อันนี้ Fetch จาก SQL server 192.168
 export const apiSliceDb = createApi({
   reducerPath: "apiSliceDb",
   baseQuery: fetchBaseQuery({
@@ -26,6 +26,20 @@ export const apiSliceDb = createApi({
   endpoints: (builder) => ({
     getDbItem: builder.query({
       query: () => "/testProducts",
+    }),
+  }),
+});
+
+//*
+const upDateApi = createApi({
+  baseQuery: fetchBaseQuery({ baseUrl: "http://192.168.0.25:9000/api" }),
+  endpoints: (builder) => ({
+    updateData: builder.mutation({
+      query: (data) => ({
+        url: "/create",
+        method: "POST",
+        body: data,
+      }),
     }),
   }),
 });
@@ -49,8 +63,12 @@ export const apiSliceDb = createApi({
 //   updateData();
 // };
 
+//** ดึงข้อมูล
 export const { useGetPostsQuery } = apiSlice;
 export const { useGetDbItemQuery } = apiSliceDb;
+
+//** DB DATA Create and Mutatation
+export const { useCreateNewData } = upDateApi;
 
 ///source
 ///https://www.positronx.io/react-fetch-data-with-redux-toolkit-rtk-query-tutorial/

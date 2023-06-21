@@ -11,15 +11,7 @@ import "./BottomComponent.css";
 import { useDispatch, useSelector } from "react-redux";
 import { saveSet } from "../slices/reportSlice";
 import { FormGroup, FormControlLabel, Checkbox } from "@mui/material";
-import { makeStyles } from "@mui/material/styles";
-
-const useStyles = makeStyles({
-  disabledFormControlLabel: {
-    pointerEvents: "none", // ปิดการใช้งานการตอบสนองเหตุการณ์
-    opacity: 0.5, // กำหนดค่าความทึบของสีสำหรับ FormControlLabel ที่ถูกปิดใช้งาน
-    cursor: "not-allowed", // เปลี่ยนสไตล์เคอร์เซอร์เป็นแบบไม่อนุญาตให้ใช้งาน
-  },
-});
+import "./saveBuildForm.css";
 
 export default function SaveBuildBtn() {
   const partData = useSelector((state) => state.noApiCustomize.partData);
@@ -35,6 +27,21 @@ export default function SaveBuildBtn() {
   });
   const { setName, customerName, customerTel, salerName } = inputData;
 
+  //** conditional Renderring
+  const [checkedItem, setCheckedItem] = useState({ isCustomer: false });
+  const handleCheckBoxChange = (e) => {
+    // console.log("พังไหม");
+    if (!checkedItem.isCustomer) {
+      setCustNameInput("");
+      setCustTelInput("");
+      //todo setSalerNameInput("");
+      //todo setSalerTelInput("");
+    }
+    setCheckedItem((prev) => {
+      return { ...checkedItem, [e.target.name]: e.target.checked };
+    });
+  };
+
   //** onclick เปิด Form ////////////////////////////////////////////////////////////////////
   const handleClickOpen = () => {
     setOpen(true);
@@ -47,13 +54,26 @@ export default function SaveBuildBtn() {
   //** onclick สำหรับกด save SPEC ////////////////////////////////////////////////////////////////////
   const handleSave = () => {
     console.log("กด Save!!", inputData);
-    const updatedInputData = {
-      setName: setNameInput,
-      customerName: custNameInput,
-      customerTel: custTelInput,
-      salerName: salerNameInput,
-    };
-    console.log("ค่ามาไหม", inputData);
+    let updatedInputData;
+    if (checkedItem.isCustomer) {
+      updatedInputData = {
+        setName: setNameInput,
+        customerName: custNameInput,
+        customerTel: custTelInput,
+        salerName: salerNameInput,
+        salerTel: salerTelInput,
+      };
+    } else {
+      updatedInputData = {
+        setName: setNameInput,
+        customerName: "",
+        customerTel: "",
+        salerName: "",
+        salerTel: "",
+      };
+    }
+
+    console.log("Stateหลัง add", inputData);
     setInputData(updatedInputData);
 
     //* ตัวอย่างการใช้ค่า inputData ที่อัพเดตใหม่
@@ -61,7 +81,8 @@ export default function SaveBuildBtn() {
     dispatch(saveSet({ updatedInputData, partData }));
 
     setSetNameInput("");
-    setSalerNameInput("");
+    //todo setSalerNameInput("");
+    //todo setSalerTelInput("");
     setCustNameInput("");
     setCustTelInput("");
 
@@ -72,9 +93,11 @@ export default function SaveBuildBtn() {
   const [setNameInput, setSetNameInput] = useState("");
   //** SalerName Input ไม่ต้องมี valid
   const [salerNameInput, setSalerNameInput] = useState("");
+  //** SalerTel Input ไม่ต้องมี valid
+  const [salerTelInput, setSalerTelInput] = useState("");
   //** CustName Input ไม่ต้องมี valid
   const [custNameInput, setCustNameInput] = useState("");
-  //** Phone Num Input Validation///////////////////////////////
+  //** CustTel Num Input Validation///////////////////////////////
   const [custTelInput, setCustTelInput] = useState("");
   const [btnSwitch, setBtnSwitch] = useState(false);
 
@@ -106,9 +129,6 @@ export default function SaveBuildBtn() {
       console.log("แกกำลังกรอกเบอร์โทรศัพท์ ");
       if (value === "" || dataValidation) {
         setCustTelInput(value);
-        // setInputData((prev) => {
-        //   return { ...prev, customerTel: value };
-        // });
       }
     } else if (e.target.id === "custNameInput") {
       console.log("แกกำลังกรอกชื่อลูกค้า");
@@ -117,28 +137,17 @@ export default function SaveBuildBtn() {
       setSalerNameInput(value);
     } else if (e.target.id === "setName") {
       setSetNameInput(value);
+    } else if (e.target.id === "salerTelInput") {
+      setSalerTelInput(value);
     }
-  };
-
-  //** conditional Renderring
-  const [checkedItem, setCheckedItem] = useState({});
-  const handleCheckBoxChange = (e) => {
-    if (!checkedItem.isCustomer) {
-      setCustNameInput("");
-      setSalerNameInput("");
-      setCustTelInput("");
-    }
-    setCheckedItem({
-      ...checkedItem,
-      [e.target.name]: e.target.checked,
-    });
   };
 
   useEffect(() => {
     validate(custTelInput);
   }, [custTelInput, checkedItem]);
 
-  const digitDisplay = custTelInput.length > 1 ? "digits" : "digit";
+  const custDigitDisplay = custTelInput.length > 1 ? "digits" : "digit";
+  const salerDigitDisplay = salerTelInput.length > 1 ? "digits" : "digit";
 
   return (
     <div>
@@ -194,14 +203,17 @@ export default function SaveBuildBtn() {
                     name="isCustomer"
                   />
                 }
-                label="ข้อมูลลูกค้า"
+                label="ข้อมูลการติดต่อ"
               />
             </FormGroup>
           </Box>
-          {checkedItem.isCustomer && (
+          <Box sx={{ position: "relative" }}>
+            <Box className={!checkedItem.isCustomer ? "disableElement" : ""}></Box>
             <>
-              <DialogContent sx={{ borderLeft: "10px solid #0033E6", backgroundColor: "#4141" }}>
-                <DialogContentText
+              <DialogContent
+                sx={{ borderLeft: "10px solid #0033E6", backgroundColor: "#4141", zIndex: "-1" }}
+              >
+                <Box
                   sx={{
                     backgroundColor: "#414151",
                     fontSize: 18,
@@ -211,7 +223,7 @@ export default function SaveBuildBtn() {
                   }}
                 >
                   ข้อมูลติดต่อลูกค้า
-                </DialogContentText>
+                </Box>
                 <Box mb={2}>
                   <TextField
                     autoFocus
@@ -233,7 +245,7 @@ export default function SaveBuildBtn() {
                         เบอร์ติดต่อ{" "}
                         {custTelInput.length !== 0 ? (
                           <>
-                            Current {digitDisplay}: {custTelInput.length}
+                            Current {custDigitDisplay}: {custTelInput.length}
                           </>
                         ) : (
                           ""
@@ -263,17 +275,38 @@ export default function SaveBuildBtn() {
                   <TextField
                     margin="dense"
                     id="salerNameInput"
-                    label="ชื่อผู้ขาย"
+                    label="ชื่อผู้ขาย (ถ้ามีLogin ควร Auto)"
                     fullWidth
                     variant="standard"
                     value={salerNameInput}
                     onChange={handleChange}
                     error={false}
                   />
+
+                  <TextField
+                    margin="dense"
+                    id="salerTelInput"
+                    label={
+                      <Box>
+                        เบอร์ติดต่อ (ถ้ามีLogin ควร Auto)
+                        {salerTelInput.length !== 0 ? (
+                          <>
+                            Current {salerDigitDisplay}: {salerTelInput.length}
+                          </>
+                        ) : (
+                          ""
+                        )}
+                      </Box>
+                    }
+                    fullWidth
+                    variant="standard"
+                    value={salerTelInput}
+                    onChange={handleChange}
+                  />
                 </Box>
               </DialogContent>
             </>
-          )}
+          </Box>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} variant="contained" color="error">

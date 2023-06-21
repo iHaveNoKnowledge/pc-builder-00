@@ -162,11 +162,11 @@ const AddSN = () => {
     setValue(`Item${index}SN${index2}`, value);
   };
 
-  ////EnterNewLine
+  //** EnterNewLine
   const textFieldsRef = React.useRef([]);
 
-  const handleKeyDown = (event, currentIndex, parentIndex, item2) => {
-    console.log("item2คือไร", item2);
+  const handleKeyDown = (event, currentIndex, parentIndex) => {
+    console.log("item2คือไร");
     if (event.key === "Enter") {
       event.preventDefault();
       const nextIndex = currentIndex + 1;
@@ -275,7 +275,7 @@ const AddSN = () => {
                                 label="S/N"
                                 variant="filled"
                                 sx={{ zoom: "80%", width: "450px" }}
-                                onKeyDown={(event) => handleKeyDown(event, index2, index, item2)}
+                                onKeyDown={(event) => handleKeyDown(event, index2, index)}
                                 inputRef={(textField) =>
                                   handleTextFieldRef(textField, index2, index)
                                 }
