@@ -68,7 +68,7 @@ export default function SetList() {
 
   const itemList = [
     {
-      id: "1",
+      id: 1,
       timeStamp: "July 21, 1983 01:15:00",
       setName: "Inwza007",
       partData: [
@@ -78,7 +78,7 @@ export default function SetList() {
           typeAmount: 0,
           listItems: [
             {
-              id: "9",
+              id: 9,
               code: "CU2-000009",
               description:
                 "GIGABYTE AORUS RADEON RX6900XT XTREME WATERFORCE WB 16GB GDDR6 256 bit CL 19-31/8/22",
@@ -94,7 +94,7 @@ export default function SetList() {
           typeAmount: 0,
           listItems: [
             {
-              id: "14",
+              id: 14,
               code: "CR4-000014",
               description: "GIGABYTE Z590 AORUS TACHYON DDR4 LGA1200 CL 19-31/8/22",
               selectAmount: 1,
@@ -109,7 +109,7 @@ export default function SetList() {
           typeAmount: 0,
           listItems: [
             {
-              id: "22",
+              id: 22,
               code: "ME1-000022",
               description: "KINGSTON FURY IMPACT 8GB (8X1/3200) DDR4 (KF432S20IB/8) NB",
               selectAmount: 2,
@@ -117,7 +117,7 @@ export default function SetList() {
               promotionPrice: 950,
             },
             {
-              id: "23",
+              id: 23,
               code: "ME1-000023",
               description: "KINGSTON FURY BEAST16GB (8X2/3200) DDR4 (KF432C16BBK2/16)",
               selectAmount: 2,
@@ -129,7 +129,7 @@ export default function SetList() {
       ],
     },
     {
-      id: "2",
+      id: 2,
       timeStamp: "Thursday, May 17 2023, 5:13:36 pm",
       setName: "Inwza008",
       partData: [
@@ -139,7 +139,7 @@ export default function SetList() {
           typeAmount: 0,
           listItems: [
             {
-              id: "11",
+              id: 11,
               code: "CU2-000011",
               description:
                 "GIGABYTE AORUS RADEON RX6900XT XTREME WATERFORCE WB 16GB GDDR6 256 bit CL 19-31/8/22",
@@ -148,7 +148,7 @@ export default function SetList() {
               promotionPrice: 77900.0,
             },
             {
-              id: "12",
+              id: 12,
               code: "CU2-000012",
               description:
                 "GIGABYTE AORUS RADEON RX6900XT XTREME WATERFORCE WB 16GB GDDR6 256 bit CL 19-31/8/22",
@@ -157,7 +157,7 @@ export default function SetList() {
               promotionPrice: 77900.0,
             },
             {
-              id: "13",
+              id: 13,
               code: "CR6-001043",
               description:
                 "GIGABYTE AORUS RADEON RX6900XT XTREME WATERFORCE WB 16GB GDDR6 256 bit CL 19-31/8/22",
@@ -173,7 +173,7 @@ export default function SetList() {
           typeAmount: 0,
           listItems: [
             {
-              id: "15",
+              id: 15,
               code: "CR4-000751",
               description: "GIGABYTE Z590 AORUS TACHYON DDR4 LGA1200 CL 19-31/8/22",
               selectAmount: 1,
@@ -188,7 +188,7 @@ export default function SetList() {
           typeAmount: 0,
           listItems: [
             {
-              id: "24",
+              id: 24,
               code: "ME1-000994",
               description: "KINGSTON FURY IMPACT 8GB (8X1/3200) DDR4 (KF432S20IB/8) NB",
               selectAmount: 2,
@@ -196,7 +196,7 @@ export default function SetList() {
               promotionPrice: 950,
             },
             {
-              id: "25",
+              id: 25,
               code: "ME1-000993",
               description: "KINGSTON FURY BEAST16GB (8X2/3200) DDR4 (KF432C16BBK2/16)",
               selectAmount: 2,
@@ -208,7 +208,7 @@ export default function SetList() {
       ],
     },
     {
-      id: "3",
+      id: 3,
       timeStamp: "May 19 2023, 5:13:37 pm",
       setName: "PuadKhee",
       partData: [
@@ -218,13 +218,36 @@ export default function SetList() {
           typeAmount: 0,
           listItems: [
             {
-              id: "9",
+              id: 1,
               code: "CU2-000009",
-              description:
+              productDescription:
                 "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque non eros dapibus, maximus tellus sollicitudin, iaculis ligula. Nullam ullamcorper metus sit amet orci consectetur interdum. Aliquam nec erat congue, facilisis.",
+              title: "CPU01_AMD",
+              category: "CPU",
+              countItem: null,
+              socket: "AM4",
+              typeRam: null,
+              slot: null,
+              img: "https://media-cdn.bnn.in.th/263562/730143309936-00-square_medium.jpg",
+              srp: 19290,
+              promotionPrice: 9066,
+              compatible: null,
+              bus: null,
+              capacityPerRAM: null,
+              totalCapacity: null,
+              effect: null,
+              latency: null,
+              color: null,
+              chipset: null,
+              formFactor: null,
+              cpuSeries: null,
+              pcieGen: null,
+              maxBus: null,
+              series: "AMD Ryzen 3000 Series",
+              model: "Ryzen 5",
+              brand: "AMD",
+              qty: 1,
               selectAmount: 1,
-              srp: 77900.0,
-              promotionPrice: 77900.0,
             },
           ],
         },
@@ -234,12 +257,37 @@ export default function SetList() {
           typeAmount: 0,
           listItems: [
             {
-              id: "15",
-              code: "CR4-000751",
-              description: "GIGABYTE Z590 AORUS TACHYON DDR4 LGA1200 CL 19-31/8/22",
+              id: 5,
+              code: "CR4-000014",
+              productDescription:
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque non eros dapibus, maximus tellus sollicitudin, iaculis ligula.",
+              title: "Mainboard01_AMD",
+              category: "Mainboard",
+              countItem: null,
+              socket: "AM4",
+              typeRam: "DDR4",
+              slot: 2,
+              img:
+                "https://media-cdn.bnn.in.th/19033/Asus-Mainboard-PRIME-A320M-K-DDR4-AM4-1-square_medium.jpg",
+              srp: 10560,
+              promotionPrice: 1690,
+              compatible: "AMD",
+              bus: null,
+              capacityPerRAM: null,
+              totalCapacity: null,
+              effect: null,
+              latency: null,
+              color: null,
+              chipset: "AMD A320",
+              formFactor: "Micro-ATX",
+              cpuSeries: "AMD Ryzen 2000, 3000 Series Desktop Processors",
+              pcieGen: "1 x PCIe 3.0 x16 Slot , 2 x PCIe 2.0 x1 Slots",
+              maxBus: "DDR4 Support up to 3200(OC) MHz",
+              series: null,
+              model: null,
+              brand: "brandex1",
+              qty: 1,
               selectAmount: 1,
-              srp: 16100.0,
-              promotionPrice: 7990,
             },
           ],
         },
@@ -249,27 +297,43 @@ export default function SetList() {
           typeAmount: 0,
           listItems: [
             {
-              id: "24",
-              code: "ME1-000994",
-              description: "KINGSTON FURY IMPACT 8GB (8X1/3200) DDR4 (KF432S20IB/8) NB",
+              id: 13,
+              code: "ME1-000022",
+              productDescription: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+              title: "RAM01_single",
+              category: "RAM",
+              countItem: 1,
+              socket: null,
+              typeRam: "DDR4",
+              slot: null,
+              img:
+                "https://media-cdn.bnn.in.th/106735/zadak-moab-aura2-rgb-ddr4-1-square_medium.jpg",
+              srp: 7460,
+              promotionPrice: 3655,
+              compatible: "PC",
+              bus: "2666 MHz",
+              capacityPerRAM: "8 GB",
+              totalCapacity: "8 GB",
+              effect: "RGB",
+              latency: "16-18-18-38",
+              color: "Black",
+              chipset: null,
+              formFactor: null,
+              cpuSeries: null,
+              pcieGen: null,
+              maxBus: null,
+              series: null,
+              model: null,
+              brand: "Zadak",
+              qty: 1,
               selectAmount: 2,
-              srp: 1000,
-              promotionPrice: 950,
-            },
-            {
-              id: "25",
-              code: "ME1-000993",
-              description: "KINGSTON FURY BEAST16GB (8X2/3200) DDR4 (KF432C16BBK2/16)",
-              selectAmount: 2,
-              srp: 2190,
-              promotionPrice: 1990,
             },
           ],
         },
       ],
     },
     {
-      id: "4",
+      id: 4,
       timeStamp: "May 18 2023",
       setName: "Kimochi",
       partData: [
@@ -279,7 +343,7 @@ export default function SetList() {
           typeAmount: 0,
           listItems: [
             {
-              id: "11",
+              id: 11,
               code: "CU2-000011",
               description:
                 "Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
@@ -295,7 +359,7 @@ export default function SetList() {
           typeAmount: 0,
           listItems: [
             {
-              id: "15",
+              id: 15,
               code: "CR4-000751",
               description: "GIGABYTE Z590 AORUS TACHYON DDR4 LGA1200 CL 19-31/8/22",
               selectAmount: 1,
@@ -310,7 +374,7 @@ export default function SetList() {
           typeAmount: 0,
           listItems: [
             {
-              id: "24",
+              id: 24,
               code: "ME1-000994",
               description: "KINGSTON FURY IMPACT 8GB (8X1/3200) DDR4 (KF432S20IB/8) NB",
               selectAmount: 2,
@@ -318,7 +382,7 @@ export default function SetList() {
               promotionPrice: 950,
             },
             {
-              id: "25",
+              id: 25,
               code: "ME1-000993",
               description: "KINGSTON FURY BEAST16GB (8X2/3200) DDR4 (KF432C16BBK2/16)",
               selectAmount: 2,
@@ -330,7 +394,7 @@ export default function SetList() {
       ],
     },
     {
-      id: "5",
+      id: 5,
       timeStamp: "May 18 2023, 5:13:43 pm",
       setName: "NekoNyanNyan",
       partData: [
@@ -340,7 +404,7 @@ export default function SetList() {
           typeAmount: 0,
           listItems: [
             {
-              id: "12",
+              id: 12,
               code: "CU2-000012",
               description:
                 "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque non eros dapibus, maximus tellus sollicitudin, iaculis ligula.",
@@ -356,7 +420,7 @@ export default function SetList() {
           typeAmount: 0,
           listItems: [
             {
-              id: "15",
+              id: 15,
               code: "CR4-000751",
               description: "GIGABYTE Z590 AORUS TACHYON DDR4 LGA1200 CL 19-31/8/22",
               selectAmount: 1,
@@ -371,7 +435,7 @@ export default function SetList() {
           typeAmount: 0,
           listItems: [
             {
-              id: "24",
+              id: 24,
               code: "ME1-000994",
               description: "KINGSTON FURY IMPACT 8GB (8X1/3200) DDR4 (KF432S20IB/8) NB",
               selectAmount: 2,
@@ -379,7 +443,7 @@ export default function SetList() {
               promotionPrice: 950,
             },
             {
-              id: "25",
+              id: 25,
               code: "ME1-000993",
               description: "KINGSTON FURY BEAST16GB (8X2/3200) DDR4 (KF432C16BBK2/16)",
               selectAmount: 2,
@@ -421,16 +485,16 @@ export default function SetList() {
             px: "10px",
             pt: "20px",
             pb: "5px",
-            width: "1181px",
+            minWidth: "1180px",
             position: "-webkit-sticky",
           }}
         >
           เลือก Set
         </DialogTitle>
-        <TableContainer component={Paper}>
-          <Table stickyHeader sx={{ maxWidth: "lg" }}>
-            <TableHead>
-              <TableRow>
+        <TableContainer component={Paper} sx={{ width: "1200px" }}>
+          <Table stickyHeader sx={{ maxWidth: "lg", width: "lg" }}>
+            <TableHead sx={{ width: "" }}>
+              <TableRow sx={{ width: "max" }}>
                 <TableCell style={{ width: 1 }}></TableCell>
                 <TableCell align="left" colSpan={1} style={{ width: 38 }}>
                   ID
@@ -506,10 +570,11 @@ export default function SetList() {
                                   <TableCell>No.</TableCell>
                                   <TableCell sx={{ minWidth: 75 }}>Code</TableCell>
                                   <TableCell align="left">Description</TableCell>
+                                  <TableCell>Stock</TableCell>
                                   <TableCell>AMT</TableCell>
-                                  <TableCell>StockAMT</TableCell>
-                                  <TableCell>SRP</TableCell>
-                                  <TableCell>Price</TableCell>
+                                  <TableCell align="right">SRP</TableCell>
+                                  <TableCell align="right">Price</TableCell>
+                                  <TableCell>TotalPrice</TableCell>
                                 </TableRow>
                               </TableHead>
                               <TableBody>
@@ -522,10 +587,10 @@ export default function SetList() {
                                           {i}
                                         </TableCell>
                                         <TableCell>{item3.code}</TableCell>
-                                        <TableCell>{item3.description}</TableCell>
-                                        <TableCell align="right">{item3.selectAmount}</TableCell>
+                                        <TableCell>{item3.productDescription}</TableCell>
                                         <TableCell></TableCell>
-                                        <TableCell>
+                                        <TableCell align="right">{item3.selectAmount}</TableCell>
+                                        <TableCell align="right">
                                           {posts
                                             .find((post, postIDX) => {
                                               if (post.id === item3.id) {
@@ -535,7 +600,7 @@ export default function SetList() {
                                             ?.srp.toLocaleString()}
                                         </TableCell>
 
-                                        <TableCell>
+                                        <TableCell align="right">
                                           {posts
                                             .find((post, postIDX) => {
                                               if (post.id === item3.id) {
@@ -543,6 +608,20 @@ export default function SetList() {
                                               }
                                             })
                                             ?.promotionPrice.toLocaleString()}
+                                        </TableCell>
+
+                                        <TableCell align="right">
+                                          {posts.find((post, postIDX) => {
+                                            if (post.id === item3.id) {
+                                              console.log("ตรง", post.id, item3.id);
+                                              const totalPrice =
+                                                post.promotionPrice * item3.selectAmount;
+
+                                              return totalPrice;
+                                            } else {
+                                              console.log("ไม่ตรง", post.id, item3.id);
+                                            }
+                                          })?.promotionPrice * item3.selectAmount}
                                         </TableCell>
                                       </TableRow>
                                     );
