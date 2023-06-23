@@ -12,9 +12,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { saveSet } from "../slices/reportSlice";
 import { FormGroup, FormControlLabel, Checkbox } from "@mui/material";
 import "./saveBuildForm.css";
+import { useCreateNewData } from "../features/api/dataApiSlice";
 
 export default function SaveBuildBtn() {
   const partData = useSelector((state) => state.noApiCustomize.partData);
+  const [updateData] = useCreateNewData();
 
   const dispatch = useDispatch();
 
@@ -79,6 +81,16 @@ export default function SaveBuildBtn() {
     //* ตัวอย่างการใช้ค่า inputData ที่อัพเดตใหม่
     console.log("บันทึกไรมา", updatedInputData.setName);
     dispatch(saveSet({ updatedInputData, partData }));
+
+    updateData(updatedInputData)
+      .unwrap()
+      .then((response) => {
+        console.log(response);
+        return response;
+      })
+      .catch((error) => {
+        console.log(error.data.response);
+      });
 
     setSetNameInput("");
     //todo setSalerNameInput("");

@@ -36,7 +36,7 @@ const upDateApi = createApi({
   endpoints: (builder) => ({
     updateData: builder.mutation({
       query: (data) => ({
-        url: "/create",
+        url: "/create-set",
         method: "POST",
         body: data,
       }),

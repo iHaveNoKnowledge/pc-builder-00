@@ -105,5 +105,40 @@ WITH (
 	qty int
 ) AS [items];
 
+ตัวอย่างสำหรับใช้ post request ผ่าน nodejs Express 
+router.post("/create-set", (req, res) => {
+  const { field1 } = req.body;
+
+  const query = `
+  BEGIN TRANSACTION;
+
+  DECLARE @mainTableId INT;
+  INSERT INTO MainTable (Field1) VALUES (@xx);
+  SET @mainTableId = SCOPE_IDENTITY();
+  SELECT * FROM MainTable WHERE MainTableID = @mainTableId;
+
+  COMMIT TRANSACTION;
+`;
+
+  sql.connect(config_3, (err) => {
+    if (err) {
+      console.log(err);
+      res.statusMessage(500).send("Error connecting to the DB");
+      return;
+    }
+
+    const request = new sql.Request();
+    request.input("xx", sql.VarChar, field1);
+    request.query(query, (err, yy) => {
+      if (err) {
+        console.log(err);
+        res.status(500).send("Error inserting data into the tables.");
+        return;
+      }
+
+      res.status(200).json(yy);
+    });
+  });
+});
 
 
