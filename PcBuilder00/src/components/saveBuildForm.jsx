@@ -12,11 +12,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { saveSet } from "../slices/reportSlice";
 import { FormGroup, FormControlLabel, Checkbox } from "@mui/material";
 import "./saveBuildForm.css";
-import { useCreateNewData } from "../features/api/dataApiSlice";
+import { useUpdateDataMutation } from "../features/api/dataApiSlice";
 
 export default function SaveBuildBtn() {
   const partData = useSelector((state) => state.noApiCustomize.partData);
-  const [updateData] = useCreateNewData();
+  const [updateData, { isLoading, isError, error }] = useUpdateDataMutation();
 
   const dispatch = useDispatch();
 
@@ -75,12 +75,14 @@ export default function SaveBuildBtn() {
       };
     }
 
-    console.log("Stateหลัง add", inputData);
     setInputData(updatedInputData);
-
+    console.log("Stateหลัง add", inputData);
     //* ตัวอย่างการใช้ค่า inputData ที่อัพเดตใหม่
     console.log("บันทึกไรมา", updatedInputData.setName);
     dispatch(saveSet({ updatedInputData, partData }));
+
+    const dataForUpdate = { ...updatedInputData, partData };
+    console.log("สำหรับยัดลง DB", dataForUpdate);
 
     updateData(updatedInputData)
       .unwrap()

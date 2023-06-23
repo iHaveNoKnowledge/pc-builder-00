@@ -31,7 +31,7 @@ export const apiSliceDb = createApi({
 });
 
 //*
-const upDateApi = createApi({
+export const updateApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: "http://192.168.0.25:9000/api" }),
   endpoints: (builder) => ({
     updateData: builder.mutation({
@@ -68,7 +68,8 @@ export const { useGetPostsQuery } = apiSlice;
 export const { useGetDbItemQuery } = apiSliceDb;
 
 //** DB DATA Create and Mutatation
-export const { useCreateNewData } = upDateApi;
+console.log("apiSliceDb", updateApi);
+export const { useUpdateDataMutation } = updateApi;
 
 ///source
 ///https://www.positronx.io/react-fetch-data-with-redux-toolkit-rtk-query-tutorial/

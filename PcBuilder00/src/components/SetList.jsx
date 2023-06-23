@@ -619,7 +619,7 @@ export default function SetList() {
 
                                               return totalPrice;
                                             } else {
-                                              console.log("ไม่ตรง", post.id, item3.id);
+                                              // console.log("ไม่ตรง", post.id, item3.id);
                                             }
                                           })?.promotionPrice * item3.selectAmount}
                                         </TableCell>
