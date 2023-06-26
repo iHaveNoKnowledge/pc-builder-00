@@ -1,0 +1,2 @@
+
+1)เลือกของแบบ Set จากปุ่ม SetList ทำให้ Component SumCustomize ไม่ถูกคำนวนยอดรวมทุกประเภท

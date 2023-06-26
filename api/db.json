@@ -20,7 +20,7 @@
     {
       "id": "9",
       "code": "CU2-000009",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque non eros dapibus, maximus tellus sollicitudin, iaculis ligula. Nullam ullamcorper metus sit amet orci consectetur interdum. Aliquam nec erat congue, facilisis.",
+      "productDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque non eros dapibus, maximus tellus sollicitudin, iaculis ligula. Nullam ullamcorper metus sit amet orci consectetur interdum. Aliquam nec erat congue, facilisis.",
       "title": "CPU01_AMD",
       "category": "CPU",
       "socket": "AM4",
@@ -35,7 +35,7 @@
     {
       "id": "11",
       "code": "CU2-000011",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      "productDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "title": "CPU02_AMD",
       "category": "CPU",
       "socket": "AM4",
@@ -50,7 +50,7 @@
     {
       "id": "12",
       "code": "CU2-000012",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque non eros dapibus, maximus tellus sollicitudin, iaculis ligula.",
+      "productDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque non eros dapibus, maximus tellus sollicitudin, iaculis ligula.",
       "title": "CPU01_intel",
       "category": "CPU",
       "socket": "1700",
@@ -65,7 +65,7 @@
     {
       "id": "13",
       "code": "CU2-000013",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque non eros dapibus, maximus tellus sollicitudin, iaculis ligula.",
+      "productDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque non eros dapibus, maximus tellus sollicitudin, iaculis ligula.",
       "title": "CPU02_intel",
       "category": "CPU",
       "socket": "1700",
@@ -80,7 +80,7 @@
     {
       "id": "14",
       "code": "CR4-000014",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque non eros dapibus, maximus tellus sollicitudin, iaculis ligula.",
+      "productDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque non eros dapibus, maximus tellus sollicitudin, iaculis ligula.",
       "title": "Mainboard01_AMD",
       "category": "Mainboard",
       "socket": "AM4",
@@ -101,7 +101,7 @@
     {
       "id": "15",
       "code": "CR4-000015",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque non eros dapibus, maximus tellus sollicitudin, iaculis ligula.",
+      "productDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque non eros dapibus, maximus tellus sollicitudin, iaculis ligula.",
       "title": "Mainboard02_AMD",
       "category": "Mainboard",
       "socket": "AM5",
@@ -122,7 +122,7 @@
     {
       "id": "16",
       "code": "CR4-000016",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque non eros dapibus, maximus tellus sollicitudin, iaculis ligula.",
+      "productDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque non eros dapibus, maximus tellus sollicitudin, iaculis ligula.",
       "title": "Mainboard01_intel",
       "category": "Mainboard",
       "socket": "1700",
@@ -143,7 +143,7 @@
     {
       "id": "17",
       "code": "CR4-000017",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque non eros dapibus, maximus tellus sollicitudin, iaculis ligula.",
+      "productDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque non eros dapibus, maximus tellus sollicitudin, iaculis ligula.",
       "title": "Mainboard02_intel",
       "category": "Mainboard",
       "socket": "1700",
@@ -164,7 +164,7 @@
     {
       "id": "18",
       "code": "CR4-000018",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque non eros dapibus, maximus tellus sollicitudin, iaculis ligula.",
+      "productDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque non eros dapibus, maximus tellus sollicitudin, iaculis ligula.",
       "title": "Mainboard01_AMD 4slot",
       "category": "Mainboard",
       "socket": "AM4",
@@ -185,7 +185,7 @@
     {
       "id": "19",
       "code": "CR4-000019",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sodales erat mauris, sit amet posuere erat ultrices in. In aliquet ultrices fermentum. Phasellus quis massa.",
+      "productDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sodales erat mauris, sit amet posuere erat ultrices in. In aliquet ultrices fermentum. Phasellus quis massa.",
       "title": "Mainboard02_AMD 4slot",
       "category": "Mainboard",
       "socket": "AM5",
@@ -206,7 +206,7 @@
     {
       "id": "20",
       "code": "CR4-000020",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque sagittis scelerisque commodo. Duis lobortis elementum est, at vehicula nulla ultricies vitae. Integer id augue et metus dapibus gravida a non turpis. Duis vitae.",
+      "productDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque sagittis scelerisque commodo. Duis lobortis elementum est, at vehicula nulla ultricies vitae. Integer id augue et metus dapibus gravida a non turpis. Duis vitae.",
       "title": "Mainboard01_intel 4slot",
       "category": "Mainboard",
       "socket": "1700",
@@ -227,7 +227,7 @@
     {
       "id": "21",
       "code": "CR4-000021",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque sagittis scelerisque commodo. Duis lobortis elementum est, at vehicula nulla ultricies vitae.",
+      "productDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque sagittis scelerisque commodo. Duis lobortis elementum est, at vehicula nulla ultricies vitae.",
       "title": "Mainboard02_intel 4slot",
       "category": "Mainboard",
       "socket": "1700",
@@ -248,7 +248,7 @@
     {
       "id": "22",
       "code": "ME1-000022",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      "productDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "title": "RAM01_single",
       "category": "RAM",
       "count": 1,
@@ -269,7 +269,7 @@
     {
       "id": "23",
       "code": "ME1-000023",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      "productDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "title": "RAM02_single",
       "category": "RAM",
       "count": 1,
@@ -290,7 +290,7 @@
     {
       "id": "24",
       "code": "ME1-000024",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      "productDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "title": "RAM01_duo",
       "category": "RAM",
       "count": 2,
@@ -311,7 +311,7 @@
     {
       "id": "25",
       "code": "ME1-000025",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      "productDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "title": "RAM02_duo",
       "category": "RAM",
       "count": 2,
@@ -332,7 +332,7 @@
     {
       "id": "26",
       "code": "CU2-000026",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      "productDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "title": "CPU03_AMD",
       "category": "CPU",
       "socket": "AM5",
@@ -347,7 +347,7 @@
     {
       "id": "27",
       "code": "CU2-000027",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      "productDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "title": "CPU04_AMD",
       "category": "CPU",
       "socket": "AM5",

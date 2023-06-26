@@ -142,3 +142,142 @@ router.post("/create-set", (req, res) => {
 });
 
 
+json table ตารางแบบ JSON  ยังไม่ได้ลองสร้าง หมดเวลาสะก่อน
+DECLARE @json NVARCHAR(MAX) = '{
+  "id": 3,
+  "timeStamp": "May 19 2023, 5:13:37 pm",
+  "setName": "Setหย่อสูตรต่อ",
+  "customerName": "ลุงตู่",
+  "customerTel": "032323232",
+  "salerName":"ไอ้ปื้ด",
+  "salerTel":"0853232323",
+  "partData": [
+    {
+      "category": "CPU",
+      "typeMax": 1,
+      "typeAmount": 0,
+      "listItems": [
+        {
+          "id": 1,
+          "code": "CU2-000009",
+          "productDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque non eros dapibus, maximus tellus sollicitudin, iaculis ligula. Nullam ullamcorper metus sit amet orci consectetur interdum. Aliquam nec erat congue, facilisis.",
+          "title": "CPU01_AMD",
+          "category": "CPU",
+          "countItem": null,
+          "socket": "AM4",
+          "typeRam": null,
+          "slot": null,
+          "img": "https://media-cdn.bnn.in.th/263562/730143309936-00-square_medium.jpg",
+          "srp": 19290,
+          "promotionPrice": 9066,
+          "compatible": null,
+          "bus": null,
+          "capacityPerRAM": null,
+          "totalCapacity": null,
+          "effect": null,
+          "latency": null,
+          "color": null,
+          "chipset": null,
+          "formFactor": null,
+          "cpuSeries": null,
+          "pcieGen": null,
+          "maxBus": null,
+          "series": "AMD Ryzen 3000 Series",
+          "model": "Ryzen 5",
+          "brand": "AMD",
+          "qty": 1,
+          "selectAmount": 1
+        }
+      ]
+    },
+    {
+      "category": "Mainboard",
+      "typeMax": 1,
+      "typeAmount": 0,
+      "listItems": [
+        {
+          "id": 5,
+          "code": "CR4-000014",
+          "productDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque non eros dapibus, maximus tellus sollicitudin, iaculis ligula.",
+          "title": "Mainboard01_AMD",
+          "category": "Mainboard",
+          "countItem": null,
+          "socket": "AM4",
+          "typeRam": "DDR4",
+          "slot": 2,
+          "img": "https://media-cdn.bnn.in.th/19033/Asus-Mainboard-PRIME-A320M-K-DDR4-AM4-1-square_medium.jpg",
+          "srp": 10560,
+          "promotionPrice": 1690,
+          "compatible": "AMD",
+          "bus": null,
+          "capacityPerRAM": null,
+          "totalCapacity": null,
+          "effect": null,
+          "latency": null,
+          "color": null,
+          "chipset": "AMD A320",
+          "formFactor": "Micro-ATX",
+          "cpuSeries": "AMD Ryzen 2000, 3000 Series Desktop Processors",
+          "pcieGen": "1 x PCIe 3.0 x16 Slot , 2 x PCIe 2.0 x1 Slots",
+          "maxBus": "DDR4 Support up to 3200(OC) MHz",
+          "series": null,
+          "model": null,
+          "brand": "brandex1",
+          "qty": 1,
+          "selectAmount": 1
+        }
+      ]
+    },
+    {
+      "category": "RAM",
+      "typeMax": 4,
+      "typeAmount": 0,
+      "listItems": [
+        {
+          "id": 13,
+          "code": "ME1-000022",
+          "productDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+          "title": "RAM01_single",
+          "category": "RAM",
+          "countItem": 1,
+          "socket": null,
+          "typeRam": "DDR4",
+          "slot": null,
+          "img": "https://media-cdn.bnn.in.th/106735/zadak-moab-aura2-rgb-ddr4-1-square_medium.jpg",
+          "srp": 7460,
+          "promotionPrice": 3655,
+          "compatible": "PC",
+          "bus": "2666 MHz",
+          "capacityPerRAM": "8 GB",
+          "totalCapacity": "8 GB",
+          "effect": "RGB",
+          "latency": "16-18-18-38",
+          "color": "Black",
+          "chipset": null,
+          "formFactor": null,
+          "cpuSeries": null,
+          "pcieGen": null,
+          "maxBus": null,
+          "series": null,
+          "model": null,
+          "brand": "Zadak",
+          "qty": 1,
+          "selectAmount": 2
+        }
+      ]
+    }
+  ]
+}';
+
+SELECT *
+INTO YourTableName
+FROM OPENJSON(@json) WITH (
+  id INT '$.id',
+  timeStamp NVARCHAR(50) '$.timeStamp',
+  setName NVARCHAR(50) '$.setName',
+  customerName NVARCHAR(50) '$.customerName',
+  customerTel NVARCHAR(50) '$.customerTel',
+  salerName NVARCHAR(50) '$.salerName',
+  salerTel NVARCHAR(50) '$.salerTel',
+  partData NVARCHAR(MAX) '$.partData' AS JSON
+);

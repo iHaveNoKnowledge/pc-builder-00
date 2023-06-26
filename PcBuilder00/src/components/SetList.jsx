@@ -210,7 +210,11 @@ export default function SetList() {
     {
       id: 3,
       timeStamp: "May 19 2023, 5:13:37 pm",
-      setName: "PuadKhee",
+      setName: "Setหย่อสูตรต่อ",
+      customerName: "ลุงตู่",
+      customerTel: "032323232",
+      salerName: "ไอ้ปื้ด",
+      salerTel: "0853232323",
       partData: [
         {
           category: "CPU",
@@ -335,7 +339,7 @@ export default function SetList() {
     {
       id: 4,
       timeStamp: "May 18 2023",
-      setName: "Kimochi",
+      setName: "Ligthinning",
       partData: [
         {
           category: "CPU",
@@ -396,7 +400,7 @@ export default function SetList() {
     {
       id: 5,
       timeStamp: "May 18 2023, 5:13:43 pm",
-      setName: "NekoNyanNyan",
+      setName: "Neko",
       partData: [
         {
           category: "CPU",
