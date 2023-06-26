@@ -185,7 +185,7 @@ const ReportDocument = () => {
                 </View>
                 <View style={{ ...inlineStyle, ...inlineDescr }}>
                   {/* <Text>{WrapText("loremfa-rotate-180")}</Text> */}
-                  <Text>{`${itemList[0].description}`}</Text>
+                  <Text>{`${itemList[0].productDescription}`}</Text>
                 </View>
                 <View style={{ ...inlineStyle, ...inlineQTY }}>
                   {/* <Text>{WrapText("99")}</Text> */}
@@ -217,19 +217,19 @@ const ReportDocument = () => {
                     </View>
                     <View style={{ ...inlineStyle, ...inlineDescr }}>
                       {/* <Text>{WrapText("loremfa-rotate-180asdasd")}</Text> */}
-                      <Text>{WrapText("loremfa-rotate-180asdasd")}</Text>
+                      <Text>{`${itemList[index + 1].productDescription}`}</Text>
                     </View>
                     <View style={{ ...inlineStyle, ...inlineQTY }}>
                       {/* <Text>{WrapText("99")}</Text> */}
-                      <Text>{WrapText("99")}</Text>
+                      <Text>{`${itemList[index + 1].selectAmount}`}</Text>
                     </View>
                     <View style={{ ...inlineStyle, ...inlinePrice }}>
                       {/* <Text>{WrapText("9999")}</Text> */}
-                      <Text>{WrapText("9999")}</Text>
+                      <Text>{`${itemList[index + 1].srp}`}</Text>
                     </View>
                     <View style={{ ...inlineStyle, ...inlineTotal }}>
                       {/* <Text>{WrapText("99999")}</Text> */}
-                      <Text>{WrapText("99999")}</Text>
+                      <Text>{`${itemList[index + 1].srp * itemList[index + 1].selectAmount}`}</Text>
                     </View>
                   </View>
                 </View>
