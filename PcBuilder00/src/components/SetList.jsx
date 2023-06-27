@@ -24,7 +24,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { saveSet } from "../slices/reportSlice";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import { useGetPostsQuery, useGetDbItemQuery } from "../features/api/dataApiSlice";
+import { useGetPostsQuery, useGetDbItemQuery, useGetSetsQuery } from "../features/api/dataApiSlice";
 import { addProduct, resetCustomized } from "../slices/cutomizeSliceNoApi";
 
 export default function SetList() {
