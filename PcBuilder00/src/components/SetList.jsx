@@ -66,6 +66,7 @@ export default function SetList() {
       .map((item, index) => ({ ...item, selectAmount: amountPerItem[index] }));
 
     itemsToAdd.map((item) => dispatch(addProduct(item)));
+    setOpen(false);
   };
 
   const { data: dataJson, error, isLoading } = useGetSetsQuery();
@@ -475,6 +476,7 @@ export default function SetList() {
   ];
 
   const sortedItemList = itemList.sort((a, b) => new Date(b.timeStamp) - new Date(a.timeStamp));
+
   const { data } = useGetDbItemQuery();
   const posts = data.recordset;
 
@@ -514,16 +516,16 @@ export default function SetList() {
             <TableHead sx={{ width: "" }}>
               <TableRow sx={{ width: "max" }}>
                 <TableCell style={{ width: 1 }}></TableCell>
-                <TableCell align="left" colSpan={1} style={{ width: 38 }}>
+                <TableCell align="center" colSpan={1} style={{ width: 38, paddingInline: 1 }}>
                   ID
                 </TableCell>
+                <TableCell style={{ width: 80, paddingInline: 1 }}></TableCell>
                 <TableCell align="left" colSpan={1}>
                   SetName
                 </TableCell>
                 <TableCell align="right" colSpan={1} style={{ width: 80 }}>
                   SaveDate
                 </TableCell>
-                <TableCell style={{ width: 80 }}></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -560,12 +562,10 @@ export default function SetList() {
                               {isOpen ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
                             </IconButton>
                           </TableCell>
-                          <TableCell align="left">{item.id}</TableCell>
-                          <TableCell align="left">{item.setName}</TableCell>
-                          <TableCell align="right">
-                            {new Date(item.timeStamp).toLocaleDateString("th-TH")}
+                          <TableCell align="center" sx={{ paddingInline: 3 }}>
+                            {item.id}
                           </TableCell>
-                          <TableCell style={{ width: "auto" }} size="small">
+                          <TableCell style={{ width: "auto", paddingInline: 1 }} size="small">
                             <Box className="resetBtn">
                               <Button
                                 fullWidth
@@ -577,6 +577,10 @@ export default function SetList() {
                                 Select
                               </Button>
                             </Box>
+                          </TableCell>
+                          <TableCell align="left">{item.setName}</TableCell>
+                          <TableCell align="right">
+                            {new Date(item.timeStamp).toLocaleDateString("th-TH")}
                           </TableCell>
                         </TableRow>
                         {/* subtableZone */}

@@ -30,10 +30,11 @@ export default function SaveBuildBtn() {
   const { setName, customerName, customerTel, salerName } = inputData;
 
   //** conditional Renderring
-  const [checkedItem, setCheckedItem] = useState({ isCustomer: false });
+  const [checkedItem, setCheckedItem] = useState({ contactInfoBool: false });
   const handleCheckBoxChange = (e) => {
     // console.log("พังไหม");
-    if (!checkedItem.isCustomer) {
+
+    if (!checkedItem.contactInfoBool) {
       setCustNameInput("");
       setCustTelInput("");
       //todo setSalerNameInput("");
@@ -57,7 +58,7 @@ export default function SaveBuildBtn() {
   const handleSave = () => {
     console.log("กด Save!!", inputData);
     let updatedInputData;
-    if (checkedItem.isCustomer) {
+    if (checkedItem.contactInfoBool) {
       updatedInputData = {
         setName: setNameInput,
         customerName: custNameInput,
@@ -84,7 +85,7 @@ export default function SaveBuildBtn() {
     const dataForUpdate = { ...updatedInputData, partData };
     console.log("สำหรับยัดลง DB", dataForUpdate);
 
-    updateData(updatedInputData)
+    updateData(dataForUpdate)
       .unwrap()
       .then((response) => {
         console.log(response);
@@ -118,7 +119,7 @@ export default function SaveBuildBtn() {
   const validate = (value) => {
     const $9DigitPattern = /^0[2,3,4,5,7]\d{7}$/;
     const $10DigitPattern = /^(06|08|09)\d{8}$/;
-    if (checkedItem.isCustomer != true) {
+    if (checkedItem.contactInfoBool != true) {
       setBtnSwitch(true);
     } else if ($9DigitPattern.test(value)) {
       console.log("เบอร์บ้าน");
@@ -213,8 +214,8 @@ export default function SaveBuildBtn() {
                 control={
                   <Checkbox
                     onChange={handleCheckBoxChange}
-                    checked={checkedItem.isCustomer}
-                    name="isCustomer"
+                    checked={checkedItem.contactInfoBool}
+                    name="contactInfoBool"
                   />
                 }
                 label="ข้อมูลการติดต่อ"
@@ -222,7 +223,7 @@ export default function SaveBuildBtn() {
             </FormGroup>
           </Box>
           <Box sx={{ position: "relative" }}>
-            <Box className={!checkedItem.isCustomer ? "disableElement" : ""}></Box>
+            <Box className={!checkedItem.contactInfoBool ? "disableElement" : ""}></Box>
             <>
               <DialogContent
                 sx={{ borderLeft: "10px solid #0033E6", backgroundColor: "#4141", zIndex: "-1" }}
