@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
@@ -32,7 +32,7 @@ export default function SetList() {
 
   const dispatch = useDispatch();
 
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
   // onclick เปิด Dialog //
   const handleClickOpen = () => {
@@ -49,9 +49,11 @@ export default function SetList() {
   };
 
   const handleSelect = (e, index1) => {
+    console.log("handleSelect clicked!!");
     e.stopPropagation();
     dispatch(resetCustomized());
-    const itemsSet = itemList[index1].partData.flatMap((category) =>
+    console.log("กดเลือกไรมา", dataJson[index1]);
+    const itemsSet = dataJson[index1].partData.flatMap((category) =>
       category.listItems.map((item) => item)
     );
 
@@ -65,6 +67,18 @@ export default function SetList() {
 
     itemsToAdd.map((item) => dispatch(addProduct(item)));
   };
+
+  const { data: dataJson, error, isLoading } = useGetSetsQuery();
+
+  useEffect(() => {
+    if (isLoading) {
+      console.log("Loading...");
+    } else if (error) {
+      console.error("Error: ", error);
+    } else if (dataJson) {
+      console.log("Data: ", dataJson);
+    }
+  }, [dataJson, error, isLoading]);
 
   const itemList = [
     {
@@ -465,7 +479,7 @@ export default function SetList() {
   const posts = data.recordset;
 
   const openSubTableRefs = React.useRef([]);
-  const [openSubTables, setOpenSubTables] = React.useState([]);
+  const [openSubTables, setOpenSubTables] = useState([]);
   return (
     <div>
       <Button
@@ -513,133 +527,141 @@ export default function SetList() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {sortedItemList.map((item, index) => {
-                const isOpen = openSubTables[index];
-                let i = 0;
-                return (
-                  <React.Fragment key={index}>
-                    <TableRow
-                      onClick={() => {
-                        const updatedOpenSubTables = [...openSubTables];
-                        updatedOpenSubTables[index] = !isOpen;
-                        console.log("isOpenคือไร:", isOpen);
-                        setOpenSubTables(updatedOpenSubTables);
-                      }}
-                      hover
-                    >
-                      <TableCell style={{ backgroundColor: "#414151" }}>
-                        <IconButton
-                          aria-label="expand row"
-                          size="small"
+              {/* ต้องเอา API มาแทนค่าตรงนี้ */}
+              {isLoading ? (
+                <>Loading</>
+              ) : (
+                <>
+                  {dataJson.map((item, index) => {
+                    const isOpen = openSubTables[index];
+                    let i = 0;
+                    return (
+                      <React.Fragment key={index}>
+                        <TableRow
                           onClick={() => {
                             const updatedOpenSubTables = [...openSubTables];
                             updatedOpenSubTables[index] = !isOpen;
+                            console.log("isOpenคือไร:", isOpen);
                             setOpenSubTables(updatedOpenSubTables);
                           }}
-                          sx={{ color: "white" }}
+                          hover
                         >
-                          {isOpen ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-                        </IconButton>
-                      </TableCell>
-                      <TableCell align="left">{item.id}</TableCell>
-                      <TableCell align="left">{item.setName}</TableCell>
-                      <TableCell align="right">
-                        {new Date(item.timeStamp).toLocaleDateString("th-TH")}
-                      </TableCell>
-                      <TableCell style={{ width: "auto" }} size="small">
-                        <Box className="resetBtn">
-                          <Button
-                            fullWidth
-                            disableRipple={true}
-                            sx={{ p: 0, backgroundColor: "#42528A" }}
-                            onClick={(e) => handleSelect(e, index)}
-                            variant="contained"
-                          >
-                            Select
-                          </Button>
-                        </Box>
-                      </TableCell>
-                    </TableRow>
-                    {/* subtableZone */}
-                    <TableRow>
-                      <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-                        <Collapse in={isOpen} timeout="auto" unmountOnExit>
-                          <Box sx={{ margin: 1 }}>
-                            <Typography variant="h6" gutterBottom component="div">
-                              ListItem
-                            </Typography>
-                            <Table size="small" aria-label="purchases">
-                              <TableHead>
-                                <TableRow>
-                                  <TableCell>No.</TableCell>
-                                  <TableCell sx={{ minWidth: 75 }}>Code</TableCell>
-                                  <TableCell align="left">Description</TableCell>
-                                  <TableCell>Stock</TableCell>
-                                  <TableCell>AMT</TableCell>
-                                  <TableCell align="right">SRP</TableCell>
-                                  <TableCell align="right">Price</TableCell>
-                                  <TableCell>TotalPrice</TableCell>
-                                </TableRow>
-                              </TableHead>
-                              <TableBody>
-                                {item.partData.map((item2, index2) =>
-                                  item2.listItems.map((item3, index3) => {
-                                    i += 1;
-                                    return (
-                                      <TableRow key={index3}>
-                                        <TableCell component="th" scope="row">
-                                          {i}
-                                        </TableCell>
-                                        <TableCell>{item3.code}</TableCell>
-                                        <TableCell>{item3.productDescription}</TableCell>
-                                        <TableCell></TableCell>
-                                        <TableCell align="right">{item3.selectAmount}</TableCell>
-                                        <TableCell align="right">
-                                          {posts
-                                            .find((post, postIDX) => {
-                                              if (post.id === item3.id) {
-                                                return post.srp.toLocaleString();
-                                              }
-                                            })
-                                            ?.srp.toLocaleString()}
-                                        </TableCell>
+                          <TableCell style={{ backgroundColor: "#414151" }}>
+                            <IconButton
+                              aria-label="expand row"
+                              size="small"
+                              onClick={() => {
+                                const updatedOpenSubTables = [...openSubTables];
+                                updatedOpenSubTables[index] = !isOpen;
+                                setOpenSubTables(updatedOpenSubTables);
+                              }}
+                              sx={{ color: "white" }}
+                            >
+                              {isOpen ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+                            </IconButton>
+                          </TableCell>
+                          <TableCell align="left">{item.id}</TableCell>
+                          <TableCell align="left">{item.setName}</TableCell>
+                          <TableCell align="right">
+                            {new Date(item.timeStamp).toLocaleDateString("th-TH")}
+                          </TableCell>
+                          <TableCell style={{ width: "auto" }} size="small">
+                            <Box className="resetBtn">
+                              <Button
+                                fullWidth
+                                disableRipple={true}
+                                sx={{ p: 0, backgroundColor: "#42528A" }}
+                                onClick={(e) => handleSelect(e, index)}
+                                variant="contained"
+                              >
+                                Select
+                              </Button>
+                            </Box>
+                          </TableCell>
+                        </TableRow>
+                        {/* subtableZone */}
+                        <TableRow>
+                          <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+                            <Collapse in={isOpen} timeout="auto" unmountOnExit>
+                              <Box sx={{ margin: 1 }}>
+                                <Typography variant="h6" gutterBottom component="div">
+                                  ListItem
+                                </Typography>
+                                <Table size="small" aria-label="purchases">
+                                  <TableHead>
+                                    <TableRow>
+                                      <TableCell>No.</TableCell>
+                                      <TableCell sx={{ minWidth: 75 }}>Code</TableCell>
+                                      <TableCell align="left">Description</TableCell>
+                                      <TableCell>Stock</TableCell>
+                                      <TableCell>AMT</TableCell>
+                                      <TableCell align="right">SRP</TableCell>
+                                      <TableCell align="right">Price</TableCell>
+                                      <TableCell>TotalPrice</TableCell>
+                                    </TableRow>
+                                  </TableHead>
+                                  <TableBody>
+                                    {item.partData.map((item2, index2) =>
+                                      item2.listItems.map((item3, index3) => {
+                                        i += 1;
+                                        return (
+                                          <TableRow key={index3}>
+                                            <TableCell component="th" scope="row">
+                                              {i}
+                                            </TableCell>
+                                            <TableCell>{item3.code}</TableCell>
+                                            <TableCell>{item3.productDescription}</TableCell>
+                                            <TableCell></TableCell>
+                                            <TableCell align="right">
+                                              {item3.selectAmount}
+                                            </TableCell>
+                                            <TableCell align="right">
+                                              {posts
+                                                .find((post, postIDX) => {
+                                                  if (post.id === item3.id) {
+                                                    return post.srp.toLocaleString();
+                                                  }
+                                                })
+                                                ?.srp.toLocaleString()}
+                                            </TableCell>
 
-                                        <TableCell align="right">
-                                          {posts
-                                            .find((post, postIDX) => {
-                                              if (post.id === item3.id) {
-                                                return post.promotionPrice;
-                                              }
-                                            })
-                                            ?.promotionPrice.toLocaleString()}
-                                        </TableCell>
+                                            <TableCell align="right">
+                                              {posts
+                                                .find((post, postIDX) => {
+                                                  if (post.id === item3.id) {
+                                                    return post.promotionPrice;
+                                                  }
+                                                })
+                                                ?.promotionPrice.toLocaleString()}
+                                            </TableCell>
 
-                                        <TableCell align="right">
-                                          {posts.find((post, postIDX) => {
-                                            if (post.id === item3.id) {
-                                              console.log("ตรง", post.id, item3.id);
-                                              const totalPrice =
-                                                post.promotionPrice * item3.selectAmount;
+                                            <TableCell align="right">
+                                              {posts.find((post, postIDX) => {
+                                                if (post.id === item3.id) {
+                                                  const totalPrice =
+                                                    post.promotionPrice * item3.selectAmount;
 
-                                              return totalPrice;
-                                            } else {
-                                              // console.log("ไม่ตรง", post.id, item3.id);
-                                            }
-                                          })?.promotionPrice * item3.selectAmount}
-                                        </TableCell>
-                                      </TableRow>
-                                    );
-                                  })
-                                )}
-                              </TableBody>
-                            </Table>
-                          </Box>
-                        </Collapse>
-                      </TableCell>
-                    </TableRow>
-                  </React.Fragment>
-                );
-              })}
+                                                  return totalPrice;
+                                                } else {
+                                                  // console.log("ไม่ตรง", post.id, item3.id);
+                                                }
+                                              })?.promotionPrice * item3.selectAmount}
+                                            </TableCell>
+                                          </TableRow>
+                                        );
+                                      })
+                                    )}
+                                  </TableBody>
+                                </Table>
+                              </Box>
+                            </Collapse>
+                          </TableCell>
+                        </TableRow>
+                      </React.Fragment>
+                    );
+                  })}
+                </>
+              )}
             </TableBody>
           </Table>
         </TableContainer>
