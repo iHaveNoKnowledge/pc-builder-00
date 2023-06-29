@@ -69,17 +69,16 @@ export default function SetList() {
     setOpen(false);
   };
 
-  const { data: dataJson, error, isLoading } = useGetSetsQuery();
+  const { data: dataJson, error, isLoading, isSuccess } = useGetSetsQuery();
+  const [sortedData, setSortedData] = useState([]);
 
   useEffect(() => {
-    if (isLoading) {
-      console.log("Loading...");
-    } else if (error) {
-      console.error("Error: ", error);
-    } else if (dataJson) {
-      console.log("Data: ", dataJson);
+    if (dataJson) {
+      const mutableData = [...dataJson];
+      const sortedData = mutableData.sort((a, b) => new Date(b.timeStamp) - new Date(a.timeStamp));
+      setSortedData(sortedData);
     }
-  }, [dataJson, error, isLoading]);
+  }, [isSuccess, dataJson]);
 
   const itemList = [
     {
@@ -286,8 +285,7 @@ export default function SetList() {
               socket: "AM4",
               typeRam: "DDR4",
               slot: 2,
-              img:
-                "https://media-cdn.bnn.in.th/19033/Asus-Mainboard-PRIME-A320M-K-DDR4-AM4-1-square_medium.jpg",
+              img: "https://media-cdn.bnn.in.th/19033/Asus-Mainboard-PRIME-A320M-K-DDR4-AM4-1-square_medium.jpg",
               srp: 10560,
               promotionPrice: 1690,
               compatible: "AMD",
@@ -325,8 +323,7 @@ export default function SetList() {
               socket: null,
               typeRam: "DDR4",
               slot: null,
-              img:
-                "https://media-cdn.bnn.in.th/106735/zadak-moab-aura2-rgb-ddr4-1-square_medium.jpg",
+              img: "https://media-cdn.bnn.in.th/106735/zadak-moab-aura2-rgb-ddr4-1-square_medium.jpg",
               srp: 7460,
               promotionPrice: 3655,
               compatible: "PC",
@@ -475,8 +472,6 @@ export default function SetList() {
     },
   ];
 
-  const sortedItemList = itemList.sort((a, b) => new Date(b.timeStamp) - new Date(a.timeStamp));
-
   const { data } = useGetDbItemQuery();
   const posts = data.recordset;
 
@@ -496,7 +491,7 @@ export default function SetList() {
         Set List
       </Button>
 
-      <Dialog open={open} onClose={handleClose} maxWidth="lg">
+      <Dialog open={open} onClose={handleClose} maxWidth="lg" sx={{ height: "900px" }}>
         <DialogTitle
           sx={{
             backgroundColor: "#414151",
@@ -534,7 +529,7 @@ export default function SetList() {
                 <>Loading</>
               ) : (
                 <>
-                  {dataJson.map((item, index) => {
+                  {sortedData.map((item, index) => {
                     const isOpen = openSubTables[index];
                     let i = 0;
                     return (
@@ -589,14 +584,21 @@ export default function SetList() {
                             <Collapse in={isOpen} timeout="auto" unmountOnExit>
                               <Box sx={{ margin: 1 }}>
                                 <Typography variant="h6" gutterBottom component="div">
-                                  ListItem
+                                  Items List
                                 </Typography>
                                 <Table size="small" aria-label="purchases">
                                   <TableHead>
                                     <TableRow>
-                                      <TableCell>No.</TableCell>
-                                      <TableCell sx={{ minWidth: 75 }}>Code</TableCell>
-                                      <TableCell align="left">Description</TableCell>
+                                      <TableCell
+                                        sx={{ width: 38, paddingInline: 1 }}
+                                        align="center"
+                                      >
+                                        No.
+                                      </TableCell>
+                                      <TableCell sx={{ width: 11 }}>Code</TableCell>
+                                      <TableCell align="left" sx={{ minWidth: 7 }}>
+                                        Description
+                                      </TableCell>
                                       <TableCell>Stock</TableCell>
                                       <TableCell>AMT</TableCell>
                                       <TableCell align="right">SRP</TableCell>
@@ -610,11 +612,18 @@ export default function SetList() {
                                         i += 1;
                                         return (
                                           <TableRow key={index3}>
-                                            <TableCell component="th" scope="row">
+                                            <TableCell
+                                              align="center"
+                                              component="th"
+                                              scope="row"
+                                              sx={{ width: 38, paddingInline: 1 }}
+                                            >
                                               {i}
                                             </TableCell>
-                                            <TableCell>{item3.code}</TableCell>
-                                            <TableCell>{item3.productDescription}</TableCell>
+                                            <TableCell sx={{ width: 100 }}>{item3.code}</TableCell>
+                                            <TableCell sx={{ width: 580 }}>
+                                              {item3.productDescription}
+                                            </TableCell>
                                             <TableCell></TableCell>
                                             <TableCell align="right">
                                               {item3.selectAmount}
