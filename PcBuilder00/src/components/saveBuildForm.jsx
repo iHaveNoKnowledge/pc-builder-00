@@ -13,6 +13,7 @@ import { saveSet } from "../slices/reportSlice";
 import { FormGroup, FormControlLabel, Checkbox } from "@mui/material";
 import "./saveBuildForm.css";
 import { useUpdateDataMutation } from "../features/api/dataApiSlice";
+import { useGetSetsQuery } from "../features/api/dataApiSlice";
 
 export default function SaveBuildBtn() {
   const partData = useSelector((state) => state.noApiCustomize.partData);
@@ -55,6 +56,7 @@ export default function SaveBuildBtn() {
     setOpen(false);
   };
   //** onclick สำหรับกด save SPEC ////////////////////////////////////////////////////////////////////
+  const { refetch: setsRefetch } = useGetSetsQuery();
   const handleSave = () => {
     console.log("กด Save!!", inputData);
     let updatedInputData;
@@ -89,6 +91,7 @@ export default function SaveBuildBtn() {
       .unwrap()
       .then((response) => {
         console.log(response);
+        setsRefetch();
         return response;
       })
       .catch((error) => {
