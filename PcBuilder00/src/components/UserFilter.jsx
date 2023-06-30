@@ -28,7 +28,7 @@ const UserFilter = () => {
   //isOptAvailable?
   const isFiltContained = Object.keys(currentFilters.selectedOptionState);
 
-  ////usestate
+  //* usestate
   const [query, setQuery] = useState("");
   // const [selectedFilter, setSelectedFilter] = useState(currentFilters.filters);
   const [currentOpt, setCuerrentOpt] = useState([]);

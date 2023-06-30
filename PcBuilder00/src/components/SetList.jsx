@@ -13,6 +13,7 @@ import {
   TableContainer,
   Paper,
   IconButton,
+  InputAdornment,
 } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -24,6 +25,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { saveSet } from "../slices/reportSlice";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import SearchIcon from "@mui/icons-material/Search";
 import { useGetPostsQuery, useGetDbItemQuery, useGetSetsQuery } from "../features/api/dataApiSlice";
 import { addProduct, resetCustomized } from "../slices/cutomizeSliceNoApi";
 
@@ -66,6 +68,7 @@ export default function SetList() {
     setOpenSubTables([]);
   };
 
+  //* Function กดเลือกSet
   const handleSelect = (e, index1) => {
     console.log("handleSelect clicked!!");
     e.stopPropagation();
@@ -85,6 +88,14 @@ export default function SetList() {
 
     itemsToAdd.map((item) => dispatch(addProduct(item)));
     setOpen(false);
+  };
+
+  //* Function SearchSets
+  const [query, setQuery] = useState("");
+  const handleSearch = (e) => {
+    console.log("searchว่า: ", query);
+    const searchResult = sortedData.filter((item) => item.setName.includes(query));
+    console.log("กดsearch แล้วได้ไรมา", searchResult);
   };
 
   //* render jsx
@@ -118,6 +129,43 @@ export default function SetList() {
           เลือก Set
         </DialogTitle>
         <TableContainer component={Paper} sx={{ width: "1200px" }}>
+          <Box sx={{ display: "flex", justifyContent: "center", marginTop: 2, marginInline: 2 }}>
+            <TextField
+              fullWidth
+              sx={{}}
+              // size="normal"
+              placeholder="ค้นหาเซ็ตคอมประกอบ"
+              type="search"
+              id="input-with-icon-textfield"
+              value={query}
+              onChange={(event) => {
+                setQuery(event.target.value);
+              }}
+              // label={`Product ${currentCategory}`}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <SearchIcon sx={{ bgcolor: "#F0F0F0", py: "4.07px" }} />
+                  </InputAdornment>
+                ),
+              }}
+              variant="standard"
+            />
+            <Box ml={2} style={{ display: "flex", alignItems: "end" }}>
+              <Button
+                type="submit"
+                variant="contained"
+                sx={{
+                  height: "27.5px",
+                  borderRadius: "0px",
+                  backgroundColor: "#42528A",
+                }}
+                onClick={handleSearch}
+              >
+                ค้นหา
+              </Button>
+            </Box>
+          </Box>
           <Table stickyHeader sx={{ maxWidth: "lg", width: "lg" }}>
             <TableHead sx={{ width: "" }}>
               <TableRow sx={{ width: "max" }}>
