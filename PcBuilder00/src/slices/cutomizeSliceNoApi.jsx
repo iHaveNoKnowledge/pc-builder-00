@@ -126,7 +126,7 @@ export const customizeSlice = createSlice({
 
       if (categoryIndex !== -1) {
         const currentType = state.partData[categoryIndex]; ///currentType จะเป็นการเลือก สมาชิกที่ filter category มาแล้ว
-        const isFoundItem = currentType.listItems.find((item) => item.id === action.payload.id); ////ตรวจสอบว่ามีแล้วหรือไม่ ถ้าเป็น true isFoundItem เป็น obj ที่เป็นสมาชิก Arr listItems, false จะเป็น undefined ต้องสร้าง obj ใหม่
+        const isFoundItem = currentType.listItems.find((item) => item.id === action.payload.id); //ตรวจสอบว่ามีแล้วหรือไม่ ถ้าเป็น true isFoundItem เป็น obj ที่เป็นสมาชิก Arr listItems, false จะเป็น undefined ต้องสร้าง obj ใหม่
         if (currentType.typeMax) {
           if (currentType.typeAmount === 0) {
             currentType.listItems.push(newArray);
