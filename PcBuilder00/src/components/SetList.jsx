@@ -36,23 +36,42 @@ export default function SetList() {
 
   const [open, setOpen] = useState(false);
 
+  let searchResult = "";
+  let displayDataList = false;
+
   //* นำ api มาใช้
   const { data: dataJson, error, isLoading, isSuccess } = useGetSetsQuery();
   const [sortedData, setSortedData] = useState([]);
-
-  useEffect(() => {
-    if (dataJson) {
-      const mutableData = [...dataJson];
-      const sortedData = mutableData.sort((a, b) => new Date(b.timeStamp) - new Date(a.timeStamp));
-      setSortedData(sortedData);
-    }
-  }, [isSuccess, dataJson]);
 
   const { data } = useGetDbItemQuery();
   const posts = data.recordset;
 
   const openSubTableRefs = React.useRef([]);
   const [openSubTables, setOpenSubTables] = useState([]);
+
+  const sortData = (data) => {
+    const mutableData = [...data];
+    return mutableData.sort((a, b) => new Date(b.timeStamp) - new Date(a.timeStamp));
+  };
+
+  //* Function SearchSets
+  const [query, setQuery] = useState("");
+  const handleSearch = (e) => {
+    if (query.length > 0) {
+      console.log("searchว่า: ", query);
+      const searchResult = sortData(dataJson).filter((item) => item.setName.includes(query));
+      console.log("กดsearch แล้วได้ไรมา", searchResult);
+      setSortedData(searchResult);
+    } else {
+      setSortedData(sortData(dataJson));
+    }
+  };
+
+  useEffect(() => {
+    if (dataJson) {
+      setSortedData(sortData(dataJson));
+    }
+  }, [isSuccess, dataJson, query]);
 
   // onclick เปิด Dialog //
   const handleClickOpen = () => {
@@ -79,23 +98,14 @@ export default function SetList() {
     );
 
     const itemsSetID = itemsSet.map((item) => item.id);
-
     const amountPerItem = itemsSet.map((item) => item.selectAmount);
-
     const itemsToAdd = posts
       .filter((item) => itemsSetID.includes(item.id))
       .map((item, index) => ({ ...item, selectAmount: amountPerItem[index] }));
 
     itemsToAdd.map((item) => dispatch(addProduct(item)));
     setOpen(false);
-  };
-
-  //* Function SearchSets
-  const [query, setQuery] = useState("");
-  const handleSearch = (e) => {
-    console.log("searchว่า: ", query);
-    const searchResult = sortedData.filter((item) => item.setName.includes(query));
-    console.log("กดsearch แล้วได้ไรมา", searchResult);
+    setQuery("");
   };
 
   //* render jsx
