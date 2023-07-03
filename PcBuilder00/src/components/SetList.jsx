@@ -51,7 +51,6 @@ export default function SetList() {
   const { data } = useGetDbItemQuery();
   const posts = data.recordset;
 
-  const openSubTableRefs = React.useRef([]);
   const [openSubTables, setOpenSubTables] = useState([]);
 
   const sortData = (data) => {
@@ -91,7 +90,6 @@ export default function SetList() {
     setOpen(false);
 
     const updatedState = openSubTables.map(() => false);
-    // setOpenSubTables(updatedState);
     setOpenSubTables([]);
   };
 
@@ -115,15 +113,25 @@ export default function SetList() {
     setOpen(false);
   };
 
+  //* Function ConfirmDelete
+  const [idDelete, setIdDelete] = useState();
+  const confirmDelete = (id) => {
+    setOpentAlert(false);
+    console.log("ลบแล้วเรียบร้อย: ", idDelete);
+    // deleteResource(idDelete);
+  };
+
   //* Function DeleteSet
-  console.log("useDeleteResourceMutation: ", useDeleteResourceMutation());
   const [deleteResource, response] = useDeleteResourceMutation();
-  const handleDelete = async (e, index, id) => {
+  const handleDelete = (e, index, id) => {
     e.stopPropagation();
-    console.log("HandleDelete Clicked!! ที่เลข: ");
-    deleteResource(id);
+    setIdDelete(id);
+    setOpentAlert(true);
     setsRefetch();
   };
+
+  //* Delete Alert!!
+  const [openAlert, setOpentAlert] = useState(false);
 
   //* render jsx
   return (
@@ -215,9 +223,10 @@ export default function SetList() {
               {isLoading ? (
                 <>Loading</>
               ) : (
-                <>
+                <React.Fragment>
                   {sortedData.map((item, index) => {
                     const isOpen = openSubTables[index];
+
                     let i = 0;
                     return (
                       <React.Fragment key={index}>
@@ -374,7 +383,38 @@ export default function SetList() {
                       </React.Fragment>
                     );
                   })}
-                </>
+                  <Dialog
+                    open={openAlert}
+                    onClose={() => {
+                      setOpentAlert(false);
+                    }}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description"
+                  >
+                    <DialogTitle id="alert-dialog-title">
+                      {"ต้องการลบเซ็ต DIY เซ็ตนี้จริงหรือไม่?"}
+                    </DialogTitle>
+                    <DialogContent>
+                      <DialogContentText id="alert-dialog-description">
+                        Set ที่กำลังจะลบ คือ (ดึงชื่อ Set จาก ปุ่ม Delete)
+                      </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                      <Button onClick={() => setOpentAlert(false)} size="large" variant="contained">
+                        ช้าก่อนไอน้อง
+                      </Button>
+                      <Button
+                        onClick={confirmDelete}
+                        autoFocus
+                        size="large"
+                        variant="contained"
+                        color="error"
+                      >
+                        ลบดิ
+                      </Button>
+                    </DialogActions>
+                  </Dialog>
+                </React.Fragment>
               )}
             </TableBody>
           </Table>

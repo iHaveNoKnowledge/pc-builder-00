@@ -17,7 +17,7 @@ export const apiSlice = createApi({
 
 const baseUrl = "http://192.168.0.25:9000/api";
 
-//* Get Fetch จาก SQL server 192.168
+//* Gets and a Delete Fetch จาก SQL server 192.168
 export const apiSliceDb = createApi({
   reducerPath: "apiSliceDb",
   baseQuery: fetchBaseQuery({
