@@ -26,7 +26,12 @@ import { saveSet } from "../slices/reportSlice";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import SearchIcon from "@mui/icons-material/Search";
-import { useGetPostsQuery, useGetDbItemQuery, useGetSetsQuery } from "../features/api/dataApiSlice";
+import {
+  useGetPostsQuery,
+  useGetDbItemQuery,
+  useGetSetsQuery,
+  useDeleteResourceMutation,
+} from "../features/api/dataApiSlice";
 import { addProduct, resetCustomized } from "../slices/cutomizeSliceNoApi";
 
 export default function SetList() {
@@ -40,7 +45,7 @@ export default function SetList() {
   let displayDataList = false;
 
   //* นำ api มาใช้
-  const { data: dataJson, error, isLoading, isSuccess } = useGetSetsQuery();
+  const { data: dataJson, error, isLoading, isSuccess, refetch: setsRefetch } = useGetSetsQuery();
   const [sortedData, setSortedData] = useState([]);
 
   const { data } = useGetDbItemQuery();
@@ -71,17 +76,20 @@ export default function SetList() {
     if (dataJson) {
       setSortedData(sortData(dataJson));
     }
-  }, [isSuccess, dataJson, query]);
+    if (!open) {
+      setQuery("");
+    }
+  }, [isSuccess, dataJson, open]);
 
   // onclick เปิด Dialog //
   const handleClickOpen = () => {
     setOpen(true);
   };
 
-  // !onclick ปิด Dialog //
   const handleClose = (e) => {
     e.stopPropagation();
     setOpen(false);
+
     const updatedState = openSubTables.map(() => false);
     // setOpenSubTables(updatedState);
     setOpenSubTables([]);
@@ -105,7 +113,16 @@ export default function SetList() {
 
     itemsToAdd.map((item) => dispatch(addProduct(item)));
     setOpen(false);
-    setQuery("");
+  };
+
+  //* Function DeleteSet
+  console.log("useDeleteResourceMutation: ", useDeleteResourceMutation());
+  const [deleteResource, response] = useDeleteResourceMutation();
+  const handleDelete = async (e, index, id) => {
+    e.stopPropagation();
+    console.log("HandleDelete Clicked!! ที่เลข: ");
+    deleteResource(id);
+    setsRefetch();
   };
 
   //* render jsx
@@ -138,7 +155,7 @@ export default function SetList() {
         >
           เลือก Set
         </DialogTitle>
-        <TableContainer component={Paper} sx={{ width: "1200px" }}>
+        <TableContainer component={Paper} sx={{ width: "1200px", height: "700px" }}>
           <Box sx={{ display: "flex", justifyContent: "center", marginTop: 2, marginInline: 2 }}>
             <TextField
               fullWidth
@@ -190,6 +207,7 @@ export default function SetList() {
                 <TableCell align="right" colSpan={1} style={{ width: 80 }}>
                   SaveDate
                 </TableCell>
+                <TableCell colSpan={1} style={{ width: 80 }}></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -234,7 +252,7 @@ export default function SetList() {
                               <Button
                                 fullWidth
                                 disableRipple={true}
-                                sx={{ p: 0, backgroundColor: "#42528A" }}
+                                sx={{ p: 0.75, backgroundColor: "#42528A" }}
                                 onClick={(e) => handleSelect(e, index)}
                                 variant="contained"
                               >
@@ -245,6 +263,20 @@ export default function SetList() {
                           <TableCell align="left">{item.setName}</TableCell>
                           <TableCell align="right">
                             {new Date(item.timeStamp).toLocaleDateString("th-TH")}
+                          </TableCell>
+                          <TableCell>
+                            <Box className="resetBtn">
+                              <Button
+                                fullWidth
+                                disableRipple={true}
+                                sx={{ p: 0.75 }}
+                                onClick={(e) => handleDelete(e, index, item.id)}
+                                variant="contained"
+                                color="error"
+                              >
+                                Delete
+                              </Button>
+                            </Box>
                           </TableCell>
                         </TableRow>
                         {/* subtableZone */}

@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 // import { queryCache } from "react-query";
 
-//* อันนี้ Fetch จาก JSON server
+//* Fetch จาก JSON server
 export const apiSlice = createApi({
   reducerPath: "apiSlice",
   baseQuery: fetchBaseQuery({
@@ -15,11 +15,13 @@ export const apiSlice = createApi({
   }),
 });
 
-//* อันนี้ Get Fetch จาก SQL server 192.168
+const baseUrl = "http://192.168.0.25:9000/api";
+
+//* Get Fetch จาก SQL server 192.168
 export const apiSliceDb = createApi({
   reducerPath: "apiSliceDb",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://192.168.0.25:9000/api",
+    baseUrl,
   }),
   endpoints: (builder) => ({
     getDbItem: builder.query({
@@ -28,12 +30,18 @@ export const apiSliceDb = createApi({
     getSets: builder.query({
       query: () => "/sets",
     }),
+    deleteResource: builder.mutation({
+      query: (resourceID) => ({
+        url: `/pop/${resourceID}`,
+        method: "DELETE",
+      }),
+    }),
   }),
 });
 
 //* Post
 export const updateApi = createApi({
-  baseQuery: fetchBaseQuery({ baseUrl: "http://192.168.0.25:9000/api" }),
+  baseQuery: fetchBaseQuery({ baseUrl }),
   endpoints: (builder) => ({
     updateData: builder.mutation({
       query: (data) => ({
@@ -45,13 +53,27 @@ export const updateApi = createApi({
   }),
 });
 
+// //* Delete
+// export const deleteResource = apiSliceDb.injectEndpoints({
+//   endpoints: (builder) => ({
+//     deleteResource: builder.mutation({
+//       query: (resourceID) => ({
+//         url: `/pop/${resourceID}`,
+//         method: "DELETE",
+//       }),
+//     }),
+//   }),
+// });
+
 //** ดึงข้อมูล
 export const { useGetPostsQuery } = apiSlice;
-export const { useGetDbItemQuery, useGetSetsQuery } = apiSliceDb;
+export const { useGetDbItemQuery, useGetSetsQuery, useDeleteResourceMutation } = apiSliceDb;
 
-//** DB DATA Create and Mutatation
-console.log("apiSliceDb", updateApi);
+//** DB DATA Create
 export const { useUpdateDataMutation } = updateApi;
+
+//** DB DATA DELETE
+// export const { useDeleteResourceMutation } = deleteResource;
 
 ///source
 ///https://www.positronx.io/react-fetch-data-with-redux-toolkit-rtk-query-tutorial/
