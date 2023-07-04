@@ -26,15 +26,18 @@ export const apiSliceDb = createApi({
   endpoints: (builder) => ({
     getDbItem: builder.query({
       query: () => "/testProducts",
+      providesTags: ["DbItems"], //Add Tag ให้กับข้อมูล]ที่ fetch มา
     }),
     getSets: builder.query({
       query: () => "/sets",
+      providesTags: ["Sets"], //Add Tag ให้กับข้อมูล]ที่ fetch มา
     }),
     deleteResource: builder.mutation({
       query: (resourceID) => ({
         url: `/pop/${resourceID}`,
         method: "DELETE",
       }),
+      invalidatesTags: ["Sets"], //หากTagที่ระบุมีการเปลี่ยนแปลงจากฟังชั่นนี้ cache ของพวกที่มีTagที่ระบุนี้จะถูกสร้างใหม่หากข้อมูลไม่ตรงกัน
     }),
   }),
 });

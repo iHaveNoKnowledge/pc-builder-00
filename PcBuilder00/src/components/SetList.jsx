@@ -45,7 +45,7 @@ export default function SetList() {
   let displayDataList = false;
 
   //* นำ api มาใช้
-  const { data: dataJson, error, isLoading, isSuccess, refetch: setsRefetch } = useGetSetsQuery();
+  const { data: dataJson, error, isLoading, isSuccess } = useGetSetsQuery();
   const [sortedData, setSortedData] = useState([]);
 
   const { data } = useGetDbItemQuery();
@@ -118,7 +118,7 @@ export default function SetList() {
   const confirmDelete = (id) => {
     setOpentAlert(false);
     console.log("ลบแล้วเรียบร้อย: ", idDelete);
-    // deleteResource(idDelete);
+    deleteResource(idDelete);
   };
 
   //* Function DeleteSet
@@ -127,7 +127,6 @@ export default function SetList() {
     e.stopPropagation();
     setIdDelete(id);
     setOpentAlert(true);
-    setsRefetch();
   };
 
   //* Delete Alert!!
