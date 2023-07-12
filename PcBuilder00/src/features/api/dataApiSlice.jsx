@@ -37,7 +37,7 @@ export const apiSliceDb = createApi({
         url: `/pop/${resourceID}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["Sets"], //หากTagที่ระบุมีการเปลี่ยนแปลงจากฟังชั่นนี้ cache ของพวกที่มีTagที่ระบุนี้จะถูกสร้างใหม่หากข้อมูลไม่ตรงกัน
+      invalidatesTags: ["Sets"], //หากTagที่ระบุมีการเปลี่ยนแปลงจากฟังชั่นนี้ สมาชิกใน cache ตัวใดๆที่มีTagที่ระบุนี้จะถูกสร้างใหม่หากข้อมูลไม่ตรงกัน
     }),
   }),
 });
