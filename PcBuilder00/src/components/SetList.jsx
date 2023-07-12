@@ -138,6 +138,7 @@ export default function SetList() {
       .map((item, index) => ({ ...item, selectAmount: amountPerItem[index] }));
 
     itemsToAdd.map((item) => dispatch(addProduct(item)));
+    setOpenSubTables([]);
     setOpen(false);
   };
 
@@ -161,18 +162,16 @@ export default function SetList() {
   const [openAlert, setOpentAlert] = useState(false);
 
   //* pagination////
-  const curPageNum2 = useSelector((state) => state.pagination.currentPage);
   const [curPageNum, setCurPageNum] = useState(1);
-  const cardsPerPage = 6;
+  const cardsPerPage = 10;
   const totalPages = Math.ceil(sortedData.length / cardsPerPage);
   const handleChangePage = (pageNum) => {
     setCurPageNum(pageNum);
-    dispatch(setPageNum(pageNum));
   };
 
-  const productPaginated = sortedData.slice(
-    (curPageNum2 - 1) * cardsPerPage,
-    curPageNum2 * cardsPerPage
+  const dataPaginated = sortedData.slice(
+    (curPageNum - 1) * cardsPerPage,
+    curPageNum * cardsPerPage
   );
 
   //* render jsx
@@ -249,7 +248,7 @@ export default function SetList() {
                   <>Loading</>
                 ) : (
                   <React.Fragment>
-                    {sortedData.map((item, index) => {
+                    {dataPaginated.map((item, index) => {
                       const isOpen = openSubTables[index];
 
                       let i = 0;
@@ -454,7 +453,7 @@ export default function SetList() {
           <Stack className="pagination-card" spacing={2} alignItems="center" sx={{ mt: "6px" }}>
             {totalPages ? (
               <Typography>
-                Page:{curPageNum2} / {totalPages}
+                Page:{curPageNum} / {totalPages}
               </Typography>
             ) : (
               ""
@@ -466,7 +465,7 @@ export default function SetList() {
               shape="rounded"
               onChange={(event, pageNum) => handleChangePage(pageNum)}
               defaultPage={1}
-              page={curPageNum2}
+              page={curPageNum}
             />
           </Stack>
           <DialogActions>

@@ -41,7 +41,6 @@ const CustomizationProto02 = () => {
   const dispatch = useDispatch();
 
   //function
-  const { refetch } = useGetDbItemQuery();
   const handleChange = (category) => {
     console.log("handleChanged", category);
     dispatch(changeCategory(category));
