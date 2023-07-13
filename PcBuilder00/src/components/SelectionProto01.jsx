@@ -171,10 +171,11 @@ function PostCard({ items }) {
   );
 
   //* นำ display ทั้งหมดที่มีการกรองและไม่มีการกรอง มารวมกัน
-  const combineProduct = unconditionProduct.concat(CPU_display, mainBoard_display, RAM_display);
+  const combinedProduct = unconditionProduct.concat(CPU_display, mainBoard_display, RAM_display);
+  console.log("RAM_display:", RAM_display);
 
-  //* นำ display ทั้งหมดมา filter เฉพาะ ประเภทที่ user เลือก
-  const showProduct = combineProduct.filter((item) => item.category === category);
+  //* นำ displayed ทั้งหมดมา filter เฉพาะ ประเภทที่ user เลือก
+  const showProduct = combinedProduct.filter((item) => item.category === category);
   const searchedShowProduct = showProduct.filter((item) => {
     return (
       item.title.toLowerCase().includes(textSearch.toLowerCase()) ||
@@ -188,7 +189,7 @@ function PostCard({ items }) {
     return filteredProducts;
   };
   const { selectedOptionState: selectedOpts } = filters.find(
-    (filter) => filter.name === category.toLowerCase()
+    (filterCategory) => filterCategory.name === category.toLowerCase()
   );
 
   const showProductWithFilter = filterProducts(searchedShowProduct, selectedOpts, expression);

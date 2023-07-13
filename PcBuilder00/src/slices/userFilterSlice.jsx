@@ -36,10 +36,10 @@ const initialState = {
       name: "ram",
       filters: [
         { name: "brand", displayName: "Brand", choices: [] },
-        { name: "typeRAM", displayName: "Type", choices: [] },
-        { name: "count", displayName: "Count", choices: [] },
+        { name: "typeRam", displayName: "Type", choices: [] },
+        { name: "countItem", displayName: "Count", choices: [] },
       ],
-      selectedOptionState: { brand: "", typeRAM: "", count: 0 },
+      selectedOptionState: { brand: "", typeRam: "", countItem: 0 },
     },
     { name: "vga", filters: [], selectedOptionState: {} },
     { name: "ssd", filters: [], selectedOptionState: {} },
@@ -69,7 +69,7 @@ export const filterSlice = createSlice({
     },
 
     getCategorizedData: (state, action) => {
-      //ใช้รับ showData จาก selectionProto
+      //ใช้รับ showData จาก selectionProto showData เป็น data ที่ได้ผ่านจากการเลือก category มาแล้ว
       const { showProduct: categorizedData, category } = action.payload;
 
       state.filterOptions = null;
@@ -108,8 +108,8 @@ export const filterSlice = createSlice({
         state.filtersSet[1].filters[4].choices = mbSlotOpts;
       } else if (category === "RAM") {
         const ramBrandOpts = [...new Set(categorizedData.map((item) => item.brand))];
-        const ramTypeOpts = [...new Set(categorizedData.map((item) => item.typeRAM))];
-        const ramCountOpts = [...new Set(categorizedData.map((item) => item.count))];
+        const ramTypeOpts = [...new Set(categorizedData.map((item) => item.typeRam))];
+        const ramCountOpts = [...new Set(categorizedData.map((item) => item.countItem))];
         const optsPerFilter = [ramBrandOpts, ramTypeOpts, ramCountOpts];
         state.filtersSet[2].filters.map(
           (filter, index) => (filter.choices = [...optsPerFilter[index]])
@@ -123,7 +123,6 @@ export const filterSlice = createSlice({
       });
     },
 
-    ////
     setSelectedValuesCopy: (state, action) => {
       console.log("destrucไม่ได้", action.payload);
 
@@ -147,7 +146,7 @@ export const filterSlice = createSlice({
         // Object.keys(objParam)ดึงค่า เฉพาะ key จาก objParam มาแล้วเรียงเปน arrayใหม่
         let expression = Object.keys(filterTarget.selectedOptionState)
           .map((filter) => {
-            return `(!selectedOpts.${filter} || product.${filter} === selectedOpts.${filter})`;
+            return `(!selectedOpts.${filter} || product.${filter} == selectedOpts.${filter})`;
           })
           .join(" && ");
         // Update the expression state
