@@ -18,16 +18,132 @@ import { Divider, Alert } from "@mui/material";
 import { addProduct, setMax, updateSumAmount, updateSumPrices } from "../slices/cutomizeSliceNoApi";
 import "./Selection.css";
 import UserFilter from "./UserFilter";
-import { useGetPostsQuery, useGetDbItemQuery } from "../features/api/dataApiSlice";
+import {
+  useGetPostsQuery,
+  useGetDbItemQuery,
+  useGetDbItem2Query,
+} from "../features/api/dataApiSlice";
 import { getCategorizedData } from "../slices/userFilterSlice";
 import Bottom from "./BottomComponent";
 import { setDefault, setPageNum } from "../slices/paginationSlice";
 
+const CustomPagination = ({ currentPage, totalPages, onChange, isLoading }) => {
+  const [pageGroup, setPageGroup] = useState(1);
+  const pagesPerGroup = 5; // จำนวนหน้าต่อกลุ่ม
+
+  const handlePageChange = (event, page) => {
+    onChange(event, page);
+    const newPageGroup = Math.ceil(page / pagesPerGroup);
+    setPageGroup(newPageGroup);
+  };
+
+  const startPage = (pageGroup - 1) * pagesPerGroup + 1;
+  const endPage = Math.min(startPage + pagesPerGroup - 1, totalPages);
+
+  const renderPagination = () => {
+    if (isLoading) {
+      // แสดงหมายเลขหน้าเป็นลำดับต่อไป
+      return (
+        <Pagination
+          count={totalPages}
+          page={currentPage}
+          onChange={onChange}
+          siblingCount={0}
+          boundaryCount={1}
+          showFirstButton
+          showLastButton
+          renderItem={(item) => <Pagination {...item} component="div" />}
+        />
+      );
+    } else {
+      // แสดงหมายเลขหน้าตามปกติ
+      return (
+        <Pagination
+          count={totalPages}
+          page={currentPage}
+          onChange={onChange}
+          showFirstButton
+          showLastButton
+        />
+      );
+    }
+  };
+
+  return (
+    <Stack spacing={2}>
+      {renderPagination()}
+
+      {totalPages > pagesPerGroup && (
+        <Pagination
+          count={Math.ceil(totalPages / pagesPerGroup)}
+          page={pageGroup}
+          onChange={(_, page) => setPageGroup(page)}
+          showFirstButton
+          showLastButton
+          renderItem={(item) => <Pagination {...item} component="div" />}
+        />
+      )}
+
+      <div>
+        Showing pages {startPage}-{endPage} of {totalPages}
+      </div>
+    </Stack>
+  );
+};
+
+const BigPaginationTest = () => {
+  const [page, setPage] = useState(1);
+  const [displayData, setDisplayData] = useState([]);
+  const [totalPages, setTotalPages] = useState(0);
+
+  const { data, isLoading, isError } = useGetDbItem2Query(page);
+
+  useEffect(() => {
+    if (data) {
+      console.log("testlimitedBig", data.recordset, "totalitem: ", data.totalItems);
+      setDisplayData(data.recordset);
+      setTotalPages(Math.ceil(data.totalItems / 6));
+    }
+  }, [data]);
+
+  const handlePageChange = (event, page) => {
+    setPage(page);
+  };
+
+  if (isLoading) {
+    return <div>กำลังโหลด.....</div>;
+  }
+
+  if (isError) {
+    return <div>เอ๋อเหรอ</div>;
+  }
+
+  return (
+    <div>
+      {displayData ? (
+        displayData.map((item, index) => {
+          return <div key={index}>{item.PRODUCT_CODE}</div>;
+        })
+      ) : (
+        <>ว่างป่าว</>
+      )}
+      <div>จำนวนหน้าทั้งหมด: {totalPages}</div>
+      <Pagination count={totalPages} page={page} onChange={handlePageChange} />
+      <CustomPagination
+        currentPage={page}
+        totalPages={totalPages}
+        isLoading={isLoading}
+        onChange={handlePageChange}
+      />
+    </div>
+  );
+};
+
 function PostCard({ items }) {
-  ////useState!!!!!!!!!!!!!!!!!!!
+  //* useState!!!!!!!!!!!!!!!!!!!
   const [curItem, setCurItem] = useState(items.recordset);
 
-  ////dispatchZone!!!!!!!!!
+  //* dispatchZone!!!!!!!!!
   const dispatch = useDispatch();
 
   // *นี่คือ dispatch ข้างในบรรจุ action
@@ -346,6 +462,9 @@ function PostCard({ items }) {
       </Stack>
 
       <Bottom />
+      <Box>
+        <BigPaginationTest />
+      </Box>
     </>
   );
 }

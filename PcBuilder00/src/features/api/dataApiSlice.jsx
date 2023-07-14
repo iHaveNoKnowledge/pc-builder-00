@@ -28,10 +28,17 @@ export const apiSliceDb = createApi({
       query: () => "/testProducts",
       providesTags: ["DbItems"], //Add Tag ให้กับข้อมูล]ที่ fetch มา
     }),
+
+    getDbItem2: builder.query({
+      query: (page) => `/testProducts2?page=${page}&limit=6`,
+      providesTags: ["DbItems2"], //Add Tag ให้กับข้อมูล]ที่ fetch มา
+    }),
+
     getSets: builder.query({
       query: () => "/sets",
       providesTags: ["Sets"], //Add Tag ให้กับข้อมูล]ที่ fetch มา
     }),
+    
     deleteResource: builder.mutation({
       query: (resourceID) => ({
         url: `/pop/${resourceID}`,
@@ -70,7 +77,12 @@ export const updateApi = createApi({
 
 //** ดึงข้อมูล
 export const { useGetPostsQuery } = apiSlice;
-export const { useGetDbItemQuery, useGetSetsQuery, useDeleteResourceMutation } = apiSliceDb;
+export const {
+  useGetDbItemQuery,
+  useGetDbItem2Query,
+  useGetSetsQuery,
+  useDeleteResourceMutation,
+} = apiSliceDb;
 
 //** DB DATA Create
 export const { useUpdateDataMutation } = updateApi;
