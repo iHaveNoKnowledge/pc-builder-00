@@ -5,12 +5,22 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const apiSlice = createApi({
   reducerPath: "apiSlice",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:3000/",
+    baseUrl: "http://localhost:3000",
   }),
   tagTypes: ["Post"],
   endpoints: (builder) => ({
     getPosts: builder.query({
-      query: () => "/items2",
+      // query: () => "/items2",
+      query: (args) => {
+        const { startPage, pageEnd, perPage, category } = args;
+        return `/items2?category=${category}&_start=${startPage}`;
+      },
+      onSuccess: (data) => {
+        console.log("fetch เรียบร้อย", data);
+      },
+      onError: (err) => {
+        console.error(err);
+      },
     }),
   }),
 });
@@ -38,7 +48,7 @@ export const apiSliceDb = createApi({
       query: () => "/sets",
       providesTags: ["Sets"], //Add Tag ให้กับข้อมูล]ที่ fetch มา
     }),
-    
+
     deleteResource: builder.mutation({
       query: (resourceID) => ({
         url: `/pop/${resourceID}`,
@@ -76,7 +86,7 @@ export const updateApi = createApi({
 // });
 
 //** ดึงข้อมูล
-export const { useGetPostsQuery } = apiSlice;
+export const { useGetPostsQuery, useLazyGetPostsQuery } = apiSlice;
 export const {
   useGetDbItemQuery,
   useGetDbItem2Query,

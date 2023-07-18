@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  category: "CPU"
+  category: "CPU",
 };
 
 export const categorySlice = createSlice({
@@ -10,8 +10,8 @@ export const categorySlice = createSlice({
   reducers: {
     changeCategory: (state, action) => {
       state.category = action.payload;
-    }
-  }
+    },
+  },
 });
 
 export const { changeCategory } = categorySlice.actions;
