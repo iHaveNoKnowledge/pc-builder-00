@@ -1,14 +1,14 @@
 {
   "posts": [
     {
-      "id": 1,
+      "_id": 1,
       "title": "json-server",
       "author": "typicode"
     }
   ],
   "comments": [
     {
-      "id": 1,
+      "_id": 1,
       "body": "some comment",
       "postId": 1
     }
@@ -21,7 +21,7 @@
   },
   "items2": [
     {
-      "id": "9",
+      "_id": "9",
       "code": "CU2-000009",
       "productDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque non eros dapibus, maximus tellus sollicitudin, iaculis ligula. Nullam ullamcorper metus sit amet orci consectetur interdum. Aliquam nec erat congue, facilisis.",
       "title": "CPU01_AMD",
@@ -33,10 +33,10 @@
       "series": "AMD Ryzen 3000 Series",
       "model": "Ryzen 5",
       "brand": "AMD",
-      "qty": "1"
+      "qty": 1
     },
     {
-      "id": "11",
+      "_id": "11",
       "code": "CU2-000011",
       "productDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "title": "CPU02_AMD",
@@ -48,10 +48,10 @@
       "series": "AMD Ryzen 5000 Series",
       "model": "Ryzen 7",
       "brand": "AMD",
-      "qty": "1"
+      "qty": 1
     },
     {
-      "id": "12",
+      "_id": "12",
       "code": "CU2-000012",
       "productDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque non eros dapibus, maximus tellus sollicitudin, iaculis ligula.",
       "title": "CPU01_intel",
@@ -63,10 +63,10 @@
       "series": "Intel Core 12th Gen Processors",
       "model": "Core i5",
       "brand": "INTEL",
-      "qty": "1"
+      "qty": 1
     },
     {
-      "id": "13",
+      "_id": "13",
       "code": "CU2-000013",
       "productDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque non eros dapibus, maximus tellus sollicitudin, iaculis ligula.",
       "title": "CPU02_intel",
@@ -78,10 +78,10 @@
       "series": "Intel Core 13th Gen Processors",
       "model": "Core i9",
       "brand": "INTEL",
-      "qty": "1"
+      "qty": 1
     },
     {
-      "id": "14",
+      "_id": "14",
       "code": "CR4-000014",
       "productDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque non eros dapibus, maximus tellus sollicitudin, iaculis ligula.",
       "title": "Mainboard01_AMD",
@@ -99,10 +99,10 @@
       "pcieGen": "1 x PCIe 3.0 x16 Slot , 2 x PCIe 2.0 x1 Slots",
       "maxBus": "DDR4 Support up to 3200(OC) MHz",
       "brand": "brandex1",
-      "qty": "1"
+      "qty": 1
     },
     {
-      "id": "15",
+      "_id": "15",
       "code": "CR4-000015",
       "productDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque non eros dapibus, maximus tellus sollicitudin, iaculis ligula.",
       "title": "Mainboard02_AMD",
@@ -120,10 +120,10 @@
       "pcieGen": "1x PCIe 4.0 x16 slot",
       "maxBus": "DDR5 Support up to 6400(OC) MHz",
       "brand": "brandex2",
-      "qty": "1"
+      "qty": 1
     },
     {
-      "id": "16",
+      "_id": "16",
       "code": "CR4-000016",
       "productDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque non eros dapibus, maximus tellus sollicitudin, iaculis ligula.",
       "title": "Mainboard01_intel",
@@ -141,10 +141,10 @@
       "pcieGen": "1x PCIe 4.0 x16 slot, 2x PCIe 3.0 x1 slot",
       "maxBus": "DDR4 support up to 5066(OC) MHz",
       "brand": "brandex1",
-      "qty": "1"
+      "qty": 1
     },
     {
-      "id": "17",
+      "_id": "17",
       "code": "CR4-000017",
       "productDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque non eros dapibus, maximus tellus sollicitudin, iaculis ligula.",
       "title": "Mainboard02_intel",
@@ -162,10 +162,10 @@
       "pcieGen": "1 x PCIe 5.0 x16",
       "maxBus": "4400 , 4800 , 5200 (OC) , 5600 (OC) , 6000 (OC)",
       "brand": "brandex2",
-      "qty": "1"
+      "qty": 1
     },
     {
-      "id": "18",
+      "_id": "18",
       "code": "CR4-000018",
       "productDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque non eros dapibus, maximus tellus sollicitudin, iaculis ligula.",
       "title": "Mainboard01_AMD 4slot",
@@ -183,10 +183,10 @@
       "pcieGen": "1x PCIe 4.0 x16, 1x PCIe 3.0 x16, 2x PCIe 3.0 x1, 1x M.2 Key E for WiFi",
       "maxBus": "supports DDR4 4733+(OC)-3466(OC)/3200/2933/2667/2400/2133 MHz",
       "brand": "brandex1",
-      "qty": "1"
+      "qty": 1
     },
     {
-      "id": "19",
+      "_id": "19",
       "code": "CR4-000019",
       "productDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sodales erat mauris, sit amet posuere erat ultrices in. In aliquet ultrices fermentum. Phasellus quis massa.",
       "title": "Mainboard02_AMD 4slot",
@@ -204,10 +204,10 @@
       "pcieGen": "1x PCIe 5.0 x16 slot, 2x PCIe 4.0 x16 slot, 1x PCIe 4.0 x1 slot",
       "maxBus": "DDR5 support up to 6600(OC) MHz, support XMP and EXPO",
       "brand": "brandex2",
-      "qty": "1"
+      "qty": 1
     },
     {
-      "id": "20",
+      "_id": "20",
       "code": "CR4-000020",
       "productDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque sagittis scelerisque commodo. Duis lobortis elementum est, at vehicula nulla ultricies vitae. Integer id augue et metus dapibus gravida a non turpis. Duis vitae.",
       "title": "Mainboard01_intel 4slot",
@@ -225,10 +225,10 @@
       "pcieGen": "1x PCIe 5.0 slot, 1x PCIe 4.0 x16 slot, 2x PCIe 3.0 x16 slot, 1x PCIe 3.0 x1 slot",
       "maxBus": "DDR4 support up to 5333(OC) MHz",
       "brand": "brandex1",
-      "qty": "1"
+      "qty": 1
     },
     {
-      "id": "21",
+      "_id": "21",
       "code": "CR4-000021",
       "productDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque sagittis scelerisque commodo. Duis lobortis elementum est, at vehicula nulla ultricies vitae.",
       "title": "Mainboard02_intel 4slot",
@@ -246,10 +246,10 @@
       "pcieGen": "1x PCIe 5.0 x16 slot, 1x PCIe 4.0 x16 slot (speed x4), 1x PCIe 3.0 x1 slot",
       "maxBus": "DDR4 Support up to 5333(OC) MHz",
       "brand": "brandex2",
-      "qty": "1"
+      "qty": 1
     },
     {
-      "id": "22",
+      "_id": "22",
       "code": "ME1-000022",
       "productDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "title": "RAM01_single",
@@ -267,10 +267,10 @@
       "latency": "16-18-18-38",
       "color": "Black",
       "brand": "Zadak",
-      "qty": "1"
+      "qty": 1
     },
     {
-      "id": "23",
+      "_id": "23",
       "code": "ME1-000023",
       "productDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "title": "RAM02_single",
@@ -288,10 +288,10 @@
       "latency": "38-38-38-84",
       "color": "White",
       "brand": "Zadak",
-      "qty": "1"
+      "qty": 1
     },
     {
-      "id": "24",
+      "_id": "24",
       "code": "ME1-000024",
       "productDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "title": "RAM01_duo",
@@ -309,10 +309,10 @@
       "latency": "16-18-18-38",
       "color": "Black",
       "brand": "Zadak",
-      "qty": "1"
+      "qty": 1
     },
     {
-      "id": "25",
+      "_id": "25",
       "code": "ME1-000025",
       "productDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "title": "RAM02_duo",
@@ -330,10 +330,10 @@
       "latency": "36-36-36-76",
       "color": "Black",
       "brand": "Corsair",
-      "qty": "1"
+      "qty": 1
     },
     {
-      "id": "26",
+      "_id": "26",
       "code": "CU2-000026",
       "productDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "title": "CPU03_AMD",
@@ -345,10 +345,10 @@
       "series": "AMD Ryzen 7000 Series",
       "model": "Ryzen 9",
       "brand": "AMD",
-      "qty": "1"
+      "qty": 1
     },
     {
-      "id": "27",
+      "_id": "27",
       "code": "CU2-000027",
       "productDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "title": "CPU04_AMD",
@@ -360,10 +360,10 @@
       "series": "AMD Ryzen 7000 Series",
       "model": "Ryzen 9",
       "brand": "AMD",
-      "qty": "1"
+      "qty": 1
     },
     {
-      "id": "28",
+      "_id": "28",
       "code": "CU2-000028",
       "productDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "title": "CPU05_AMD",
@@ -375,10 +375,10 @@
       "series": "AMD Ryzen 7000 Series",
       "model": "Ryzen 5",
       "brand": "AMD",
-      "qty": "1"
+      "qty": 1
     },
     {
-      "id": "29",
+      "_id": "29",
       "code": "CU2-000029",
       "productDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "title": "CPU06_AMD",
@@ -390,10 +390,10 @@
       "series": "AMD Ryzen 5000 Series",
       "model": "Ryzen 7",
       "brand": "AMD",
-      "qty": "1"
+      "qty": 1
     },
     {
-      "id": "30",
+      "_id": "30",
       "code": "ME1-000030",
       "productDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "title": "RAM03_single",
@@ -411,10 +411,10 @@
       "latency": "16-18-18-38",
       "color": "Black",
       "brand": "RAM Brand 1",
-      "qty": "1"
+      "qty": 1
     },
     {
-      "id": "31",
+      "_id": "31",
       "code": "ME1-000031",
       "productDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "title": "RAM04_duo",
@@ -432,10 +432,10 @@
       "latency": "18-22-22-42",
       "color": "White",
       "brand": "RAM Brand 2",
-      "qty": "1"
+      "qty": 1
     },
     {
-      "id": "32",
+      "_id": "32",
       "code": "CU2-000032",
       "productDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "title": "CPU07_AMD",
@@ -447,10 +447,10 @@
       "series": "AMD Ryzen 5000 Series",
       "model": "Ryzen 9",
       "brand": "AMD",
-      "qty": "1"
+      "qty": 1
     },
     {
-      "id": "33",
+      "_id": "33",
       "code": "CU2-000033",
       "productDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "title": "CPU08_AMD",
@@ -462,10 +462,10 @@
       "series": "AMD Ryzen 5000 Series",
       "model": "Ryzen 9",
       "brand": "AMD",
-      "qty": "1"
+      "qty": 1
     },
     {
-      "id": "34",
+      "_id": "34",
       "code": "CR4-000034",
       "productDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "title": "Mainboard03_AMD",
@@ -483,10 +483,10 @@
       "pcieGen": "1x PCIe 4.0 x16, 2x PCIe 3.0 x16, 3x PCIe 3.0 x1",
       "maxBus": "DDR4 support up to 4400(OC) MHz",
       "brand": "Mainboard Brand 1",
-      "qty": "1"
+      "qty": 1
     },
     {
-      "id": "35",
+      "_id": "35",
       "code": "CR4-000035",
       "productDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "title": "Mainboard04_AMD",
@@ -504,10 +504,10 @@
       "pcieGen": "1x PCIe 4.0 x16, 2x PCIe 3.0 x16, 2x PCIe 3.0 x1",
       "maxBus": "DDR4 support up to 4800(OC) MHz",
       "brand": "Mainboard Brand 2",
-      "qty": "1"
+      "qty": 1
     },
     {
-      "id": "36",
+      "_id": "36",
       "code": "ME1-000036",
       "productDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "title": "RAM05_single",
@@ -525,10 +525,10 @@
       "latency": "18-20-20-38",
       "color": "Black",
       "brand": "RAM Brand 3",
-      "qty": "1"
+      "qty": 1
     },
     {
-      "id": "37",
+      "_id": "37",
       "code": "ME1-000037",
       "productDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "title": "RAM06_duo",
@@ -546,10 +546,10 @@
       "latency": "24-26-26-46",
       "color": "White",
       "brand": "RAM Brand 4",
-      "qty": "1"
+      "qty": 1
     },
     {
-      "id": "38",
+      "_id": "38",
       "code": "CU2-000038",
       "productDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "title": "CPU09_AMD",
@@ -561,10 +561,10 @@
       "series": "AMD Ryzen 5000 Series",
       "model": "Ryzen 7",
       "brand": "AMD",
-      "qty": "1"
+      "qty": 1
     },
     {
-      "id": "39",
+      "_id": "39",
       "code": "CU2-000039",
       "productDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "title": "CPU10_AMD",
@@ -576,10 +576,10 @@
       "series": "AMD Ryzen 7000 Series",
       "model": "Ryzen 9",
       "brand": "AMD",
-      "qty": "1"
+      "qty": 1
     },
     {
-      "id": "40",
+      "_id": "40",
       "code": "CR4-000040",
       "productDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "title": "Mainboard05_AMD",
@@ -597,10 +597,10 @@
       "pcieGen": "1x PCIe 4.0 x16, 2x PCIe 3.0 x16, 3x PCIe 3.0 x1",
       "maxBus": "DDR4 support up to 4600(OC) MHz",
       "brand": "Mainboard Brand 3",
-      "qty": "1"
+      "qty": 1
     },
     {
-      "id": "41",
+      "_id": "41",
       "code": "CR4-000041",
       "productDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "title": "Mainboard06_AMD",
@@ -618,7 +618,7 @@
       "pcieGen": "1x PCIe 4.0 x16, 2x PCIe 3.0 x16, 2x PCIe 3.0 x1",
       "maxBus": "DDR4 support up to 4800(OC) MHz",
       "brand": "Mainboard Brand 4",
-      "qty": "1"
+      "qty": 1
     }
   ]
 }

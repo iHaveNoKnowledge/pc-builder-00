@@ -1,1 +1,27 @@
-รี Server ใน IISไม่ได้ผล ให้ รีใน App.js แทน ด้วยการแก้ไขcode แล้ว เซฟ มันจะทำให้ App.js มันรีให้ code ที่เกี่ยวข้องทำงาน
+•รี Server ใน IISไม่ได้ผล ให้ รีใน App.js แทน ด้วยการแก้ไขcode แล้ว เซฟ มันจะทำให้ App.js มันรีให้ code ที่เกี่ยวข้องทำงาน
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+•pagination
+รอรับ req เป็นเลขหน้าอย่างเดียว
+การหาข้อมูลมาแสดงผลว่าหน้าละเท่าไหร่ ควรทำผ่าน server แล้วส่ง res ออกมา
+ขั้นตอนคือ
+ควรทำเป็น async เพราะการสอบถามข้อมูลจาก DB อาจจะใช้เวลานานเนื่องจาก ข้อมูลที่ได้รับอาจเล็กหรือใหญ่ ขึ้นอยู่กับว่าเราหาอะไร
+1 รับ req.query.page
+2 สร้างเงื่อนไขของการแสดงผลใน server 
+3 ใช้เงื่อนไขการแสดงผลมาใช้ในการ query
+4 response ผลลัพธ์ กลับออกไป 
+
+const getPaginatedBlogs = async (req, res) =>{
+    const {page} = req.query;
+
+    try {
+        const LIMIT = 6;
+        const startIndex = (Number(page)-1)*LIMIT;
+        const total = await model.countDocuments({})
+        const blogs = await model.find().sort({_id:-1}).limit(LIMIT).skip(startIndex)
+        res.status(200).json({data:blogs, currentPage: Number(page), numberOfPages: math.ceil(total/LIMIT)})
+    } catch (err) {
+        res.status(401).json({message:err?.message})
+    }
+}
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
