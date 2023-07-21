@@ -6,6 +6,7 @@ import { apiSlice, apiSliceDb, updateApi } from "./features/api/dataApiSlice";
 import userFilterReducer from "./slices/userFilterSlice";
 import reportReducer from "./slices/reportSlice";
 import paginationReducer from "./slices/paginationSlice";
+import productsReducer from "./slices/productsSlice";
 
 export const store = configureStore({
   reducer: {
@@ -17,6 +18,7 @@ export const store = configureStore({
     userFilter: userFilterReducer,
     report: reportReducer,
     pagination: paginationReducer,
+    products: productsReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(apiSlice.middleware, apiSliceDb.middleware, updateApi.middleware),

@@ -27,6 +27,8 @@ import {
 import { getCategorizedData } from "../slices/userFilterSlice";
 import Bottom from "./BottomComponent";
 import { setDefault, setPageNum } from "../slices/paginationSlice";
+import { apiSlice } from "../features/api/dataApiSlice";
+import { getProducts } from "../slices/productsSlice";
 
 // const CustomPagination = ({ currentPage, totalPages, onChange, isLoading }) => {
 //   const [pageGroup, setPageGroup] = useState(1);
@@ -144,10 +146,15 @@ function PostCard({ items }) {
   //* useState!!!!!!!!!!!!!!!!!!!
   // const [curItem, setCurItem] = useState(items.recordset);
   const [curItem, setCurItem] = useState(items);
-
   //* dispatchZone!!!!!!!!!
   const dispatch = useDispatch();
 
+  //* useSelector!!!!!!!!!!!!!!!!!!!!!
+  const products = useSelector((state) => state.products.products);
+
+  useEffect(() => {
+    setCurItem(products);
+  }, [products]);
   // *นี่คือ dispatch ข้างในบรรจุ action
   const handleChange = (
     id,
@@ -284,7 +291,7 @@ function PostCard({ items }) {
   });
 
   //* arrayของสินค้าที่ไม่ต้องมีเงื่อนไข ไม่มีการกรอง
-  const unconditionProduct = curItem.filter(
+  const unconditionProduct = products.filter(
     (item) => item.category !== "CPU" && item.category !== "Mainboard" && item.category !== "RAM"
   );
 
@@ -481,8 +488,10 @@ function PostCard({ items }) {
 
 //****************************  ส่วนนี้เป็นส่วน dynamic display based on api state/////////////////////////////////
 function SelectionProto01() {
+  const dispatch = useDispatch();
   const category = useSelector((state) => state.category.category);
   const currentPage = useSelector((state) => state.pagination.currentPage);
+  const products = useSelector((state) => state.products.products);
   const startPage = currentPage - 1;
   const pageEnd = currentPage * 6;
   console.log("category:", startPage, pageEnd, 6, category);
@@ -494,26 +503,25 @@ function SelectionProto01() {
     isError,
     error,
     refetch,
-  } = useLazyGetPostsQuery(
+  } = useGetPostsQuery(
     { startPage, pageEnd, perPage: 10, category },
     {
       refetchOnMountOrArgChange: true,
+      skip: !category,
     }
   );
 
+  // const { data: posts, loading: isLoading, error: isError } = useSelector(
+  //   (state) => state.products
+  // );
+
   // useEffect(() => {
-  //   const socket = subscribeDbItem((newData) => {
-  //     console.log("newData:คือไร", newData);
-  //   });
-  //   return () => {
-  //     socket.close();
-  //   };
-  // }, []);
-  // const posts = data.recordsets.flatmap((recordset) => recordset.map((data) => data));
+  //   dispatch(apiSlice.endpoints.getPosts({ startPage, pageEnd, peraPage: 10, category }));
+  //   // useGetPostsQuery({ startPage, pageEnd, peraPage: 10, category });
+  // }, [dispatch]);
 
   // const posts = data.recordsets.flat();
   let postContent;
-  console.log("data เป็นไง", posts, "postsได้ยัง: ");
 
   //** กรณีกำลังโหลด
   if (isLoading) {
@@ -527,8 +535,10 @@ function SelectionProto01() {
     );
     //** กรณีโหลดสำเร็จ
   } else if (isSuccess) {
+    console.log("data เป็นไง", posts, "postsได้ยัง: ", products);
+    // dispatch(getProducts(posts));
     ///เอา [posts] ซึ่งเป็น array data ที่ได้จากการ fetchจาก endpoints ที่เราเลือก มาใน dataApiSLice เอามาทำการ map() แล้วส่งไป เป็น prop ให้ตัวหลักข้างบนที่เราจะแสดงผล
-    postContent = <PostCard items={posts} />;
+    postContent = <PostCard items={products} />;
     // postContent = <>สำเร็จ</>;
 
     //** กรณีError

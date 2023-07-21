@@ -3,12 +3,7 @@ import "./App.css";
 import CustomizationProto01 from "./components/CustomizationProto01";
 import CustomizationProto02 from "./components/CustomizationProto02";
 import SelectionProto01 from "./components/SelectionProto01";
-import ReportA4 from "./components/Documents/ReportA4";
-import TestReportA4 from "./components/Documents/testReportA4";
 import { Box, Container, Grid } from "@mui/material";
-import { Route, Routes, BrowserRouter, NavLink, useNavigate } from "react-router-dom";
-import { PDFViewer } from "@react-pdf/renderer";
-import SaveBuildBtn from "./components/saveBuildForm";
 import axios from "axios";
 
 function App() {
