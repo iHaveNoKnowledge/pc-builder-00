@@ -13,7 +13,31 @@ export const apiSlice = createApi({
       // query: () => "/items2",
       query: (args) => {
         const { startPage, pageEnd, perPage, category } = args;
-        return `/items2?category=${category}&_start=${startPage}`;
+        return `/items2?category=${category}&_start=${startPage}&_end=${pageEnd}`;
+      },
+      onSuccess: (data) => {
+        console.log("fetch เรียบร้อย", data);
+      },
+      onError: (err) => {
+        console.error(err);
+      },
+    }),
+  }),
+});
+
+//* Fetch จาก JSONplaceHolder
+export const apiSliceJSONPlaceHolder = createApi({
+  reducerPath: "apiSliceJSONPlaceHolder",
+  baseQuery: fetchBaseQuery({
+    baseUrl: "https://jsonplaceholder.typicode.com",
+  }),
+  tagTypes: ["placeholder"],
+  endpoints: (builder) => ({
+    getPhotos: builder.query({
+      // query: () => "/items2",
+      query: (args) => {
+        const { startPage, pageEnd, perPage, category } = args;
+        return `/photos?_start=${startPage}&_limit=54`;
       },
       onSuccess: (data) => {
         console.log("fetch เรียบร้อย", data);
@@ -93,6 +117,8 @@ export const {
   useGetSetsQuery,
   useDeleteResourceMutation,
 } = apiSliceDb;
+
+export const { useGetPhotosQuery } = apiSliceJSONPlaceHolder;
 
 //** DB DATA Create
 export const { useUpdateDataMutation } = updateApi;

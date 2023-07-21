@@ -23,12 +23,12 @@ import {
   useLazyGetPostsQuery,
   useGetDbItemQuery,
   useGetDbItem2Query,
+  useGetPhotosQuery,
 } from "../features/api/dataApiSlice";
 import { getCategorizedData } from "../slices/userFilterSlice";
 import Bottom from "./BottomComponent";
 import { setDefault, setPageNum } from "../slices/paginationSlice";
 import { apiSlice } from "../features/api/dataApiSlice";
-import { getProducts } from "../slices/productsSlice";
 
 // const CustomPagination = ({ currentPage, totalPages, onChange, isLoading }) => {
 //   const [pageGroup, setPageGroup] = useState(1);
@@ -146,6 +146,7 @@ function PostCard({ items }) {
   //* useState!!!!!!!!!!!!!!!!!!!
   // const [curItem, setCurItem] = useState(items.recordset);
   const [curItem, setCurItem] = useState(items);
+  console.log("curItemใช้ได้ยัง :", curItem);
   //* dispatchZone!!!!!!!!!
   const dispatch = useDispatch();
 
@@ -291,7 +292,7 @@ function PostCard({ items }) {
   });
 
   //* arrayของสินค้าที่ไม่ต้องมีเงื่อนไข ไม่มีการกรอง
-  const unconditionProduct = products.filter(
+  const unconditionProduct = curItem.filter(
     (item) => item.category !== "CPU" && item.category !== "Mainboard" && item.category !== "RAM"
   );
 
@@ -324,8 +325,17 @@ function PostCard({ items }) {
   const [curPageNum, setCurPageNum] = useState(1);
   const cardsPerPage = 6;
   const totalPages = Math.ceil(showProductWithFilter.length / cardsPerPage);
+  console.log(
+    "จำนวนหน้าcurItem:",
+    curItem.length,
+    "จำนวนหน้า: ",
+    showProductWithFilter.length,
+    "ตอนนี้อยู่",
+    curPageNum2,
+    "totalPages:",
+    totalPages
+  );
   const handleChangePage = (pageNum) => {
-    setCurPageNum(pageNum);
     dispatch(setPageNum(pageNum));
   };
 
@@ -493,7 +503,7 @@ function SelectionProto01() {
   const currentPage = useSelector((state) => state.pagination.currentPage);
   const products = useSelector((state) => state.products.products);
   const startPage = currentPage - 1;
-  const pageEnd = currentPage * 6;
+  const pageEnd = currentPage * 54;
   console.log("category:", startPage, pageEnd, 6, category);
   ///* เอา ค่า boolean status api มา ในหลายๆกรณี
   const {
