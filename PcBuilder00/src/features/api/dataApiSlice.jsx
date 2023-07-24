@@ -13,7 +13,7 @@ export const apiSlice = createApi({
       // query: () => "/items2",
       query: (args) => {
         const { startPage, pageEnd, perPage, category } = args;
-        return `/items2?category=${category}&_start=${startPage}&_end=${pageEnd}`;
+        return `/items2?category=${category}&_limit=${pageEnd}`;
       },
       onSuccess: (data) => {
         console.log("fetch เรียบร้อย", data);

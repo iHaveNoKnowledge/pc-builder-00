@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { apiSlice, apiSliceJSONPlaceHolder } from "../features/api/dataApiSlice";
+import { apiSlice, apiSliceJSONPlaceHolder, apiSliceDb } from "../features/api/dataApiSlice";
 
 const initialState = {
   products: [],
@@ -13,16 +13,16 @@ const productsSlice = createSlice({
   //* ของแท้
   extraReducers: (builder) => {
     builder
-      .addMatcher(apiSlice.endpoints.getPosts.matchPending, (state) => {
+      .addMatcher(apiSliceDb.endpoints.getDbItem.matchPending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addMatcher(apiSlice.endpoints.getPosts.matchFulfilled, (state, action) => {
+      .addMatcher(apiSliceDb.endpoints.getDbItem.matchFulfilled, (state, action) => {
         state.loading = false;
-        state.products = action.payload;
+        state.products = action.payload.recordsets.flat();
         state.error = null;
       })
-      .addMatcher(apiSlice.endpoints.getPosts.matchRejected, (state, action) => {
+      .addMatcher(apiSliceDb.endpoints.getDbItem.matchRejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
       });

@@ -299,12 +299,13 @@ function PostCard({ items }) {
   //* นำ display ทั้งหมดที่มีการกรองและไม่มีการกรอง มารวมกัน
   const combinedProduct = unconditionProduct.concat(CPU_display, mainBoard_display, RAM_display);
   console.log("RAM_display:", RAM_display);
+  console.log("combinedProduct:", combinedProduct);
 
   //* นำ displayed ทั้งหมดมา filter เฉพาะ ประเภทที่ user เลือก
   const showProduct = combinedProduct.filter((item) => item.category === category);
   const searchedShowProduct = showProduct.filter((item) => {
     return (
-      item.title.toLowerCase().includes(textSearch.toLowerCase()) ||
+      item.code.toLowerCase().includes(textSearch.toLowerCase()) ||
       (item.socket && item.socket.toLowerCase().includes(textSearch.toLowerCase()))
     );
   });
@@ -437,21 +438,27 @@ function PostCard({ items }) {
                         primary={
                           <>
                             <Typography sx={{ fontSize: "1.2rem", fontWeight: "bolder" }}>
-                              {"฿ " + item.promotionPrice.toLocaleString() + ".-"}
+                              {item.promotionPrice
+                                ? "฿ " + item.promotionPrice.toLocaleString() + ".-"
+                                : "฿ " + item.srp + ".-"}
                             </Typography>
                           </>
                         }
                         secondary={
-                          <React.Fragment>
-                            <Typography
-                              sx={{ display: "inline", fontSize: "0.9rem" }}
-                              component="span"
-                              variant="caption"
-                              color="text.secondary"
-                            >
-                              ราคาปกติ ฿ {item.srp.toLocaleString()}.-
-                            </Typography>
-                          </React.Fragment>
+                          item.promotionPrice ? (
+                            <React.Fragment>
+                              <Typography
+                                sx={{ display: "inline", fontSize: "0.9rem" }}
+                                component="span"
+                                variant="caption"
+                                color="text.secondary"
+                              >
+                                ราคาปกติ ฿ {item.srp.toLocaleString()}.-
+                              </Typography>
+                            </React.Fragment>
+                          ) : (
+                            <></>
+                          )
                         }
                       />
                     </Box>
@@ -502,22 +509,27 @@ function SelectionProto01() {
   const category = useSelector((state) => state.category.category);
   const currentPage = useSelector((state) => state.pagination.currentPage);
   const products = useSelector((state) => state.products.products);
-  const startPage = currentPage - 1;
-  const pageEnd = currentPage * 54;
+  const startPage = (currentPage - 1) * 6;
+  const pageEnd = currentPage * 6;
   console.log("category:", startPage, pageEnd, 6, category);
   ///* เอา ค่า boolean status api มา ในหลายๆกรณี
-  const {
-    data: posts, //dataที่ได้จาก api เก็บไว้ในตัวแปร posts
-    isLoading,
-    isSuccess,
-    isError,
-    error,
-    refetch,
-  } = useGetPostsQuery(
+  // const {
+  //   data, //dataที่ได้จาก api เก็บไว้ในตัวแปร posts
+  //   isLoading,
+  //   isSuccess,
+  //   isError,
+  //   error,
+  //   refetch,
+  // } = useGetDbItemQuery(
+  //   { startPage, pageEnd, perPage: 10, category },
+  //   {
+  //     refetchOnMountOrArgChange: true,
+  //   }
+  // );
+  const { isLoading, isSuccess, isError, error } = useGetDbItemQuery(
     { startPage, pageEnd, perPage: 10, category },
     {
       refetchOnMountOrArgChange: true,
-      skip: !category,
     }
   );
 
@@ -530,7 +542,6 @@ function SelectionProto01() {
   //   // useGetPostsQuery({ startPage, pageEnd, peraPage: 10, category });
   // }, [dispatch]);
 
-  // const posts = data.recordsets.flat();
   let postContent;
 
   //** กรณีกำลังโหลด
@@ -545,7 +556,8 @@ function SelectionProto01() {
     );
     //** กรณีโหลดสำเร็จ
   } else if (isSuccess) {
-    console.log("data เป็นไง", posts, "postsได้ยัง: ", products);
+    // const posts = data.recordsets.flat();
+    console.log("data เป็นไง", products, "postsได้ยัง: ", products);
     // dispatch(getProducts(posts));
     ///เอา [posts] ซึ่งเป็น array data ที่ได้จากการ fetchจาก endpoints ที่เราเลือก มาใน dataApiSLice เอามาทำการ map() แล้วส่งไป เป็น prop ให้ตัวหลักข้างบนที่เราจะแสดงผล
     postContent = <PostCard items={products} />;
