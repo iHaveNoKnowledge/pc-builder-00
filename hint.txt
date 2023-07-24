@@ -25,3 +25,20 @@ const getPaginatedBlogs = async (req, res) =>{
 }
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+category
+CPU
+MB
+RAM
+VGA
+SSD
+HDD
+Liquid Cooling
+Air Cooling
+FAN CASE
+Thermal compound
+Sleeve Cable
+LCS
+GPU Extender
+GPU HOLDER
+Power supply
+CASE
