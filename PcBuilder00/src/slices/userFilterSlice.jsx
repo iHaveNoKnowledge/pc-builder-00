@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-
+// --------------------------------------------------------------INITIAL_STATE---------------------------------------------------------------------
+// จะมี useEffect ที่ทำงานเมื่อ category มีการเปลี่ยนแปลง แล้วจะดึงข้อมูลมา หา filter
 const initialState = {
   textSearch: "",
   selectedOption: {
@@ -15,7 +16,7 @@ const initialState = {
     {
       name: "cpu",
       filters: [
-        { name: "brand", displayName: "Brand", choices: [] },
+        { name: "compatible", displayName: "Brand", choices: [] },
         { name: "model", displayName: "Model", choices: [] },
         { name: "socket", displayName: "Socket", choices: [] },
       ],
@@ -25,7 +26,7 @@ const initialState = {
       name: "mainboard",
       filters: [
         { name: "formFactor", displayName: "FormFactor", choices: [] },
-        { name: "brand", displayName: "Brand", choices: [] },
+        { name: "compatible", displayName: "Brand", choices: [] },
         { name: "socket", displayName: "Socket", choices: [] },
         { name: "chipset", displayName: "Chipset", choices: [] },
         { name: "slot", displayName: "Slot", choices: [] },
@@ -35,7 +36,7 @@ const initialState = {
     {
       name: "ram",
       filters: [
-        { name: "brand", displayName: "Brand", choices: [] },
+        { name: "compatible", displayName: "Brand", choices: [] },
         { name: "typeRam", displayName: "Type", choices: [] },
         { name: "countItem", displayName: "Count", choices: [] },
       ],
@@ -55,6 +56,26 @@ const initialState = {
   ],
 };
 
+// --------------------------------------------------------------------FUNCTIONS-------------------------------------------------------------------
+const checkCategory = (category) => {
+  category = category.toLowerCase();
+
+  const validCategories = {
+    mb: ["mb", "mainboard", "motherboard"],
+    cpu: ["cpu"],
+    ram: ["ram"],
+  };
+
+  for (const key in validCategories) {
+    if (validCategories[key].includes(category)) {
+      return key;
+    }
+  }
+
+  return null;
+};
+
+// --------------------------------------------------------------------CREATE_SLICE-------------------------------------------------------------------
 export const filterSlice = createSlice({
   name: "userFilter",
   initialState,
@@ -64,36 +85,37 @@ export const filterSlice = createSlice({
       state.textSearch = action.payload;
     },
     createFilter: (state, action) => {
-      //ยังไม่รู้จะใช้ยังไง
+      //! ยังไม่รู้จะใช้ยังไง
       state.filter = action.payload;
     },
 
     getCategorizedData: (state, action) => {
-      //ใช้รับ showData จาก selectionProto showData เป็น data ที่ได้ผ่านจากการเลือก category มาแล้ว
+      //ใช้รับ showProduct จาก selectionProto(ภายในuseEffect), showProductเป็น รายการproducts ที่ได้ผ่านจากการเลือก category มาแล้ว ถือว่าเป็น categorizedData
       const { showProduct: categorizedData, category } = action.payload;
 
       state.filterOptions = null;
-
-      if (category === "CPU") {
-        const cpuBrandOptions = [...new Set(categorizedData.map((item) => item.brand))];
+      ///สร้าง options ให้ dropdown
+      if (checkCategory(category) === "cpu") {
+        const cpuBrandOptions = [...new Set(categorizedData.map((item) => item.compatible))];
         const cpuModelOptions = [...new Set(categorizedData.map((item) => item.model))];
         const cpuSocketOptions = [...new Set(categorizedData.map((item) => item.socket))];
-        ///สร้าง option ให้ dropdown
+
         state.filterOptions = [
           { filterName: "brand", value: cpuBrandOptions.sort() },
           { filterName: "model", value: cpuModelOptions.sort() },
           { filterName: "socket", value: cpuSocketOptions.sort() },
         ];
+        // นำ options ที่สร้างมาใส่ใน filter แต่ละรายการ
         state.filtersSet[0].filters[0].choices = cpuBrandOptions;
         state.filtersSet[0].filters[1].choices = cpuModelOptions;
         state.filtersSet[0].filters[2].choices = cpuSocketOptions;
-      } else if (category === "Mainboard") {
+      } else if (checkCategory(category) === "mb") {
         const mbFormFactorOpts = [...new Set(categorizedData.map((item) => item.formFactor))];
         const mbBrandOpts = [...new Set(categorizedData.map((item) => item.brand))];
         const mbSocketOpts = [...new Set(categorizedData.map((item) => item.socket))];
         const mbChipsetOpts = [...new Set(categorizedData.map((item) => item.chipset))];
         const mbSlotOpts = [...new Set(categorizedData.map((item) => item.slot))];
-        ///สร้าง option ให้ dropdown
+        ///สร้าง options ให้ dropdown
         state.filterOptions = [
           { filterName: "formFactor", value: mbFormFactorOpts.sort() },
           { filterName: "brand", value: mbBrandOpts.sort() },
@@ -106,7 +128,7 @@ export const filterSlice = createSlice({
         state.filtersSet[1].filters[2].choices = mbSocketOpts;
         state.filtersSet[1].filters[3].choices = mbChipsetOpts;
         state.filtersSet[1].filters[4].choices = mbSlotOpts;
-      } else if (category === "RAM") {
+      } else if (checkCategory(category) === "ram") {
         const ramBrandOpts = [...new Set(categorizedData.map((item) => item.brand))];
         const ramTypeOpts = [...new Set(categorizedData.map((item) => item.typeRam))];
         const ramCountOpts = [...new Set(categorizedData.map((item) => item.countItem))];
@@ -115,6 +137,7 @@ export const filterSlice = createSlice({
           (filter, index) => (filter.choices = [...optsPerFilter[index]])
         );
       }
+      console.log("เช็คfilter", JSON.stringify(state.filtersSet[0].selectedOptionState));
     },
 
     clearSelectedFilter: (state, action) => {
@@ -159,6 +182,7 @@ export const filterSlice = createSlice({
   },
 });
 
+// -----------------------------------------------------------------EXPORT_ACTIONS-------------------------------------------------------------------
 export const {
   changeTextSearch,
   createFilter,

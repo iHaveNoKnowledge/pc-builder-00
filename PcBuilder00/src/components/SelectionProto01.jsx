@@ -29,6 +29,7 @@ import { getCategorizedData } from "../slices/userFilterSlice";
 import Bottom from "./BottomComponent";
 import { setDefault, setPageNum } from "../slices/paginationSlice";
 import { apiSlice } from "../features/api/dataApiSlice";
+import logoHeader from "../assets/itLogo-1.png";
 
 // const CustomPagination = ({ currentPage, totalPages, onChange, isLoading }) => {
 //   const [pageGroup, setPageGroup] = useState(1);
@@ -306,7 +307,8 @@ function PostCard({ items }) {
   const searchedShowProduct = showProduct.filter((item) => {
     return (
       item.code.toLowerCase().includes(textSearch.toLowerCase()) ||
-      (item.socket && item.socket.toLowerCase().includes(textSearch.toLowerCase()))
+      (item.socket && item.socket.toLowerCase().includes(textSearch.toLowerCase())) ||
+      item.productDescription.toLowerCase().includes(textSearch.toLowerCase())
     );
   });
 
@@ -352,7 +354,7 @@ function PostCard({ items }) {
       setCurPageNum(1);
       dispatch(setDefault());
     }
-  }, [category, parts]);
+  }, [category, parts, products]);
 
   //* imgLoading
   const [isLoading, setIsLoading] = useState(true);
@@ -367,6 +369,8 @@ function PostCard({ items }) {
       <UserFilter />
       <Grid container spacing="10" columns={{ xs: 4, sm: 12, md: 12 }}>
         {productPaginated.map((item, index) => {
+          const pngPath = `src/assets/${item.compatible.toLowerCase()}.png`;
+          const jpgPath = `src/assets/${item.compatible.toLowerCase()}.jpg`;
           const maxCardHeight = Math.max(...productPaginated.map((card) => card.height));
           console.log("maxCardHeight", maxCardHeight);
           return (
@@ -391,15 +395,27 @@ function PostCard({ items }) {
                     );
                   }}
                 >
-                  <CardMedia
-                    component="img"
-                    src={item.img}
-                    alt={item.title}
-                    title={item.title}
-                    sx={{ height: "200px", objectFit: "contain" }}
-                    onLoad={handleImageLoad}
-                  />
-                  {isLoading && <span>Loading...</span>}
+                  {isLoading ? (
+                    isLoading && (
+                      <CardMedia
+                        component="img"
+                        src={pngPath || jpgPath}
+                        // image={logoHeader}
+                        alt={item.title}
+                        title={item.title}
+                        sx={{ height: "200px", objectFit: "contain" }}
+                      />
+                    )
+                  ) : (
+                    <CardMedia
+                      component="img"
+                      src={item.img}
+                      alt={item.title}
+                      title={item.title}
+                      sx={{ height: "200px", objectFit: "contain" }}
+                      onLoad={handleImageLoad}
+                    />
+                  )}
                   {!isLoading && !item.img && <span>ไม่มีภาพ</span>}
 
                   <CardContent sx={{ height: "165px" }}>
