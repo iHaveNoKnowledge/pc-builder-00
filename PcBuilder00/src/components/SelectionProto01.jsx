@@ -158,46 +158,16 @@ function PostCard({ items }) {
     setCurItem(products);
   }, [products]);
   // *นี่คือ dispatch ข้างในบรรจุ action
-  const handleChange = (
-    id,
-    title,
-    category,
-    socket,
-    typeRam,
-    slot,
-    img,
-    count,
-    promotionPrice,
-    srp,
-    max,
-    code,
-    productDescription
-  ) => {
-    dispatch(
-      addProduct({
-        id,
-        title,
-        category,
-        socket,
-        typeRam,
-        img,
-        count,
-        promotionPrice,
-        srp,
-        slot,
-        max,
-        code,
-        productDescription,
-      })
-    );
-    if (category === "MB") {
-      dispatch(setMax(slot));
+  const handleChange = (item) => {
+    dispatch(addProduct(item));
+    if (category === "mb") {
+      dispatch(setMax(item.slot));
     }
     dispatch(updateSumAmount());
     dispatch(updateSumPrices());
-    console.log(`productDescription: ${productDescription}
-    count: ${count}
-    typeRam: ${typeRam}
+    console.log(`productDescription: ${item.productDescription}
+    count: ${item.count}
+    typeRam: ${item.typeRam}
     `);
   };
 
@@ -214,7 +184,7 @@ function PostCard({ items }) {
   ///หาเงื่อนไข จากการเลือก mainboard
   let socket_mb, typeRAM_mb;
   parts.find((item) => {
-    if (item.category === "MB") {
+    if (item.category.toLowerCase() === "mb") {
       if (item.listItems.length !== 0) {
         socket_mb = item.listItems[0].socket;
         typeRAM_mb = item.listItems[0].typeRam;
@@ -229,7 +199,7 @@ function PostCard({ items }) {
   ///* หาเงื่อนไข จากการเลือก CPU
   let socket_CPU;
   parts.find((item) => {
-    if (item.category === "CPU") {
+    if (item.category.toLowerCase() === "cpu") {
       if (item.listItems.length !== 0) {
         socket_CPU = item.listItems[0].socket;
       } else {
@@ -242,7 +212,7 @@ function PostCard({ items }) {
   ///* หาเงื่อนไข จากการเลือก RAM
   let typeRAM_RAM;
   parts.find((item) => {
-    if (item.category === "RAM") {
+    if (item.category.toLowerCase().replace(" ", "") === "ram") {
       if (item.listItems.length !== 0) {
         typeRAM_RAM = item.listItems[0].typeRam;
       } else {
@@ -258,10 +228,10 @@ function PostCard({ items }) {
     //ตรวจสอบว่า เมนบอร์ดตอนนี้ถูกเลือกหรือยัง ถ้าถูกเลือกแล้ว จะทำให้ CPU ที่โชว์นั้นต้องโชว์อย่างมีเงื่อนไข
     if (socket_mb === "") {
       //กรณียังที่ไม่ได้เลือกเมนบอร์ด ให้คืนค่าสินค้าสินค้าทุกตัวที่มีประเภทเป็น CPU
-      return item.category === "CPU";
+      return item.category.toLowerCase().replace(" ", "") === "cpu";
       //กรณีที่เลือกเมนบอร์ด ทำให้ "socket_mb" ไม่ใช่ค่าว่าง ให้คืนค่าสินค้าที่มีประเภท CPU ทุกตัว แต่ทุกตัวที่คืนมาต้องมีค่า socket ตาม  socket_mb
     } else if (socket_mb !== "") {
-      return item.category === "CPU" && item.socket === socket_mb;
+      return item.category.toLowerCase().replace(" ", "") === "cpu" && item.socket === socket_mb;
     } else {
       alert("ผีหลอกแล้วมวั้ง");
     }
@@ -270,29 +240,32 @@ function PostCard({ items }) {
   //* กรองสินค้าMB
   const mainBoard_display = curItem.filter((item) => {
     if (socket_CPU === "" && typeRAM_RAM === "") {
-      return item.category === "MB";
+      return item.category.toLowerCase().replace(" ", "") === "mb";
     } else if (socket_CPU === "" && typeRAM_RAM !== "") {
       console.log(`CPUยังไม่เลือก แต่เลือก RAM`);
-      return item.category === "MB" && item.typeRam === typeRAM_RAM;
+      return item.category.toLowerCase().replace(" ", "") === "mb" && item.typeRam === typeRAM_RAM;
     } else if (socket_CPU !== "" && typeRAM_RAM === "") {
-      return item.category === "MB" && item.socket === socket_CPU;
+      return item.category.toLowerCase().replace(" ", "") === "mb" && item.socket === socket_CPU;
     } else {
-      return item.category === "MB" && item.socket === socket_CPU && item.typeRam === typeRAM_RAM;
+      return item.category === "mb" && item.socket === socket_CPU && item.typeRam === typeRAM_RAM;
     }
   });
 
   //* กรองสินค้าRAM
   const RAM_display = curItem.filter((item) => {
     if (typeRAM_mb === "") {
-      return item.category === "RAM";
+      return item.category.toLowerCase().replace(" ", "") === "ram";
     } else {
-      return item.category === "RAM" && item.typeRam === typeRAM_mb;
+      return item.category.toLowerCase().replace(" ", "") === "ram" && item.typeRam === typeRAM_mb;
     }
   });
 
   //* arrayของสินค้าที่ไม่ต้องมีเงื่อนไข ไม่มีการกรอง
   const unconditionProduct = curItem.filter(
-    (item) => item.category !== "CPU" && item.category !== "MB" && item.category !== "RAM"
+    (item) =>
+      item.category.toLowerCase().replace(" ", "") !== "cpu" &&
+      item.category.toLowerCase().replace(" ", "") !== "mb" &&
+      item.category.toLowerCase().replace(" ", "") !== "ram"
   );
 
   //* นำ display ทั้งหมดที่มีการกรองและไม่มีการกรอง มารวมกัน
@@ -302,7 +275,9 @@ function PostCard({ items }) {
 
   //* นำ displayed ทั้งหมดมา filter เฉพาะ ประเภทที่ user เลือก
   console.log("combinedProduct[0].category:", combinedProduct, category);
-  const showProduct = combinedProduct.filter((item) => item.category === category);
+  const showProduct = combinedProduct.filter(
+    (item) => item.category.toLowerCase().replace(" ", "") === category
+  );
   const searchedShowProduct = showProduct.filter((item) => {
     return (
       item.code.toLowerCase().includes(textSearch.toLowerCase()) ||
@@ -377,21 +352,7 @@ function PostCard({ items }) {
               <Card sx={{ boxShadow: "2px 2px 2px 1px rgba(92, 92, 92, 0.5)" }}>
                 <Card
                   onClick={(e) => {
-                    handleChange(
-                      item.id,
-                      item.title,
-                      item.category,
-                      item.socket,
-                      item.typeRam,
-                      item.slot,
-                      item.img,
-                      item.countItem,
-                      item.promotionPrice,
-                      item.srp,
-                      item.max,
-                      item.code,
-                      item.productDescription
-                    );
+                    handleChange(item);
                   }}
                 >
                   {isLoading ? (
@@ -512,8 +473,10 @@ function PostCard({ items }) {
         />
       </Stack>
 
-      {/* <Bottom /> */}
-      <Box>{/* <BigPaginationTest /> */}</Box>
+      <Bottom />
+      {/* <Box>
+        <BigPaginationTest />
+      </Box> */}
     </>
   );
 }

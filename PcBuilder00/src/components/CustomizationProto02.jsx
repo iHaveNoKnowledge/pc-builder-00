@@ -35,7 +35,7 @@ const CustomizationProto02 = () => {
   //useState
   const [selected, setSelected] = useState(false);
   //useSelector
-  const categories = useSelector((state) => state.noApiCustomize.partData);
+  const parts = useSelector((state) => state.noApiCustomize.partData);
   const currentCategory = useSelector((state) => state.category.category);
 
   //สร้าง functiondispatch
@@ -44,9 +44,10 @@ const CustomizationProto02 = () => {
   //function
   const handleChange = (category) => {
     console.log("handleChanged", category);
-    dispatch(changeCategory(category));
+    dispatch(changeCategory(category.toLowerCase().replace(" ", "")));
     dispatch(setDefault());
-    if (currentCategory !== category) dispatch(clearSelectedFilter());
+    if (currentCategory !== category.toLowerCase().replace(" ", ""))
+      dispatch(clearSelectedFilter());
   };
 
   const handleIncAmt = (category, miniIndex) => {
@@ -80,7 +81,7 @@ const CustomizationProto02 = () => {
         <SumCustomize />
         {/* <div>ปัจจุบันเลือกไร: {currentCategory}</div> */}
         <Box>
-          {categories.map((item, index) => {
+          {parts.map((item, index) => {
             return (
               <React.Fragment key={index}>
                 {item.listItems[0] ? (
@@ -157,12 +158,23 @@ const CustomizationProto02 = () => {
                                           alignItems: "center",
                                         }}
                                       >
-                                        <Box
-                                          component="img"
-                                          src={miniItem.img}
-                                          alt={miniItem.title}
-                                          sx={{ objectFit: "contain", width: 40 }}
-                                        />
+                                        {miniItem.img ? (
+                                          <Box
+                                            component="img"
+                                            src={miniItem.img}
+                                            alt={miniItem.title}
+                                            sx={{ objectFit: "contain", width: 40 }}
+                                          />
+                                        ) : (
+                                          <Box
+                                            component="img"
+                                            src={`src/assets/${miniItem.compatible
+                                              .toLowerCase()
+                                              .split(" ", 1)}.png`}
+                                            alt={miniItem.title}
+                                            sx={{ objectFit: "contain", width: 40 }}
+                                          />
+                                        )}
                                       </ListItemAvatar>
                                     </Box>
 

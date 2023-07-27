@@ -28,29 +28,10 @@ function Bottom() {
       </Box>
 
       <Box>
-        {/* <Button
-          variant="contained"
-          sx={{ height: "27.5px", borderRadius: "0px", backgroundColor: "#42528A" }}
-          onClick={() => history("/print")}
-        >
-          Report
-        </Button> */}
         <ReportDocument />
       </Box>
 
       <Box>
-        {/* <Button
-          variant="contained"
-          sx={{
-            height: "27.5px",
-            borderRadius: "0px",
-            backgroundColor: "#42528A",
-          }}
-        >
-        
-          Add S/N
-         
-        </Button> */}
         <AddSN />
       </Box>
     </Box>

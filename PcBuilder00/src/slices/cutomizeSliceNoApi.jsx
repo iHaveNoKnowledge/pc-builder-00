@@ -4,112 +4,112 @@ import { filter, map, chain, reduce, mapValues, value, findIndex, find } from "l
 const initialState = {
   partData: [
     {
-      category: "CPU",
+      category: "cpu",
       categoryDisplay: "CPU",
       typeMax: 1,
       typeAmount: 0,
       listItems: [],
     },
     {
-      category: "MB",
+      category: "mb",
       categoryDisplay: "Mainboard",
       typeMax: 1,
       typeAmount: 0,
       listItems: [],
     },
     {
-      category: "RAM",
+      category: "ram",
       categoryDisplay: "RAM",
       typeMax: 4,
       typeAmount: 0,
       listItems: [],
     },
     {
-      category: "VGA",
+      category: "vga",
       categoryDisplay: "VGA",
       typeMax: null,
       typeAmount: 0,
       listItems: [],
     },
     {
-      category: "SSD",
+      category: "ssd",
       categoryDisplay: "SSD",
       typeMax: null,
       typeAmount: 0,
       listItems: [],
     },
     {
-      category: "HDD",
+      category: "hdd",
       categoryDisplay: "HDD",
       typeMax: null,
       typeAmount: 0,
       listItems: [],
     },
     {
-      category: "LiquidCooling",
+      category: "liquidcooling",
       categoryDisplay: "Liquid Cooling",
       typeMax: null,
       typeAmount: 0,
       listItems: [],
     },
     {
-      category: "AirCooling",
+      category: "aircooling",
       categoryDisplay: "Air Cooling",
       typeMax: null,
       typeAmount: 0,
       listItems: [],
     },
     {
-      category: "FANCASE",
+      category: "fancase",
       categoryDisplay: "FAN CASE",
       typeMax: null,
       typeAmount: 0,
       listItems: [],
     },
     {
-      category: "Thermalcompound",
+      category: "thermalcompound",
       categoryDisplay: "Thermal compound",
       typeMax: null,
       typeAmount: 0,
       listItems: [],
     },
     {
-      category: "SleeveCable",
+      category: "sleevecable",
       categoryDisplay: "Sleeve Cable",
       typeMax: null,
       typeAmount: 0,
       listItems: [],
     },
     {
-      category: "LCS",
+      category: "lcs",
       categoryDisplay: "LCS",
       typeMax: null,
       typeAmount: 0,
       listItems: [],
     },
     {
-      category: "GPUExtender",
+      category: "gpuextender",
       categoryDisplay: "GPU Extender",
       typeMax: null,
       typeAmount: 0,
       listItems: [],
     },
     {
-      category: "GPUHOLDER",
+      category: "gpuholder",
       categoryDisplay: "GPU HOLDER",
       typeMax: null,
       typeAmount: 0,
       listItems: [],
     },
     {
-      category: "Powersupply",
+      category: "powersupply",
       categoryDisplay: "Power supply",
       typeMax: null,
       typeAmount: 0,
       listItems: [],
     },
     {
-      category: "CASE",
+      category: "case",
       categoryDisplay: "CASE",
       typeMax: null,
       typeAmount: 0,
@@ -127,29 +127,48 @@ export const customizeSlice = createSlice({
     //Main Action (1 action ต่อ 1 ปุ่ม)///////////////////////////////////////////////
     addProduct: (state, action) => {
       const categoryIndex = state.partData.findIndex(
-        (item) => item.category === action.payload.category
+        (item) => item.category === action.payload.category.toLowerCase().replace(" ", "")
       );
+
       console.log("ใน slice", action.payload);
-      ///เก็บค่าใหม่ที่รับเข้ามาดองไว้ใน object ก่อน
-      const newArray = {
-        id: action.payload.id,
-        code: action.payload.code,
-        productDescription: action.payload.productDescription,
-        title: action.payload.title,
-        selectAmount: 1,
-        socket: action.payload.socket,
-        category: action.payload.category,
-        typeRam: action.payload.typeRam,
-        promotionPrice: action.payload.promotionPrice,
-        srp: action.payload.srp,
-        img: action.payload.img,
-        count: action.payload.count ? action.payload.count : 1,
-        slot: action.payload.slot,
-        max: action.payload.max,
-      };
+
+      const newArray2 = { ...action.payload };
+
+      for (let key in newArray2) {
+        if (newArray2[key] === null || newArray2[key] === undefined) {
+          delete newArray2[key];
+          delete newArray2["qty"];
+        }
+      }
+
+      newArray2["selectAmount"] = 1;
+
+      newArray2["category"] = newArray2["category"].toLowerCase().replace(" ", "");
+
+      newArray2["countItem"] = newArray2["countItem"] ? newArray2["countItem"] : 1;
+
+      console.log("newArray2: ", newArray2);
+
+      ///* เก็บค่าใหม่ที่รับเข้ามาดองไว้ใน object ก่อน
+      // const newArray = {
+      //   id: action.payload.id,
+      //   code: action.payload.code,
+      //   productDescription: action.payload.productDescription,
+      //   title: action.payload.title,
+      //   selectAmount: 1,
+      //   socket: action.payload.socket,
+      //   category: action.payload.category.toLowerCase().replace(" ", ""),
+      //   typeRam: action.payload.typeRam,
+      //   promotionPrice: action.payload.promotionPrice,
+      //   srp: action.payload.srp,
+      //   img: action.payload.img,
+      //   count: action.payload.count ? action.payload.count : 1,
+      //   slot: action.payload.slot,
+      //   max: action.payload.max,
+      // };
 
       //เช็คสมาชิกใหม่ว่า load เท่าไหร่ เนื่องจากมี max capa ทำให้ต้องดู load ว่าเกิน max capaหรือไม่
-      const typeMaxConsumtion = newArray.selectAmount * newArray.count;
+      const typeMaxConsumtion = newArray2.selectAmount * newArray2.count;
       console.log("ค่าโหลดของสินค้าที่ Add เท่าไหร่: ", typeMaxConsumtion);
 
       if (categoryIndex !== -1) {
@@ -157,14 +176,14 @@ export const customizeSlice = createSlice({
         const isFoundItem = currentType.listItems.find((item) => item.id === action.payload.id); //ตรวจสอบว่ามีแล้วหรือไม่ ถ้าเป็น true isFoundItem เป็น obj ที่เป็นสมาชิก Arr listItems, false จะเป็น undefined ต้องสร้าง obj ใหม่
         if (currentType.typeMax) {
           if (currentType.typeAmount === 0) {
-            currentType.listItems.push(newArray);
+            currentType.listItems.push(newArray2);
           } else {
             if (
               currentType.typeAmount / currentType.typeMax === 1 &&
               currentType.listItems.length < 2 &&
               currentType.typeAmount <= 1
             ) {
-              currentType.listItems[0] = newArray;
+              currentType.listItems[0] = newArray2;
             } else {
               if (currentType.typeAmount + typeMaxConsumtion <= currentType.typeMax) {
                 console.log("สินค้ายังไม่เกินกว่ากำหนด");
@@ -173,7 +192,7 @@ export const customizeSlice = createSlice({
                   isFoundItem.selectAmount += 1;
                 } else {
                   console.log("ไม่เจอ", isFoundItem);
-                  currentType.listItems.push(newArray);
+                  currentType.listItems.push(newArray2);
                 }
               } else {
                 console.log("สินค้าเกินจำนวนที่กำหนด");
@@ -211,7 +230,9 @@ export const customizeSlice = createSlice({
     // },
 
     removeProduct: (state, action) => {
-      const index = state.partData.findIndex((item) => item.category === action.payload.category);
+      const index = state.partData.findIndex(
+        (item) => item.category === action.payload.category.toLowerCase().replace(" ", "")
+      );
       //categorizedList เป็น array เก็บค่าในหมวดหมู่นั้นๆ
       const categorizedListItem = state.partData[index].listItems;
       console.log("Arrayในประเภทที่เลือก: ", JSON.stringify(categorizedListItem));
@@ -237,7 +258,9 @@ export const customizeSlice = createSlice({
     },
 
     incAmount: (state, action) => {
-      const index = state.partData.findIndex((item) => item.category === action.payload.category); //action.payload = category
+      const index = state.partData.findIndex(
+        (item) => item.category === action.payload.category.toLowerCase().replace(" ", "")
+      ); //action.payload = category
       const categorizedListItem = state.partData[index].listItems;
       const miniIndex = action.payload.miniIndex;
       if (index !== -1) {
@@ -262,7 +285,9 @@ export const customizeSlice = createSlice({
 
     decAmount: (state, action) => {
       console.log("decAmount ใน store ทำงาน");
-      const index = state.partData.findIndex((item) => item.category === action.payload.category);
+      const index = state.partData.findIndex(
+        (item) => item.category === action.payload.category.toLowerCase().replace(" ", "")
+      );
       const categorizedListItem = state.partData[index].listItems;
       const miniIndex = action.payload.miniIndex;
 
@@ -287,7 +312,7 @@ export const customizeSlice = createSlice({
 
     setTypeAmount: (state, action) => {
       const index = findIndex(state.partData, {
-        category: action.payload.category,
+        category: action.payload.category.toLowerCase().replace(" ", ""),
       });
 
       let sumAllItem = 0;
