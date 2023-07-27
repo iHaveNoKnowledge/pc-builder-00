@@ -168,7 +168,7 @@ export const customizeSlice = createSlice({
       // };
 
       //เช็คสมาชิกใหม่ว่า load เท่าไหร่ เนื่องจากมี max capa ทำให้ต้องดู load ว่าเกิน max capaหรือไม่
-      const typeMaxConsumtion = newArray2.selectAmount * newArray2.count;
+      const typeMaxConsumtion = newArray2.selectAmount * newArray2.countItem;
       console.log("ค่าโหลดของสินค้าที่ Add เท่าไหร่: ", typeMaxConsumtion);
 
       if (categoryIndex !== -1) {
