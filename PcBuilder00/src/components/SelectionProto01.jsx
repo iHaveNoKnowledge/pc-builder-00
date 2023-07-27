@@ -190,7 +190,7 @@ function PostCard({ items }) {
         productDescription,
       })
     );
-    if (category === "Mainboard") {
+    if (category === "MB") {
       dispatch(setMax(slot));
     }
     dispatch(updateSumAmount());
@@ -214,7 +214,7 @@ function PostCard({ items }) {
   ///หาเงื่อนไข จากการเลือก mainboard
   let socket_mb, typeRAM_mb;
   parts.find((item) => {
-    if (item.category === "Mainboard") {
+    if (item.category === "MB") {
       if (item.listItems.length !== 0) {
         socket_mb = item.listItems[0].socket;
         typeRAM_mb = item.listItems[0].typeRam;
@@ -270,16 +270,14 @@ function PostCard({ items }) {
   //* กรองสินค้าMB
   const mainBoard_display = curItem.filter((item) => {
     if (socket_CPU === "" && typeRAM_RAM === "") {
-      return item.category === "Mainboard";
+      return item.category === "MB";
     } else if (socket_CPU === "" && typeRAM_RAM !== "") {
       console.log(`CPUยังไม่เลือก แต่เลือก RAM`);
-      return item.category === "Mainboard" && item.typeRam === typeRAM_RAM;
+      return item.category === "MB" && item.typeRam === typeRAM_RAM;
     } else if (socket_CPU !== "" && typeRAM_RAM === "") {
-      return item.category === "Mainboard" && item.socket === socket_CPU;
+      return item.category === "MB" && item.socket === socket_CPU;
     } else {
-      return (
-        item.category === "Mainboard" && item.socket === socket_CPU && item.typeRam === typeRAM_RAM
-      );
+      return item.category === "MB" && item.socket === socket_CPU && item.typeRam === typeRAM_RAM;
     }
   });
 
@@ -294,7 +292,7 @@ function PostCard({ items }) {
 
   //* arrayของสินค้าที่ไม่ต้องมีเงื่อนไข ไม่มีการกรอง
   const unconditionProduct = curItem.filter(
-    (item) => item.category !== "CPU" && item.category !== "Mainboard" && item.category !== "RAM"
+    (item) => item.category !== "CPU" && item.category !== "MB" && item.category !== "RAM"
   );
 
   //* นำ display ทั้งหมดที่มีการกรองและไม่มีการกรอง มารวมกัน
@@ -303,6 +301,7 @@ function PostCard({ items }) {
   console.log("combinedProduct:", combinedProduct);
 
   //* นำ displayed ทั้งหมดมา filter เฉพาะ ประเภทที่ user เลือก
+  console.log("combinedProduct[0].category:", combinedProduct, category);
   const showProduct = combinedProduct.filter((item) => item.category === category);
   const searchedShowProduct = showProduct.filter((item) => {
     return (
@@ -369,7 +368,7 @@ function PostCard({ items }) {
       <UserFilter />
       <Grid container spacing="10" columns={{ xs: 4, sm: 12, md: 12 }}>
         {productPaginated.map((item, index) => {
-          const pngPath = `src/assets/${item.compatible.toLowerCase()}.png`;
+          const pngPath = `src/assets/${item.compatible.toLowerCase().split(" ", 1)}.png`;
           const jpgPath = `src/assets/${item.compatible.toLowerCase()}.jpg`;
           const maxCardHeight = Math.max(...productPaginated.map((card) => card.height));
           console.log("maxCardHeight", maxCardHeight);

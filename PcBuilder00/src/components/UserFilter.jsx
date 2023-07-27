@@ -10,22 +10,24 @@ import { useDispatch, useSelector } from "react-redux";
 import { changeTextSearch, updateFilters, setSelectedValuesCopy } from "../slices/userFilterSlice";
 import { Typography } from "@mui/material";
 import { clearSelectedFilter } from "../slices/userFilterSlice";
+import { setDefault } from "../slices/paginationSlice";
 
 const UserFilter = () => {
-  ////Static Variable
+  //*Static Variable
 
-  ////useDispatch
+  //* useDispatch
   const dispatch = useDispatch();
-  ////useSelector
+
+  //* useSelector
   const currentCategory = useSelector((state) => state.category.category);
   const searchTyped = useSelector((state) => state.userFilter.textSearch);
   const filterOptions = useSelector((state) => state.userFilter.filterOptions);
   const filtersSet = useSelector((state) => state.userFilter.filtersSet);
-
   const currentFilters = filtersSet.find((filterItem) => {
     return filterItem.name === currentCategory.toLowerCase();
   });
-  //isOptAvailable?
+
+  //* isOptAvailable?
   const isFiltContained = Object.keys(currentFilters.selectedOptionState);
 
   //* usestate
@@ -50,6 +52,7 @@ const UserFilter = () => {
     const test = value == Number(value);
     console.log("ตรวจType:", value, ":", typeof value, "ลบกันได้ไหม", test);
     dispatch(setSelectedValuesCopy({ value, currentCategory, keyName }));
+    dispatch(setDefault());
   };
 
   ////useEffect !!!สำหรับ search filter

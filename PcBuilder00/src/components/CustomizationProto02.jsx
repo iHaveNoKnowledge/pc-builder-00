@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import ImageIcon from "@mui/icons-material/Image";
+import DeleteIcon from "@mui/icons-material/Delete";
 import {
   Box,
   List,
@@ -126,14 +127,16 @@ const CustomizationProto02 = () => {
                                       );
                                     }}
                                     sx={{
-                                      padding: "0.1px 15px",
+                                      display: "absolute",
+                                      top: "1000",
+                                      padding: "1.1px 10px 0px",
                                       backgroundColor: "rgb(220,47,47)",
                                       color: "white",
                                       // textAlign:"justify",
                                       paddingBottom: "2px",
                                     }}
                                   >
-                                    x
+                                    <DeleteIcon />
                                   </Box>
                                 </Box>
 
@@ -197,8 +200,6 @@ const CustomizationProto02 = () => {
                                         +
                                       </Box>
                                     </Box>
-
-                                    <div>ss</div>
                                   </Box>
 
                                   {/* /ก้อนขวา/////////////////////////////// */}
@@ -266,7 +267,7 @@ const CustomizationProto02 = () => {
                               <ImageIcon />
                             </Avatar>
                           </ListItemAvatar>
-                          <ListItemText primary={`${item.category}`} secondary="" />
+                          <ListItemText primary={`${item.categoryDisplay}`} secondary="" />
                         </ListItemButton>
                         <Box>
                           <div>
