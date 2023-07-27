@@ -166,7 +166,7 @@ function PostCard({ items }) {
     dispatch(updateSumAmount());
     dispatch(updateSumPrices());
     console.log(`productDescription: ${item.productDescription}
-    count: ${item.count}
+    count: ${item.countItem}
     typeRam: ${item.typeRam}
     `);
   };

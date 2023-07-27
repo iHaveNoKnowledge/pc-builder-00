@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import ImageIcon from "@mui/icons-material/Image";
 import DeleteIcon from "@mui/icons-material/Delete";
+import IconButton from "@mui/material/IconButton";
 import {
   Box,
   List,
@@ -128,16 +129,14 @@ const CustomizationProto02 = () => {
                                       );
                                     }}
                                     sx={{
-                                      display: "absolute",
-                                      top: "1000",
-                                      padding: "1.1px 10px 0px",
                                       backgroundColor: "rgb(220,47,47)",
-                                      color: "white",
+
                                       // textAlign:"justify",
-                                      paddingBottom: "2px",
                                     }}
                                   >
-                                    <DeleteIcon />
+                                    <IconButton size="small" sx={{ color: "#FFF" }}>
+                                      <DeleteIcon />
+                                    </IconButton>
                                   </Box>
                                 </Box>
 
@@ -255,6 +254,7 @@ const CustomizationProto02 = () => {
                                     </Typography>
                                   </Box>
                                 </Box>
+                                <Box sx={{ height: "30px" }}></Box>
                               </ListItemButton>
                             </ListItem>
                             {/* {miniItem.listItems.length > 1 && <Divider />} */}
