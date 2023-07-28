@@ -196,7 +196,7 @@ export default function SaveBuildBtn() {
                 pt: "5px",
               }}
             >
-              ระบุชื่อ Set คอมประกอบ ที่ต้องการ
+              ตั้งชื่อ Set คอมประกอบ 
             </DialogContentText>
             <TextField
               sx={{ mt: "0px" }}

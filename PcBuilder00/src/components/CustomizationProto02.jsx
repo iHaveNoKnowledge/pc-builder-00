@@ -16,6 +16,7 @@ import {
   Grid,
   CardContent,
   Divider,
+  ButtonGroup,
 } from "@mui/material";
 import { changeCategory } from "../slices/categorySlice";
 import {
@@ -108,12 +109,12 @@ const CustomizationProto02 = () => {
                                 }}
                               >
                                 <Box sx={{ display: "Flex", width: "100%" }}>
-                                  <Box sx={{ flexGrow: 1 }}></Box>
+                                  <Box sx={{ flexGrow: 1 }}>{item.categoryDisplay}</Box>
 
                                   <Box sx={{ flexGrow: 0.05 }}>
                                     <div>
                                       {/* {miniItem.selectAmount * miniItem.count} */}
-                                      {item.typeAmount}
+                                      {item.typeMax ? item.typeAmount : <></>}
                                       {item.typeMax !== null && <>/{item.typeMax}</>}
                                     </div>
                                   </Box>
@@ -162,7 +163,7 @@ const CustomizationProto02 = () => {
                                             component="img"
                                             src={miniItem.img}
                                             alt={miniItem.title}
-                                            sx={{ objectFit: "contain", width: 40 }}
+                                            sx={{ objectFit: "contain", width: 40, height: 40 }}
                                           />
                                         ) : (
                                           <Box
@@ -171,7 +172,7 @@ const CustomizationProto02 = () => {
                                               .toLowerCase()
                                               .split(" ", 1)}.png`}
                                             alt={miniItem.title}
-                                            sx={{ objectFit: "contain", width: 40 }}
+                                            sx={{ objectFit: "contain", width: 40, height: 40 }}
                                           />
                                         )}
                                       </ListItemAvatar>
@@ -183,7 +184,7 @@ const CustomizationProto02 = () => {
                                         justifyContent: "space-between",
                                         bgcolor: "#c7c7c7",
                                         my: "2px",
-                                        boxShadow: "1px 1px 1px 1px rgba(92, 92, 92, 1)",
+                                        boxShadow: "0px 1px 0px 1px #c7c7c7",
                                         textAlign: "center",
                                       }}
                                     >

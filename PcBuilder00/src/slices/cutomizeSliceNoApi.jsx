@@ -172,41 +172,46 @@ export const customizeSlice = createSlice({
       console.log("ค่าโหลดของสินค้าที่ Add เท่าไหร่: ", typeMaxConsumtion);
 
       if (categoryIndex !== -1) {
-        const currentType = state.partData[categoryIndex]; ///currentType จะเป็นการเลือก สมาชิกที่ filter category มาแล้ว
-        const isFoundItem = currentType.listItems.find((item) => item.id === action.payload.id); //ตรวจสอบว่ามีแล้วหรือไม่ ถ้าเป็น true isFoundItem เป็น obj ที่เป็นสมาชิก Arr listItems, false จะเป็น undefined ต้องสร้าง obj ใหม่
-        if (currentType.typeMax) {
-          if (currentType.typeAmount === 0) {
-            currentType.listItems.push(newArray2);
+        const currentStateType = state.partData[categoryIndex]; ///currentStateType จะเป็นการเลือก สมาชิกที่ filter category มาแล้ว
+        const isFoundItem = currentStateType.listItems.find(
+          (item) => item.id === action.payload.id
+        ); //ตรวจสอบว่ามีแล้วหรือไม่ ถ้าเป็น true isFoundItem เป็น obj ที่เป็นสมาชิก Arr listItems, false จะเป็น undefined ต้องสร้าง obj ใหม่
+        if (currentStateType.typeMax) {
+          if (currentStateType.typeAmount === 0) {
+            currentStateType.listItems.push(newArray2);
           } else {
             if (
-              currentType.typeAmount / currentType.typeMax === 1 &&
-              currentType.listItems.length < 2 &&
-              currentType.typeAmount <= 1
+              currentStateType.typeAmount / currentStateType.typeMax === 1 &&
+              currentStateType.listItems.length < 2 &&
+              currentStateType.typeAmount <= 1
             ) {
-              currentType.listItems[0] = newArray2;
+              currentStateType.listItems[0] = newArray2;
             } else {
-              if (currentType.typeAmount + typeMaxConsumtion <= currentType.typeMax) {
+              if (currentStateType.typeAmount + typeMaxConsumtion <= currentStateType.typeMax) {
                 console.log("สินค้ายังไม่เกินกว่ากำหนด");
                 if (isFoundItem) {
                   console.log("เจอซ้ำ", isFoundItem.id);
                   isFoundItem.selectAmount += 1;
                 } else {
                   console.log("ไม่เจอ", isFoundItem);
-                  currentType.listItems.push(newArray2);
+                  currentStateType.listItems.push(newArray2);
                 }
               } else {
                 console.log("สินค้าเกินจำนวนที่กำหนด");
               }
-              console.log("หน้าตาเป็นไงแล้ว:", JSON.stringify(currentType.listItems));
+              console.log("หน้าตาเป็นไงแล้ว:", JSON.stringify(currentStateType.listItems));
             }
           }
         } else {
-          if (currentType.listItems.length > 0) {
+          console.log(currentStateType.category, "ไม่มีtypeMaxนี่นา");
+          if (currentStateType.listItems.length > 0) {
+            console.log("มีไอเต็มใน", currentStateType.category, "หรือไม่");
             if (isFoundItem) {
               isFoundItem.selectAmount++;
-            } else {
-              currentType.listItems.push(newArray);
             }
+          } else {
+            console.log("ใส่ลงไป");
+            currentStateType.listItems.push(newArray2);
           }
         }
       }
@@ -263,24 +268,32 @@ export const customizeSlice = createSlice({
       ); //action.payload = category
       const categorizedListItem = state.partData[index].listItems;
       const miniIndex = action.payload.miniIndex;
-      if (index !== -1) {
-        if (state.partData[index].typeAmount < state.partData[index].typeMax) {
-          categorizedListItem[miniIndex].selectAmount++;
-        } else if (state.partData[index].typeAmount === state.partData[index].typeMax) {
-          categorizedListItem[miniIndex].selectAmount;
-        } else {
-          categorizedListItem[miniIndex].selectAmount = 1;
+      if (state.partData[index].typeMax) {
+        if (index !== -1) {
+          if (state.partData[index].typeAmount < state.partData[index].typeMax) {
+            categorizedListItem[miniIndex].selectAmount++;
+          } else if (state.partData[index].typeAmount === state.partData[index].typeMax) {
+            categorizedListItem[miniIndex].selectAmount;
+          } else {
+            categorizedListItem[miniIndex].selectAmount = 1;
+          }
+          console.log("มีป่าวหว่า: ", JSON.stringify(categorizedListItem[miniIndex]));
         }
-        console.log("มีป่าวหว่า: ", JSON.stringify(categorizedListItem[miniIndex]));
-      }
 
-      let totalAmount = 0; // Initialize the total amount to 0
-      // Loop through the listItems array of the RAM object
-      for (let i = 0; i < state.partData[index].listItems.length; i++) {
-        let item = state.partData[index].listItems[i];
-        totalAmount += item.selectAmount * (item.count ? item.count : 1); // Add the product of selectAmount and count to the total amount
+        let totalAmount = 0; // Initialize the total amount to 0
+        // Loop through the listItems array of the RAM object
+        for (let i = 0; i < state.partData[index].listItems.length; i++) {
+          let item = state.partData[index].listItems[i];
+          totalAmount += item.selectAmount * (item.count ? item.count : 1); // Add the product of selectAmount and count to the total amount
+        }
+        state.partData[index].typeAmount = totalAmount; // Assign the total amount to the typeAmount property of the RAM object
+      } else {
+        console.log("ไม่มี Typemax");
+        if (index !== -1) {
+          categorizedListItem[miniIndex].selectAmount++;
+          console.log("มีป่าวหว่า: ", JSON.stringify(categorizedListItem[miniIndex]));
+        }
       }
-      state.partData[index].typeAmount = totalAmount; // Assign the total amount to the typeAmount property of the RAM object
     },
 
     decAmount: (state, action) => {

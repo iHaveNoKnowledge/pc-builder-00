@@ -111,12 +111,8 @@ export const updateApi = createApi({
 
 //** ดึงข้อมูล
 export const { useGetPostsQuery, useLazyGetPostsQuery } = apiSlice;
-export const {
-  useGetDbItemQuery,
-  useGetDbItem2Query,
-  useGetSetsQuery,
-  useDeleteResourceMutation,
-} = apiSliceDb;
+export const { useGetDbItemQuery, useGetDbItem2Query, useGetSetsQuery, useDeleteResourceMutation } =
+  apiSliceDb;
 
 export const { useGetPhotosQuery } = apiSliceJSONPlaceHolder;
 

@@ -30,13 +30,14 @@
     box-sizing: border-box;
     font-size: 20px;
     font-weight: bolder;
-    box-shadow: 1px 1px 1px 1px rgba(92, 92, 92, 1);
+    box-shadow: 0px 1px 0px 1px rgba(80, 80, 80, 1);
     height: 20px;
-    width:15px;
+    width:22px;
     align-items: center;
-    background-color: #dadada
+    background-color: #42528A;
+    color: #fafafa;
 }
 
 .textButton:hover {
-    background-color: #fafafa;
+    background-color: #6178ca;
 }

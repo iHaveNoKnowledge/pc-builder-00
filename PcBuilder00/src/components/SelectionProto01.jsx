@@ -7,7 +7,7 @@ import CardActions from "@mui/material/CardActions";
 import CardActionArea from "@mui/material/CardActionArea";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-import Button from "@mui/material/Button";
+import { Button, ButtonGroup } from "@mui/material/";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import ListItemText from "@mui/material/ListItemText";
@@ -208,6 +208,9 @@ function PostCard({ items }) {
       return item;
     }
   });
+  // const [CPU] = parts.filter((item) => item.category.toLowerCase().includes("cpu"));
+  // const { listItems: socket_CPU } = CPU;
+  // console.log("socket_CPU:", socket_CPU[0].category);
 
   ///* หาเงื่อนไข จากการเลือก RAM
   let typeRAM_RAM;
@@ -350,11 +353,7 @@ function PostCard({ items }) {
           return (
             <Grid item xs={2} sm={4} md={4} key={index}>
               <Card sx={{ boxShadow: "2px 2px 2px 1px rgba(92, 92, 92, 0.5)" }}>
-                <Card
-                  onClick={(e) => {
-                    handleChange(item);
-                  }}
-                >
+                <Card>
                   {isLoading ? (
                     isLoading && (
                       <CardMedia
@@ -437,17 +436,24 @@ function PostCard({ items }) {
                           )
                         }
                       />
+                      <Button
+                        variant="contained"
+                        onClick={(e) => {
+                          handleChange(item);
+                        }}
+                      >
+                        เลือก
+                      </Button>
                     </Box>
-                    {/* <Typography
-                    variant="body2"
-                    color="text.secondary"
-                  >5555</Typography> */}
+                    {/* <Typography variant="body2" color="text.secondary">
+                      5555
+                    </Typography> */}
                   </CardContent>
                 </Card>
-                <CardActions>
+                {/* <CardActions>
                   <Button size="small">Like</Button>
                   <Button size="small">Fav</Button>
-                </CardActions>
+                </CardActions> */}
               </Card>
             </Grid>
           );
