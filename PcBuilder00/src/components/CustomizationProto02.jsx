@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import ImageIcon from "@mui/icons-material/Image";
+import DeleteIcon from "@mui/icons-material/Delete";
+import IconButton from "@mui/material/IconButton";
 import {
   Box,
   List,
@@ -14,6 +16,7 @@ import {
   Grid,
   CardContent,
   Divider,
+  ButtonGroup,
 } from "@mui/material";
 import { changeCategory } from "../slices/categorySlice";
 import {
@@ -34,7 +37,7 @@ const CustomizationProto02 = () => {
   //useState
   const [selected, setSelected] = useState(false);
   //useSelector
-  const categories = useSelector((state) => state.noApiCustomize.partData);
+  const parts = useSelector((state) => state.noApiCustomize.partData);
   const currentCategory = useSelector((state) => state.category.category);
 
   //สร้าง functiondispatch
@@ -43,9 +46,10 @@ const CustomizationProto02 = () => {
   //function
   const handleChange = (category) => {
     console.log("handleChanged", category);
-    dispatch(changeCategory(category));
+    dispatch(changeCategory(category.toLowerCase().replace(" ", "")));
     dispatch(setDefault());
-    if (currentCategory !== category) dispatch(clearSelectedFilter());
+    if (currentCategory !== category.toLowerCase().replace(" ", ""))
+      dispatch(clearSelectedFilter());
   };
 
   const handleIncAmt = (category, miniIndex) => {
@@ -79,7 +83,7 @@ const CustomizationProto02 = () => {
         <SumCustomize />
         {/* <div>ปัจจุบันเลือกไร: {currentCategory}</div> */}
         <Box>
-          {categories.map((item, index) => {
+          {parts.map((item, index) => {
             return (
               <React.Fragment key={index}>
                 {item.listItems[0] ? (
@@ -105,12 +109,12 @@ const CustomizationProto02 = () => {
                                 }}
                               >
                                 <Box sx={{ display: "Flex", width: "100%" }}>
-                                  <Box sx={{ flexGrow: 1 }}></Box>
+                                  <Box sx={{ flexGrow: 1 }}>{item.categoryDisplay}</Box>
 
                                   <Box sx={{ flexGrow: 0.05 }}>
                                     <div>
                                       {/* {miniItem.selectAmount * miniItem.count} */}
-                                      {item.typeAmount}
+                                      {item.typeMax ? item.typeAmount : <></>}
                                       {item.typeMax !== null && <>/{item.typeMax}</>}
                                     </div>
                                   </Box>
@@ -126,14 +130,14 @@ const CustomizationProto02 = () => {
                                       );
                                     }}
                                     sx={{
-                                      padding: "0.1px 15px",
                                       backgroundColor: "rgb(220,47,47)",
-                                      color: "white",
+
                                       // textAlign:"justify",
-                                      paddingBottom: "2px",
                                     }}
                                   >
-                                    x
+                                    <IconButton size="small" sx={{ color: "#FFF" }}>
+                                      <DeleteIcon />
+                                    </IconButton>
                                   </Box>
                                 </Box>
 
@@ -154,12 +158,23 @@ const CustomizationProto02 = () => {
                                           alignItems: "center",
                                         }}
                                       >
-                                        <Box
-                                          component="img"
-                                          src={miniItem.img}
-                                          alt={miniItem.title}
-                                          sx={{ objectFit: "contain", width: 40 }}
-                                        />
+                                        {miniItem.img ? (
+                                          <Box
+                                            component="img"
+                                            src={miniItem.img}
+                                            alt={miniItem.title}
+                                            sx={{ objectFit: "contain", width: 40, height: 40 }}
+                                          />
+                                        ) : (
+                                          <Box
+                                            component="img"
+                                            src={`src/assets/${miniItem.compatible
+                                              .toLowerCase()
+                                              .split(" ", 1)}.png`}
+                                            alt={miniItem.title}
+                                            sx={{ objectFit: "contain", width: 40, height: 40 }}
+                                          />
+                                        )}
                                       </ListItemAvatar>
                                     </Box>
 
@@ -169,7 +184,7 @@ const CustomizationProto02 = () => {
                                         justifyContent: "space-between",
                                         bgcolor: "#c7c7c7",
                                         my: "2px",
-                                        boxShadow: "1px 1px 1px 1px rgba(92, 92, 92, 1)",
+                                        boxShadow: "0px 1px 0px 1px #c7c7c7",
                                         textAlign: "center",
                                       }}
                                     >
@@ -197,8 +212,6 @@ const CustomizationProto02 = () => {
                                         +
                                       </Box>
                                     </Box>
-
-                                    <div>ss</div>
                                   </Box>
 
                                   {/* /ก้อนขวา/////////////////////////////// */}
@@ -242,6 +255,7 @@ const CustomizationProto02 = () => {
                                     </Typography>
                                   </Box>
                                 </Box>
+                                <Box sx={{ height: "30px" }}></Box>
                               </ListItemButton>
                             </ListItem>
                             {/* {miniItem.listItems.length > 1 && <Divider />} */}
@@ -266,7 +280,7 @@ const CustomizationProto02 = () => {
                               <ImageIcon />
                             </Avatar>
                           </ListItemAvatar>
-                          <ListItemText primary={`${item.category}`} secondary="" />
+                          <ListItemText primary={`${item.categoryDisplay}`} secondary="" />
                         </ListItemButton>
                         <Box>
                           <div>

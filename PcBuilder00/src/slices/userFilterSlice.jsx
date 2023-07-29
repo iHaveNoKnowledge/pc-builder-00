@@ -23,7 +23,7 @@ const initialState = {
       selectedOptionState: { brand: "", model: "", socket: "" },
     },
     {
-      name: "mainboard",
+      name: "mb",
       filters: [
         { name: "formFactor", displayName: "FormFactor", choices: [] },
         { name: "compatible", displayName: "Brand", choices: [] },
@@ -45,14 +45,16 @@ const initialState = {
     { name: "vga", filters: [], selectedOptionState: {} },
     { name: "ssd", filters: [], selectedOptionState: {} },
     { name: "hdd", filters: [], selectedOptionState: {} },
-    { name: "psu", filters: [], selectedOptionState: {} },
+    { name: "liquidcooling", filters: [], selectedOptionState: {} },
+    { name: "aircooling", filters: [], selectedOptionState: {} },
+    { name: "fancase", filters: [], selectedOptionState: {} },
+    { name: "thermalcompound", filters: [], selectedOptionState: {} },
+    { name: "sleevecable", filters: [], selectedOptionState: {} },
+    { name: "lcs", filters: [], selectedOptionState: {} },
+    { name: "gpuextender", filters: [], selectedOptionState: {} },
+    { name: "gpuholder", filters: [], selectedOptionState: {} },
+    { name: "powersupply", filters: [], selectedOptionState: {} },
     { name: "case", filters: [], selectedOptionState: {} },
-    { name: "cooling", filters: [], selectedOptionState: {} },
-    { name: "accesories diy", filters: [], selectedOptionState: {} },
-    { name: "monitor", filters: [], selectedOptionState: {} },
-    { name: "mouse", filters: [], selectedOptionState: {} },
-    { name: "keyboard", filters: [], selectedOptionState: {} },
-    { name: "os", filters: [], selectedOptionState: {} },
   ],
 };
 
@@ -111,7 +113,7 @@ export const filterSlice = createSlice({
         state.filtersSet[0].filters[2].choices = cpuSocketOptions;
       } else if (checkCategory(category) === "mb") {
         const mbFormFactorOpts = [...new Set(categorizedData.map((item) => item.formFactor))];
-        const mbBrandOpts = [...new Set(categorizedData.map((item) => item.brand))];
+        const mbBrandOpts = [...new Set(categorizedData.map((item) => item.compatible))];
         const mbSocketOpts = [...new Set(categorizedData.map((item) => item.socket))];
         const mbChipsetOpts = [...new Set(categorizedData.map((item) => item.chipset))];
         const mbSlotOpts = [...new Set(categorizedData.map((item) => item.slot))];
@@ -129,7 +131,7 @@ export const filterSlice = createSlice({
         state.filtersSet[1].filters[3].choices = mbChipsetOpts;
         state.filtersSet[1].filters[4].choices = mbSlotOpts;
       } else if (checkCategory(category) === "ram") {
-        const ramBrandOpts = [...new Set(categorizedData.map((item) => item.brand))];
+        const ramBrandOpts = [...new Set(categorizedData.map((item) => item.compatible))];
         const ramTypeOpts = [...new Set(categorizedData.map((item) => item.typeRam))];
         const ramCountOpts = [...new Set(categorizedData.map((item) => item.countItem))];
         const optsPerFilter = [ramBrandOpts, ramTypeOpts, ramCountOpts];

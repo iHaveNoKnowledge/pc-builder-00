@@ -7,7 +7,7 @@ import CardActions from "@mui/material/CardActions";
 import CardActionArea from "@mui/material/CardActionArea";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-import Button from "@mui/material/Button";
+import { Button, ButtonGroup } from "@mui/material/";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import ListItemText from "@mui/material/ListItemText";
@@ -158,46 +158,16 @@ function PostCard({ items }) {
     setCurItem(products);
   }, [products]);
   // *นี่คือ dispatch ข้างในบรรจุ action
-  const handleChange = (
-    id,
-    title,
-    category,
-    socket,
-    typeRam,
-    slot,
-    img,
-    count,
-    promotionPrice,
-    srp,
-    max,
-    code,
-    productDescription
-  ) => {
-    dispatch(
-      addProduct({
-        id,
-        title,
-        category,
-        socket,
-        typeRam,
-        img,
-        count,
-        promotionPrice,
-        srp,
-        slot,
-        max,
-        code,
-        productDescription,
-      })
-    );
-    if (category === "Mainboard") {
-      dispatch(setMax(slot));
+  const handleChange = (item) => {
+    dispatch(addProduct(item));
+    if (category === "mb") {
+      dispatch(setMax(item.slot));
     }
     dispatch(updateSumAmount());
     dispatch(updateSumPrices());
-    console.log(`productDescription: ${productDescription}
-    count: ${count}
-    typeRam: ${typeRam}
+    console.log(`productDescription: ${item.productDescription}
+    count: ${item.countItem}
+    typeRam: ${item.typeRam}
     `);
   };
 
@@ -214,7 +184,7 @@ function PostCard({ items }) {
   ///หาเงื่อนไข จากการเลือก mainboard
   let socket_mb, typeRAM_mb;
   parts.find((item) => {
-    if (item.category === "Mainboard") {
+    if (item.category.toLowerCase() === "mb") {
       if (item.listItems.length !== 0) {
         socket_mb = item.listItems[0].socket;
         typeRAM_mb = item.listItems[0].typeRam;
@@ -229,7 +199,7 @@ function PostCard({ items }) {
   ///* หาเงื่อนไข จากการเลือก CPU
   let socket_CPU;
   parts.find((item) => {
-    if (item.category === "CPU") {
+    if (item.category.toLowerCase() === "cpu") {
       if (item.listItems.length !== 0) {
         socket_CPU = item.listItems[0].socket;
       } else {
@@ -238,11 +208,14 @@ function PostCard({ items }) {
       return item;
     }
   });
+  // const [CPU] = parts.filter((item) => item.category.toLowerCase().includes("cpu"));
+  // const { listItems: socket_CPU } = CPU;
+  // console.log("socket_CPU:", socket_CPU[0].category);
 
   ///* หาเงื่อนไข จากการเลือก RAM
   let typeRAM_RAM;
   parts.find((item) => {
-    if (item.category === "RAM") {
+    if (item.category.toLowerCase().replace(" ", "") === "ram") {
       if (item.listItems.length !== 0) {
         typeRAM_RAM = item.listItems[0].typeRam;
       } else {
@@ -258,10 +231,10 @@ function PostCard({ items }) {
     //ตรวจสอบว่า เมนบอร์ดตอนนี้ถูกเลือกหรือยัง ถ้าถูกเลือกแล้ว จะทำให้ CPU ที่โชว์นั้นต้องโชว์อย่างมีเงื่อนไข
     if (socket_mb === "") {
       //กรณียังที่ไม่ได้เลือกเมนบอร์ด ให้คืนค่าสินค้าสินค้าทุกตัวที่มีประเภทเป็น CPU
-      return item.category === "CPU";
+      return item.category.toLowerCase().replace(" ", "") === "cpu";
       //กรณีที่เลือกเมนบอร์ด ทำให้ "socket_mb" ไม่ใช่ค่าว่าง ให้คืนค่าสินค้าที่มีประเภท CPU ทุกตัว แต่ทุกตัวที่คืนมาต้องมีค่า socket ตาม  socket_mb
     } else if (socket_mb !== "") {
-      return item.category === "CPU" && item.socket === socket_mb;
+      return item.category.toLowerCase().replace(" ", "") === "cpu" && item.socket === socket_mb;
     } else {
       alert("ผีหลอกแล้วมวั้ง");
     }
@@ -270,31 +243,32 @@ function PostCard({ items }) {
   //* กรองสินค้าMB
   const mainBoard_display = curItem.filter((item) => {
     if (socket_CPU === "" && typeRAM_RAM === "") {
-      return item.category === "Mainboard";
+      return item.category.toLowerCase().replace(" ", "") === "mb";
     } else if (socket_CPU === "" && typeRAM_RAM !== "") {
       console.log(`CPUยังไม่เลือก แต่เลือก RAM`);
-      return item.category === "Mainboard" && item.typeRam === typeRAM_RAM;
+      return item.category.toLowerCase().replace(" ", "") === "mb" && item.typeRam === typeRAM_RAM;
     } else if (socket_CPU !== "" && typeRAM_RAM === "") {
-      return item.category === "Mainboard" && item.socket === socket_CPU;
+      return item.category.toLowerCase().replace(" ", "") === "mb" && item.socket === socket_CPU;
     } else {
-      return (
-        item.category === "Mainboard" && item.socket === socket_CPU && item.typeRam === typeRAM_RAM
-      );
+      return item.category === "mb" && item.socket === socket_CPU && item.typeRam === typeRAM_RAM;
     }
   });
 
   //* กรองสินค้าRAM
   const RAM_display = curItem.filter((item) => {
     if (typeRAM_mb === "") {
-      return item.category === "RAM";
+      return item.category.toLowerCase().replace(" ", "") === "ram";
     } else {
-      return item.category === "RAM" && item.typeRam === typeRAM_mb;
+      return item.category.toLowerCase().replace(" ", "") === "ram" && item.typeRam === typeRAM_mb;
     }
   });
 
   //* arrayของสินค้าที่ไม่ต้องมีเงื่อนไข ไม่มีการกรอง
   const unconditionProduct = curItem.filter(
-    (item) => item.category !== "CPU" && item.category !== "Mainboard" && item.category !== "RAM"
+    (item) =>
+      item.category.toLowerCase().replace(" ", "") !== "cpu" &&
+      item.category.toLowerCase().replace(" ", "") !== "mb" &&
+      item.category.toLowerCase().replace(" ", "") !== "ram"
   );
 
   //* นำ display ทั้งหมดที่มีการกรองและไม่มีการกรอง มารวมกัน
@@ -303,7 +277,10 @@ function PostCard({ items }) {
   console.log("combinedProduct:", combinedProduct);
 
   //* นำ displayed ทั้งหมดมา filter เฉพาะ ประเภทที่ user เลือก
-  const showProduct = combinedProduct.filter((item) => item.category === category);
+  console.log("combinedProduct[0].category:", combinedProduct, category);
+  const showProduct = combinedProduct.filter(
+    (item) => item.category.toLowerCase().replace(" ", "") === category
+  );
   const searchedShowProduct = showProduct.filter((item) => {
     return (
       item.code.toLowerCase().includes(textSearch.toLowerCase()) ||
@@ -369,32 +346,14 @@ function PostCard({ items }) {
       <UserFilter />
       <Grid container spacing="10" columns={{ xs: 4, sm: 12, md: 12 }}>
         {productPaginated.map((item, index) => {
-          const pngPath = `src/assets/${item.compatible.toLowerCase()}.png`;
+          const pngPath = `src/assets/${item.compatible.toLowerCase().split(" ", 1)}.png`;
           const jpgPath = `src/assets/${item.compatible.toLowerCase()}.jpg`;
           const maxCardHeight = Math.max(...productPaginated.map((card) => card.height));
           console.log("maxCardHeight", maxCardHeight);
           return (
             <Grid item xs={2} sm={4} md={4} key={index}>
               <Card sx={{ boxShadow: "2px 2px 2px 1px rgba(92, 92, 92, 0.5)" }}>
-                <Card
-                  onClick={(e) => {
-                    handleChange(
-                      item.id,
-                      item.title,
-                      item.category,
-                      item.socket,
-                      item.typeRam,
-                      item.slot,
-                      item.img,
-                      item.countItem,
-                      item.promotionPrice,
-                      item.srp,
-                      item.max,
-                      item.code,
-                      item.productDescription
-                    );
-                  }}
-                >
+                <Card>
                   {isLoading ? (
                     isLoading && (
                       <CardMedia
@@ -477,17 +436,24 @@ function PostCard({ items }) {
                           )
                         }
                       />
+                      <Button
+                        variant="contained"
+                        onClick={(e) => {
+                          handleChange(item);
+                        }}
+                      >
+                        เลือก
+                      </Button>
                     </Box>
-                    {/* <Typography
-                    variant="body2"
-                    color="text.secondary"
-                  >5555</Typography> */}
+                    {/* <Typography variant="body2" color="text.secondary">
+                      5555
+                    </Typography> */}
                   </CardContent>
                 </Card>
-                <CardActions>
+                {/* <CardActions>
                   <Button size="small">Like</Button>
                   <Button size="small">Fav</Button>
-                </CardActions>
+                </CardActions> */}
               </Card>
             </Grid>
           );
@@ -513,8 +479,10 @@ function PostCard({ items }) {
         />
       </Stack>
 
-      {/* <Bottom /> */}
-      <Box>{/* <BigPaginationTest /> */}</Box>
+      <Bottom />
+      {/* <Box>
+        <BigPaginationTest />
+      </Box> */}
     </>
   );
 }

@@ -10,36 +10,33 @@ import { useDispatch, useSelector } from "react-redux";
 import { changeTextSearch, updateFilters, setSelectedValuesCopy } from "../slices/userFilterSlice";
 import { Typography } from "@mui/material";
 import { clearSelectedFilter } from "../slices/userFilterSlice";
+import { setDefault } from "../slices/paginationSlice";
 
 const UserFilter = () => {
-  ////Static Variable
+  //* Static Variable
 
-  ////useDispatch
+  //* useDispatch
   const dispatch = useDispatch();
-  ////useSelector
+
+  //* useSelector
   const currentCategory = useSelector((state) => state.category.category);
   const searchTyped = useSelector((state) => state.userFilter.textSearch);
   const filterOptions = useSelector((state) => state.userFilter.filterOptions);
   const filtersSet = useSelector((state) => state.userFilter.filtersSet);
-
   const currentFilters = filtersSet.find((filterItem) => {
     return filterItem.name === currentCategory.toLowerCase();
   });
-  //isOptAvailable?
+  const parts = useSelector((state) => state.noApiCustomize.partData);
+
+  //* isOptAvailable?
   const isFiltContained = Object.keys(currentFilters.selectedOptionState);
 
   //* usestate
   const [query, setQuery] = useState("");
   // const [selectedFilter, setSelectedFilter] = useState(currentFilters.filters);
   const [currentOpt, setCuerrentOpt] = useState([]);
-  ////useRef
-  const selectRef = useRef(null);
-  // const handleResetSelect = () => {
-  //   console.log("selectRef:", selectRef.current);
-  //   selectRef.current.value = "x";
-  // };
 
-  ////handleFunctions
+  //*  handleFunctions
   const handleSearch = (e) => {
     console.log("ค้นห่าสินค้า", e.target);
     e.preventDefault();
@@ -50,12 +47,18 @@ const UserFilter = () => {
     const test = value == Number(value);
     console.log("ตรวจType:", value, ":", typeof value, "ลบกันได้ไหม", test);
     dispatch(setSelectedValuesCopy({ value, currentCategory, keyName }));
+    dispatch(setDefault());
   };
 
-  ////useEffect !!!สำหรับ search filter
+  //* useEffect !!!สำหรับ search filter
   useEffect(() => {
     dispatch(changeTextSearch(query));
   }, [query]);
+
+  //* DisplayCategory
+  const { categoryDisplay } = parts.find((category) => {
+    return category.category === currentCategory;
+  });
 
   return (
     <Box className="mainCardFilter">
@@ -71,7 +74,7 @@ const UserFilter = () => {
               setQuery(event.target.value);
               console.log(event.target.value);
             }}
-            label={`Product ${currentCategory}`}
+            label={`Product ${categoryDisplay}`}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">

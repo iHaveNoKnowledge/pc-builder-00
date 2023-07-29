@@ -64,6 +64,7 @@ const theme = createTheme({
 
 export default function SetList() {
   const partData = useSelector((state) => state.noApiCustomize.partData);
+  const products = useSelector((state) => state.products.products);
 
   const dispatch = useDispatch();
 
@@ -77,7 +78,8 @@ export default function SetList() {
   const [sortedData, setSortedData] = useState([]);
 
   const { data } = useGetDbItemQuery();
-  const posts = data.recordset;
+  const posts = products;
+  console.log("posts: ", posts);
 
   const [openSubTables, setOpenSubTables] = useState([]);
 
@@ -98,7 +100,7 @@ export default function SetList() {
       setSortedData(sortData(dataJson));
     }
   };
-
+  console.log("dataJson: ", dataJson);
   useEffect(() => {
     if (dataJson) {
       setSortedData(sortData(dataJson));
@@ -201,7 +203,6 @@ export default function SetList() {
             <Box sx={{ display: "flex", justifyContent: "center", marginTop: 2, marginInline: 2 }}>
               <TextField
                 fullWidth
-                // size="normal"
                 placeholder="ค้นหาเซ็ตคอมประกอบ"
                 type="search"
                 id="input-with-icon-textfield"
