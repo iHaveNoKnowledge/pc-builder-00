@@ -437,6 +437,7 @@ function PostCard({ items }) {
                         }
                       />
                       <Button
+                        sx={{ height: "35px", alignSelf: "center", backgroundColor: "#42528A" }}
                         variant="contained"
                         onClick={(e) => {
                           handleChange(item);
