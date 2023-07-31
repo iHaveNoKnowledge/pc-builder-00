@@ -73,8 +73,8 @@ export default function SaveBuildBtn() {
         setName: setNameInput,
         customerName: "",
         customerTel: "",
-        salerName: "",
-        salerTel: "",
+        sellerName: "",
+        sellerTel: "",
       };
     }
 

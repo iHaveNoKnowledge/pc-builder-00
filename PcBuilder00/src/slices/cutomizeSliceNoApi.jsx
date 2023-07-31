@@ -6,6 +6,7 @@ const initialState = {
     {
       category: "cpu",
       categoryDisplay: "CPU",
+      dbCategory: "CPU",
       typeMax: 1,
       typeAmount: 0,
       listItems: [],
@@ -13,6 +14,7 @@ const initialState = {
     {
       category: "mb",
       categoryDisplay: "Mainboard",
+      dbCategory: "MB",
       typeMax: 1,
       typeAmount: 0,
       listItems: [],
@@ -20,6 +22,7 @@ const initialState = {
     {
       category: "ram",
       categoryDisplay: "RAM",
+      dbCategory: "RAM",
       typeMax: 4,
       typeAmount: 0,
       listItems: [],
@@ -27,6 +30,7 @@ const initialState = {
     {
       category: "vga",
       categoryDisplay: "VGA",
+      dbCategory: "VGA",
       typeMax: null,
       typeAmount: 0,
       listItems: [],
@@ -34,6 +38,7 @@ const initialState = {
     {
       category: "ssd",
       categoryDisplay: "SSD",
+      dbCategory: "SSD",
       typeMax: null,
       typeAmount: 0,
       listItems: [],
@@ -41,6 +46,7 @@ const initialState = {
     {
       category: "hdd",
       categoryDisplay: "HDD",
+      dbCategory: "HDD",
       typeMax: null,
       typeAmount: 0,
       listItems: [],
@@ -48,6 +54,7 @@ const initialState = {
     {
       category: "liquidcooling",
       categoryDisplay: "Liquid Cooling",
+      dbCategory: "Liquid Cooling",
       typeMax: null,
       typeAmount: 0,
       listItems: [],
@@ -55,6 +62,7 @@ const initialState = {
     {
       category: "aircooling",
       categoryDisplay: "Air Cooling",
+      dbCategory: "Air Cooling",
       typeMax: null,
       typeAmount: 0,
       listItems: [],
@@ -62,6 +70,7 @@ const initialState = {
     {
       category: "fancase",
       categoryDisplay: "FAN CASE",
+      dbCategory: "FAN CASE",
       typeMax: null,
       typeAmount: 0,
       listItems: [],
@@ -69,6 +78,7 @@ const initialState = {
     {
       category: "thermalcompound",
       categoryDisplay: "Thermal compound",
+      dbCategory: "Thermal compound",
       typeMax: null,
       typeAmount: 0,
       listItems: [],
@@ -76,6 +86,7 @@ const initialState = {
     {
       category: "sleevecable",
       categoryDisplay: "Sleeve Cable",
+      dbCategory: "Sleeve Cable",
       typeMax: null,
       typeAmount: 0,
       listItems: [],
@@ -83,6 +94,7 @@ const initialState = {
     {
       category: "lcs",
       categoryDisplay: "LCS",
+      dbCategory: "LCS",
       typeMax: null,
       typeAmount: 0,
       listItems: [],
@@ -90,6 +102,7 @@ const initialState = {
     {
       category: "gpuextender",
       categoryDisplay: "GPU Extender",
+      dbCategory: "GPU Extender",
       typeMax: null,
       typeAmount: 0,
       listItems: [],
@@ -97,6 +110,7 @@ const initialState = {
     {
       category: "gpuholder",
       categoryDisplay: "GPU HOLDER",
+      dbCategory: "GPU HOLDER",
       typeMax: null,
       typeAmount: 0,
       listItems: [],
@@ -104,6 +118,7 @@ const initialState = {
     {
       category: "powersupply",
       categoryDisplay: "Power supply",
+      dbCategory: "Power supply",
       typeMax: null,
       typeAmount: 0,
       listItems: [],
@@ -111,6 +126,7 @@ const initialState = {
     {
       category: "case",
       categoryDisplay: "CASE",
+      dbCategory: "CASE",
       typeMax: null,
       typeAmount: 0,
       listItems: [],

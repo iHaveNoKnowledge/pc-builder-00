@@ -59,7 +59,7 @@ export const apiSliceDb = createApi({
   }),
   endpoints: (builder) => ({
     getDbItem: builder.query({
-      query: () => "/testProducts",
+      query: ({ category }) => `/testProducts?category=${category}`,
       providesTags: ["DbItems"], //Add Tag ให้กับข้อมูล]ที่ fetch มา
     }),
 
@@ -111,8 +111,12 @@ export const updateApi = createApi({
 
 //** ดึงข้อมูล
 export const { useGetPostsQuery, useLazyGetPostsQuery } = apiSlice;
-export const { useGetDbItemQuery, useGetDbItem2Query, useGetSetsQuery, useDeleteResourceMutation } =
-  apiSliceDb;
+export const {
+  useGetDbItemQuery,
+  useGetDbItem2Query,
+  useGetSetsQuery,
+  useDeleteResourceMutation,
+} = apiSliceDb;
 
 export const { useGetPhotosQuery } = apiSliceJSONPlaceHolder;
 

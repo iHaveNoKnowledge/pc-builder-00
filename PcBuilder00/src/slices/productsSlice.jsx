@@ -5,6 +5,7 @@ const initialState = {
   products: [],
   loading: false,
   error: null,
+  totalRows: 1,
 };
 
 const productsSlice = createSlice({
@@ -19,7 +20,8 @@ const productsSlice = createSlice({
       })
       .addMatcher(apiSliceDb.endpoints.getDbItem.matchFulfilled, (state, action) => {
         state.loading = false;
-        state.products = action.payload.recordsets.flat();
+        state.products = action.payload.data;
+        state.totalRows = action.payload.totalRows;
         state.error = null;
       })
       .addMatcher(apiSliceDb.endpoints.getDbItem.matchRejected, (state, action) => {

@@ -31,119 +31,8 @@ import { setDefault, setPageNum } from "../slices/paginationSlice";
 import { apiSlice } from "../features/api/dataApiSlice";
 import logoHeader from "../assets/itLogo-1.png";
 
-// const CustomPagination = ({ currentPage, totalPages, onChange, isLoading }) => {
-//   const [pageGroup, setPageGroup] = useState(1);
-//   const pagesPerGroup = 5; // จำนวนหน้าต่อกลุ่ม
-
-//   const handlePageChange = (event, page) => {
-//     onChange(event, page);
-//     const newPageGroup = Math.ceil(page / pagesPerGroup);
-//     setPageGroup(newPageGroup);
-//   };
-
-//   const startPage = (pageGroup - 1) * pagesPerGroup + 1;
-//   const endPage = Math.min(startPage + pagesPerGroup - 1, totalPages);
-
-//   const renderPagination = () => {
-//     if (isLoading) {
-//       // แสดงหมายเลขหน้าเป็นลำดับต่อไป
-//       return (
-//         <Pagination
-//           count={totalPages}
-//           page={currentPage}
-//           onChange={onChange}
-//           siblingCount={0}
-//           boundaryCount={1}
-//           showFirstButton
-//           showLastButton
-//           renderItem={(item) => <Pagination {...item} component="div" />}
-//         />
-//       );
-//     } else {
-//       // แสดงหมายเลขหน้าตามปกติ
-//       return (
-//         <Pagination
-//           count={totalPages}
-//           page={currentPage}
-//           onChange={onChange}
-//           showFirstButton
-//           showLastButton
-//         />
-//       );
-//     }
-//   };
-
-//   return (
-//     <Stack spacing={2}>
-//       {renderPagination()}
-
-//       {totalPages > pagesPerGroup && (
-//         <Pagination
-//           count={Math.ceil(totalPages / pagesPerGroup)}
-//           page={pageGroup}
-//           onChange={(_, page) => setPageGroup(page)}
-//           showFirstButton
-//           showLastButton
-//           renderItem={(item) => <Pagination {...item} component="div" />}
-//         />
-//       )}
-
-//       <div>
-//         Showing pages {startPage}-{endPage} of {totalPages}
-//       </div>
-//     </Stack>
-//   );
-// };
-
-// const BigPaginationTest = () => {
-//   const [page, setPage] = useState(1);
-//   const [displayData, setDisplayData] = useState([]);
-//   const [totalPages, setTotalPages] = useState(0);
-
-//   const { data, isLoading, isError } = useGetDbItem2Query(page);
-
-//   useEffect(() => {
-//     if (data) {
-//       console.log("testlimitedBig", data.recordset, "totalitem: ", data.totalItems);
-//       setDisplayData(data.recordset);
-//       setTotalPages(Math.ceil(data.totalItems / 6));
-//     }
-//   }, [data]);
-
-//   const handlePageChange = (event, page) => {
-//     setPage(page);
-//   };
-
-//   if (isLoading) {
-//     return <div>กำลังโหลด.....</div>;
-//   }
-
-//   if (isError) {
-//     return <div>เอ๋อเหรอ</div>;
-//   }
-
-//   return (
-//     <div>
-//       {displayData ? (
-//         displayData.map((item, index) => {
-//           return <div key={index}>{item.PRODUCT_CODE}</div>;
-//         })
-//       ) : (
-//         <>ว่างป่าว</>
-//       )}
-//       <div>จำนวนหน้าทั้งหมด: {totalPages}</div>
-//       <Pagination count={totalPages} page={page} onChange={handlePageChange} />
-//       <CustomPagination
-//         currentPage={page}
-//         totalPages={totalPages}
-//         isLoading={isLoading}
-//         onChange={handlePageChange}
-//       />
-//     </div>
-//   );
-// };
-
-function PostCard({ items }) {
+//* ------------------------------------------------Display*-----------------------------------------------------------------------------------------
+function PostCard({ items, totalRows }) {
   //* useState!!!!!!!!!!!!!!!!!!!
   // const [curItem, setCurItem] = useState(items.recordset);
   const [curItem, setCurItem] = useState(items);
@@ -304,7 +193,8 @@ function PostCard({ items }) {
   const curPageNum2 = useSelector((state) => state.pagination.currentPage);
   const [curPageNum, setCurPageNum] = useState(1);
   const cardsPerPage = 6;
-  const totalPages = Math.ceil(showProductWithFilter.length / cardsPerPage);
+  const totalPages = Math.ceil(totalRows / cardsPerPage);
+
   console.log(
     "จำนวนหน้าcurItem:",
     curItem.length,
@@ -474,7 +364,7 @@ function PostCard({ items }) {
           count={totalPages}
           variant="outlined"
           shape="rounded"
-          onChange={(event, pageNum) => handleChangePage(pageNum)}
+          onChange={(event, pageNum) => dispatch(setPageNum(pageNum))}
           defaultPage={1}
           page={curPageNum2}
         />
@@ -491,12 +381,14 @@ function PostCard({ items }) {
 //****************************  ส่วนนี้เป็นส่วน dynamic display based on api state/////////////////////////////////
 function SelectionProto01() {
   const dispatch = useDispatch();
-  const category = useSelector((state) => state.category.category);
+  const category = useSelector((state) => state.category.category || "cpu");
   const currentPage = useSelector((state) => state.pagination.currentPage);
-  const products = useSelector((state) => state.products.products);
+  const { products, totalRows, loading } = useSelector((state) => state.products);
+  const partData = useSelector((state) => state.noApiCustomize.partData);
   const startPage = (currentPage - 1) * 6;
   const pageEnd = currentPage * 6;
   console.log("category:", startPage, pageEnd, 6, category);
+  const { dbCategory } = partData.find((item) => item.category === category);
   ///* เอา ค่า boolean status api มา ในหลายๆกรณี
   // const {
   //   data, //dataที่ได้จาก api เก็บไว้ในตัวแปร posts
@@ -512,20 +404,11 @@ function SelectionProto01() {
   //   }
   // );
   const { isLoading, isSuccess, isError, error } = useGetDbItemQuery(
-    { startPage, pageEnd, perPage: 10, category },
+    { startPage, pageEnd, perPage: 10, category, currentPage },
     {
       refetchOnMountOrArgChange: true,
     }
   );
-
-  // const { data: posts, loading: isLoading, error: isError } = useSelector(
-  //   (state) => state.products
-  // );
-
-  // useEffect(() => {
-  //   dispatch(apiSlice.endpoints.getPosts({ startPage, pageEnd, peraPage: 10, category }));
-  //   // useGetPostsQuery({ startPage, pageEnd, peraPage: 10, category });
-  // }, [dispatch]);
 
   let postContent;
 
@@ -545,7 +428,7 @@ function SelectionProto01() {
     console.log("data เป็นไง", products, "postsได้ยัง: ", products);
     // dispatch(getProducts(posts));
     ///เอา [posts] ซึ่งเป็น array data ที่ได้จากการ fetchจาก endpoints ที่เราเลือก มาใน dataApiSLice เอามาทำการ map() แล้วส่งไป เป็น prop ให้ตัวหลักข้างบนที่เราจะแสดงผล
-    postContent = <PostCard items={products} />;
+    postContent = <PostCard items={products} totalRows={totalRows} />;
     // postContent = <>สำเร็จ</>;
 
     //** กรณีError
@@ -563,4 +446,5 @@ function SelectionProto01() {
   ///* อะไรเกิดขึ้นมันจะมา return เพื่อแสดงผลตรงนี้
   return <div>{postContent}</div>;
 }
+
 export default SelectionProto01;
