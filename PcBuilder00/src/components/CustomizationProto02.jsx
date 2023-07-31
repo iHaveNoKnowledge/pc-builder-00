@@ -255,7 +255,7 @@ const CustomizationProto02 = () => {
                                     </Typography>
                                   </Box>
                                 </Box>
-                                <Box sx={{ height: "30px" }}></Box>
+                                <Box sx={{ height: "10px" }}></Box>
                               </ListItemButton>
                             </ListItem>
                             {/* {miniItem.listItems.length > 1 && <Divider />} */}

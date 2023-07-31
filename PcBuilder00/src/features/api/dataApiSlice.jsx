@@ -57,9 +57,11 @@ export const apiSliceDb = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl,
   }),
+  tagTypes: ["Sets"],
   endpoints: (builder) => ({
     getDbItem: builder.query({
-      query: ({ category }) => `/testProducts?category=${category}`,
+      query: ({ dbCategory, currentPage }) =>
+        `/testProducts?category=${dbCategory}&page=${currentPage}`,
       providesTags: ["DbItems"], //Add Tag ให้กับข้อมูล]ที่ fetch มา
     }),
 
@@ -71,6 +73,15 @@ export const apiSliceDb = createApi({
     getSets: builder.query({
       query: () => "/sets",
       providesTags: ["Sets"], //Add Tag ให้กับข้อมูล]ที่ fetch มา
+    }),
+
+    updateData: builder.mutation({
+      query: (data) => ({
+        url: "/create-set",
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["Sets"],
     }),
 
     deleteResource: builder.mutation({

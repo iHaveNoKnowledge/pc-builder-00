@@ -11,6 +11,7 @@ import userFilterReducer from "./slices/userFilterSlice";
 import reportReducer from "./slices/reportSlice";
 import paginationReducer from "./slices/paginationSlice";
 import productsReducer from "./slices/productsSlice";
+import setsReducer from "./slices/setsSlice";
 
 export const store = configureStore({
   reducer: {
@@ -23,6 +24,7 @@ export const store = configureStore({
     report: reportReducer,
     pagination: paginationReducer,
     products: productsReducer,
+    sets: setsReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(

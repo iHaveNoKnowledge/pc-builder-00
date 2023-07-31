@@ -65,6 +65,11 @@ const theme = createTheme({
 export default function SetList() {
   const partData = useSelector((state) => state.noApiCustomize.partData);
   const products = useSelector((state) => state.products.products);
+  const { sets, totalRows } = useSelector((state) => state.sets);
+  console.log(
+    "ทำไมมันว่าง: ",
+    useSelector((state) => state.sets)
+  );
 
   const dispatch = useDispatch();
 
@@ -74,41 +79,39 @@ export default function SetList() {
   let displayDataList = false;
 
   //* นำ api มาใช้
-  const { data: dataJson, error, isLoading, isSuccess } = useGetSetsQuery();
+  const { error, isLoading, isSuccess } = useGetSetsQuery();
   const [sortedData, setSortedData] = useState([]);
-
-  const { data } = useGetDbItemQuery();
   const posts = products;
-  console.log("posts: ", posts);
+  // console.log("posts: ", posts);
 
   const [openSubTables, setOpenSubTables] = useState([]);
 
-  const sortData = (data) => {
-    const mutableData = [...data];
-    return mutableData.sort((a, b) => new Date(b.timeStamp) - new Date(a.timeStamp));
-  };
+  // const sortData = (setsData) => {
+  //   const mutableData = [...setsData];
+  //   return mutableData.sort((a, b) => new Date(b.timeStamp) - new Date(a.timeStamp));
+  // };
 
   //* Function SearchSets
   const [query, setQuery] = useState("");
   const handleSearch = (e) => {
     if (query.length > 0) {
       console.log("searchว่า: ", query);
-      const searchResult = sortData(dataJson).filter((item) => item.setName.includes(query));
+      const searchResult = sets.filter((item) => item.setName.includes(query));
       console.log("กดsearch แล้วได้ไรมา", searchResult);
       setSortedData(searchResult);
     } else {
-      setSortedData(sortData(dataJson));
+      setSortedData(sets);
     }
   };
-  console.log("dataJson: ", dataJson);
+  console.log("sets: ", sets);
   useEffect(() => {
-    if (dataJson) {
-      setSortedData(sortData(dataJson));
+    if (sets) {
+      setSortedData(sets);
     }
     if (!open) {
       setQuery("");
     }
-  }, [isSuccess, dataJson, open]);
+  }, [isSuccess, open]);
 
   // onclick เปิด Dialog //
   const handleClickOpen = () => {
@@ -171,10 +174,7 @@ export default function SetList() {
     setCurPageNum(pageNum);
   };
 
-  const dataPaginated = sortedData.slice(
-    (curPageNum - 1) * cardsPerPage,
-    curPageNum * cardsPerPage
-  );
+  const dataPaginated = sets.slice((curPageNum - 1) * cardsPerPage, curPageNum * cardsPerPage);
 
   //* render jsx
   return (

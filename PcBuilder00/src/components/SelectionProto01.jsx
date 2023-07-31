@@ -29,6 +29,7 @@ import { getCategorizedData } from "../slices/userFilterSlice";
 import Bottom from "./BottomComponent";
 import { setDefault, setPageNum } from "../slices/paginationSlice";
 import { apiSlice } from "../features/api/dataApiSlice";
+import { changeCategory } from "../slices/categorySlice";
 import logoHeader from "../assets/itLogo-1.png";
 
 //* ------------------------------------------------Display*-----------------------------------------------------------------------------------------
@@ -43,9 +44,11 @@ function PostCard({ items, totalRows }) {
   //* useSelector!!!!!!!!!!!!!!!!!!!!!
   const products = useSelector((state) => state.products.products);
 
+  //* ตรงนี้ขาดไม่ได้
   useEffect(() => {
     setCurItem(products);
   }, [products]);
+
   // *นี่คือ dispatch ข้างในบรรจุ action
   const handleChange = (item) => {
     dispatch(addProduct(item));
@@ -62,9 +65,7 @@ function PostCard({ items, totalRows }) {
 
   //* useSelector!!!!!!!!!!!!!!!
   const category = useSelector((state) => state.category.category);
-
   const parts = useSelector((state) => state.noApiCustomize.partData);
-
   const filters = useSelector((state) => state.userFilter.filtersSet);
   const expression = useSelector((state) => state.userFilter.expression);
   const textSearch = useSelector((state) => state.userFilter.textSearch);
@@ -177,7 +178,7 @@ function PostCard({ items, totalRows }) {
       item.productDescription.toLowerCase().includes(textSearch.toLowerCase())
     );
   });
-
+  console.log("บรรทัดที่ 180 category: ", category);
   //* นำ flter มา filter showproduct
   const filterProducts = (products, selectedOpts, expression) => {
     const filteredProducts = products.filter((product) => eval(expression));
@@ -216,6 +217,7 @@ function PostCard({ items, totalRows }) {
   //* useEffect //ถ้าuseEffect รับ showProduct ตัวนี้ไป param2 มันจะ inf loop จนพัง
   useEffect(() => {
     dispatch(getCategorizedData({ showProduct, category }));
+
     if (curPageNum2 > totalPages) {
       console.log("หน้าปัจจุบัน", curPageNum2, ">", totalPages);
       setCurPageNum(1);
@@ -364,7 +366,7 @@ function PostCard({ items, totalRows }) {
           count={totalPages}
           variant="outlined"
           shape="rounded"
-          onChange={(event, pageNum) => dispatch(setPageNum(pageNum))}
+          onChange={(event, pageNum) => handleChangePage(pageNum)}
           defaultPage={1}
           page={curPageNum2}
         />
@@ -381,14 +383,16 @@ function PostCard({ items, totalRows }) {
 //****************************  ส่วนนี้เป็นส่วน dynamic display based on api state/////////////////////////////////
 function SelectionProto01() {
   const dispatch = useDispatch();
-  const category = useSelector((state) => state.category.category || "cpu");
+
+  const category = useSelector((state) => state.category.category);
+  if (!category) dispatch(changeCategory("cpu"));
   const currentPage = useSelector((state) => state.pagination.currentPage);
   const { products, totalRows, loading } = useSelector((state) => state.products);
   const partData = useSelector((state) => state.noApiCustomize.partData);
   const startPage = (currentPage - 1) * 6;
   const pageEnd = currentPage * 6;
-  console.log("category:", startPage, pageEnd, 6, category);
   const { dbCategory } = partData.find((item) => item.category === category);
+
   ///* เอา ค่า boolean status api มา ในหลายๆกรณี
   // const {
   //   data, //dataที่ได้จาก api เก็บไว้ในตัวแปร posts
@@ -404,7 +408,7 @@ function SelectionProto01() {
   //   }
   // );
   const { isLoading, isSuccess, isError, error } = useGetDbItemQuery(
-    { startPage, pageEnd, perPage: 10, category, currentPage },
+    { dbCategory, currentPage },
     {
       refetchOnMountOrArgChange: true,
     }
