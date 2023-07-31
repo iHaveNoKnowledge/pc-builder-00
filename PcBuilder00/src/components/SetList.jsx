@@ -66,10 +66,6 @@ export default function SetList() {
   const partData = useSelector((state) => state.noApiCustomize.partData);
   const products = useSelector((state) => state.products.products);
   const { sets, totalRows } = useSelector((state) => state.sets);
-  console.log(
-    "ทำไมมันว่าง: ",
-    useSelector((state) => state.sets)
-  );
 
   const dispatch = useDispatch();
 
@@ -135,9 +131,11 @@ export default function SetList() {
     const itemsSet = sortedData[index1].partData.flatMap((category) =>
       category.listItems.map((item) => item)
     );
+    console.log("itemsSet: ", itemsSet);
 
     const itemsSetID = itemsSet.map((item) => item.id);
     const amountPerItem = itemsSet.map((item) => item.selectAmount);
+    //todo line139: ตรงนี้ที่ทำให้ itemsToAdd รับค่าจาก posts ซึ่ง posts ไม่มีข้อมูลมากพอ ต้องเอา set มาแล้วดึงค่าsku ข้างในทั้งหมดแล้วแล้วเอารายละเอียดสินค้าออกมา
     const itemsToAdd = posts
       .filter((item) => itemsSetID.includes(item.id))
       .map((item, index) => ({ ...item, selectAmount: amountPerItem[index] }));
