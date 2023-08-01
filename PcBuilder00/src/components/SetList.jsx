@@ -30,12 +30,13 @@ import SearchIcon from "@mui/icons-material/Search";
 import {
   useGetPostsQuery,
   useGetDbItemQuery,
-  useGetSetsQuery,
+  useLazyGetSetsQuery,
   useDeleteResourceMutation,
 } from "../features/api/dataApiSlice";
 import { addProduct, resetCustomized } from "../slices/cutomizeSliceNoApi";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import Pagination from "@mui/material/Pagination";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const theme = createTheme({
   palette: {
@@ -65,7 +66,7 @@ const theme = createTheme({
 export default function SetList() {
   const partData = useSelector((state) => state.noApiCustomize.partData);
   const products = useSelector((state) => state.products.products);
-  const { sets, totalRows } = useSelector((state) => state.sets);
+  // const { sets, totalRows, loading } = useSelector((state) => state.sets);
 
   const dispatch = useDispatch();
 
@@ -75,10 +76,12 @@ export default function SetList() {
   let displayDataList = false;
 
   //* นำ api มาใช้
-  const { error, isLoading, isSuccess } = useGetSetsQuery();
+  const [getSetsData, { data: sets, error, isLoading, isSuccess, isUninitialized }] =
+    useLazyGetSetsQuery({ skipToken: false });
   const [sortedData, setSortedData] = useState([]);
+  const [rows, setRows] = useState(0);
   const posts = products;
-  // console.log("posts: ", posts);
+  console.log("sets: ", sets?.updatedRecordset);
 
   const [openSubTables, setOpenSubTables] = useState([]);
 
@@ -92,26 +95,30 @@ export default function SetList() {
   const handleSearch = (e) => {
     if (query.length > 0) {
       console.log("searchว่า: ", query);
-      const searchResult = sets.filter((item) => item.setName.includes(query));
+      const searchResult = sets.updatedRecordset.filter((item) => item.setName.includes(query));
       console.log("กดsearch แล้วได้ไรมา", searchResult);
       setSortedData(searchResult);
     } else {
-      setSortedData(sets);
+      setSortedData(sets?.updatedRecordset);
     }
   };
-  console.log("sets: ", sets);
+  console.log("sets: ", sets?.updatedRecordset);
   useEffect(() => {
-    if (sets) {
-      setSortedData(sets);
-    }
     if (!open) {
       setQuery("");
     }
-  }, [isSuccess, open]);
+  }, [open]);
+  useEffect(() => {
+    if (sets) {
+      setSortedData(sets.updatedRecordset);
+      setRows(sets.totalRows);
+    }
+  }, [isSuccess]);
 
   // onclick เปิด Dialog //
   const handleClickOpen = () => {
     setOpen(true);
+    getSetsData();
   };
 
   const handleClose = (e) => {
@@ -172,7 +179,14 @@ export default function SetList() {
     setCurPageNum(pageNum);
   };
 
-  const dataPaginated = sets.slice((curPageNum - 1) * cardsPerPage, curPageNum * cardsPerPage);
+  const dataPaginated = sortedData.slice(
+    (curPageNum - 1) * cardsPerPage,
+    curPageNum * cardsPerPage
+  );
+
+  // useEffect(() => {
+  //   setSortedData(dataPaginated);
+  // }, []);
 
   //* render jsx
   return (
@@ -200,6 +214,7 @@ export default function SetList() {
           <TableContainer component={Paper}>
             <Box sx={{ display: "flex", justifyContent: "center", marginTop: 2, marginInline: 2 }}>
               <TextField
+              
                 fullWidth
                 placeholder="ค้นหาเซ็ตคอมประกอบ"
                 type="search"
@@ -243,11 +258,10 @@ export default function SetList() {
               </TableHead>
               <TableBody>
                 {/* ต้องเอา API มาแทนค่าตรงนี้ */}
-                {isLoading ? (
-                  <>Loading</>
-                ) : (
+                {isLoading && <CircularProgress />}
+                {sets && (
                   <React.Fragment>
-                    {dataPaginated.map((item, index) => {
+                    {dataPaginated?.map((item, index) => {
                       const isOpen = openSubTables[index];
 
                       let i = 0;

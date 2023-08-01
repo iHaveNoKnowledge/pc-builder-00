@@ -126,6 +126,7 @@ export const {
   useGetDbItemQuery,
   useGetDbItem2Query,
   useGetSetsQuery,
+  useLazyGetSetsQuery,
   useDeleteResourceMutation,
 } = apiSliceDb;
 

@@ -33,20 +33,21 @@ import { changeCategory } from "../slices/categorySlice";
 import logoHeader from "../assets/itLogo-1.png";
 
 //* ------------------------------------------------Display*-----------------------------------------------------------------------------------------
-function PostCard({ items, totalRows }) {
+function PostCard({ totalRows }) {
+  //* useSelector!!!!!!!!!!!!!!!!!!!!!
+  const products = useSelector((state) => state.products.products);
   //* useState!!!!!!!!!!!!!!!!!!!
   // const [curItem, setCurItem] = useState(items.recordset);
-  const [curItem, setCurItem] = useState(items);
+  console.log("บรรทัด39 :");
+  const [curItem, setCurItem] = useState(products || []);
   console.log("curItemใช้ได้ยัง :", curItem);
   //* dispatchZone!!!!!!!!!
   const dispatch = useDispatch();
 
-  //* useSelector!!!!!!!!!!!!!!!!!!!!!
-  const products = useSelector((state) => state.products.products);
-
   //* ตรงนี้ขาดไม่ได้
   useEffect(() => {
     setCurItem(products);
+    dispatch(getCategorizedData({ showProduct, category }));
   }, [products]);
 
   // *นี่คือ dispatch ข้างในบรรจุ action
@@ -216,14 +217,12 @@ function PostCard({ items, totalRows }) {
   );
   //* useEffect //ถ้าuseEffect รับ showProduct ตัวนี้ไป param2 มันจะ inf loop จนพัง
   useEffect(() => {
-    dispatch(getCategorizedData({ showProduct, category }));
-
     if (curPageNum2 > totalPages) {
       console.log("หน้าปัจจุบัน", curPageNum2, ">", totalPages);
       setCurPageNum(1);
       dispatch(setDefault());
     }
-  }, [category, parts, products]);
+  }, [curPageNum2]);
 
   //* imgLoading
   const [isLoading, setIsLoading] = useState(true);
@@ -387,39 +386,25 @@ function SelectionProto01() {
   const category = useSelector((state) => state.category.category);
   if (!category) dispatch(changeCategory("cpu"));
   const currentPage = useSelector((state) => state.pagination.currentPage);
-  const { products, totalRows, loading } = useSelector((state) => state.products);
+  const { products, totalRows, loading, error } = useSelector((state) => state.products);
   const partData = useSelector((state) => state.noApiCustomize.partData);
   const startPage = (currentPage - 1) * 6;
   const pageEnd = currentPage * 6;
   const { dbCategory } = partData.find((item) => item.category === category);
 
-  ///* เอา ค่า boolean status api มา ในหลายๆกรณี
-  // const {
-  //   data, //dataที่ได้จาก api เก็บไว้ในตัวแปร posts
-  //   isLoading,
-  //   isSuccess,
-  //   isError,
-  //   error,
-  //   refetch,
-  // } = useGetDbItemQuery(
-  //   { startPage, pageEnd, perPage: 10, category },
-  //   {
-  //     refetchOnMountOrArgChange: true,
-  //   }
-  // );
-  const { isLoading, isSuccess, isError, error } = useGetDbItemQuery(
+  const { isLoading, isSuccess, isError } = useGetDbItemQuery(
     { dbCategory, currentPage },
     {
       refetchOnMountOrArgChange: true,
     }
   );
 
-  let postContent;
+  let cardContent;
 
   //** กรณีกำลังโหลด
   if (isLoading) {
-    ///* ให้เก็บหน้า html ไว้ใน postContent ดังนี้เอาไว้ return ภายหลัง
-    postContent = (
+    ///* ให้เก็บหน้า html ไว้ใน cardContent ดังนี้เอาไว้ return ภายหลัง
+    cardContent = (
       <div className="d-flex justify-content-center">
         <div className="spinner-border" role="status">
           <span className="visually-hidden">Loading...</span>
@@ -432,13 +417,13 @@ function SelectionProto01() {
     console.log("data เป็นไง", products, "postsได้ยัง: ", products);
     // dispatch(getProducts(posts));
     ///เอา [posts] ซึ่งเป็น array data ที่ได้จากการ fetchจาก endpoints ที่เราเลือก มาใน dataApiSLice เอามาทำการ map() แล้วส่งไป เป็น prop ให้ตัวหลักข้างบนที่เราจะแสดงผล
-    postContent = <PostCard items={products} totalRows={totalRows} />;
-    // postContent = <>สำเร็จ</>;
+    cardContent = <PostCard items={products} totalRows={totalRows} />;
+    // cardContent = <>สำเร็จ</>;
 
     //** กรณีError
   } else if (isError) {
-    ///* postContent เก็บ div ก้อนนึง ทำหน้าที่โชว alert
-    postContent = (
+    ///* cardContent เก็บ div ก้อนนึง ทำหน้าที่โชว alert
+    cardContent = (
       <div>
         <Stack sx={{ width: "100%" }} spacing={2}>
           <Alert severity="error">{error}</Alert>
@@ -448,7 +433,7 @@ function SelectionProto01() {
     );
   }
   ///* อะไรเกิดขึ้นมันจะมา return เพื่อแสดงผลตรงนี้
-  return <div>{postContent}</div>;
+  return <div>{cardContent}</div>;
 }
 
 export default SelectionProto01;

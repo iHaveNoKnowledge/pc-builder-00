@@ -24,7 +24,7 @@ export const store = configureStore({
     report: reportReducer,
     pagination: paginationReducer,
     products: productsReducer,
-    sets: setsReducer,
+    // sets: setsReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(

@@ -1,11 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-
 const initialState = {
-  category: "",
+  category: "cpu",
 };
-
-
 
 export const categorySlice = createSlice({
   name: "category",
