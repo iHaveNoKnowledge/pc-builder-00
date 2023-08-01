@@ -94,13 +94,14 @@ export const filterSlice = createSlice({
     getCategorizedData: (state, action) => {
       //ใช้รับ showProduct จาก selectionProto(ภายในuseEffect), showProductเป็น รายการproducts ที่ได้ผ่านจากการเลือก category มาแล้ว ถือว่าเป็น categorizedData
       const { showProduct: categorizedData, category } = action.payload;
+      console.log("categorizedData", categorizedData);
 
       state.filterOptions = null;
       ///สร้าง options ให้ dropdown
       if (checkCategory(category) === "cpu") {
-        const cpuBrandOptions = [...new Set(categorizedData.map((item) => item.compatible))];
-        const cpuModelOptions = [...new Set(categorizedData.map((item) => item.model))];
-        const cpuSocketOptions = [...new Set(categorizedData.map((item) => item.socket))];
+        const cpuBrandOptions = [...new Set(categorizedData?.map((item) => item.compatible))];
+        const cpuModelOptions = [...new Set(categorizedData?.map((item) => item.model))];
+        const cpuSocketOptions = [...new Set(categorizedData?.map((item) => item.socket))];
 
         state.filterOptions = [
           { filterName: "brand", value: cpuBrandOptions.sort() },

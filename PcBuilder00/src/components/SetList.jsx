@@ -37,6 +37,7 @@ import { addProduct, resetCustomized } from "../slices/cutomizeSliceNoApi";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import Pagination from "@mui/material/Pagination";
 import CircularProgress from "@mui/material/CircularProgress";
+import { throttle, debounce } from "lodash";
 
 const theme = createTheme({
   palette: {
@@ -110,11 +111,11 @@ export default function SetList() {
     }
   }, [open]);
   useEffect(() => {
-    if (sets) {
+    if (isSuccess && sets) {
       setSortedData(sets.updatedRecordset);
       setRows(sets.totalRows);
     }
-  }, [isSuccess]);
+  }, [isSuccess, sets]);
 
   // onclick เปิด Dialog
   const handleClickOpen = () => {
@@ -192,7 +193,13 @@ export default function SetList() {
     }
   }, [dataPaginated]);
 
+  const handleThrottledChange = throttle((value) => {
+    setQuery(value);
+    console.log("Throttled action:", value);
+  }, 1000);
+
   console.log("มาถึงนี่ไหม");
+
   //* render jsx
   return (
     <ThemeProvider theme={theme}>
@@ -225,7 +232,7 @@ export default function SetList() {
                 id="input-with-icon-textfield"
                 value={query}
                 onChange={(event) => {
-                  setQuery(event.target.value);
+                  handleThrottledChange(event.target.value);
                 }}
                 // label={`Product ${currentCategory}`}
                 InputProps={{

@@ -33,21 +33,21 @@ import { changeCategory } from "../slices/categorySlice";
 import logoHeader from "../assets/itLogo-1.png";
 
 //* ------------------------------------------------Display*-----------------------------------------------------------------------------------------
-function PostCard({ totalRows }) {
-  //* useSelector!!!!!!!!!!!!!!!!!!!!!
-  const products = useSelector((state) => state.products.products);
+function PostCard({ items, totalRows }) {
   //* useState!!!!!!!!!!!!!!!!!!!
   // const [curItem, setCurItem] = useState(items.recordset);
   console.log("บรรทัด39 :");
-  const [curItem, setCurItem] = useState(products || []);
+  const [curItem, setCurItem] = useState(items);
   console.log("curItemใช้ได้ยัง :", curItem);
   //* dispatchZone!!!!!!!!!
   const dispatch = useDispatch();
 
+  //* useSelector!!!!!!!!!!!!!!!!!!!!!
+  const products = useSelector((state) => state.products.products);
+
   //* ตรงนี้ขาดไม่ได้
   useEffect(() => {
     setCurItem(products);
-    dispatch(getCategorizedData({ showProduct, category }));
   }, [products]);
 
   // *นี่คือ dispatch ข้างในบรรจุ action
@@ -71,38 +71,59 @@ function PostCard({ totalRows }) {
   const expression = useSelector((state) => state.userFilter.expression);
   const textSearch = useSelector((state) => state.userFilter.textSearch);
 
-  // Find socket and typeRAM from the mainboard
-  let socket_mb = "",
-    typeRAM_mb = "";
+  //* เงื่อนไขcompatibility
+  ///หาเงื่อนไข จากการเลือก mainboard
+  let socket_mb, typeRAM_mb;
   parts.find((item) => {
-    if (item.category.toLowerCase() === "mb" && item.listItems.length !== 0) {
-      ({ socket: socket_mb, typeRam: typeRAM_mb } = item.listItems[0]);
-      return true;
+    if (item.category.toLowerCase() === "mb") {
+      if (item.listItems.length !== 0) {
+        socket_mb = item.listItems[0].socket;
+        typeRAM_mb = item.listItems[0].typeRam;
+      } else {
+        socket_mb = "";
+        typeRAM_mb = "";
+      }
+      return item.listItems[0];
     }
   });
 
-  // Find socket from the CPU
-  let socket_CPU = "";
+  ///* หาเงื่อนไข จากการเลือก CPU
+  let socket_CPU;
   parts.find((item) => {
-    if (item.category.toLowerCase() === "cpu" && item.listItems.length !== 0) {
-      socket_CPU = item.listItems[0].socket;
-      return true;
+    if (item.category.toLowerCase() === "cpu") {
+      if (item.listItems.length !== 0) {
+        socket_CPU = item.listItems[0].socket;
+      } else {
+        socket_CPU = "";
+      }
+      return item;
+    }
+  });
+  // const [CPU] = parts.filter((item) => item.category.toLowerCase().includes("cpu"));
+  // const { listItems: socket_CPU } = CPU;
+  // console.log("socket_CPU:", socket_CPU[0].category);
+
+  ///* หาเงื่อนไข จากการเลือก RAM
+  let typeRAM_RAM;
+  parts.find((item) => {
+    if (item.category.toLowerCase().replace(" ", "") === "ram") {
+      if (item.listItems.length !== 0) {
+        typeRAM_RAM = item.listItems[0].typeRam;
+      } else {
+        typeRAM_RAM = "";
+      }
+      return item.listItems[0];
     }
   });
 
-  // Find typeRAM from the RAM
-  let typeRAM_RAM = "";
-  parts.find((item) => {
-    if (item.category.toLowerCase().replace(" ", "") === "ram" && item.listItems.length !== 0) {
-      typeRAM_RAM = item.listItems[0].typeRam;
-      return true;
-    }
-  });
-
-  // Filter products based on selected mainboard, CPU, and RAM
+  ///**  สำหรับโชวสินค้าให้เลือกตามหมวดหมู่
+  //* กรองเอาเฉพาะสินค้าCPU
   const CPU_display = curItem.filter((item) => {
+    //ตรวจสอบว่า เมนบอร์ดตอนนี้ถูกเลือกหรือยัง ถ้าถูกเลือกแล้ว จะทำให้ CPU ที่โชว์นั้นต้องโชว์อย่างมีเงื่อนไข
     if (socket_mb === "") {
+      //กรณียังที่ไม่ได้เลือกเมนบอร์ด ให้คืนค่าสินค้าสินค้าทุกตัวที่มีประเภทเป็น CPU
       return item.category.toLowerCase().replace(" ", "") === "cpu";
+      //กรณีที่เลือกเมนบอร์ด ทำให้ "socket_mb" ไม่ใช่ค่าว่าง ให้คืนค่าสินค้าที่มีประเภท CPU ทุกตัว แต่ทุกตัวที่คืนมาต้องมีค่า socket ตาม  socket_mb
     } else if (socket_mb !== "") {
       return item.category.toLowerCase().replace(" ", "") === "cpu" && item.socket === socket_mb;
     } else {
@@ -110,14 +131,16 @@ function PostCard({ totalRows }) {
     }
   });
 
+  //* กรองสินค้าMB
   const mainBoard_display = curItem.filter((item) => {
     if (socket_CPU === "" && typeRAM_RAM === "") {
       return item.category.toLowerCase().replace(" ", "") === "mb";
     } else if (socket_CPU === "" && typeRAM_RAM !== "") {
+      console.log(`CPUยังไม่เลือก แต่เลือก RAM`);
       return item.category.toLowerCase().replace(" ", "") === "mb" && item.typeRam === typeRAM_RAM;
     } else if (socket_CPU !== "" && typeRAM_RAM === "") {
       return item.category.toLowerCase().replace(" ", "") === "mb" && item.socket === socket_CPU;
-    } else if (socket_CPU !== "" && typeRAM_RAM !== "") {
+    } else {
       return (
         item.category.toLowerCase().replace(" ", "") === "mb" &&
         item.socket === socket_CPU &&
@@ -126,6 +149,7 @@ function PostCard({ totalRows }) {
     }
   });
 
+  //* กรองสินค้าRAM
   const RAM_display = curItem.filter((item) => {
     if (typeRAM_mb === "") {
       return item.category.toLowerCase().replace(" ", "") === "ram";
@@ -175,7 +199,7 @@ function PostCard({ totalRows }) {
   const curPageNum2 = useSelector((state) => state.pagination.currentPage);
   const [curPageNum, setCurPageNum] = useState(1);
   const cardsPerPage = 6;
-  const totalPages = Math.ceil(totalRows / cardsPerPage);
+  const totalPages = Math.ceil(showProductWithFilter.length / cardsPerPage);
 
   console.log(
     "จำนวนหน้าcurItem:",
@@ -197,12 +221,14 @@ function PostCard({ totalRows }) {
   );
   //* useEffect //ถ้าuseEffect รับ showProduct ตัวนี้ไป param2 มันจะ inf loop จนพัง
   useEffect(() => {
+    dispatch(getCategorizedData({ showProduct, category }));
+
     if (curPageNum2 > totalPages) {
       console.log("หน้าปัจจุบัน", curPageNum2, ">", totalPages);
       setCurPageNum(1);
       dispatch(setDefault());
     }
-  }, [curPageNum2]);
+  }, [category, parts, products]);
 
   //* imgLoading
   const [isLoading, setIsLoading] = useState(true);
@@ -382,7 +408,7 @@ function SelectionProto01() {
   let cardContent;
 
   //** กรณีกำลังโหลด
-  if (isLoading) {
+  if (loading) {
     ///* ให้เก็บหน้า html ไว้ใน cardContent ดังนี้เอาไว้ return ภายหลัง
     cardContent = (
       <div className="d-flex justify-content-center">
@@ -392,7 +418,7 @@ function SelectionProto01() {
       </div>
     );
     //** กรณีโหลดสำเร็จ
-  } else if (isSuccess) {
+  } else if (products) {
     // const posts = data.recordsets.flat();
     console.log("data เป็นไง", products, "postsได้ยัง: ", products);
     // dispatch(getProducts(posts));
