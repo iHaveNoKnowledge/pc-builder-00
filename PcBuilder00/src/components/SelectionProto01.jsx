@@ -71,59 +71,38 @@ function PostCard({ totalRows }) {
   const expression = useSelector((state) => state.userFilter.expression);
   const textSearch = useSelector((state) => state.userFilter.textSearch);
 
-  //* เงื่อนไขcompatibility
-  ///หาเงื่อนไข จากการเลือก mainboard
-  let socket_mb, typeRAM_mb;
+  // Find socket and typeRAM from the mainboard
+  let socket_mb = "",
+    typeRAM_mb = "";
   parts.find((item) => {
-    if (item.category.toLowerCase() === "mb") {
-      if (item.listItems.length !== 0) {
-        socket_mb = item.listItems[0].socket;
-        typeRAM_mb = item.listItems[0].typeRam;
-      } else {
-        socket_mb = "";
-        typeRAM_mb = "";
-      }
-      return item.listItems[0];
+    if (item.category.toLowerCase() === "mb" && item.listItems.length !== 0) {
+      ({ socket: socket_mb, typeRam: typeRAM_mb } = item.listItems[0]);
+      return true;
     }
   });
 
-  ///* หาเงื่อนไข จากการเลือก CPU
-  let socket_CPU;
+  // Find socket from the CPU
+  let socket_CPU = "";
   parts.find((item) => {
-    if (item.category.toLowerCase() === "cpu") {
-      if (item.listItems.length !== 0) {
-        socket_CPU = item.listItems[0].socket;
-      } else {
-        socket_CPU = "";
-      }
-      return item;
-    }
-  });
-  // const [CPU] = parts.filter((item) => item.category.toLowerCase().includes("cpu"));
-  // const { listItems: socket_CPU } = CPU;
-  // console.log("socket_CPU:", socket_CPU[0].category);
-
-  ///* หาเงื่อนไข จากการเลือก RAM
-  let typeRAM_RAM;
-  parts.find((item) => {
-    if (item.category.toLowerCase().replace(" ", "") === "ram") {
-      if (item.listItems.length !== 0) {
-        typeRAM_RAM = item.listItems[0].typeRam;
-      } else {
-        typeRAM_RAM = "";
-      }
-      return item.listItems[0];
+    if (item.category.toLowerCase() === "cpu" && item.listItems.length !== 0) {
+      socket_CPU = item.listItems[0].socket;
+      return true;
     }
   });
 
-  ///**  สำหรับโชวสินค้าให้เลือกตามหมวดหมู่
-  //* กรองเอาเฉพาะสินค้าCPU
+  // Find typeRAM from the RAM
+  let typeRAM_RAM = "";
+  parts.find((item) => {
+    if (item.category.toLowerCase().replace(" ", "") === "ram" && item.listItems.length !== 0) {
+      typeRAM_RAM = item.listItems[0].typeRam;
+      return true;
+    }
+  });
+
+  // Filter products based on selected mainboard, CPU, and RAM
   const CPU_display = curItem.filter((item) => {
-    //ตรวจสอบว่า เมนบอร์ดตอนนี้ถูกเลือกหรือยัง ถ้าถูกเลือกแล้ว จะทำให้ CPU ที่โชว์นั้นต้องโชว์อย่างมีเงื่อนไข
     if (socket_mb === "") {
-      //กรณียังที่ไม่ได้เลือกเมนบอร์ด ให้คืนค่าสินค้าสินค้าทุกตัวที่มีประเภทเป็น CPU
       return item.category.toLowerCase().replace(" ", "") === "cpu";
-      //กรณีที่เลือกเมนบอร์ด ทำให้ "socket_mb" ไม่ใช่ค่าว่าง ให้คืนค่าสินค้าที่มีประเภท CPU ทุกตัว แต่ทุกตัวที่คืนมาต้องมีค่า socket ตาม  socket_mb
     } else if (socket_mb !== "") {
       return item.category.toLowerCase().replace(" ", "") === "cpu" && item.socket === socket_mb;
     } else {
@@ -131,21 +110,22 @@ function PostCard({ totalRows }) {
     }
   });
 
-  //* กรองสินค้าMB
   const mainBoard_display = curItem.filter((item) => {
     if (socket_CPU === "" && typeRAM_RAM === "") {
       return item.category.toLowerCase().replace(" ", "") === "mb";
     } else if (socket_CPU === "" && typeRAM_RAM !== "") {
-      console.log(`CPUยังไม่เลือก แต่เลือก RAM`);
       return item.category.toLowerCase().replace(" ", "") === "mb" && item.typeRam === typeRAM_RAM;
     } else if (socket_CPU !== "" && typeRAM_RAM === "") {
       return item.category.toLowerCase().replace(" ", "") === "mb" && item.socket === socket_CPU;
-    } else {
-      return item.category === "mb" && item.socket === socket_CPU && item.typeRam === typeRAM_RAM;
+    } else if (socket_CPU !== "" && typeRAM_RAM !== "") {
+      return (
+        item.category.toLowerCase().replace(" ", "") === "mb" &&
+        item.socket === socket_CPU &&
+        item.typeRam === typeRAM_RAM
+      );
     }
   });
 
-  //* กรองสินค้าRAM
   const RAM_display = curItem.filter((item) => {
     if (typeRAM_mb === "") {
       return item.category.toLowerCase().replace(" ", "") === "ram";

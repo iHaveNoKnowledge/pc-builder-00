@@ -81,7 +81,8 @@ export default function SetList() {
   const [sortedData, setSortedData] = useState([]);
   const [rows, setRows] = useState(0);
   const posts = products;
-  console.log("sets: ", sets?.updatedRecordset);
+
+  console.log("sets: ", sets);
 
   const [openSubTables, setOpenSubTables] = useState([]);
 
@@ -115,7 +116,7 @@ export default function SetList() {
     }
   }, [isSuccess]);
 
-  // onclick เปิด Dialog //
+  // onclick เปิด Dialog
   const handleClickOpen = () => {
     setOpen(true);
     getSetsData();
@@ -171,7 +172,7 @@ export default function SetList() {
   //* Delete Alert!!
   const [openAlert, setOpentAlert] = useState(false);
 
-  //* pagination////
+  //* pagination////------------------------------------------------------
   const [curPageNum, setCurPageNum] = useState(1);
   const cardsPerPage = 10;
   const totalPages = Math.ceil(sortedData.length / cardsPerPage);
@@ -184,10 +185,14 @@ export default function SetList() {
     curPageNum * cardsPerPage
   );
 
-  // useEffect(() => {
-  //   setSortedData(dataPaginated);
-  // }, []);
+  //* dataที่ใช้pagination เปลี่ยนไปต้องเกิด effect
+  useEffect(() => {
+    if (curPageNum > totalPages) {
+      setCurPageNum(1);
+    }
+  }, [dataPaginated]);
 
+  console.log("มาถึงนี่ไหม");
   //* render jsx
   return (
     <ThemeProvider theme={theme}>
@@ -214,7 +219,6 @@ export default function SetList() {
           <TableContainer component={Paper}>
             <Box sx={{ display: "flex", justifyContent: "center", marginTop: 2, marginInline: 2 }}>
               <TextField
-              
                 fullWidth
                 placeholder="ค้นหาเซ็ตคอมประกอบ"
                 type="search"
@@ -233,6 +237,7 @@ export default function SetList() {
                 }}
                 variant="standard"
               />
+
               <Box ml={2} style={{ display: "flex", alignItems: "end" }}>
                 <Button type="submit" variant="contained" onClick={handleSearch}>
                   ค้นหา
@@ -406,7 +411,6 @@ export default function SetList() {
 
                                                     return totalPrice;
                                                   } else {
-                                                    // console.log("ไม่ตรง", post.id, item3.id);
                                                   }
                                                 })?.promotionPrice * item3.selectAmount}
                                               </TableCell>
