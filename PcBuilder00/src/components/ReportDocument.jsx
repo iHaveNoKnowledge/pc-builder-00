@@ -46,12 +46,12 @@ const ReportDocument = () => {
   // });
 
   const [open, setOpen] = React.useState(false);
-  ////onclick เปิด Form ////////////////////////////////////////////////////////////////////
+  //* onclick เปิด Form ////////////////////////////////////////////////////////////////////
   const handleClickOpen = () => {
     setOpen(true);
   };
 
-  ////onclick ปิด Form ////////////////////////////////////////////////////////////////////
+  //* onclick ปิด Form ////////////////////////////////////////////////////////////////////
   const handleClose = () => {
     setOpen(false);
   };
@@ -104,14 +104,14 @@ const ReportDocument = () => {
 
           <View style={{ ...subTableDisplay, ...{ flexDirection: "row" } }}>
             <View style={{ fontSize: 10, width: "17%" }}>
-              <Text>Sale</Text>
+              <Text>ผู้ขาย</Text>
             </View>
             <View>
               <Text style={{ fontSize: 10 }}>:</Text>
             </View>
             <View style={{ fontSize: 9, marginVertical: 1, marginLeft: 3, width: 130 }}>
               {/* <Text>รับตัวแปร saler ทำconditional display </Text> */}
-              <Text>{reportInfo.salerName} </Text>
+              <Text>{reportInfo.sellerName} </Text>
             </View>
           </View>
         </View>

@@ -101,10 +101,10 @@ export default function SetList() {
 
   const [openSubTables, setOpenSubTables] = useState([]);
 
-  // const sortData = (setsData) => {
-  //   const mutableData = [...setsData];
-  //   return mutableData.sort((a, b) => new Date(b.timeStamp) - new Date(a.timeStamp));
-  // };
+  //* เพิ่มความเนียนของ transition
+  const [isAnimating, setIsAnimating] = useState(false);
+  const isTransition = { transition: "none" };
+
   //* -------------------------------FUNCTIONS------------------------------------------------------
   //* Function SearchSets
   const [query, setQuery] = useState("");
@@ -172,6 +172,7 @@ export default function SetList() {
 
     itemsToAdd.map((item) => dispatch(addProduct(item)));
     dispatch(updateSummations());
+
     setOpenSubTables([]);
     setOpen(false);
   };
@@ -200,6 +201,7 @@ export default function SetList() {
   const cardsPerPage = 10;
   const totalPages = Math.ceil(sortedData.length / cardsPerPage);
   const handleChangePage = (pageNum) => {
+    setIsAnimating(true);
     setCurPageNum(pageNum);
     setOpenSubTables([]);
   };
@@ -303,9 +305,11 @@ export default function SetList() {
                       return (
                         <React.Fragment key={index}>
                           <TableRow
+                            sx={{}}
                             onClick={() => {
                               const updatedOpenSubTables = [...openSubTables];
                               updatedOpenSubTables[index] = !isOpen;
+                              setIsAnimating(false);
                               console.log("isOpenคือไร:", isOpen);
                               setOpenSubTables(updatedOpenSubTables);
                             }}
@@ -318,6 +322,7 @@ export default function SetList() {
                                 onClick={() => {
                                   const updatedOpenSubTables = [...openSubTables];
                                   updatedOpenSubTables[index] = !isOpen;
+                                  setIsAnimating(false);
                                   setOpenSubTables(updatedOpenSubTables);
                                 }}
                                 sx={{ color: "white" }}
@@ -364,7 +369,12 @@ export default function SetList() {
                           {/* subtableZone */}
                           <TableRow>
                             <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-                              <Collapse in={isOpen} timeout="auto" unmountOnExit>
+                              <Collapse
+                                in={isOpen}
+                                timeout="auto"
+                                unmountOnExit
+                                sx={isAnimating ? isTransition : {}}
+                              >
                                 {loadingAxios ? (
                                   <Box sx={{ display: "flex", justifyContent: "center" }}>
                                     <CircularProgress />
