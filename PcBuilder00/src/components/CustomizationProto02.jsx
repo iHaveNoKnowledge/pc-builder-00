@@ -23,8 +23,7 @@ import {
   removeProduct,
   incAmount,
   decAmount,
-  updateSumAmount,
-  updateSumPrices,
+  updateSummations,
   setMax,
 } from "../slices/cutomizeSliceNoApi";
 import { clearSelectedFilter, getCategorizedData } from "../slices/userFilterSlice";
@@ -55,15 +54,13 @@ const CustomizationProto02 = () => {
   const handleIncAmt = (category, miniIndex) => {
     dispatch(incAmount({ category, miniIndex }));
     console.log("เพิ่ม");
-    dispatch(updateSumAmount());
-    dispatch(updateSumPrices());
+    dispatch(updateSummations());
   };
 
   const handleDecAmt = (category, miniIndex) => {
     dispatch(decAmount({ category, miniIndex }));
     console.log("ลด");
-    dispatch(updateSumAmount());
-    dispatch(updateSumPrices());
+    dispatch(updateSummations());
   };
 
   const handleClear = (category, slot, id, miniIndex) => {
@@ -73,8 +70,7 @@ const CustomizationProto02 = () => {
     //   dispatch(setMax(slot));
     // }
     dispatch(setMax());
-    dispatch(updateSumAmount());
-    dispatch(updateSumPrices());
+    dispatch(updateSummations());
   };
 
   return (

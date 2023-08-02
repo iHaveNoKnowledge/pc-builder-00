@@ -237,7 +237,7 @@ export const customizeSlice = createSlice({
       // Loop through the listItems array of the RAM object
       for (let i = 0; i < state.partData[categoryIndex].listItems.length; i++) {
         let item = state.partData[categoryIndex].listItems[i];
-        totalAmount += item.selectAmount * (item.count ? item.count : 1); // Add the product of selectAmount and count to the total amount
+        totalAmount += item.selectAmount * (item.countItem ? item.countItem : 1); // Add the product of selectAmount and count to the total amount
       }
 
       state.partData[categoryIndex].typeAmount = totalAmount; // Assign the total amount to the typeAmount property of the RAM object
@@ -270,7 +270,7 @@ export const customizeSlice = createSlice({
         for (let i = 0; i < categorizedListItem.length; i++) {
           console.log("ติดไร: ", JSON.stringify(categorizedListItem.length), i);
           let item = categorizedListItem[i];
-          totalAmount += item.selectAmount * (item.count ? item.count : 1); // Add the product of selectAmount and count to the total amount
+          totalAmount += item.selectAmount * (item.countItem ? item.countItem : 1); // Add the product of selectAmount and count to the total amount
         }
 
         state.partData[index].typeAmount = totalAmount; // Assign the total amount to the typeAmount property of the RAM object
@@ -300,7 +300,7 @@ export const customizeSlice = createSlice({
         // Loop through the listItems array of the RAM object
         for (let i = 0; i < state.partData[index].listItems.length; i++) {
           let item = state.partData[index].listItems[i];
-          totalAmount += item.selectAmount * (item.count ? item.count : 1); // Add the product of selectAmount and count to the total amount
+          totalAmount += item.selectAmount * (item.countItem ? item.countItem : 1); // Add the product of selectAmount and count to the total amount
         }
         state.partData[index].typeAmount = totalAmount; // Assign the total amount to the typeAmount property of the RAM object
       } else {
@@ -330,7 +330,7 @@ export const customizeSlice = createSlice({
       // Loop through the listItems array of the RAM object
       for (let i = 0; i < state.partData[index].listItems.length; i++) {
         let item = state.partData[index].listItems[i];
-        totalAmount += item.selectAmount * (item.count ? item.count : 1); // Add the product of selectAmount and count to the total amount
+        totalAmount += item.selectAmount * (item.countItem ? item.countItem : 1); // Add the product of selectAmount and count to the total amount
       }
       state.partData[index].typeAmount = totalAmount; // Assign the total amount to the typeAmount property of the RAM object
     },
@@ -385,7 +385,7 @@ export const customizeSlice = createSlice({
         let totalAmount = 0; // Initialize the total amount to 0
         for (let i = 0; i < categorizedListItem.length; i++) {
           let item = categorizedListItem[i];
-          totalAmount += item.selectAmount * (item.count ? item.count : 1); // Add the product of selectAmount and count to the total amount
+          totalAmount += item.selectAmount * (item.countItem ? item.countItem : 1); // Add the product of selectAmount and count to the total amount
         }
 
         state.partData[index].typeAmount = totalAmount; // Assign the total amount to the typeAmount property of the RAM object
@@ -397,27 +397,29 @@ export const customizeSlice = createSlice({
       }
     },
 
-    updateSumAmount: (state, action) => {
-      let sumAllAmount = 0;
-      map(state.partData, (item) => {
-        map(item.listItems, (miniItem) => {
-          sumAllAmount += miniItem.selectAmount;
-        });
-      });
-      console.log("จำนวนทั้งหมด: ", sumAllAmount);
-      state.summations.sumAmount = sumAllAmount;
-    },
+    // updateSumAmount: (state, action) => {
+    //   let sumAllAmount = 0;
+    //   map(state.partData, (item) => {
+    //     map(item.listItems, (miniItem) => {
+    //       sumAllAmount += miniItem.selectAmount;
+    //     });
+    //   });
+    //   console.log("จำนวนทั้งหมด: ", sumAllAmount);
+    //   state.summations.sumAmount = sumAllAmount;
+    // },
 
     //เรื่องราคาเหมารวมจบใน action เดียวเลย
-    updateSumPrices: (state, action) => {
+    updateSummations: (state, action) => {
       let sumAll_SRP_Prices = 0;
       let sumAllDiscount = 0;
       let sumAllPrices = 0;
+      let sumAllAmount = 0;
       map(state.partData, (item) => {
         map(item.listItems, (miniItem) => {
           sumAllPrices += miniItem.promotionPrice * miniItem.selectAmount;
           sumAllDiscount += (miniItem.srp - miniItem.promotionPrice) * miniItem.selectAmount;
           sumAll_SRP_Prices += miniItem.srp * miniItem.selectAmount;
+          sumAllAmount += miniItem.selectAmount;
         });
       });
 
@@ -425,6 +427,7 @@ export const customizeSlice = createSlice({
       state.summations.sum_SRP = sumAll_SRP_Prices;
       state.summations.sumDiscount = sumAllDiscount;
       state.summations.sumPrice = sumAllPrices;
+      state.summations.sumAmount = sumAllAmount;
     },
   },
 });
@@ -437,7 +440,7 @@ export const {
   decAmount,
   updateSumAmount,
   resetCustomized,
-  updateSumPrices,
+  updateSummations,
   setTypeAmount,
   batchAdd,
 } = customizeSlice.actions;

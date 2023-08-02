@@ -13,10 +13,15 @@ import {
   Button,
   Grid,
   CardContent,
-  Divider
+  Divider,
 } from "@mui/material";
 import { changeCategory } from "../slices/categorySlice";
-import { removeProduct, incAmount, decAmount, updateSumAmount, updateSumPrices } from "../slices/cutomizeSliceNoApi";
+import {
+  removeProduct,
+  incAmount,
+  decAmount,
+  updateSummations,
+} from "../slices/cutomizeSliceNoApi";
 import "./CustomizationProto01.css";
 import SumCustomize from "./SumCustomize";
 
@@ -25,7 +30,7 @@ const CustomizationProto01 = () => {
   const [selected, setSelected] = useState(false);
   //useSelector
   const categories = useSelector((state) => state.noApiCustomize.partData);
-  const currentCategory = useSelector((state) => state.category.category)
+  const currentCategory = useSelector((state) => state.category.category);
 
   //สร้าง functiondispatch
   const dispatch = useDispatch();
@@ -39,14 +44,14 @@ const CustomizationProto01 = () => {
   const handleIncAmt = (category) => {
     dispatch(incAmount(category));
     console.log("เพิ่ม");
-    dispatch(updateSumAmount());
-    dispatch(updateSumPrices());
+
+    dispatch(updateSummations());
   };
 
   const handleDecAmt = (category) => {
     dispatch(decAmount(category));
-    dispatch(updateSumAmount());
-    dispatch(updateSumPrices());
+
+    dispatch(updateSummations());
   };
 
   const handleClear = (category, slot) => {
@@ -55,8 +60,8 @@ const CustomizationProto01 = () => {
     if (category === "Mainboard") {
       dispatch(setMax(slot));
     }
-    dispatch(updateSumAmount());
-    dispatch(updateSumPrices());
+
+    dispatch(updateSummations());
   };
 
   return (
@@ -79,26 +84,20 @@ const CustomizationProto01 = () => {
                         handleChange(item.category);
                       }}
                       sx={{
-
                         display: "flex",
                         flexDirection: "column",
                         padding: "0px",
-
                       }}
                     >
-
                       <Box sx={{ display: "Flex", width: "100%" }}>
-
                         <Box sx={{ flexGrow: 1 }}></Box>
 
                         <Box sx={{ flexGrow: 0.05 }}>
-                          <div>{(item.selectAmount * item.count)}{item.max !== null && (
-                            <>
-                              /{item.max}
-                            </>
-                          )}</div>
+                          <div>
+                            {item.selectAmount * item.count}
+                            {item.max !== null && <>/{item.max}</>}
+                          </div>
                         </Box>
-
 
                         <Box
                           onClick={(e) => {
@@ -107,25 +106,27 @@ const CustomizationProto01 = () => {
                           }}
                           sx={{
                             padding: "0.1px 15px",
-                            backgroundColor: 'rgb(220,47,47)',
+                            backgroundColor: "rgb(220,47,47)",
                             color: "white",
                             // textAlign:"justify",
                             paddingBottom: "2px",
-
                           }}
                         >
                           x
                         </Box>
-
                       </Box>
-
 
                       <Box sx={{ display: "flex", width: "100%", gap: "4px" }}>
                         {/* ////////////////////////ก้อนซ้าย/////////////////////////////// */}
                         <Box sx={{ flexGrow: "1" }}>
-
-                          <Box >
-                            <ListItemAvatar sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                          <Box>
+                            <ListItemAvatar
+                              sx={{
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                              }}
+                            >
                               <Box
                                 component="img"
                                 src={item.img}
@@ -135,46 +136,52 @@ const CustomizationProto01 = () => {
                             </ListItemAvatar>
                           </Box>
 
-                          <Box sx={{ display: "flex", justifyContent: "space-between", bgcolor: "#c7c7c7", my: "2px", boxShadow: "1px 1px 1px 1px rgba(92, 92, 92, 1)", textAlign: "center" }}>
-                            <Box className="textButton" onClick={(e) => {
-                              e.stopPropagation();
-                              handleDecAmt(item.category);
-                            }}>
+                          <Box
+                            sx={{
+                              display: "flex",
+                              justifyContent: "space-between",
+                              bgcolor: "#c7c7c7",
+                              my: "2px",
+                              boxShadow: "1px 1px 1px 1px rgba(92, 92, 92, 1)",
+                              textAlign: "center",
+                            }}
+                          >
+                            <Box
+                              className="textButton"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleDecAmt(item.category);
+                              }}
+                            >
                               -
                             </Box>
                             {/* จำนวนสินค้า */}
                             <Box style={{ marginTop: "5px" }}>{item.selectAmount}</Box>
 
-                            <Box className="textButton" onClick={(e) => {
-                              e.stopPropagation();
-                              handleIncAmt(item.category)
-                            }}>
+                            <Box
+                              className="textButton"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleIncAmt(item.category);
+                              }}
+                            >
                               +
                             </Box>
                           </Box>
 
                           <div>ss</div>
-
                         </Box>
 
                         {/* ////////////////////////ก้อนขวา/////////////////////////////// */}
                         {/* //// ย่อย1 //// */}
                         <Box sx={{ flexGrow: "5" }}>
-                          <Box
-                            sx={{ display: "flex" }}
-                          >
-
-                            <Box
-                              variant="subtitle1"
-                              sx={{ flexGrow: "1", fontWeight: "bolder" }}
-                            >
+                          <Box sx={{ display: "flex" }}>
+                            <Box variant="subtitle1" sx={{ flexGrow: "1", fontWeight: "bolder" }}>
                               SKU-000000
                               {/* {item.title} */}
                             </Box>
 
-                            <Typography variant="caption">
-                              Stock: INT
-                            </Typography>
+                            <Typography variant="caption">Stock: INT</Typography>
                           </Box>
 
                           <Divider />
@@ -191,12 +198,14 @@ const CustomizationProto01 = () => {
                           </Box>
 
                           {/* //// ย่อย3 //// */}
-                          <Typography variant="subtitle1" sx={{ marginLeft: "70%" }}>฿ {Math.round((item.price * (1 - item.discount)) * item.selectAmount).toLocaleString()}</Typography>
-
+                          <Typography variant="subtitle1" sx={{ marginLeft: "70%" }}>
+                            ฿{" "}
+                            {Math.round(
+                              item.price * (1 - item.discount) * item.selectAmount
+                            ).toLocaleString()}
+                          </Typography>
                         </Box>
                       </Box>
-
-
                     </ListItemButton>
                   </ListItem>
                 </div>
@@ -207,25 +216,22 @@ const CustomizationProto01 = () => {
                     <ListItemButton
                       disableGutters={true}
                       onClick={(e) => {
-
                         handleChange(item.category);
                       }}
                     >
-
                       <ListItemAvatar>
-                        <Avatar
-                          sx={{ borderRadius: "0" }}
-                        >
+                        <Avatar sx={{ borderRadius: "0" }}>
                           <ImageIcon />
                         </Avatar>
                       </ListItemAvatar>
                       <ListItemText primary={`${item.category}`} secondary="" />
                     </ListItemButton>
-                    <Box><div>{(item.selectAmount * item.count) ? (item.selectAmount * item.count) : 0}{item.max !== null && (
-                      <>
-                        /{item.max}
-                      </>
-                    )}</div></Box>
+                    <Box>
+                      <div>
+                        {item.selectAmount * item.count ? item.selectAmount * item.count : 0}
+                        {item.max !== null && <>/{item.max}</>}
+                      </div>
+                    </Box>
                   </ListItem>
                 </div>
               )}

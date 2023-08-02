@@ -82,21 +82,24 @@ export default function SaveBuildBtn() {
     console.log("Stateหลัง add", inputData);
     //* ตัวอย่างการใช้ค่า inputData ที่อัพเดตใหม่
     console.log("บันทึกไรมา", updatedInputData.setName);
-    dispatch(saveSet({ updatedInputData, partData }));
-
-    const dataForUpdate = { ...updatedInputData, partData };
-    console.log("สำหรับยัดลง DB", dataForUpdate);
-
-    updateData(dataForUpdate)
-      .unwrap()
-      .then((response) => {
-        console.log(response);
-        setsRefetch();
-        return response;
-      })
-      .catch((error) => {
-        console.log(error.data.response);
-      });
+    const isEmpty = partData.map((item) => item.listItems).filter((item2) => item2.length != 0);
+    if (isEmpty != 0) {
+      dispatch(saveSet({ updatedInputData, partData }));
+      const dataForUpdate = { ...updatedInputData, partData };
+      console.log("สำหรับยัดลง DB", dataForUpdate);
+      updateData(dataForUpdate)
+        .unwrap()
+        .then((response) => {
+          console.log(response);
+          setsRefetch();
+          return response;
+        })
+        .catch((error) => {
+          console.log(error.data.response);
+        });
+    } else {
+      console.log("ไปเลือกสินค้ามาก่อน", isEmpty);
+    }
 
     setSetNameInput("");
     //todo setSalerNameInput("");
@@ -196,7 +199,7 @@ export default function SaveBuildBtn() {
                 pt: "5px",
               }}
             >
-              ตั้งชื่อ Set คอมประกอบ 
+              ตั้งชื่อ Set คอมประกอบ
             </DialogContentText>
             <TextField
               sx={{ mt: "0px" }}

@@ -15,7 +15,7 @@ import Box from "@mui/material/Box";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import { Divider, Alert } from "@mui/material";
-import { addProduct, setMax, updateSumAmount, updateSumPrices } from "../slices/cutomizeSliceNoApi";
+import { addProduct, setMax, updateSummations } from "../slices/cutomizeSliceNoApi";
 import "./Selection.css";
 import UserFilter from "./UserFilter";
 import {
@@ -56,8 +56,7 @@ function PostCard({ items, totalRows }) {
     if (category === "mb") {
       dispatch(setMax(item.slot));
     }
-    dispatch(updateSumAmount());
-    dispatch(updateSumPrices());
+    dispatch(updateSummations());
     console.log(`productDescription: ${item.productDescription}
     count: ${item.countItem}
     typeRam: ${item.typeRam}

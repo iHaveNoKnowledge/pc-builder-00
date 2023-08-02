@@ -33,11 +33,12 @@ import {
   useLazyGetSetsQuery,
   useDeleteResourceMutation,
 } from "../features/api/dataApiSlice";
-import { addProduct, resetCustomized } from "../slices/cutomizeSliceNoApi";
+import { addProduct, resetCustomized, updateSummations } from "../slices/cutomizeSliceNoApi";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import Pagination from "@mui/material/Pagination";
 import CircularProgress from "@mui/material/CircularProgress";
 import { throttle, debounce } from "lodash";
+import axios from "axios";
 
 const theme = createTheme({
   palette: {
@@ -77,34 +78,15 @@ export default function SetList() {
   let displayDataList = false;
 
   //* นำ api มาใช้
-  const [getSetsData, { data: sets, error, isLoading, isSuccess, isUninitialized }] =
-    useLazyGetSetsQuery({ skipToken: false });
+  const [
+    getSetsData,
+    { data: sets, error, isLoading, isSuccess, isUninitialized },
+  ] = useLazyGetSetsQuery({ skipToken: false });
   const [sortedData, setSortedData] = useState([]);
   const [rows, setRows] = useState(0);
-  const posts = products;
 
   console.log("sets: ", sets);
 
-  const [openSubTables, setOpenSubTables] = useState([]);
-
-  // const sortData = (setsData) => {
-  //   const mutableData = [...setsData];
-  //   return mutableData.sort((a, b) => new Date(b.timeStamp) - new Date(a.timeStamp));
-  // };
-
-  //* Function SearchSets
-  const [query, setQuery] = useState("");
-  const handleSearch = (e) => {
-    if (query.length > 0) {
-      console.log("searchว่า: ", query);
-      const searchResult = sets.updatedRecordset.filter((item) => item.setName.includes(query));
-      console.log("กดsearch แล้วได้ไรมา", searchResult);
-      setSortedData(searchResult);
-    } else {
-      setSortedData(sets?.updatedRecordset);
-    }
-  };
-  console.log("sets: ", sets?.updatedRecordset);
   useEffect(() => {
     if (!open) {
       setQuery("");
@@ -117,10 +99,49 @@ export default function SetList() {
     }
   }, [isSuccess, sets]);
 
+  const [openSubTables, setOpenSubTables] = useState([]);
+
+  // const sortData = (setsData) => {
+  //   const mutableData = [...setsData];
+  //   return mutableData.sort((a, b) => new Date(b.timeStamp) - new Date(a.timeStamp));
+  // };
+  //* -------------------------------FUNCTIONS------------------------------------------------------
+  //* Function SearchSets
+  const [query, setQuery] = useState("");
+  const handleSearch = (e) => {
+    if (query.length > 0) {
+      console.log("searchว่า: ", query);
+      const searchResult = sets.updatedRecordset.filter((item) => item.setName.includes(query));
+      console.log("กดsearch แล้วได้ไรมา", searchResult);
+      setSortedData(searchResult);
+    } else {
+      setSortedData(sets?.updatedRecordset);
+    }
+  };
+
+  //* function Fetch
+  const [productsData, setProductsData] = useState(null);
+  const [loadingAxios, setLoadingAxios] = useState(false);
+  const fetchData = async () => {
+    try {
+      setLoadingAxios(true);
+      const response = await axios.get(`${import.meta.env.VITE_APP_DB_CONFIG3_HOST}/testProducts`);
+      setProductsData(response.data);
+      setLoadingAxios(false);
+      console.log("productsDataAxios:", response.data);
+    } catch (error) {
+      console.error("Error fetching axios:", error);
+      setLoadingAxios(false);
+    }
+  };
+
+  const posts = productsData?.data;
+
   // onclick เปิด Dialog
   const handleClickOpen = () => {
     setOpen(true);
     getSetsData();
+    fetchData();
   };
 
   const handleClose = (e) => {
@@ -150,6 +171,7 @@ export default function SetList() {
       .map((item, index) => ({ ...item, selectAmount: amountPerItem[index] }));
 
     itemsToAdd.map((item) => dispatch(addProduct(item)));
+    dispatch(updateSummations());
     setOpenSubTables([]);
     setOpen(false);
   };
@@ -179,6 +201,7 @@ export default function SetList() {
   const totalPages = Math.ceil(sortedData.length / cardsPerPage);
   const handleChangePage = (pageNum) => {
     setCurPageNum(pageNum);
+    setOpenSubTables([]);
   };
 
   const dataPaginated = sortedData.slice(
@@ -342,92 +365,100 @@ export default function SetList() {
                           <TableRow>
                             <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
                               <Collapse in={isOpen} timeout="auto" unmountOnExit>
-                                <Box sx={{ margin: 1 }}>
-                                  <Typography variant="h6" gutterBottom component="div">
-                                    Items List
-                                  </Typography>
-                                  <Table size="small" aria-label="purchases">
-                                    <TableHead>
-                                      <TableRow>
-                                        <TableCell
-                                          sx={{ width: 38, paddingInline: 1 }}
-                                          align="center"
-                                        >
-                                          No.
-                                        </TableCell>
-                                        <TableCell sx={{ width: 11 }}>Code</TableCell>
-                                        <TableCell align="left" sx={{ minWidth: 7 }}>
-                                          Description
-                                        </TableCell>
-                                        <TableCell>Stock</TableCell>
-                                        <TableCell>AMT</TableCell>
-                                        <TableCell align="right">SRP</TableCell>
-                                        <TableCell align="right">Price</TableCell>
-                                        <TableCell>TotalPrice</TableCell>
-                                      </TableRow>
-                                    </TableHead>
-                                    <TableBody>
-                                      {item.partData.map((item2, index2) =>
-                                        item2.listItems.map((item3, index3) => {
-                                          i += 1;
-                                          return (
-                                            <TableRow key={index3}>
-                                              <TableCell
-                                                align="center"
-                                                component="th"
-                                                scope="row"
-                                                sx={{ width: 38, paddingInline: 1 }}
-                                              >
-                                                {i}
-                                              </TableCell>
-                                              <TableCell sx={{ width: 100 }}>
-                                                {item3.code}
-                                              </TableCell>
-                                              <TableCell sx={{ width: 580 }}>
-                                                {item3.productDescription}
-                                              </TableCell>
-                                              <TableCell></TableCell>
-                                              <TableCell align="right">
-                                                {item3.selectAmount}
-                                              </TableCell>
-                                              <TableCell align="right">
-                                                {posts
-                                                  .find((post, postIDX) => {
-                                                    if (post.id === item3.id) {
-                                                      return post.srp.toLocaleString();
-                                                    }
-                                                  })
-                                                  ?.srp.toLocaleString()}
-                                              </TableCell>
+                                {loadingAxios ? (
+                                  <Box sx={{ display: "flex", justifyContent: "center" }}>
+                                    <CircularProgress />
+                                  </Box>
+                                ) : (
+                                  <Box sx={{ margin: 1 }}>
+                                    <Typography variant="h6" gutterBottom component="div">
+                                      Items List
+                                    </Typography>
+                                    <Table size="small" aria-label="purchases">
+                                      <TableHead>
+                                        <TableRow>
+                                          <TableCell
+                                            sx={{ width: 38, paddingInline: 1 }}
+                                            align="center"
+                                          >
+                                            No.
+                                          </TableCell>
+                                          <TableCell sx={{ width: 11 }}>Code</TableCell>
+                                          <TableCell align="left" sx={{ minWidth: 7 }}>
+                                            Description
+                                          </TableCell>
+                                          <TableCell>Stock</TableCell>
+                                          <TableCell>AMT</TableCell>
+                                          <TableCell align="right">SRP</TableCell>
+                                          <TableCell align="right">Price</TableCell>
+                                          <TableCell>TotalPrice</TableCell>
+                                        </TableRow>
+                                      </TableHead>
+                                      <TableBody>
+                                        {item.partData.map((item2, index2) =>
+                                          item2.listItems.map((item3, index3) => {
+                                            i += 1;
+                                            return (
+                                              <TableRow key={index3}>
+                                                <TableCell
+                                                  align="center"
+                                                  component="th"
+                                                  scope="row"
+                                                  sx={{ width: 38, paddingInline: 1 }}
+                                                >
+                                                  {i}
+                                                </TableCell>
+                                                <TableCell sx={{ width: 100 }}>
+                                                  {item3.code}
+                                                </TableCell>
+                                                <TableCell sx={{ width: 580 }}>
+                                                  {item3.productDescription}
+                                                </TableCell>
+                                                <TableCell></TableCell>
+                                                <TableCell align="right">
+                                                  {item3.selectAmount}
+                                                </TableCell>
+                                                <TableCell align="right">
+                                                  {posts
+                                                    .find((post, postIDX) => {
+                                                      if (post.id === item3.id) {
+                                                        return post.srp.toLocaleString();
+                                                      }
+                                                    })
+                                                    ?.srp.toLocaleString()}
+                                                </TableCell>
 
-                                              <TableCell align="right">
-                                                {posts
-                                                  .find((post, postIDX) => {
-                                                    if (post.id === item3.id) {
-                                                      return post.promotionPrice;
-                                                    }
-                                                  })
-                                                  ?.promotionPrice.toLocaleString()}
-                                              </TableCell>
+                                                <TableCell align="right">
+                                                  {posts
+                                                    .find((post, postIDX) => {
+                                                      if (post.id === item3.id) {
+                                                        return post.promotionPrice;
+                                                      }
+                                                    })
+                                                    ?.promotionPrice.toLocaleString()}
+                                                </TableCell>
 
-                                              <TableCell align="right">
-                                                {posts.find((post, postIDX) => {
-                                                  if (post.id === item3.id) {
-                                                    const totalPrice =
-                                                      post.promotionPrice * item3.selectAmount;
+                                                <TableCell align="right">
+                                                  {(
+                                                    posts.find((post, postIDX) => {
+                                                      if (post.id === item3.id) {
+                                                        const totalPrice =
+                                                          post.promotionPrice * item3.selectAmount;
 
-                                                    return totalPrice;
-                                                  } else {
-                                                  }
-                                                })?.promotionPrice * item3.selectAmount}
-                                              </TableCell>
-                                            </TableRow>
-                                          );
-                                        })
-                                      )}
-                                    </TableBody>
-                                  </Table>
-                                </Box>
+                                                        return totalPrice.toLocaleString();
+                                                      } else {
+                                                      }
+                                                    })?.promotionPrice * item3.selectAmount
+                                                  ).toLocaleString()}
+                                                </TableCell>
+                                              </TableRow>
+                                            );
+                                          })
+                                        )}
+                                      </TableBody>
+                                    </Table>
+                                  </Box>
+                                )}
                               </Collapse>
                             </TableCell>
                           </TableRow>

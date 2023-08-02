@@ -7,4 +7,9 @@ dns.setDefaultResultOrder("verbatim");
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
+  vite: {
+    define: {
+      "process.env.DB_CONFIG3_HOST": process.env,
+    },
+  },
 });
