@@ -59,6 +59,8 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           height: "27.5px",
+          borderRadius: "0px",
+          fontFamily: "Chakra Petch",
         },
       },
     },
@@ -229,7 +231,7 @@ export default function SetList() {
   return (
     <ThemeProvider theme={theme}>
       <div>
-        <Button variant="contained" onClick={handleClickOpen} color="primary">
+        <Button variant="contained" onClick={handleClickOpen}>
           Set List
         </Button>
 

@@ -17,14 +17,7 @@ function Bottom() {
         <SetList />
       </Box>
       <Box>
-        <SaveBuildBtn
-          variant="contained"
-          sx={{
-            height: "27.5px",
-            borderRadius: "0px",
-            backgroundColor: "#42528A",
-          }}
-        />
+        <SaveBuildBtn />
       </Box>
 
       <Box>

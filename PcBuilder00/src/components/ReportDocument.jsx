@@ -189,15 +189,15 @@ const ReportDocument = () => {
                 </View>
                 <View style={{ ...inlineStyle, ...inlineQTY }}>
                   {/* <Text>{WrapText("99")}</Text> */}
-                  <Text>{`${itemList[0].selectAmount}`}</Text>
+                  <Text>{`${itemList[0].selectAmount.toLocaleString()}`}</Text>
                 </View>
                 <View style={{ ...inlineStyle, ...inlinePrice }}>
                   {/* <Text>{WrapText("9999")}</Text> */}
-                  <Text>{`${itemList[0].srp}`}</Text>
+                  <Text>{`${itemList[0].srp.toLocaleString()}`}</Text>
                 </View>
                 <View style={{ ...inlineStyle, ...inlineTotal }}>
                   {/* <Text>{WrapText("99999")}</Text> */}
-                  <Text>{`${itemList[0].srp * itemList[0].selectAmount}`}</Text>
+                  <Text>{`${(itemList[0].srp * itemList[0].selectAmount).toLocaleString()}`}</Text>
                 </View>
               </View>
             </View>
@@ -221,20 +221,44 @@ const ReportDocument = () => {
                     </View>
                     <View style={{ ...inlineStyle, ...inlineQTY }}>
                       {/* <Text>{WrapText("99")}</Text> */}
-                      <Text>{`${itemList[index + 1].selectAmount}`}</Text>
+                      <Text>{`${itemList[index + 1].selectAmount.toLocaleString()}`}</Text>
                     </View>
                     <View style={{ ...inlineStyle, ...inlinePrice }}>
                       {/* <Text>{WrapText("9999")}</Text> */}
-                      <Text>{`${itemList[index + 1].srp}`}</Text>
+                      <Text>{`${itemList[index + 1].srp.toLocaleString()}`}</Text>
                     </View>
                     <View style={{ ...inlineStyle, ...inlineTotal }}>
                       {/* <Text>{WrapText("99999")}</Text> */}
-                      <Text>{`${itemList[index + 1].srp * itemList[index + 1].selectAmount}`}</Text>
+                      <Text>{`${(
+                        itemList[index + 1].srp * itemList[index + 1].selectAmount
+                      ).toLocaleString()}`}</Text>
                     </View>
                   </View>
                 </View>
               );
             })}
+            <View>
+              <View break={true} style={{ display: "flex", flexDirection: "row" }}>
+                <View style={{ ...inlineStyle, ...inlineOrder }}>
+                  {/* <Text>{WrapText(`${2 + index}`)}</Text> */}
+                </View>
+                <View style={{ ...inlineStyle, ...inlineCode }}>
+                  {/* <Text>{`XXX-${formattedNumberx}`}</Text> */}
+                </View>
+                <View style={{ ...inlineStyle, ...inlineDescr }}>
+                  {/* <Text>{WrapText("loremfa-rotate-180asdasd")}</Text> */}
+                </View>
+                <View style={{ ...inlineStyle, ...inlineQTY }}>
+                  {/* <Text>{WrapText("99")}</Text> */}
+                </View>
+                <View style={{ ...inlineStyle, ...inlinePrice }}>
+                  {/* <Text>{WrapText("9999")}</Text> */}
+                </View>
+                <View style={{ ...inlineStyle, ...inlineTotal }}>
+                  {/* <Text>{WrapText("99999")}</Text> */}
+                </View>
+              </View>
+            </View>
           </View>
         );
 

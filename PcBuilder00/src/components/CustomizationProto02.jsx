@@ -210,8 +210,8 @@ const CustomizationProto02 = () => {
                                     </Box>
                                   </Box>
 
-                                  {/* /ก้อนขวา/////////////////////////////// */}
-                                  {/* //// ย่อย1 //// */}
+                                  {/* /ก้อนขวา----------------------------------------------- */}
+                                  {/* /// ย่อย1 ------------------ */}
                                   <Box sx={{ flexGrow: "7", width: "40px" }}>
                                     <Box sx={{ display: "flex" }}>
                                       <Box
@@ -229,20 +229,19 @@ const CustomizationProto02 = () => {
                                     </Box>
 
                                     <Divider />
-                                    {/* //// ย่อย2 //// */}
+                                    {/* // ย่อย2 ------------------ //// */}
                                     <Box>
                                       <Typography
                                         disableripple={true}
                                         onClick={(e) => {
                                           console.log("innerBtnActivated");
                                         }}
-                                        noWrap={true}
                                       >
                                         {miniItem.productDescription}
                                       </Typography>
                                     </Box>
 
-                                    {/* //// ย่อย3 //// */}
+                                    {/* // ย่อย3 -----------------//// */}
                                     <Typography variant="subtitle1" sx={{ marginLeft: "70%" }}>
                                       ฿{" "}
                                       {(

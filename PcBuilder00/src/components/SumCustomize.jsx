@@ -30,28 +30,44 @@ const SumCustomize = () => {
     dispatch(updateSumAmount());
   };
 
+  const boxStyle = {
+    flexGrow: 1,
+    flexBasis: 0,
+    fontWeight: "bolder",
+    color: "#303030",
+  };
+  const typoFontSize = "h5";
+
   return (
     <>
       <Box>
-        <Box className="mainCard">
-          <Box sx={{ display: "flex" }}>
-            <Box variant="subtitle1" sx={{ flexGrow: 1, fontWeight: "bolder" }}>
+        <Box className="mainCard" sx={{}}>
+          <Box sx={{ display: "flex", color: "#303030" }}>
+            <Typography variant={typoFontSize} sx={{ flexGrow: 1, fontWeight: "bolder" }}>
               สินค้ารวม : {sumAmount}
-            </Box>
+            </Typography>
             {/* <Box>ประเภทสินค้า : {category}</Box> */}
           </Box>
           <Box sx={{ display: "flex", justifyContent: "center" }}>
-            <Box sx={{ flexGrow: 1, flexBasis: 0 }}>
-              ส่วนลด : <br />฿{Math.round(sumDiscount)}
-            </Box>
-            &nbsp;
-            <Box sx={{ flexGrow: 1, flexBasis: 0 }}>
-              ราคารวม : <br />฿{sum_SRP}
-            </Box>
-            &nbsp;
-            <Box sx={{ flexGrow: 1, flexBasis: 0 }}>
-              ราคาสุทธิ : <br />฿{sum_SRP - Math.round(sumDiscount)}
-            </Box>
+            <Typography
+              variant={typoFontSize}
+              sx={{ ...boxStyle, background: "rgba(82, 82, 82,0.5) " }}
+            >
+              ราคารวม : <br />฿{sum_SRP.toLocaleString()}
+            </Typography>
+            <Typography
+              variant={typoFontSize}
+              sx={{ ...boxStyle, background: "rgba(82, 82, 82,0.5) " }}
+            >
+              ส่วนลด : <br />฿{Math.round(sumDiscount).toLocaleString()}
+            </Typography>
+
+            <Typography
+              variant={typoFontSize}
+              sx={{ ...boxStyle, background: "rgba(0, 245, 25,0.5) " }}
+            >
+              ราคาสุทธิ : <br />฿{(sum_SRP - Math.round(sumDiscount)).toLocaleString()}
+            </Typography>
           </Box>
         </Box>
         <Divider />
