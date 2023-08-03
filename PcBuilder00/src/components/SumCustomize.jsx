@@ -15,7 +15,7 @@ import {
   CardContent,
   Divider,
 } from "@mui/material";
-import { resetCustomized, updateSumAmount } from "../slices/cutomizeSliceNoApi";
+import { resetCustomized, updateSummations } from "../slices/cutomizeSliceNoApi";
 import "./SumCustomize.css";
 
 const SumCustomize = () => {
@@ -27,7 +27,7 @@ const SumCustomize = () => {
 
   const handleReset = () => {
     dispatch(resetCustomized());
-    dispatch(updateSumAmount());
+    dispatch(updateSummations());
   };
 
   const boxStyle = {

@@ -39,10 +39,10 @@ const ReportDocument = () => {
   // itemList.forEach((item) => {
   //   // const times = item.selectAmount;
   //   // item.sn = Array(times).fill("");
-  //   let x;
+  //   let xy;
   //   console.log("แอด", item);
-  //   x = { ...item, sn: "" };
-  //   console.log("หลังแอด", x);
+  //   xy = { ...item, sn: "" };
+  //   console.log("หลังแอด", xy);
   // });
 
   const [open, setOpen] = React.useState(false);
@@ -119,10 +119,10 @@ const ReportDocument = () => {
     );
   };
 
-  const createTableRowIT = (x) => {
+  const createTableRowIT = (rows) => {
     return (
       <View style={tableRowStyle}>
-        <View style={firstTableColStyle}>{createTableRowITDYN(x)}</View>
+        <View style={firstTableColStyle}>{createTableRowITDYN(rows)}</View>
       </View>
     );
   };
@@ -166,10 +166,10 @@ const ReportDocument = () => {
 
   const createTableRowITDYN = (itemArr) => {
     console.log("itemList", itemList);
-    const x = itemList.length;
-    const formattedNumber = (x - (x - 1)).toString().padStart(6, "0");
+    const itemsAmt = itemList.length;
+    const formattedNumber = (itemsAmt - (itemsAmt - 1)).toString().padStart(6, "0");
     switch (true) {
-      case x >= 1:
+      case itemsAmt >= 1:
         return (
           <View style={subTableDisplay}>
             {headerSubTable()}
@@ -202,7 +202,7 @@ const ReportDocument = () => {
               </View>
             </View>
 
-            {[...Array(x - 1)].map((table, index) => {
+            {[...Array(itemsAmt - 1)].map((table, index) => {
               const formattedNumberx = (index + 2).toString().padStart(6, "0");
               return (
                 <View key={index}>
@@ -255,7 +255,7 @@ const ReportDocument = () => {
                   {/* <Text>{WrapText("9999")}</Text> */}
                 </View>
                 <View style={{ ...inlineStyle, ...inlineTotal }}>
-                  {/* <Text>{WrapText("99999")}</Text> */}
+                  <Text>{WrapText("99999")}</Text>
                 </View>
               </View>
             </View>

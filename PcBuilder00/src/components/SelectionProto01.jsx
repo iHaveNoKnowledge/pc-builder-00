@@ -198,7 +198,7 @@ function PostCard({ items, totalRows }) {
   //* pagination////
   const curPageNum2 = useSelector((state) => state.pagination.currentPage);
   const [curPageNum, setCurPageNum] = useState(1);
-  const cardsPerPage = 6;
+  const cardsPerPage = 9;
   const totalPages = Math.ceil(showProductWithFilter.length / cardsPerPage);
 
   console.log(
