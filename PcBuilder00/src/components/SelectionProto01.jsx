@@ -31,6 +31,7 @@ import { setDefault, setPageNum } from "../slices/paginationSlice";
 import { apiSlice } from "../features/api/dataApiSlice";
 import { changeCategory } from "../slices/categorySlice";
 import logoHeader from "../assets/itLogo-1.png";
+import { skipToken } from "@reduxjs/toolkit/dist/query";
 
 //* ------------------------------------------------Display*-----------------------------------------------------------------------------------------
 function PostCard({ items, totalRows }) {

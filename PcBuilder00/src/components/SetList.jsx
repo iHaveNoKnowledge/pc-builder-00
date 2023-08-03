@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
@@ -83,23 +83,16 @@ export default function SetList() {
   const [
     getSetsData,
     { data: sets, error, isLoading, isSuccess, isUninitialized },
-  ] = useLazyGetSetsQuery({ skipToken: false });
+  ] = useLazyGetSetsQuery();
   const [sortedData, setSortedData] = useState([]);
   const [rows, setRows] = useState(0);
 
-  console.log("sets: ", sets);
-
   useEffect(() => {
-    if (!open) {
-      setQuery("");
-    }
-  }, [open]);
-  useEffect(() => {
-    if (isSuccess && sets) {
+    if (open) {
       setSortedData(sets.updatedRecordset);
       setRows(sets.totalRows);
     }
-  }, [isSuccess, sets]);
+  }, [open]);
 
   const [openSubTables, setOpenSubTables] = useState([]);
 
@@ -109,11 +102,12 @@ export default function SetList() {
 
   //* -------------------------------FUNCTIONS------------------------------------------------------
   //* Function SearchSets
-  const [query, setQuery] = useState("");
+  const searchTxt = useRef();
   const handleSearch = (e) => {
-    if (query.length > 0) {
-      console.log("searchว่า: ", query);
-      const searchResult = sets.updatedRecordset.filter((item) => item.setName.includes(query));
+    if (searchTxt.current.value.length > 0) {
+      const txt = searchTxt.current.value;
+      console.log("searchว่า: ", txt);
+      const searchResult = sortedData.filter((item) => item.setName.includes(txt));
       console.log("กดsearch แล้วได้ไรมา", searchResult);
       setSortedData(searchResult);
     } else {
@@ -220,13 +214,6 @@ export default function SetList() {
     }
   }, [dataPaginated]);
 
-  const handleThrottledChange = throttle((value) => {
-    setQuery(value);
-    console.log("Throttled action:", value);
-  }, 1000);
-
-  console.log("มาถึงนี่ไหม");
-
   //* render jsx
   return (
     <ThemeProvider theme={theme}>
@@ -257,10 +244,7 @@ export default function SetList() {
                 placeholder="ค้นหาเซ็ตคอมประกอบ"
                 type="search"
                 id="input-with-icon-textfield"
-                value={query}
-                onChange={(event) => {
-                  handleThrottledChange(event.target.value);
-                }}
+                inputRef={searchTxt}
                 // label={`Product ${currentCategory}`}
                 InputProps={{
                   startAdornment: (
