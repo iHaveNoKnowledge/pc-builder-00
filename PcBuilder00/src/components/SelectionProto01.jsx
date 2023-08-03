@@ -22,7 +22,6 @@ import {
   useGetPostsQuery,
   useLazyGetPostsQuery,
   useGetDbItemQuery,
-  useGetDbItem2Query,
   useGetPhotosQuery,
 } from "../features/api/dataApiSlice";
 import { getCategorizedData } from "../slices/userFilterSlice";
