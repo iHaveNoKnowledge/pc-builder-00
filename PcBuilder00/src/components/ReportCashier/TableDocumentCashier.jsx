@@ -1,36 +1,12 @@
 import React from "react";
-import { Page, Text, View, Document, Image, Font, StyleSheet } from "@react-pdf/renderer";
+import { Page, Text, View, Document, Image, Font } from "@react-pdf/renderer";
 import xx from "../../fonts/ChakraPetch-Regular.ttf";
 import xxx from "../../../public/images/itLogo-1.png";
-import { AppBar, Toolbar, Button, Dialog, IconButton, Typography, Slide, Box } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
+import { Box } from "@mui/material";
 import { PDFViewer } from "@react-pdf/renderer";
-import { useDispatch, useSelector } from "react-redux";
-
 Font.register({ family: "Chakra_Petch", src: xx });
 
-const styles = StyleSheet.create({
-  title: {
-    fontFamily: "Chakra_Petch",
-  },
-});
-
-const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="down" ref={ref} {...props} />;
-});
-
 const TableDocumentCashier = () => {
-  const [open, setOpen] = React.useState(false);
-  ////onclick เปิด Form ////////////////////////////////////////////////////////////////////
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  ////onclick ปิด Form ////////////////////////////////////////////////////////////////////
-  const handleClose = () => {
-    setOpen(false);
-  };
-
   const createMainTableHeader = () => {
     return (
       <View style={tableRowStyle} fixed>
@@ -278,17 +254,6 @@ const firstTableColStyle = {
   whiteSpace: "normal",
 };
 
-const tableColStyle = {
-  // width: "28vh",
-  width: "100%",
-  borderStyle: "solid",
-  borderColor: "#000",
-  borderWidth: 1,
-  borderLeftWidth: 0,
-  borderTopWidth: 0,
-  whiteSpace: "pre",
-};
-
 const tableCellHeaderStyle = {
   margin: 4,
   fontSize: 12,
@@ -304,15 +269,6 @@ const inlineDescr = { width: "37.5%" };
 const inlineQTY = { width: "14%" };
 const inlinePrice = { width: "14%" };
 const inlineTotal = { width: "14%" };
-
-const tableCellStyle = {
-  margin: 5,
-  fontSize: 10,
-  width: 160,
-  flexGrow: 0,
-  textAlign: "left",
-  fontFamily: "Chakra_Petch",
-};
 
 const image = {
   marginVertical: 1,

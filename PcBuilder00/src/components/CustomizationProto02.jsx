@@ -12,11 +12,7 @@ import {
   ListItemAvatar,
   Avatar,
   Typography,
-  Button,
-  Grid,
-  CardContent,
   Divider,
-  ButtonGroup,
 } from "@mui/material";
 import { changeCategory } from "../slices/categorySlice";
 import {
@@ -26,11 +22,10 @@ import {
   updateSummations,
   setMax,
 } from "../slices/cutomizeSliceNoApi";
-import { clearSelectedFilter, getCategorizedData } from "../slices/userFilterSlice";
+import { clearSelectedFilter } from "../slices/userFilterSlice";
 import "./CustomizationProto01.css";
 import SumCustomize from "./SumCustomize";
 import { setDefault } from "../slices/paginationSlice";
-import { useGetDbItemQuery } from "../features/api/dataApiSlice"; //เอามาreFetch ใช้ไม่ได้ตามคาด
 
 const CustomizationProto02 = () => {
   //useState

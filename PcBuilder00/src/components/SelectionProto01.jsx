@@ -1,13 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-// import { makeStyles, CardActionArea } from "@material-ui/core";
 import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-// import {makeStyles} from "@mui/material/legacy/styles";
-import CardActionArea from "@mui/material/CardActionArea";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-import { Button, ButtonGroup } from "@mui/material/";
+import { Button } from "@mui/material/";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import ListItemText from "@mui/material/ListItemText";
@@ -18,19 +14,12 @@ import { Divider, Alert } from "@mui/material";
 import { addProduct, setMax, updateSummations } from "../slices/cutomizeSliceNoApi";
 import "./Selection.css";
 import UserFilter from "./UserFilter";
-import {
-  useGetPostsQuery,
-  useLazyGetPostsQuery,
-  useGetDbItemQuery,
-  useGetPhotosQuery,
-} from "../features/api/dataApiSlice";
+import { useGetDbItemQuery } from "../features/api/dataApiSlice";
 import { getCategorizedData } from "../slices/userFilterSlice";
 import Bottom from "./BottomComponent";
 import { setDefault, setPageNum } from "../slices/paginationSlice";
-import { apiSlice } from "../features/api/dataApiSlice";
+
 import { changeCategory } from "../slices/categorySlice";
-import logoHeader from "../../public/images/itLogo-1.png";
-import { skipToken } from "@reduxjs/toolkit/dist/query";
 
 //* ------------------------------------------------Display*-----------------------------------------------------------------------------------------
 function PostCard({ items, totalRows }) {
@@ -98,9 +87,7 @@ function PostCard({ items, totalRows }) {
       return item;
     }
   });
-  // const [CPU] = parts.filter((item) => item.category.toLowerCase().includes("cpu"));
-  // const { listItems: socket_CPU } = CPU;
-  // console.log("socket_CPU:", socket_CPU[0].category);
+
 
   ///* หาเงื่อนไข จากการเลือก RAM
   let typeRAM_RAM;

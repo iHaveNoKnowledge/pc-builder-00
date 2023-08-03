@@ -6,8 +6,6 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-import "./BottomComponent.css";
 import { useDispatch, useSelector } from "react-redux";
 import { saveSet } from "../slices/reportSlice";
 import { FormGroup, FormControlLabel, Checkbox } from "@mui/material";
@@ -22,19 +20,11 @@ export default function SaveBuildBtn() {
   const dispatch = useDispatch();
 
   const [open, setOpen] = useState(false);
-  const [inputData, setInputData] = useState({
-    // setName: "",
-    // customerName: "",
-    // customerTel: "",
-    // salerName: "",
-  });
-  const { setName, customerName, customerTel, salerName } = inputData;
+  const [inputData, setInputData] = useState({});
 
   //** conditional Renderring
   const [checkedItem, setCheckedItem] = useState({ contactInfoBool: false });
   const handleCheckBoxChange = (e) => {
-    // console.log("พังไหม");
-
     if (!checkedItem.contactInfoBool) {
       setCustNameInput("");
       setCustTelInput("");
@@ -79,26 +69,23 @@ export default function SaveBuildBtn() {
     }
 
     setInputData(updatedInputData);
-    console.log("Stateหลัง add", inputData);
+
     //* ตัวอย่างการใช้ค่า inputData ที่อัพเดตใหม่
-    console.log("บันทึกไรมา", updatedInputData.setName);
+
     const isEmpty = partData.map((item) => item.listItems).filter((item2) => item2.length != 0);
     if (isEmpty != 0) {
       dispatch(saveSet({ updatedInputData, partData }));
       const dataForUpdate = { ...updatedInputData, partData };
-      console.log("สำหรับยัดลง DB", dataForUpdate);
+
       updateData(dataForUpdate)
         .unwrap()
         .then((response) => {
-          console.log(response);
           setsRefetch();
           return response;
         })
         .catch((error) => {
-          console.log(error.data.response);
+          console.error(error.data.response);
         });
-    } else {
-      console.log("ไปเลือกสินค้ามาก่อน", isEmpty);
     }
 
     setSetNameInput("");
@@ -128,13 +115,10 @@ export default function SaveBuildBtn() {
     if (checkedItem.contactInfoBool != true) {
       setBtnSwitch(true);
     } else if ($9DigitPattern.test(value)) {
-      console.log("เบอร์บ้าน");
       setBtnSwitch(true);
     } else if ($10DigitPattern.test(value)) {
-      console.log("เบอร์มือถือ");
       setBtnSwitch(true);
     } else {
-      console.log("ไม่ใช่เบอร์ละ");
       setBtnSwitch(false);
     }
 
@@ -183,12 +167,9 @@ export default function SaveBuildBtn() {
       >
         Save Set
       </Button>
-      {/* <Box>State inspector: {inputData ? JSON.stringify(inputData) : "ว่าง"}</Box> */}
 
       <Dialog open={open} onClose={handleClose} style={{ zoom: "115%" }}>
-        {/* <DialogTitle>Subscribe</DialogTitle> */}
         <DialogContent sx={{ width: "auto" }}>
-          {/* <DialogContentText>Enter Your Build Name</DialogContentText> */}
           <Box mb={1}>
             <DialogContentText
               sx={{
