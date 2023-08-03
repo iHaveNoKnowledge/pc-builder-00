@@ -1,6 +1,6 @@
 import React from "react";
 import { Page, Text, View, Document, Image, Font, StyleSheet } from "@react-pdf/renderer";
-import logoHeader from "../assets/itLogo-1.png";
+import logoHeader from "../../public/images/itLogo-1.png";
 import xx from "../fonts/ChakraPetch-Regular.ttf";
 import { AppBar, Toolbar, Button, Dialog, IconButton, Typography, Slide, Box } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";

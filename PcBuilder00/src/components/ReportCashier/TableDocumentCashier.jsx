@@ -1,7 +1,7 @@
 import React from "react";
 import { Page, Text, View, Document, Image, Font, StyleSheet } from "@react-pdf/renderer";
 import xx from "../../fonts/ChakraPetch-Regular.ttf";
-import xxx from "../../assets/itLogo-1.png";
+import xxx from "../../../public/images/itLogo-1.png";
 import { AppBar, Toolbar, Button, Dialog, IconButton, Typography, Slide, Box } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { PDFViewer } from "@react-pdf/renderer";

@@ -29,7 +29,7 @@ import Bottom from "./BottomComponent";
 import { setDefault, setPageNum } from "../slices/paginationSlice";
 import { apiSlice } from "../features/api/dataApiSlice";
 import { changeCategory } from "../slices/categorySlice";
-import logoHeader from "../assets/itLogo-1.png";
+import logoHeader from "../../public/images/itLogo-1.png";
 import { skipToken } from "@reduxjs/toolkit/dist/query";
 
 //* ------------------------------------------------Display*-----------------------------------------------------------------------------------------
@@ -242,7 +242,7 @@ function PostCard({ items, totalRows }) {
       <UserFilter />
       <Grid container spacing="10" columns={{ xs: 4, sm: 12, md: 12 }}>
         {productPaginated.map((item, index) => {
-          const pngPath = `src/assets/${item.compatible.toLowerCase().split(" ", 1)}.png`;
+          const pngPath = `/images/${item.compatible.toLowerCase().split(" ", 1)}.png`;
           const jpgPath = `src/assets/${item.compatible.toLowerCase()}.jpg`;
           const maxCardHeight = Math.max(...productPaginated.map((card) => card.height));
           console.log("maxCardHeight", maxCardHeight);
