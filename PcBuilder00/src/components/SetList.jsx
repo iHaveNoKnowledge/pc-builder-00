@@ -92,7 +92,7 @@ export default function SetList() {
       setSortedData(sets.updatedRecordset);
       setRows(sets.totalRows);
     }
-  }, [open]);
+  }, [open, sets]); //เมื่อเปิด กับ เมื่อค่า sets มีการเปลี่ยนแปลง ซึ่งความเปลี่ยนแปลง redux monitor ให้
 
   const [openSubTables, setOpenSubTables] = useState([]);
 
@@ -187,6 +187,7 @@ export default function SetList() {
     e.stopPropagation();
     setIdDelete(id);
     setOpentAlert(true);
+    getSetsData();
   };
 
   //* Delete Alert!!
