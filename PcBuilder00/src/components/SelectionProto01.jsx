@@ -230,7 +230,7 @@ function PostCard({ items, totalRows }) {
       <Grid container spacing="10" columns={{ xs: 4, sm: 12, md: 12 }}>
         {productPaginated.map((item, index) => {
           const pngPath = `/images/${item.compatible.toLowerCase().split(" ", 1)}.png`;
-          const jpgPath = `src/assets/${item.compatible.toLowerCase()}.jpg`;
+          const jpgPath = `/images/${item.compatible.toLowerCase()}.jpg`;
           const maxCardHeight = Math.max(...productPaginated.map((card) => card.height));
           console.log("maxCardHeight", maxCardHeight);
           return (
@@ -241,7 +241,7 @@ function PostCard({ items, totalRows }) {
                     isLoading && (
                       <CardMedia
                         component="img"
-                        src={pngPath || jpgPath}
+                        src={jpgPath || pngPath}
                         // image={logoHeader}
                         alt={item.title}
                         title={item.title}
