@@ -4,7 +4,7 @@ import noApiCustomizeReducer from "./slices/cutomizeSliceNoApi";
 import {
   apiSlice,
   apiSliceDb,
-  updateApi,
+  apiPutSets,
   apiSliceJSONPlaceHolder,
 } from "./features/api/dataApiSlice";
 import userFilterReducer from "./slices/userFilterSlice";
@@ -20,6 +20,7 @@ export const store = configureStore({
     [apiSlice.reducerPath]: apiSlice.reducer,
     [apiSliceDb.reducerPath]: apiSliceDb.reducer,
     [apiSliceJSONPlaceHolder.reducerPath]: apiSliceJSONPlaceHolder.reducer,
+    [apiPutSets.reducerPath]: apiPutSets.reducer,
     userFilter: userFilterReducer,
     report: reportReducer,
     pagination: paginationReducer,
@@ -30,7 +31,7 @@ export const store = configureStore({
     getDefaultMiddleware().concat(
       apiSlice.middleware,
       apiSliceDb.middleware,
-      updateApi.middleware,
+      apiPutSets.middleware,
       apiSliceJSONPlaceHolder.middleware
     ),
 });

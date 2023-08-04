@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { apiSlice, apiSliceJSONPlaceHolder, apiSliceDb } from "../features/api/dataApiSlice";
+import { apiSliceDb } from "../features/api/dataApiSlice";
 
 const initialState = {
   products: [],
@@ -29,24 +29,6 @@ const productsSlice = createSlice({
         state.error = action.error.message;
       });
   },
-
-  //* ของเทส
-  // extraReducers: (builder) => {
-  //   builder
-  //     .addMatcher(apiSliceJSONPlaceHolder.endpoints.getPhotos.matchPending, (state) => {
-  //       state.loading = true;
-  //       state.error = null;
-  //     })
-  //     .addMatcher(apiSliceJSONPlaceHolder.endpoints.getPhotos.matchFulfilled, (state, action) => {
-  //       state.loading = false;
-  //       state.products = action.payload;
-  //       state.error = null;
-  //     })
-  //     .addMatcher(apiSliceJSONPlaceHolder.endpoints.getPhotos.matchRejected, (state, action) => {
-  //       state.loading = false;
-  //       state.error = action.error.message;
-  //     });
-  // },
 });
 
 export const { getProducts } = productsSlice.actions;

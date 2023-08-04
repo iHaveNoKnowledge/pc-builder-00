@@ -10,7 +10,6 @@ export const apiSlice = createApi({
   tagTypes: ["test"],
   endpoints: (builder) => ({
     getPosts: builder.query({
-      // query: () => "/items2",
       query: (args) => {
         const { startPage, pageEnd, perPage, category } = args;
         return `/items2?category=${category}&_limit=${pageEnd}`;
@@ -90,7 +89,8 @@ export const apiSliceDb = createApi({
 });
 
 //* Post
-export const updateApi = createApi({
+export const apiPutSets = createApi({
+  reducerPath: "putSets",
   baseQuery: fetchBaseQuery({ baseUrl }),
   endpoints: (builder) => ({
     updateData: builder.mutation({
@@ -102,18 +102,6 @@ export const updateApi = createApi({
     }),
   }),
 });
-
-// //* Delete
-// export const deleteResource = apiSliceDb.injectEndpoints({
-//   endpoints: (builder) => ({
-//     deleteResource: builder.mutation({
-//       query: (resourceID) => ({
-//         url: `/pop/${resourceID}`,
-//         method: "DELETE",
-//       }),
-//     }),
-//   }),
-// });
 
 //** ดึงข้อมูล
 export const { useGetPostsQuery, useLazyGetPostsQuery } = apiSlice;
@@ -127,10 +115,7 @@ export const {
 export const { useGetPhotosQuery } = apiSliceJSONPlaceHolder;
 
 //** DB DATA Create
-export const { useUpdateDataMutation } = updateApi;
-
-//** DB DATA DELETE
-// export const { useDeleteResourceMutation } = deleteResource;
+export const { useUpdateDataMutation } = apiPutSets;
 
 ///source
 ///https://www.positronx.io/react-fetch-data-with-redux-toolkit-rtk-query-tutorial/

@@ -28,8 +28,6 @@ export default function SaveBuildBtn() {
     if (!checkedItem.contactInfoBool) {
       setCustNameInput("");
       setCustTelInput("");
-      //todo setSalerNameInput("");
-      //todo setSalerTelInput("");
     }
     setCheckedItem((prev) => {
       return { ...checkedItem, [e.target.name]: e.target.checked };
@@ -80,11 +78,12 @@ export default function SaveBuildBtn() {
       updateData(dataForUpdate)
         .unwrap()
         .then((response) => {
+          console.log("บันทึกสำเร็จ");
           setsRefetch();
           return response;
         })
         .catch((error) => {
-          console.error(error.data.response);
+          console.error("บันทึกไม่สำเร็จ", error.data.response);
         });
     }
 
@@ -180,14 +179,14 @@ export default function SaveBuildBtn() {
                 pt: "5px",
               }}
             >
-              ตั้งชื่อ Set คอมประกอบ
+              ตั้งชื่อ เซ็ต คอมประกอบ
             </DialogContentText>
             <TextField
               sx={{ mt: "0px" }}
               autoFocus
               margin="dense"
               id="setName"
-              label={`{db.setName? db.setName : db.builedDefName }`}
+              label="Set Name"
               fullWidth
               variant="filled"
               value={setNameInput}

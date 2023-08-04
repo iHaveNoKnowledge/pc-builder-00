@@ -2,7 +2,6 @@ import React from "react";
 import Box from "@mui/material/Box";
 import SaveBuildBtn from "./saveBuildForm";
 import "./BottomComponent.css";
-import { useNavigate } from "react-router-dom";
 import ReportDocument from "./ReportDocument";
 import SetList from "./SetList";
 import AddSN from "./ReportCashier/AddSN";

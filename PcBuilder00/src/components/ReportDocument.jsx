@@ -34,16 +34,6 @@ const ReportDocument = () => {
     });
   });
 
-  // console.log("ไอนี่แอดไม่ได้", itemList);
-
-  // itemList.forEach((item) => {
-  //   // const times = item.selectAmount;
-  //   // item.sn = Array(times).fill("");
-  //   let xy;
-  //   console.log("แอด", item);
-  //   xy = { ...item, sn: "" };
-  //   console.log("หลังแอด", xy);
-  // });
 
   const [open, setOpen] = React.useState(false);
   //* onclick เปิด Form ////////////////////////////////////////////////////////////////////

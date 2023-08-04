@@ -31,7 +31,6 @@ const AddSN = () => {
     customerTel: "",
     salerName: "",
   });
-  const { buildedName, customerName, customerTel, salerName } = inputData;
   const [selectedItem, setSelectedItem] = React.useState({
     partData: [
       {
@@ -134,18 +133,6 @@ const AddSN = () => {
     const times = item.selectAmount;
     item.sn = Array(times).fill("");
   });
-
-  ////ก่อนออกหน้ากระดาษ
-  // let updatedItemsList;
-  // const onSubmit = () => {
-  //   updatedItemsList = itemList.map((item1, index1) => {
-  //     const updatedSN = item1.sn.map((sn, snIndex) => watch(`Item${index1}SN${snIndex}`));
-  //     return { ...item1, sn: updatedSN };
-  //   });
-  //   console.log("ผลลัพธ์", updatedItemsList);
-  //   reset();
-  //   console.log();
-  // };
 
   const onSubmit = () => {
     itemList = itemList.map((item1, index1) => {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import ImageIcon from "@mui/icons-material/Image";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -28,8 +28,6 @@ import SumCustomize from "./SumCustomize";
 import { setDefault } from "../slices/paginationSlice";
 
 const CustomizationProto02 = () => {
-  //useState
-  const [selected, setSelected] = useState(false);
   //useSelector
   const parts = useSelector((state) => state.noApiCustomize.partData);
   const currentCategory = useSelector((state) => state.category.category);
@@ -58,12 +56,9 @@ const CustomizationProto02 = () => {
     dispatch(updateSummations());
   };
 
-  const handleClear = (category, slot, id, miniIndex) => {
+  const handleClear = (category, id, miniIndex) => {
     console.log("clear data");
     dispatch(removeProduct({ category, id, miniIndex }));
-    // if (category === "Mainboard") {
-    //   dispatch(setMax(slot));
-    // }
     dispatch(setMax());
     dispatch(updateSummations());
   };
@@ -115,7 +110,7 @@ const CustomizationProto02 = () => {
                                       e.stopPropagation();
                                       handleClear(
                                         miniItem.category,
-                                        miniItem.slot,
+
                                         miniItem.id,
                                         miniIndex
                                       );
@@ -159,7 +154,7 @@ const CustomizationProto02 = () => {
                                         ) : (
                                           <Box
                                             component="img"
-                                            src={`src/assets/${miniItem.compatible
+                                            src={`/images/${miniItem.compatible
                                               .toLowerCase()
                                               .split(" ", 1)}.png`}
                                             alt={miniItem.title}

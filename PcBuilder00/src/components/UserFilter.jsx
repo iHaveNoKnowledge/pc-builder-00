@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
 import SearchIcon from "@mui/icons-material/Search";
@@ -7,7 +7,7 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import "./UserFilter.css";
 import { useDispatch, useSelector } from "react-redux";
-import { changeTextSearch, updateFilters, setSelectedValuesCopy } from "../slices/userFilterSlice";
+import { changeTextSearch, setSelectedValuesCopy } from "../slices/userFilterSlice";
 import { Typography } from "@mui/material";
 import { clearSelectedFilter } from "../slices/userFilterSlice";
 import { setDefault } from "../slices/paginationSlice";
@@ -20,8 +20,6 @@ const UserFilter = () => {
 
   //* useSelector
   const currentCategory = useSelector((state) => state.category.category);
-  const searchTyped = useSelector((state) => state.userFilter.textSearch);
-  const filterOptions = useSelector((state) => state.userFilter.filterOptions);
   const filtersSet = useSelector((state) => state.userFilter.filtersSet);
   const currentFilters = filtersSet.find((filterItem) => {
     return filterItem.name === currentCategory.toLowerCase();
@@ -33,8 +31,6 @@ const UserFilter = () => {
 
   //* usestate
   const [query, setQuery] = useState("");
-  // const [selectedFilter, setSelectedFilter] = useState(currentFilters.filters);
-  const [currentOpt, setCuerrentOpt] = useState([]);
 
   //*  handleFunctions
   const handleSearch = (e) => {
