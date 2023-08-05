@@ -297,7 +297,6 @@ function PostCard({ items, totalRows }) {
                       variant="body2"
                       sx={{ height: "80px", overflowY: "auto" }}
                     >
-                      {item.productDescription}
                       {JSON.stringify(item.QTY)}
                     </Typography>
                     <Divider sx={{ pt: 1 }} />
