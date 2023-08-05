@@ -18,8 +18,8 @@ import { useGetDbItemQuery } from "../features/api/dataApiSlice";
 import { getCategorizedData } from "../slices/userFilterSlice";
 import Bottom from "./BottomComponent";
 import { setDefault, setPageNum } from "../slices/paginationSlice";
-
 import { changeCategory } from "../slices/categorySlice";
+import Popup from "./generalModules/popup01";
 
 //* ------------------------------------------------Display*-----------------------------------------------------------------------------------------
 function PostCard({ items, totalRows }) {
@@ -281,6 +281,7 @@ function PostCard({ items, totalRows }) {
                       >
                         Stock: INT
                       </Typography>
+                      <Popup/>
                     </Box>
                     <Typography
                       textOverflow="clip"
