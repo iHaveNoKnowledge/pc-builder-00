@@ -24,8 +24,6 @@ import Popup from "./generalModules/popup01";
 //* ------------------------------------------------Display*-----------------------------------------------------------------------------------------
 function PostCard({ items, totalRows }) {
   //* useState!!!!!!!!!!!!!!!!!!!
-  // const [curItem, setCurItem] = useState(items.recordset);
-  console.log("บรรทัด39 :");
   const [curItem, setCurItem] = useState(items);
   console.log("curItemใช้ได้ยัง :", curItem);
   //* dispatchZone!!!!!!!!!
@@ -87,7 +85,6 @@ function PostCard({ items, totalRows }) {
       return item;
     }
   });
-
 
   ///* หาเงื่อนไข จากการเลือก RAM
   let typeRAM_RAM;
@@ -223,6 +220,14 @@ function PostCard({ items, totalRows }) {
     setIsLoading(false);
   };
 
+  const [isOpen, setIsOpen] = useState(false);
+  const [stockByBranchs, setstockByBranchs] = useState();
+  const togglePopup = (e, index) => {
+    console.log("เลข index:", productPaginated[index]);
+    setstockByBranchs(productPaginated[index]);
+    setIsOpen(!isOpen);
+  };
+
   //** หน้าเว็บ
   return (
     <>
@@ -269,26 +274,31 @@ function PostCard({ items, totalRows }) {
                     >
                       <Typography
                         variant="body1"
-                        sx={{ flexGrow: "1", fontSize: "1.2rem", fontWeight: "bolder" }}
+                        sx={{
+                          flexGrow: "1",
+                          fontSize: "1.2rem",
+                          fontWeight: "bolder",
+                        }}
                       >
                         {item.code}
                       </Typography>
 
-                      <Typography
-                        variant="caption"
+                      <Button
+                        sx={{ textDecoration: "underline", padding: 0 }}
+                        onClick={(e) => togglePopup(e, index)}
                         // display="block"
                         // gutterBottom
                       >
-                        Stock: INT
-                      </Typography>
-                      <Popup/>
+                        Stock: {item.QTY.reduce((acc, QTYItem) => acc + QTYItem, 0)}
+                      </Button>
                     </Box>
                     <Typography
                       textOverflow="clip"
                       variant="body2"
-                      sx={{ height: "100px", overflowY: "auto" }}
+                      sx={{ height: "80px", overflowY: "auto" }}
                     >
                       {item.productDescription}
+                      {JSON.stringify(item.QTY)}
                     </Typography>
                     <Divider sx={{ pt: 1 }} />
                     <Box sx={{ display: "flex" }}>
@@ -330,19 +340,41 @@ function PostCard({ items, totalRows }) {
                         เลือก
                       </Button>
                     </Box>
-                    {/* <Typography variant="body2" color="text.secondary">
-                      5555
-                    </Typography> */}
                   </CardContent>
                 </Card>
-                {/* <CardActions>
-                  <Button size="small">Like</Button>
-                  <Button size="small">Fav</Button>
-                </CardActions> */}
               </Card>
             </Grid>
           );
         })}
+        {isOpen && (
+          <div style={popupStyle}>
+            <div style={popupContentStyle}>
+              <h2>รายการสินค้าตามสาขา</h2>
+              <p>
+                <div style={{ display: "flex", justifyContent: "space-between" }}>
+                  <div>สาขา</div>
+                  <div>จำนวน</div>
+                </div>
+                <hr style={{ padding: "1px", border: "1px solid grey" }} />
+                {stockByBranchs.BRANCH_CODE.map((item, index) => {
+                  return (
+                    <div>
+                      <div style={{ display: "flex", justifyContent: "space-between" }}>
+                        <div>{item}</div>
+                        <div>{stockByBranchs.QTY[index]}</div>
+                      </div>
+                      {index > 0 && <hr />}
+                    </div>
+                  );
+                })}
+              </p>
+
+              <button style={closePopupButtonStyle} onClick={togglePopup}>
+                Close
+              </button>
+            </div>
+          </div>
+        )}
       </Grid>
 
       <Stack className="pagination-card" spacing={2} alignItems="center" sx={{ mt: "6px" }}>
@@ -365,9 +397,6 @@ function PostCard({ items, totalRows }) {
       </Stack>
 
       <Bottom />
-      {/* <Box>
-        <BigPaginationTest />
-      </Box> */}
     </>
   );
 }
@@ -406,15 +435,12 @@ function SelectionProto01() {
     );
     //** กรณีโหลดสำเร็จ
   } else if (products) {
-    // const posts = data.recordsets.flat();
     console.log("data เป็นไง", products, "postsได้ยัง: ", products);
-    // dispatch(getProducts(posts));
-    ///เอา [posts] ซึ่งเป็น array data ที่ได้จากการ fetchจาก endpoints ที่เราเลือก มาใน dataApiSLice เอามาทำการ map() แล้วส่งไป เป็น prop ให้ตัวหลักข้างบนที่เราจะแสดงผล
+
     cardContent = <PostCard items={products} totalRows={totalRows} />;
-    // cardContent = <>สำเร็จ</>;
 
     //** กรณีError
-  } else if (isError) {
+  } else if (error) {
     ///* cardContent เก็บ div ก้อนนึง ทำหน้าที่โชว alert
     cardContent = (
       <div>
@@ -430,3 +456,31 @@ function SelectionProto01() {
 }
 
 export default SelectionProto01;
+
+const popupStyle = {
+  position: "fixed",
+  top: "0",
+  left: "0",
+  width: "100%",
+  height: "100%",
+  backgroundColor: "rgba(0, 0, 0, 0.5)",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  zIndex: "1000",
+};
+
+const popupContentStyle = {
+  backgroundColor: "white",
+  padding: "20px",
+  borderRadius: "5px",
+  boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.2)",
+};
+
+const closePopupButtonStyle = {
+  marginTop: "10px",
+  padding: "5px 10px",
+  backgroundColor: "#ccc",
+  border: "none",
+  cursor: "pointer",
+};
