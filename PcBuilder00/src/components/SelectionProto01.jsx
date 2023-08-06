@@ -347,26 +347,28 @@ function PostCard({ items, totalRows }) {
         })}
         {isOpen && (
           <div style={popupStyle}>
-            <div style={popupContentStyle}>
+            <div style={popupBg}>
               <h2>รายการสินค้าตามสาขา</h2>
-              <p>
-                <div style={{ display: "flex", justifyContent: "space-between" }}>
-                  <div>สาขา</div>
-                  <div>จำนวน</div>
-                </div>
-                <hr style={{ padding: "1px", border: "1px solid grey" }} />
-                {stockByBranchs.BRANCH_CODE.map((item, index) => {
-                  return (
-                    <div>
-                      <div style={{ display: "flex", justifyContent: "space-between" }}>
-                        <div>{item}</div>
-                        <div>{stockByBranchs.QTY[index]}</div>
-                      </div>
-                      {index > 0 && <hr />}
-                    </div>
-                  );
-                })}
-              </p>
+              <div style={popupContentStyle}>
+                <table style={{ width: "100%" }}>
+                  <thead
+                    style={{ position: "sticky", top: "0", zIndex: "1", backgroundColor: "white" }}
+                  >
+                    <tr>
+                      <th>สาขา</th>
+                      <th>จำนวน</th>
+                    </tr>
+                  </thead>
+                  <tbody style={{ maxHeight: "300px", overflow: "auto" }}>
+                    {stockByBranchs.BRANCH_CODE.map((item, index) => (
+                      <tr key={index}>
+                        <td>{item}</td>
+                        <td>{stockByBranchs.QTY[index]}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
 
               <button style={closePopupButtonStyle} onClick={togglePopup}>
                 Close
@@ -456,6 +458,12 @@ function SelectionProto01() {
 
 export default SelectionProto01;
 
+const popupBg = {
+  backgroundColor: "rgba(255, 255, 255, 1)",
+  width: "100%",
+  maxWidth: "350px",
+};
+
 const popupStyle = {
   position: "fixed",
   top: "0",
@@ -474,6 +482,8 @@ const popupContentStyle = {
   padding: "20px",
   borderRadius: "5px",
   boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.2)",
+  maxHeight: "300px", // Set the maximum height for the popup content
+  overflow: "auto", // Add scroll if content overflows the maximum height
 };
 
 const closePopupButtonStyle = {
