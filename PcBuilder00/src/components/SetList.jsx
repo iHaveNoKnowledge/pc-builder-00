@@ -23,7 +23,7 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import "./BottomComponent.css";
 import { useDispatch, useSelector } from "react-redux";
-import { saveSet } from "../slices/reportSlice";
+import { addInfo } from "../slices/reportSlice";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import SearchIcon from "@mui/icons-material/Search";
@@ -80,10 +80,8 @@ export default function SetList() {
   let displayDataList = false;
 
   //* นำ api มาใช้
-  const [
-    getSetsData,
-    { data: sets, error, isLoading, isSuccess, isUninitialized },
-  ] = useLazyGetSetsQuery();
+  const [getSetsData, { data: sets, error, isLoading, isSuccess, isUninitialized }] =
+    useLazyGetSetsQuery();
   const [sortedData, setSortedData] = useState([]);
   const [rows, setRows] = useState(0);
 
@@ -153,21 +151,22 @@ export default function SetList() {
     console.log("handleSelect clicked!!");
     e.stopPropagation();
     dispatch(resetCustomized());
+    const { setName, customerName, customerTel, sellerName, sellerTel } = sortedData[index1];
     console.log("กดเลือกไรมา", sortedData[index1]);
     const itemsSet = sortedData[index1].partData.flatMap((category) =>
       category.listItems.map((item) => item)
     );
     console.log("itemsSet: ", itemsSet);
-
     const itemsSetID = itemsSet.map((item) => item.id);
     const amountPerItem = itemsSet.map((item) => item.selectAmount);
-    //todo line139: ตรงนี้ที่ทำให้ itemsToAdd รับค่าจาก posts ซึ่ง posts ไม่มีข้อมูลมากพอ ต้องเอา set มาแล้วดึงค่าsku ข้างในทั้งหมดแล้วแล้วเอารายละเอียดสินค้าออกมา
     const itemsToAdd = posts
       .filter((item) => itemsSetID.includes(item.id))
       .map((item, index) => ({ ...item, selectAmount: amountPerItem[index] }));
 
     itemsToAdd.map((item) => dispatch(addProduct(item)));
     dispatch(updateSummations());
+    dispatch;
+    dispatch(addInfo({ setName, customerName, customerTel, sellerName, sellerTel }));
 
     setOpenSubTables([]);
     setOpen(false);
@@ -274,6 +273,12 @@ export default function SetList() {
                   <TableCell align="left" colSpan={1}>
                     Set Name
                   </TableCell>
+                  <TableCell align="left" colSpan={1} style={{ width: 80 }}>
+                    ชื่อลูกค้า
+                  </TableCell>
+                  <TableCell align="left" colSpan={1} style={{ width: 80 }}>
+                    เบอร์
+                  </TableCell>
                   <TableCell align="right" colSpan={1} style={{ width: 80 }}>
                     Save Date
                   </TableCell>
@@ -292,7 +297,6 @@ export default function SetList() {
                       return (
                         <React.Fragment key={index}>
                           <TableRow
-                            sx={{}}
                             onClick={() => {
                               const updatedOpenSubTables = [...openSubTables];
                               updatedOpenSubTables[index] = !isOpen;
@@ -335,6 +339,12 @@ export default function SetList() {
                             <TableCell align="left">
                               {item.setName ? item.setName : item.DefaultName}
                             </TableCell>
+                            <TableCell align="left">
+                              {item.customerName ? item.customerName : "-"}
+                            </TableCell>
+                            <TableCell align="left">
+                              {item.customerTel ? item.customerTel : "-"}
+                            </TableCell>
                             <TableCell align="right">
                               {new Date(item.timeStamp).toLocaleDateString("th-TH")}
                             </TableCell>
@@ -367,7 +377,7 @@ export default function SetList() {
                                     <CircularProgress />
                                   </Box>
                                 ) : (
-                                  <Box sx={{ margin: 1 }}>
+                                  <Box sx={{ margin: 1, width: "inherit" }}>
                                     <Typography variant="h6" gutterBottom component="div">
                                       Items List
                                     </Typography>

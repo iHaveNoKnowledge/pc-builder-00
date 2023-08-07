@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  info: { setName: "", customerName: "", customerTel: "", sellerName: "" },
+  info: { setName: "", customerName: "", customerTel: "", sellerName: "", sellerTel: "" },
   partData: [],
   sets: [],
 };
@@ -11,6 +11,7 @@ export const reportSlice = createSlice({
   initialState,
   reducers: {
     addInfo: (state, action) => {
+      state.info = initialState.info;
       state.info = action.payload;
     },
 

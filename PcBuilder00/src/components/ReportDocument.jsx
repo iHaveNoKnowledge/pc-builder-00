@@ -24,6 +24,7 @@ const ReportDocument = () => {
   const partDataReport2 = useSelector((state) => state.noApiCustomize.partData);
   const reportInfo = useSelector((state) => state.report.info);
   console.log("มีพาทไรบ้าง:", partDataReport);
+  console.log("reportInfo:", reportInfo);
 
   let itemList = [];
 
@@ -113,7 +114,7 @@ const ReportDocument = () => {
             </View>
             <View style={{ fontSize: 9, marginVertical: 1, marginLeft: 3, width: 130 }}>
               {/* <Text>รับตัวแปร custel str ทำconditional display</Text> */}
-              <Text>{reportInfo.customerTel}</Text>
+              <Text>{reportInfo.sellerTel}</Text>
             </View>
           </View>
         </View>
@@ -260,8 +261,9 @@ const ReportDocument = () => {
                 <View style={{ ...inlineStyle, ...inlineTotal }}>
                   <Text>
                     {itemList
-                      .reduce((acc, item) => acc + item.srp * item.selectAmount, 0)
-                      .toLocaleString()}
+                      .reduce((acc, item) => acc + item.srp * (100 / 107) * item.selectAmount, 0)
+                      .toFixed(2)
+                      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                   </Text>
                 </View>
               </View>
@@ -283,6 +285,38 @@ const ReportDocument = () => {
                 </View>
                 <View style={{ ...inlineStyle, ...inlinePrice }}>
                   <Text>ภาษีมูลค่าเพิ่ม</Text>
+                </View>
+                <View style={{ ...inlineStyle, ...inlineTotal }}>
+                  <Text>
+                    {itemList
+                      .reduce(
+                        (acc, item) =>
+                          acc + (item.srp - item.srp * (100 / 107)) * item.selectAmount,
+                        0
+                      )
+                      .toFixed(2)
+                      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                  </Text>
+                </View>
+              </View>
+            </View>
+
+            <View>
+              <View break={true} style={{ display: "flex", flexDirection: "row" }}>
+                <View style={{ ...inlineStyle, ...inlineOrder }}>
+                  {/* <Text>{WrapText(`${2 + index}`)}</Text> */}
+                </View>
+                <View style={{ ...inlineStyle, ...inlineCode }}>
+                  {/* <Text>{`XXX-${formattedNumberx}`}</Text> */}
+                </View>
+                <View style={{ ...inlineStyle, ...inlineDescr }}>
+                  {/* <Text>{WrapText("loremfa-rotate-180asdasd")}</Text> */}
+                </View>
+                <View style={{ ...inlineStyle, ...inlineQTY }}>
+                  {/* <Text>{WrapText("99")}</Text> */}
+                </View>
+                <View style={{ ...inlineStyle, ...inlinePrice }}>
+                  <Text>ราคาสุทธิ</Text>
                 </View>
                 <View style={{ ...inlineStyle, ...inlineTotal }}>
                   <Text>

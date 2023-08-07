@@ -53,8 +53,8 @@ export default function SaveBuildBtn() {
         setName: setNameInput,
         customerName: custNameInput,
         customerTel: custTelInput,
-        salerName: salerNameInput,
-        salerTel: salerTelInput,
+        sellerName: sellerNameInput,
+        sellerTel: sellerTelInput,
       };
     } else {
       updatedInputData = {
@@ -88,8 +88,8 @@ export default function SaveBuildBtn() {
     }
 
     setSetNameInput("");
-    //todo setSalerNameInput("");
-    //todo setSalerTelInput("");
+    //todo setsellerNameInput("");
+    //todo setsellerTelInput("");
     setCustNameInput("");
     setCustTelInput("");
 
@@ -98,10 +98,10 @@ export default function SaveBuildBtn() {
 
   //** SetName Input ไม่ต้องมี valid
   const [setNameInput, setSetNameInput] = useState("");
-  //** SalerName Input ไม่ต้องมี valid
-  const [salerNameInput, setSalerNameInput] = useState("");
-  //** SalerTel Input ไม่ต้องมี valid
-  const [salerTelInput, setSalerTelInput] = useState("");
+  //** sellerName Input ไม่ต้องมี valid
+  const [sellerNameInput, setsellerNameInput] = useState("");
+  //** sellerTel Input ไม่ต้องมี valid
+  const [sellerTelInput, setsellerTelInput] = useState("");
   //** CustName Input ไม่ต้องมี valid
   const [custNameInput, setCustNameInput] = useState("");
   //** CustTel Num Input Validation///////////////////////////////
@@ -137,12 +137,12 @@ export default function SaveBuildBtn() {
     } else if (e.target.id === "custNameInput") {
       console.log("แกกำลังกรอกชื่อลูกค้า");
       setCustNameInput(value);
-    } else if (e.target.id === "salerNameInput") {
-      setSalerNameInput(value);
+    } else if (e.target.id === "sellerNameInput") {
+      setsellerNameInput(value);
     } else if (e.target.id === "setName") {
       setSetNameInput(value);
-    } else if (e.target.id === "salerTelInput") {
-      setSalerTelInput(value);
+    } else if (e.target.id === "sellerTelInput") {
+      setsellerTelInput(value);
     }
   };
 
@@ -151,7 +151,7 @@ export default function SaveBuildBtn() {
   }, [custTelInput, checkedItem]);
 
   const custDigitDisplay = custTelInput.length > 1 ? "digits" : "digit";
-  const salerDigitDisplay = salerTelInput.length > 1 ? "digits" : "digit";
+  const sellerDigitDisplay = sellerTelInput.length > 1 ? "digits" : "digit";
 
   return (
     <div>
@@ -246,7 +246,7 @@ export default function SaveBuildBtn() {
                         เบอร์ติดต่อ{" "}
                         {custTelInput.length !== 0 ? (
                           <>
-                            Current {custDigitDisplay}: {custTelInput.length}
+                            (Current {custDigitDisplay}: {custTelInput.length})
                           </>
                         ) : (
                           ""
@@ -275,24 +275,24 @@ export default function SaveBuildBtn() {
 
                   <TextField
                     margin="dense"
-                    id="salerNameInput"
-                    label="ชื่อผู้ขาย (ถ้ามีLogin ควร Auto)"
+                    id="sellerNameInput"
+                    label="ชื่อผู้ขาย "
                     fullWidth
                     variant="standard"
-                    value={salerNameInput}
+                    value={sellerNameInput}
                     onChange={handleChange}
                     error={false}
                   />
 
                   <TextField
                     margin="dense"
-                    id="salerTelInput"
+                    id="sellerTelInput"
                     label={
                       <Box>
-                        เบอร์ติดต่อ (ถ้ามีLogin ควร Auto)
-                        {salerTelInput.length !== 0 ? (
+                        เบอร์ติดต่อ{" "}
+                        {sellerTelInput.length !== 0 ? (
                           <>
-                            Current {salerDigitDisplay}: {salerTelInput.length}
+                            (Current {sellerDigitDisplay}: {sellerTelInput.length})
                           </>
                         ) : (
                           ""
@@ -301,7 +301,7 @@ export default function SaveBuildBtn() {
                     }
                     fullWidth
                     variant="standard"
-                    value={salerTelInput}
+                    value={sellerTelInput}
                     onChange={handleChange}
                   />
                 </Box>

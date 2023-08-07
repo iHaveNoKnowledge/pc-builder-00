@@ -226,7 +226,16 @@ function PostCard({ items, totalRows }) {
     console.log("เลข index:", productPaginated[index]);
     setstockByBranchs(productPaginated[index]);
     setIsOpen(!isOpen);
+    document.body.style.overflow = isOpen ? "auto" : "hidden";
   };
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+  }, [isOpen]);
 
   //** หน้าเว็บ
   return (
@@ -362,8 +371,19 @@ function PostCard({ items, totalRows }) {
                   <tbody style={{ maxHeight: "300px", overflow: "auto" }}>
                     {stockByBranchs.BRANCH_CODE.map((item, index) => (
                       <tr key={index}>
-                        <td>{item}</td>
-                        <td>{stockByBranchs.QTY[index]}</td>
+                        <td style={{ ...tdBorderStyle, textAlign: "center", flexGrow: 1 }}>
+                          {item}
+                        </td>
+                        <td
+                          style={{
+                            ...tdBorderStyle,
+                            textAlign: "center",
+                            flexGrow: 1,
+                            width: "45%",
+                          }}
+                        >
+                          {stockByBranchs.QTY[index]}
+                        </td>
                       </tr>
                     ))}
                   </tbody>
@@ -462,6 +482,7 @@ const popupBg = {
   backgroundColor: "rgba(255, 255, 255, 1)",
   width: "100%",
   maxWidth: "350px",
+  padding: "20px",
 };
 
 const popupStyle = {
@@ -479,11 +500,11 @@ const popupStyle = {
 
 const popupContentStyle = {
   backgroundColor: "white",
-  padding: "20px",
   borderRadius: "5px",
   boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.2)",
   maxHeight: "300px", // Set the maximum height for the popup content
-  overflow: "auto", // Add scroll if content overflows the maximum height
+  overflowY: "scroll", // Add scroll if content overflows the maximum height
+  border: "1px solid #ccc",
 };
 
 const closePopupButtonStyle = {
@@ -492,4 +513,9 @@ const closePopupButtonStyle = {
   backgroundColor: "#ccc",
   border: "none",
   cursor: "pointer",
+};
+
+const tdBorderStyle = {
+  border: "1px solid #ddd", // Add border to <td> elements
+  padding: "8px", // Add padding to <td> elements for spacing
 };
