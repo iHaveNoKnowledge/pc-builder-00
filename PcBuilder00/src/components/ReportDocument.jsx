@@ -34,7 +34,6 @@ const ReportDocument = () => {
     });
   });
 
-
   const [open, setOpen] = React.useState(false);
   //* onclick เปิด Form ////////////////////////////////////////////////////////////////////
   const handleClickOpen = () => {
@@ -73,7 +72,7 @@ const ReportDocument = () => {
             </View>
           </View>
 
-          <View style={{ ...subTableDisplay, ...{ flexDirection: "row" } }}>
+          <View style={{ ...subTableDisplay, flexDirection: "row" }}>
             <View style={{ fontSize: 10, width: "17%" }}>
               <Text>โทร</Text>
             </View>
@@ -92,7 +91,7 @@ const ReportDocument = () => {
             }}
           ></View>
 
-          <View style={{ ...subTableDisplay, ...{ flexDirection: "row" } }}>
+          <View style={{ ...subTableDisplay, flexDirection: "row" }}>
             <View style={{ fontSize: 10, width: "17%" }}>
               <Text>ผู้ขาย</Text>
             </View>
@@ -102,6 +101,19 @@ const ReportDocument = () => {
             <View style={{ fontSize: 9, marginVertical: 1, marginLeft: 3, width: 130 }}>
               {/* <Text>รับตัวแปร saler ทำconditional display </Text> */}
               <Text>{reportInfo.sellerName} </Text>
+            </View>
+          </View>
+
+          <View style={{ ...subTableDisplay, flexDirection: "row" }}>
+            <View style={{ fontSize: 10, width: "17%" }}>
+              <Text>โทร</Text>
+            </View>
+            <View>
+              <Text style={{ fontSize: 10 }}>:</Text>
+            </View>
+            <View style={{ fontSize: 9, marginVertical: 1, marginLeft: 3, width: 130 }}>
+              {/* <Text>รับตัวแปร custel str ทำconditional display</Text> */}
+              <Text>{reportInfo.customerTel}</Text>
             </View>
           </View>
         </View>
@@ -227,6 +239,34 @@ const ReportDocument = () => {
                 </View>
               );
             })}
+
+            <View style={{ bordertop: "1px solid black" }}>
+              <View break={true} style={{ display: "flex", flexDirection: "row" }}>
+                <View style={{ ...inlineStyle, ...inlineOrder }}>
+                  {/* <Text>{WrapText(`${2 + index}`)}</Text> */}
+                </View>
+                <View style={{ ...inlineStyle, ...inlineCode }}>
+                  {/* <Text>{`XXX-${formattedNumberx}`}</Text> */}
+                </View>
+                <View style={{ ...inlineStyle, ...inlineDescr }}>
+                  {/* <Text>{WrapText("loremfa-rotate-180asdasd")}</Text> */}
+                </View>
+                <View style={{ ...inlineStyle, ...inlineQTY }}>
+                  {/* <Text>{WrapText("99")}</Text> */}
+                </View>
+                <View style={{ ...inlineStyle, ...inlinePrice }}>
+                  <Text>ราคารวม</Text>
+                </View>
+                <View style={{ ...inlineStyle, ...inlineTotal }}>
+                  <Text>
+                    {itemList
+                      .reduce((acc, item) => acc + item.srp * item.selectAmount, 0)
+                      .toLocaleString()}
+                  </Text>
+                </View>
+              </View>
+            </View>
+
             <View>
               <View break={true} style={{ display: "flex", flexDirection: "row" }}>
                 <View style={{ ...inlineStyle, ...inlineOrder }}>
@@ -242,10 +282,15 @@ const ReportDocument = () => {
                   {/* <Text>{WrapText("99")}</Text> */}
                 </View>
                 <View style={{ ...inlineStyle, ...inlinePrice }}>
-                  {/* <Text>{WrapText("9999")}</Text> */}
+                  <Text>ภาษีมูลค่าเพิ่ม</Text>
                 </View>
                 <View style={{ ...inlineStyle, ...inlineTotal }}>
-                  <Text>{WrapText("99999")}</Text>
+                  <Text>
+                    {itemList
+                      .reduce((acc, item) => acc + item.srp * item.selectAmount, 0)
+                      .toFixed(2)
+                      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                  </Text>
                 </View>
               </View>
             </View>
@@ -257,7 +302,7 @@ const ReportDocument = () => {
     }
   };
 
-  const FinalizeDocument = () => {
+  const FinalizedDocument = () => {
     return (
       <Document>
         <Page style={pageStyle} size="A4" orientation="portrait">
@@ -296,7 +341,7 @@ const ReportDocument = () => {
           </Toolbar>
         </AppBar>
         <Box>
-          <PDFViewer style={viewerStyle}> {FinalizeDocument()}</PDFViewer>
+          <PDFViewer style={viewerStyle}> {FinalizedDocument()}</PDFViewer>
         </Box>
       </Dialog>
     </div>
