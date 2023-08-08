@@ -161,9 +161,11 @@ function PostCard({ items, totalRows }) {
     return (
       item.code.toLowerCase().includes(textSearch.toLowerCase()) ||
       (item.socket && item.socket.toLowerCase().includes(textSearch.toLowerCase())) ||
-      item.productDescription.toLowerCase().includes(textSearch.toLowerCase()) || item.BRANCH_CODE.toLowerCase()
+      item.productDescription.toLowerCase().includes(textSearch.toLowerCase()) ||
+      item.BRANCH_CODE.every((branch) => selectedBranches.includes(branch))
     );
   });
+  console.log("searchedShowProduct:", searchedShowProduct);
 
   //* นำ flter มา filter showproduct
   const filterProducts = (products, selectedOpts, expression) => {
