@@ -61,8 +61,7 @@ const UserFilter = () => {
       <Box>
         <form onSubmit={handleSearch} style={{ display: "flex" }}>
           <TextField
-          sx={{}}
-            fullWidth
+            sx={{ width: "56.8%", paddingRight: "8px" }}
             placeholder="ค้นหาสินค้า"
             type="search"
             id="input-with-icon-textfield"
