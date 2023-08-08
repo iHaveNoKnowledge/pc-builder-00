@@ -6,6 +6,7 @@ const initialState = {
   loading: false,
   error: null,
   totalRows: 1,
+  branches: null,
 };
 
 const productsSlice = createSlice({
@@ -23,6 +24,9 @@ const productsSlice = createSlice({
         state.products = action.payload.data;
         state.totalRows = action.payload.totalRows;
         state.error = null;
+        state.branches = [
+          ...new Set(action.payload.data.flatMap((item) => item.BRANCH_CODE)),
+        ].sort();
       })
       .addMatcher(apiSliceDb.endpoints.getDbItem.matchRejected, (state, action) => {
         state.loading = false;

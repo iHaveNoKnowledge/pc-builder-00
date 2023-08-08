@@ -53,8 +53,7 @@ function PostCard({ items, totalRows }) {
   const category = useSelector((state) => state.category.category);
   const parts = useSelector((state) => state.noApiCustomize.partData);
   const filters = useSelector((state) => state.userFilter.filtersSet);
-  const expression = useSelector((state) => state.userFilter.expression);
-  const textSearch = useSelector((state) => state.userFilter.textSearch);
+  const { expression, textSearch, selectedBranches } = useSelector((state) => state.userFilter);
 
   //* เงื่อนไขcompatibility
   ///หาเงื่อนไข จากการเลือก mainboard
@@ -162,7 +161,7 @@ function PostCard({ items, totalRows }) {
     return (
       item.code.toLowerCase().includes(textSearch.toLowerCase()) ||
       (item.socket && item.socket.toLowerCase().includes(textSearch.toLowerCase())) ||
-      item.productDescription.toLowerCase().includes(textSearch.toLowerCase())
+      item.productDescription.toLowerCase().includes(textSearch.toLowerCase()) || item.BRANCH_CODE.toLowerCase()
     );
   });
 
@@ -428,7 +427,7 @@ function SelectionProto01() {
   const category = useSelector((state) => state.category.category);
   if (!category) dispatch(changeCategory("cpu"));
   const currentPage = useSelector((state) => state.pagination.currentPage);
-  const { products, totalRows, loading, error } = useSelector((state) => state.products);
+  const { products, totalRows, loading, error, branches } = useSelector((state) => state.products);
   const partData = useSelector((state) => state.noApiCustomize.partData);
   const startPage = (currentPage - 1) * 6;
   const pageEnd = currentPage * 6;
@@ -454,7 +453,7 @@ function SelectionProto01() {
       </div>
     );
     //** กรณีโหลดสำเร็จ
-  } else if (products && !error) {
+  } else if (products && !error && branches) {
     console.log("data เป็นไง", products, "postsได้ยัง: ", products);
 
     cardContent = <PostCard items={products} totalRows={totalRows} />;
