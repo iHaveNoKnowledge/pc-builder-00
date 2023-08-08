@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 // จะมี useEffect ที่ทำงานเมื่อ category มีการเปลี่ยนแปลง แล้วจะดึงข้อมูลมา หา filter
 const initialState = {
   textSearch: "",
+  selectedBranches: [],
   selectedOption: {
     CPU: { brand: "", model: "", socket: "" },
     Mainboard: { formFactor: "", brand: "", socket: "", chipset: "", slot: 0 },
@@ -182,6 +183,10 @@ export const filterSlice = createSlice({
         console.log("ไม่มี Payload ของ action");
       }
     },
+    branchSelect: (state, action) => {
+      console.log("BRanchesSelect:", action.payload);
+      state.selectedBranches = [...action.payload];
+    },
   },
 });
 
@@ -193,5 +198,6 @@ export const {
   updateFilters,
   clearSelectedFilter,
   setSelectedValuesCopy,
+  branchSelect,
 } = filterSlice.actions;
 export default filterSlice.reducer;

@@ -467,7 +467,7 @@ function SelectionProto01() {
         <Stack sx={{ width: "100%" }} spacing={2}>
           <Alert severity="error">{error}</Alert>
         </Stack>
-        <div>Connection is closed before receiving response.</div>
+        <div>Cannot receive response from server</div>
       </div>
     );
   }

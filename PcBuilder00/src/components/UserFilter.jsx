@@ -8,8 +8,8 @@ import Box from "@mui/material/Box";
 import "./UserFilter.css";
 import { useDispatch, useSelector } from "react-redux";
 import { changeTextSearch, setSelectedValuesCopy } from "../slices/userFilterSlice";
-import { Typography } from "@mui/material";
-import { clearSelectedFilter } from "../slices/userFilterSlice";
+import { Typography, Autocomplete } from "@mui/material";
+import { clearSelectedFilter, branchSelect } from "../slices/userFilterSlice";
 import { setDefault } from "../slices/paginationSlice";
 
 const UserFilter = () => {
@@ -56,12 +56,19 @@ const UserFilter = () => {
     return category.category === currentCategory;
   });
 
+  //* AutoComplete
+  const Branches = ["B001", "B002", "B003", "B004", "B005", "B006", "B007"];
+
+  const handleAutocompleteChange = (event, newValue) => {
+    dispatch(branchSelect(newValue));
+  };
+
   return (
     <Box className="mainCardFilter">
       <Box>
         <form onSubmit={handleSearch} style={{ display: "flex" }}>
           <TextField
-            sx={{ width: "56.8%", paddingRight: "8px" }}
+            sx={{ width: "57%", paddingRight: "8px" }}
             placeholder="ค้นหาสินค้า"
             type="search"
             id="input-with-icon-textfield"
@@ -80,7 +87,7 @@ const UserFilter = () => {
             }}
             variant="standard"
           />
-          <Box style={{ display: "flex", alignItems: "end" }}>
+          <Box style={{ display: "flex", paddingTop: "16px", paddingRight: "8px" }}>
             <Button
               type="submit"
               variant="contained"
@@ -93,7 +100,18 @@ const UserFilter = () => {
               ค้นหา
             </Button>
           </Box>
-          <Box>vbvb</Box>
+          <Box sx={{ width: "32.7%" }}>
+            <Autocomplete
+              size="small"
+              multiple
+              limitTags={2}
+              options={Branches}
+              getOptionLabel={(branch) => branch}
+              // defaultValue={[Branches[0], Branches[1], Branches[2]]}
+              renderInput={(params) => <TextField {...params} label="Branch" variant="standard" />}
+              onChange={handleAutocompleteChange}
+            />
+          </Box>
         </form>
       </Box>
 
