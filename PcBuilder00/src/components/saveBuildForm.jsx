@@ -83,7 +83,13 @@ export default function SaveBuildBtn() {
           return response;
         })
         .catch((error) => {
-          console.error("บันทึกไม่สำเร็จ", error.data.response);
+          if (error.response.status) {
+            console.error("บันทึกไม่สำเร็จ", error.response.data);
+          } else if (error.request) {
+            console.error("Unable to connect to the server.");
+          } else {
+            console.error("An error occurred.");
+          }
         });
     }
 

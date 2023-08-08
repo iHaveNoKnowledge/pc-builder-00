@@ -19,7 +19,6 @@ import { getCategorizedData } from "../slices/userFilterSlice";
 import Bottom from "./BottomComponent";
 import { setDefault, setPageNum } from "../slices/paginationSlice";
 import { changeCategory } from "../slices/categorySlice";
-import Popup from "./generalModules/popup01";
 
 //* ------------------------------------------------Display*-----------------------------------------------------------------------------------------
 function PostCard({ items, totalRows }) {
@@ -166,7 +165,7 @@ function PostCard({ items, totalRows }) {
       item.productDescription.toLowerCase().includes(textSearch.toLowerCase())
     );
   });
-  console.log("บรรทัดที่ 180 category: ", category);
+
   //* นำ flter มา filter showproduct
   const filterProducts = (products, selectedOpts, expression) => {
     const filteredProducts = products.filter((product) => eval(expression));
@@ -455,7 +454,7 @@ function SelectionProto01() {
       </div>
     );
     //** กรณีโหลดสำเร็จ
-  } else if (products) {
+  } else if (products && !error) {
     console.log("data เป็นไง", products, "postsได้ยัง: ", products);
 
     cardContent = <PostCard items={products} totalRows={totalRows} />;
@@ -468,7 +467,7 @@ function SelectionProto01() {
         <Stack sx={{ width: "100%" }} spacing={2}>
           <Alert severity="error">{error}</Alert>
         </Stack>
-        <div>Error</div>
+        <div>Connection is closed before receiving response.</div>
       </div>
     );
   }

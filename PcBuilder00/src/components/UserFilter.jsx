@@ -61,6 +61,7 @@ const UserFilter = () => {
       <Box>
         <form onSubmit={handleSearch} style={{ display: "flex" }}>
           <TextField
+          sx={{}}
             fullWidth
             placeholder="ค้นหาสินค้า"
             type="search"
@@ -93,8 +94,10 @@ const UserFilter = () => {
               ค้นหา
             </Button>
           </Box>
+          <Box>vbvb</Box>
         </form>
       </Box>
+
       {/* เอาไว้ดูค่าใน state สำหรับ dev
       <Box>{JSON.stringify(filtersSet[0].selectedOptionState)}</Box>
       <Box>{JSON.stringify(filtersSet[1].selectedOptionState)}</Box>

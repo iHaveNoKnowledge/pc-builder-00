@@ -148,6 +148,7 @@ export const customizeSlice = createSlice({
 
       console.log("ใน slice", action.payload);
 
+      //* เก็บค่าใหม่ที่รับเข้ามาดองไว้ใน object ก่อน
       const newArray2 = { ...action.payload };
 
       for (let key in newArray2) {
@@ -158,32 +159,11 @@ export const customizeSlice = createSlice({
       }
 
       newArray2["selectAmount"] = 1;
-
       newArray2["category"] = newArray2["category"].toLowerCase().replace(" ", "");
-
       newArray2["countItem"] = newArray2["countItem"] ? newArray2["countItem"] : 1;
-
       console.log("newArray2: ", newArray2);
 
-      ///* เก็บค่าใหม่ที่รับเข้ามาดองไว้ใน object ก่อน
-      // const newArray = {
-      //   id: action.payload.id,
-      //   code: action.payload.code,
-      //   productDescription: action.payload.productDescription,
-      //   title: action.payload.title,
-      //   selectAmount: 1,
-      //   socket: action.payload.socket,
-      //   category: action.payload.category.toLowerCase().replace(" ", ""),
-      //   typeRam: action.payload.typeRam,
-      //   promotionPrice: action.payload.promotionPrice,
-      //   srp: action.payload.srp,
-      //   img: action.payload.img,
-      //   count: action.payload.count ? action.payload.count : 1,
-      //   slot: action.payload.slot,
-      //   max: action.payload.max,
-      // };
-
-      //เช็คสมาชิกใหม่ว่า load เท่าไหร่ เนื่องจากมี max capa ทำให้ต้องดู load ว่าเกิน max capaหรือไม่
+      //* เช็คสมาชิกใหม่ว่า load เท่าไหร่ เนื่องจากมี max capa ทำให้ต้องดู load ว่าเกิน max capaหรือไม่
       const typeMaxConsumtion = newArray2.selectAmount * newArray2.countItem;
       console.log("ค่าโหลดของสินค้าที่ Add เท่าไหร่: ", typeMaxConsumtion);
 
@@ -191,7 +171,7 @@ export const customizeSlice = createSlice({
         const currentStateType = state.partData[categoryIndex]; ///currentStateType จะเป็นการเลือก สมาชิกที่ filter category มาแล้ว
         const isFoundItem = currentStateType.listItems.find(
           (item) => item.id === action.payload.id
-        ); //ตรวจสอบว่ามีแล้วหรือไม่ ถ้าเป็น true isFoundItem เป็น obj ที่เป็นสมาชิก Arr listItems, false จะเป็น undefined ต้องสร้าง obj ใหม่
+        ); //* ตรวจสอบว่ามีแล้วหรือไม่ ถ้าเป็น true isFoundItem เป็น obj ที่เป็นสมาชิก Arr listItems, false จะเป็น undefined ต้องสร้าง obj ใหม่
         if (currentStateType.typeMax) {
           if (currentStateType.typeAmount === 0) {
             currentStateType.listItems.push(newArray2);
@@ -242,13 +222,6 @@ export const customizeSlice = createSlice({
 
       state.partData[categoryIndex].typeAmount = totalAmount; // Assign the total amount to the typeAmount property of the RAM object
     },
-
-    //! เกมอาจจะเปลีย่นเล็กน้อยเหมือนจะไม่ได้ใช้
-    // batchAdd: (state, action) => {
-    //   const newSet = action.payload.itemsSet;
-    //   console.log("redux รับ set จาก list", newSet);
-    //   // state.partData = newSet;
-    // },
 
     removeProduct: (state, action) => {
       const index = state.partData.findIndex(
@@ -352,7 +325,7 @@ export const customizeSlice = createSlice({
       state.partData[index].typeAmount = sumAllItem;
     },
 
-    //Sub Action (ใช้ ร่วมกับ action หลัก)/////////////////////////////////
+    //Sub Action (ใช้ ร่วมกับ action หลัก)----------------------------------
     //actionนี้ถูกใช้หลังจากเช็คว่าไอเท็มที่แอดมา เป็น mainboard หรือไม่ ถ้ามีให้ใช้ action
     setMax: (state, action) => {
       const index = state.partData.findIndex((item) => item.category === "RAM");
@@ -396,17 +369,6 @@ export const customizeSlice = createSlice({
         }
       }
     },
-
-    // updateSumAmount: (state, action) => {
-    //   let sumAllAmount = 0;
-    //   map(state.partData, (item) => {
-    //     map(item.listItems, (miniItem) => {
-    //       sumAllAmount += miniItem.selectAmount;
-    //     });
-    //   });
-    //   console.log("จำนวนทั้งหมด: ", sumAllAmount);
-    //   state.summations.sumAmount = sumAllAmount;
-    // },
 
     //เรื่องราคาเหมารวมจบใน action เดียวเลย
     updateSummations: (state, action) => {

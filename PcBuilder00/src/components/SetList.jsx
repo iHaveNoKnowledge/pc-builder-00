@@ -80,8 +80,10 @@ export default function SetList() {
   let displayDataList = false;
 
   //* นำ api มาใช้
-  const [getSetsData, { data: sets, error, isLoading, isSuccess, isUninitialized }] =
-    useLazyGetSetsQuery();
+  const [
+    getSetsData,
+    { data: sets, error, isLoading, isSuccess, isUninitialized },
+  ] = useLazyGetSetsQuery();
   const [sortedData, setSortedData] = useState([]);
   const [rows, setRows] = useState(0);
 
@@ -279,8 +281,8 @@ export default function SetList() {
                   <TableCell align="left" colSpan={1} style={{ width: 80 }}>
                     เบอร์
                   </TableCell>
-                  <TableCell align="right" colSpan={1} style={{ width: 80 }}>
-                    Save Date
+                  <TableCell align="left" colSpan={1} style={{ width: 80 }}>
+                    Created At
                   </TableCell>
                   <TableCell colSpan={1} style={{ width: 80 }}></TableCell>
                 </TableRow>
@@ -347,6 +349,10 @@ export default function SetList() {
                             </TableCell>
                             <TableCell align="right">
                               {new Date(item.timeStamp).toLocaleDateString("th-TH")}
+                              {"_"}
+                              {new Date(item.timeStamp).toLocaleTimeString("th-TH", {
+                                timeZone: "UTC",
+                              })}
                             </TableCell>
                             <TableCell>
                               <Box className="resetBtn">
