@@ -1,28 +1,22 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import Box from "@mui/material/Box";
-import SaveBuildBtn from "./saveBuildForm";
 import "./BottomComponent.css";
-import ReportDocument from "./ReportDocument";
-import SetList from "./SetList";
-import AddSN from "./ReportCashier/AddSN";
+
+const componentsToLazyLoad = [
+  { path: () => import("./saveBuildForm"), label: "Save Build" },
+  { path: () => import("./SetList"), label: "Set List" },
+  { path: () => import("./ReportDocument"), label: "Report Document" },
+  { path: () => import("./ReportCashier/AddSN"), label: "Add SN" },
+];
 
 function Bottom() {
   return (
     <Box className="mainCardBottom">
-      <Box>
-        <SetList />
-      </Box>
-      <Box>
-        <SaveBuildBtn />
-      </Box>
-
-      <Box>
-        <ReportDocument />
-      </Box>
-
-      <Box>
-        <AddSN />
-      </Box>
+      {componentsToLazyLoad.map(({ path, label }) => (
+        <Suspense key={path.toString()} fallback={<div>Loading...</div>}>
+          <Box>{React.createElement(lazy(path), { label })}</Box>
+        </Suspense>
+      ))}
     </Box>
   );
 }

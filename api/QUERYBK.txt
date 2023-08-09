@@ -1,0 +1,349 @@
+-----------------------------------------------------2:45 PM 8/9/2023
+//* ประกอบคอม
+const connection3 = new sql.ConnectionPool(config_3);
+router.get("/testProducts", (req, res) => {
+  const page = req.query.page; // รับค่า page จาก req.query
+  const branch = req.query.branch; // รับค่า limit จาก req.query
+  const category = req.query.category;
+
+  const queryWithPage = `
+    SELECT *
+    FROM dbo.TEST_PRODUCTS
+    ${category ? `WHERE category = '${category}'` : ""}
+    ORDER BY id -- เพิ่มการเรียงข้อมูล (อาจต้องเปลี่ยน your_sorting_column เป็นชื่อคอลัมน์ที่ต้องการเรียง)
+    OFFSET ${(page - 1) * 6} ROWS
+    FETCH NEXT 6 ROWS ONLY;
+  `;
+
+  const queryTotalRow = `
+    SELECT COUNT(*) As TotalRows
+    FROM DEV_TEST_DB2.dbo.TEST_PRODUCTS
+    JOIN SMCO_DATA.dbo.SMCO_INV_DATA ON DEV_TEST_DB2.dbo.TEST_PRODUCTS.code = SMCO_DATA.dbo.SMCO_INV_DATA.PRODUCT_CODE collate Thai_CI_AS
+    WHERE ${category ? `category = '${category}'` : `1=1`} AND ${
+    branch ? `BRANCH_CODE = '${BRANCH_CODE}'` : `1=1`
+  }
+  `;
+
+  const query = `
+    SELECT DEV_TEST_DB2.dbo.TEST_PRODUCTS.*, SMCO_DATA.dbo.SMCO_INV_DATA.BRANCH_CODE, SMCO_DATA.dbo.SMCO_INV_DATA.QTY
+    FROM dbo.TEST_PRODUCTS
+    JOIN SMCO_DATA.dbo.SMCO_INV_DATA ON DEV_TEST_DB2.dbo.TEST_PRODUCTS.code = SMCO_DATA.dbo.SMCO_INV_DATA.PRODUCT_CODE collate Thai_CI_AS
+    WHERE ${category ? `category = '${category}'` : `1=1`} AND ${
+    branch ? `BRANCH_CODE = '${BRANCH_CODE}'` : `1=1`
+  }
+    ORDER BY id -- เพิ่มการเรียงข้อมูล (อาจต้องเปลี่ยน your_sorting_column เป็นชื่อคอลัมน์ที่ต้องการเรียง)
+  `;
+
+  const branchAndQty = `
+    SELECT
+    DEV_TEST_DB2.dbo.TEST_PRODUCTS.code,
+    SMCO_DATA.dbo.SMCO_INV_DATA.BRANCH_CODE,
+    SUM(SMCO_DATA.dbo.SMCO_INV_DATA.QTY) AS TOTAL_QTY
+    FROM DEV_TEST_DB2.dbo.TEST_PRODUCTS
+    JOIN SMCO_DATA.dbo.SMCO_INV_DATA ON DEV_TEST_DB2.dbo.TEST_PRODUCTS.code = SMCO_DATA.dbo.SMCO_INV_DATA.PRODUCT_CODE collate Thai_CI_AS
+    GROUP BY DEV_TEST_DB2.dbo.TEST_PRODUCTS.code, SMCO_DATA.dbo.SMCO_INV_DATA.BRANCH_CODE
+    ORDER BY DEV_TEST_DB2.dbo.TEST_PRODUCTS.code;
+  `;
+
+  connection3.connect((err) => {
+    if (err) {
+      res.status(500).send("Error retrieving data from database.");
+      return console.log(err);
+    } else {
+      connection3.query(queryTotalRow, (err, recordset) => {
+        if (err) {
+          res.status(500).send("Error retrieving data from database.");
+          return console.log(err);
+        } else {
+          const totalRows = recordset.recordsets[0][0].TotalRows; // จำนวนแถวทั้งหมดที่ตรงกับเงื่อนไข category
+          connection3.query(query, (err, recordset) => {
+            if (err) {
+              res.status(500).send("Error retrieving data from database.");
+              return console.log(err);
+            } else {
+              const response = {
+                totalRows,
+                data: dataFormat1(recordset.recordsets[0]), // ข้อมูลที่ดึงมา
+              };
+
+              res.send(response);
+            }
+          });
+        }
+      });
+    }
+  });
+});
+
+router.get("/sets", (req, res) => {
+  const query = `SELECT
+  id,
+  timeStamp,
+  setName,
+  DefaultName,
+  customerName,
+  customerTel,
+  sellerName,
+  sellerTel,
+  partData
+  FROM Sets_JSON
+  ORDER BY timeStamp DESC
+  `;
+
+  const totalRowsQuery = `SELECT
+  COUNT(*) AS TotalRows
+  FROM Sets_JSON
+  
+  `;
+
+  connection3.connect(async (err) => {
+    if (err) {
+      res.status(500).send("Error retrieving data from database.");
+      return console.log(err);
+    } else {
+      console.log("เชื่อมต่อ db จาก req sets สำเร็จ");
+      connection3.query(query, async (err, response) => {
+        if (err) {
+          res.status(500).send("Error retrieving data from database.");
+          console.log("เรียก sets ออกมาไม่ได้");
+        } else {
+          const updatedRecordset = response.recordset.map((item) => {
+            if (item.partData && item.partData.length > 0) {
+              const parsedPartData = JSON.parse(item.partData);
+              item.partData = parsedPartData;
+            } else {
+              item.partData = [];
+            }
+            return item;
+          });
+          connection3.query(totalRowsQuery, async (err, recordset) => {
+            if (err) {
+              res.status(500).send("Error retrieving data from database.");
+              return console.log(err);
+            } else {
+              const response = {
+                updatedRecordset,
+                totalRows: recordset.recordsets[0][0].TotalRows, // ข้อมูลที่ดึงมา
+              };
+              res.send(response);
+            }
+          });
+        }
+      });
+    }
+  });
+});
+
+router.post("/create-set", createSetJson);
+
+router.delete("/pop/:id", (req, res) => {
+  const removeId = req.params.id;
+  const query = `DELETE FROM Sets_JSON
+  WHERE id = ${removeId}
+  `;
+
+  connection3.connect((err) => {
+    if (err) {
+      console.error("Error connecting to the DB: ", err);
+      res.status(500).send("Error connecting to the DB.");
+      return;
+    }
+
+    const request = new sql.Request(connection3);
+    request.query(query, (err, response) => {
+      if (err) {
+        console.error("Error executing the DELETE query: ", err);
+        res.status(500).send("Error executing the DELETE query.");
+        return;
+      }
+
+      res.sendStatus(200);
+    });
+  });
+});
+
+module.exports = router;
+
+
+--------พัง---------------3:24 8/9/2023 มีปัญหาคือ ตารางมันunique เวลาเอาตัว branch ไป join มันจะได้ row เดียว เพราะตารางหลักมัน ีnique 
+//* ประกอบคอม
+const connection3 = new sql.ConnectionPool(config_3);
+router.get("/testProducts", (req, res) => {
+  const page = req.query.page;
+  const branch = req.query.branch;
+  const category = req.query.category;
+
+  const queryTotalRow = `
+    SELECT COUNT(*) AS TotalRows
+    FROM DEV_TEST_DB2.dbo.TEST_PRODUCTS
+    WHERE ${category ? `category = '${category}'` : `1=1`} AND ${
+    branch ? `BRANCH_CODE = '${BRANCH_CODE}'` : `1=1`
+  }
+  `;
+
+  const query = `
+    SELECT DEV_TEST_DB2.dbo.TEST_PRODUCTS.* 
+    FROM DEV_TEST_DB2.dbo.TEST_PRODUCTS
+    WHERE ${category ? `category = '${category}'` : `1=1`} AND ${
+    branch ? `BRANCH_CODE = '${BRANCH_CODE}'` : `1=1`
+  }
+    ORDER BY id 
+  `;
+
+  const branchAndQty = `
+    SELECT
+    DEV_TEST_DB2.dbo.TEST_PRODUCTS.code,
+    SMCO_DATA.dbo.SMCO_INV_DATA.BRANCH_CODE,
+    SUM(SMCO_DATA.dbo.SMCO_INV_DATA.QTY) AS TOTAL_QTY
+    FROM DEV_TEST_DB2.dbo.TEST_PRODUCTS
+    JOIN SMCO_DATA.dbo.SMCO_INV_DATA ON DEV_TEST_DB2.dbo.TEST_PRODUCTS.code = SMCO_DATA.dbo.SMCO_INV_DATA.PRODUCT_CODE COLLATE Thai_CI_AS
+    GROUP BY DEV_TEST_DB2.dbo.TEST_PRODUCTS.code, SMCO_DATA.dbo.SMCO_INV_DATA.BRANCH_CODE
+    ORDER BY DEV_TEST_DB2.dbo.TEST_PRODUCTS.code;
+  `;
+
+  connection3.connect((err) => {
+    if (err) {
+      res.status(500).send("Error retrieving data from database.");
+      return console.log(err);
+    } else {
+      connection3.query(queryTotalRow, (err, recordset) => {
+        if (err) {
+          res.status(500).send("Error retrieving data from database.");
+          return console.log(err);
+        } else {
+          const totalRows = recordset.recordsets[0][0].TotalRows;
+
+          connection3.query(query, (err, productRecordset) => {
+            if (err) {
+              res.status(500).send("Error retrieving data from database.");
+              return console.log(err);
+            } else {
+              connection3.query(branchAndQty, (err, branchQtyRecordset) => {
+                if (err) {
+                  res.status(500).send("Error retrieving data from database.");
+                  return console.log(err);
+                } else {
+                  // Joining data based on the product code
+                  const dataWithBranchQty = productRecordset.recordsets[0].map((product) => {
+                    const matchingBranchQty = branchQtyRecordset.recordsets[0].find(
+                      (branchQty) => branchQty.code === product.code
+                    );
+                    return {
+                      ...product,
+                      QTY: matchingBranchQty ? matchingBranchQty.TOTAL_QTY : 0,
+                      BRANCH_CODE: matchingBranchQty? matchingBranchQty.BRANCH_CODE : ""
+                    };
+                  });
+
+                  const response = {
+                    totalRows,
+                    data: dataWithBranchQty,
+                  };
+
+                  res.send(response);
+                }
+              });
+            }
+          });
+        }
+      });
+    }
+  });
+});
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 3:57 8/9/2023 ใช้ได้
+//* ประกอบคอม
+const connection3 = new sql.ConnectionPool(config_3);
+router.get("/testProducts", (req, res) => {
+  const page = req.query.page;
+  const branch = req.query.branch;
+  const category = req.query.category;
+
+  const queryTotalRow = `
+    SELECT COUNT(*) AS TotalRows
+    FROM DEV_TEST_DB2.dbo.TEST_PRODUCTS
+    WHERE ${category ? `category = '${category}'` : `1=1`} AND ${
+    branch ? `BRANCH_CODE = '${branch}'` : `1=1`
+  }
+  `;
+
+  const query = `
+    SELECT DEV_TEST_DB2.dbo.TEST_PRODUCTS.* 
+    FROM DEV_TEST_DB2.dbo.TEST_PRODUCTS
+    WHERE ${category ? `category = '${category}'` : `1=1`} AND ${
+    branch ? `BRANCH_CODE = '${branch}'` : `1=1`
+  }
+    ORDER BY id 
+  `;
+
+  const branchAndQty = `
+    SELECT
+    DEV_TEST_DB2.dbo.TEST_PRODUCTS.code,
+    SMCO_DATA.dbo.SMCO_INV_DATA.BRANCH_CODE,
+    SMCO_DATA.dbo.SMCO_INV_DATA.QTY AS TOTAL_QTY
+    FROM DEV_TEST_DB2.dbo.TEST_PRODUCTS
+    JOIN SMCO_DATA.dbo.SMCO_INV_DATA ON DEV_TEST_DB2.dbo.TEST_PRODUCTS.code = SMCO_DATA.dbo.SMCO_INV_DATA.PRODUCT_CODE COLLATE Thai_CI_AS
+    ORDER BY DEV_TEST_DB2.dbo.TEST_PRODUCTS.code, SMCO_DATA.dbo.SMCO_INV_DATA.BRANCH_CODE;
+  `;
+
+  connection3.connect((err) => {
+    if (err) {
+      res.status(500).send("Error retrieving data from database.");
+      return console.log(err);
+    } else {
+      connection3.query(queryTotalRow, (err, recordset) => {
+        if (err) {
+          res.status(500).send("Error retrieving data from database.");
+          return console.log(err);
+        } else {
+          const totalRows = recordset.recordsets[0][0].TotalRows;
+
+          connection3.query(query, (err, productRecordset) => {
+            if (err) {
+              res.status(500).send("Error retrieving data from database.");
+              return console.log(err);
+            } else {
+              connection3.query(branchAndQty, (err, branchQtyRecordset) => {
+                if (err) {
+                  res.status(500).send("Error retrieving data from database.");
+                  return console.log(err);
+                } else {
+                  const dataWithBranchQty = productRecordset.recordsets[0].map((product) => {
+                    const matchingBranchQtys = branchQtyRecordset.recordsets[0].filter(
+                      (branchQty) => branchQty.code === product.code
+                    );
+
+                    const qtyByBranch = {};
+
+                    matchingBranchQtys.forEach((branchQty) => {
+                      if (!qtyByBranch[branchQty.BRANCH_CODE]) {
+                        qtyByBranch[branchQty.BRANCH_CODE] = 0;
+                      }
+                      qtyByBranch[branchQty.BRANCH_CODE] += branchQty.TOTAL_QTY;
+                    });
+
+                    const qtys = Object.values(qtyByBranch);
+                    const branchCodes = Object.keys(qtyByBranch);
+
+                    return {
+                      ...product,
+                      QTY: qtys,
+                      BRANCH_CODE: branchCodes,
+                    };
+                  });
+
+                  const response = {
+                    totalRows,
+                    data: dataWithBranchQty,
+                  };
+
+                  res.send(response);
+                }
+              });
+            }
+          });
+        }
+      });
+    }
+  });
+});

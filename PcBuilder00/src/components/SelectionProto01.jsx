@@ -157,15 +157,26 @@ function PostCard({ items, totalRows }) {
   const showProduct = combinedProduct.filter(
     (item) => item.category.toLowerCase().replace(" ", "") === category
   );
-  const searchedShowProduct = showProduct.filter((item) => {
+  let searchedShowProduct = showProduct.filter((item) => {
     return (
       item.code.toLowerCase().includes(textSearch.toLowerCase()) ||
       (item.socket && item.socket.toLowerCase().includes(textSearch.toLowerCase())) ||
-      item.productDescription.toLowerCase().includes(textSearch.toLowerCase()) ||
-      item.BRANCH_CODE.every((branch) => selectedBranches.includes(branch))
+      item.productDescription.toLowerCase().includes(textSearch.toLowerCase())
     );
   });
-  console.log("searchedShowProduct:", searchedShowProduct);
+
+  let test = searchedShowProduct
+    .filter((sku) => sku.BRANCH_CODE.some((branch) => selectedBranches.includes(branch)))
+    .map((sku) => ({
+      ...sku,
+      BRANCH_CODE: sku.BRANCH_CODE.filter((branch) => selectedBranches.includes(branch)),
+      QTY: sku.QTY.filter((_, index) => selectedBranches.includes(sku.BRANCH_CODE[index])),
+    }));
+
+  let filteredSKUs = searchedShowProduct.filter((sku) =>
+    sku.BRANCH_CODE.some((branch) => selectedBranches.includes(branch))
+  );
+  console.log("test:", test);
 
   //* นำ flter มา filter showproduct
   const filterProducts = (products, selectedOpts, expression) => {
