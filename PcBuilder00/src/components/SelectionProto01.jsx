@@ -165,7 +165,7 @@ function PostCard({ items, totalRows }) {
     );
   });
 
-  let test = searchedShowProduct
+  let filteredSKUs = searchedShowProduct
     .filter((sku) => sku.BRANCH_CODE.some((branch) => selectedBranches.includes(branch)))
     .map((sku) => ({
       ...sku,
@@ -173,21 +173,24 @@ function PostCard({ items, totalRows }) {
       QTY: sku.QTY.filter((_, index) => selectedBranches.includes(sku.BRANCH_CODE[index])),
     }));
 
-  let filteredSKUs = searchedShowProduct.filter((sku) =>
-    sku.BRANCH_CODE.some((branch) => selectedBranches.includes(branch))
-  );
-  console.log("test:", test);
+  console.log("BranchFiltered:", filteredSKUs, "initialData:", searchedShowProduct);
 
   //* นำ flter มา filter showproduct
   const filterProducts = (products, selectedOpts, expression) => {
     const filteredProducts = products.filter((product) => eval(expression));
     return filteredProducts;
   };
+
   const { selectedOptionState: selectedOpts } = filters.find(
     (filterCategory) => filterCategory.name === category.toLowerCase()
   );
 
-  const showProductWithFilter = filterProducts(searchedShowProduct, selectedOpts, expression);
+  let showProductWithFilter;
+  if (filteredSKUs.length === 0) {
+    showProductWithFilter = filterProducts(searchedShowProduct, selectedOpts, expression);
+  } else {
+    showProductWithFilter = filterProducts(filteredSKUs, selectedOpts, expression);
+  }
 
   //* pagination////
   const curPageNum2 = useSelector((state) => state.pagination.currentPage);
