@@ -18,3 +18,5 @@ export const PopupAlert = () => {
     </Alert>
   );
 };
+
+export default PopupAlert;

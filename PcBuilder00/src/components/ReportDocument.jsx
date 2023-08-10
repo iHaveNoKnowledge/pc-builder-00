@@ -6,7 +6,7 @@ import { AppBar, Toolbar, Button, Dialog, IconButton, Typography, Slide, Box } f
 import CloseIcon from "@mui/icons-material/Close";
 import { PDFViewer } from "@react-pdf/renderer";
 import { useDispatch, useSelector } from "react-redux";
-import { PopupAlert } from "./generalModules/PopupAlert";
+import PopupAlert from "./generalModules/PopupAlert";
 
 Font.register({ family: "Chakra_Petch", src: font });
 
