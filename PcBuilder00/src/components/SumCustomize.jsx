@@ -1,20 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import ImageIcon from "@mui/icons-material/Image";
-import {
-  Box,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemText,
-  ListItemAvatar,
-  Avatar,
-  Typography,
-  Button,
-  Grid,
-  CardContent,
-  Divider,
-} from "@mui/material";
+import { Box, Typography, Button, Divider } from "@mui/material";
 import { resetCustomized, updateSummations } from "../slices/cutomizeSliceNoApi";
 import "./SumCustomize.css";
 

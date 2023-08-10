@@ -19,7 +19,6 @@ import { getCategorizedData } from "../slices/userFilterSlice";
 import Bottom from "./BottomComponent";
 import { setDefault, setPageNum } from "../slices/paginationSlice";
 import { changeCategory } from "../slices/categorySlice";
-import { current } from "@reduxjs/toolkit";
 
 //* ------------------------------------------------Display*-----------------------------------------------------------------------------------------
 function PostCard({ items, totalRows }) {
@@ -310,8 +309,6 @@ function PostCard({ items, totalRows }) {
                       <Button
                         sx={{ textDecoration: "underline", padding: 0 }}
                         onClick={(e) => togglePopup(e, index)}
-                        // display="block"
-                        // gutterBottom
                       >
                         Stock: {item.QTY.reduce((acc, QTYItem) => acc + QTYItem, 0)}
                       </Button>
@@ -483,7 +480,7 @@ function SelectionProto01() {
         <Stack sx={{ width: "100%" }} spacing={2}>
           <Alert severity="error">{error}</Alert>
         </Stack>
-        <div>Cannot receive response from server</div>
+        <div>Cannot receive any responses from server</div>
       </div>
     );
   }

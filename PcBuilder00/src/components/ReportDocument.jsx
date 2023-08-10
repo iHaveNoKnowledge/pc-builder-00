@@ -1,14 +1,14 @@
 import React from "react";
 import { Page, Text, View, Document, Image, Font, StyleSheet } from "@react-pdf/renderer";
 import logoHeader from "../../public/images/itLogo-1.png";
-import xx from "../fonts/ChakraPetch-Regular.ttf";
+import font from "../fonts/ChakraPetch-Regular.ttf";
 import { AppBar, Toolbar, Button, Dialog, IconButton, Typography, Slide, Box } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { PDFViewer } from "@react-pdf/renderer";
 import { useDispatch, useSelector } from "react-redux";
-import { PopupAlert } from "./generalModules/popupAlert";
+import { PopupAlert } from "./generalModules/PopupAlert";
 
-Font.register({ family: "Chakra_Petch", src: xx });
+Font.register({ family: "Chakra_Petch", src: font });
 
 const styles = StyleSheet.create({
   title: {
@@ -37,12 +37,20 @@ const ReportDocument = () => {
   const [open, setOpen] = React.useState(false);
   //* onclick เปิด Form ////////////////////////////////////////////////////////////////////
   const handleClickOpen = () => {
-    setOpen(true);
+    if (!itemList.length && !alertOpen) {
+      setAlertOpen(true);
+    } else {
+      setOpen(true);
+    }
   };
 
   //* onclick ปิด Form ////////////////////////////////////////////////////////////////////
   const handleClose = () => {
-    setOpen(false);
+    if (alertOpen === true) {
+      setAlertOpen(false);
+    } else {
+      setOpen(false);
+    }
   };
 
   const createMainTableHeader = () => {
@@ -362,7 +370,9 @@ const ReportDocument = () => {
         Report
       </Button>
 
-      <Dialog open={alertOpen} ><PopupAlert /></Dialog>
+      <Dialog open={alertOpen} onClose={handleClose}>
+        <PopupAlert />
+      </Dialog>
 
       <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
         <AppBar sx={{ position: "relative", backgroundColor: "#42528A" }}>
