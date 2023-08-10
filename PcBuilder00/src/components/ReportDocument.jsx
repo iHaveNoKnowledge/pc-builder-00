@@ -10,12 +10,6 @@ import PopupAlert from "./generalModules/PopupAlert";
 
 Font.register({ family: "Chakra_Petch", src: font });
 
-const styles = StyleSheet.create({
-  title: {
-    fontFamily: "Chakra_Petch",
-  },
-});
-
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="down" ref={ref} {...props} />;
 });
@@ -53,6 +47,23 @@ const ReportDocument = () => {
     }
   };
 
+  const twoDigitFormat = (number) => {
+    return number.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  };
+
+  //*
+  const WrapText = (text) => (
+    <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
+      {text?.match(/\w+|\W+/g)?.map((seg, i) => {
+        if (Number(seg) / Number(seg) === 1) {
+          return <Text key={i}>{Number(seg)}</Text>;
+        } else {
+          return <Text key={i}>{seg.toLocaleString()}</Text>;
+        }
+      })}
+    </View>
+  );
+
   const createMainTableHeader = () => {
     return (
       <View style={tableRowStyle} fixed>
@@ -62,7 +73,7 @@ const ReportDocument = () => {
 
         <View style={tableColHeaderStyle}>
           <Text style={tableCellHeaderStyle}>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque, eligendi!
+            {WrapText("บริษัท ไอที ซิตี้ จำกัด  ")}&#40;มหาชน&#41;
           </Text>
         </View>
 
@@ -161,18 +172,6 @@ const ReportDocument = () => {
       </View>
     );
   };
-
-  const WrapText = (text) => (
-    <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
-      {text?.match(/\w+|\W+/g)?.map((seg, i) => {
-        if (Number(seg) / Number(seg) === 1) {
-          return <Text key={i}>{Number(seg).toLocaleString()}</Text>;
-        } else {
-          return <Text key={i}>{seg.toLocaleString()}</Text>;
-        }
-      })}
-    </View>
-  );
 
   const createTableRowITDYN = (itemArr) => {
     console.log("itemList", itemList);
@@ -461,20 +460,21 @@ const tableColStyle = {
 };
 
 const tableCellHeaderStyle = {
-  margin: 4,
+  // margin: 4,
   fontSize: 12,
   fontWeight: "bold",
   width: 171,
   fontFamily: "Chakra_Petch",
+  textAlign: "justify",
 };
 
 const inlineStyle = { padding: "10px", fontSize: 10 };
 const inlineOrder = { width: "6.5%", textAlign: "right" };
 const inlineCode = { width: "14%" };
 const inlineDescr = { width: "37.5%" };
-const inlineQTY = { width: "14%" };
-const inlinePrice = { width: "14%" };
-const inlineTotal = { width: "14%" };
+const inlineQTY = { width: "14%", textAlign: "right" };
+const inlinePrice = { width: "16%", textAlign: "right" };
+const inlineTotal = { width: "14%", textAlign: "right" };
 
 const tableCellStyle = {
   margin: 5,

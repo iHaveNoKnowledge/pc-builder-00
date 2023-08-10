@@ -158,7 +158,7 @@ export const customizeSlice = createSlice({
         }
       }
 
-      newArray2["selectAmount"] = 1;
+      newArray2["selectAmount"] = newArray2["selectAmount"] > 1 ? newArray2["selectAmount"] : 1;
       newArray2["category"] = newArray2["category"].toLowerCase().replace(" ", "");
       newArray2["countItem"] = newArray2["countItem"] ? newArray2["countItem"] : 1;
       console.log("newArray2: ", newArray2);

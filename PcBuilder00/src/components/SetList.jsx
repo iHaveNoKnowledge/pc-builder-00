@@ -149,13 +149,23 @@ export default function SetList() {
   };
 
   //* Function กดเลือกSet
-  const handleSelect = (e, index1) => {
-    console.log("handleSelect clicked!!");
+  const handleSelect = (e, index1, curPageNum) => {
+    setOpen(false);
+    console.log(
+      "handleSelect clicked!!",
+      "indexnum:",
+      index1,
+      "indexpage:",
+      curPageNum - 1,
+      "ArrayIndex",
+      (curPageNum - 1) * 10 + index1
+    );
+    const arrIdx = (curPageNum - 1) * 10 + index1;
     e.stopPropagation();
     dispatch(resetCustomized());
-    const { setName, customerName, customerTel, sellerName, sellerTel } = sortedData[index1];
-    console.log("กดเลือกไรมา", sortedData[index1]);
-    const itemsSet = sortedData[index1].partData.flatMap((category) =>
+    const { setName, customerName, customerTel, sellerName, sellerTel } = sortedData[arrIdx];
+    console.log("กดเลือกไรมา", sortedData[arrIdx]);
+    const itemsSet = sortedData[arrIdx].partData.flatMap((category) =>
       category.listItems.map((item) => item)
     );
     console.log("itemsSet: ", itemsSet);
@@ -167,11 +177,9 @@ export default function SetList() {
 
     itemsToAdd.map((item) => dispatch(addProduct(item)));
     dispatch(updateSummations());
-    dispatch;
     dispatch(addInfo({ setName, customerName, customerTel, sellerName, sellerTel }));
 
     setOpenSubTables([]);
-    setOpen(false);
   };
 
   //* Function ConfirmDelete
@@ -184,11 +192,15 @@ export default function SetList() {
 
   //* Function DeleteSet
   const [deleteResource, response] = useDeleteResourceMutation();
-  const handleDelete = (e, index, id) => {
+  const [deleteSet, setDeleteSet] = useState(0);
+  const handleDelete = (e, index, id, curPageNum) => {
+    const setIdx = (curPageNum - 1) * 10 + index;
+    console.log("sortedData: ", sortedData, setIdx, curPageNum);
     e.stopPropagation();
     setIdDelete(id);
     setOpentAlert(true);
     getSetsData();
+    setDeleteSet(sortedData[setIdx].setName);
   };
 
   //* Delete Alert!!
@@ -331,7 +343,7 @@ export default function SetList() {
                                 <Button
                                   fullWidth
                                   disableRipple={true}
-                                  onClick={(e) => handleSelect(e, index)}
+                                  onClick={(e) => handleSelect(e, index, curPageNum)}
                                   variant="contained"
                                 >
                                   Select
@@ -360,7 +372,7 @@ export default function SetList() {
                                   fullWidth
                                   disableRipple={true}
                                   sx={{ p: 0.75 }}
-                                  onClick={(e) => handleDelete(e, index, item.id)}
+                                  onClick={(e) => handleDelete(e, index, item.id, curPageNum)}
                                   variant="contained"
                                   color="error"
                                 >
@@ -491,7 +503,7 @@ export default function SetList() {
                       </DialogTitle>
                       <DialogContent>
                         <DialogContentText id="alert-dialog-description">
-                          Set ที่กำลังจะลบ คือ (ดึงชื่อ Set จาก ปุ่ม Delete)
+                          Set ที่กำลังจะลบ คือ {deleteSet}
                         </DialogContentText>
                       </DialogContent>
                       <DialogActions>
@@ -500,7 +512,7 @@ export default function SetList() {
                           size="large"
                           variant="contained"
                         >
-                          ช้าก่อนไอน้อง
+                          ช้าก่อน
                         </Button>
                         <Button
                           onClick={confirmDelete}
