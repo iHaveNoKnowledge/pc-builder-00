@@ -186,7 +186,7 @@ function PostCard({ items, totalRows }) {
   );
 
   let showProductWithFilter;
-  if (filteredSKUs.length === 0) {
+  if (selectedBranches.length === 0) {
     showProductWithFilter = filterProducts(searchedShowProduct, selectedOpts, expression);
   } else {
     showProductWithFilter = filterProducts(filteredSKUs, selectedOpts, expression);
