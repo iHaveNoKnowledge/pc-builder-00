@@ -68,7 +68,7 @@ const theme = createTheme({
 });
 
 export default function SetList() {
-  const partData = useSelector((state) => state.noApiCustomize.partData);
+  const partData = useSelector((state) => state.customize.partData);
   const products = useSelector((state) => state.products.products);
   // const { sets, totalRows, loading } = useSelector((state) => state.sets);
 

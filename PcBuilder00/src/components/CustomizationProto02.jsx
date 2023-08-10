@@ -29,7 +29,7 @@ import { setDefault } from "../slices/paginationSlice";
 
 const CustomizationProto02 = () => {
   //useSelector
-  const parts = useSelector((state) => state.noApiCustomize.partData);
+  const parts = useSelector((state) => state.customize.partData);
   const currentCategory = useSelector((state) => state.category.category);
 
   //สร้าง functiondispatch

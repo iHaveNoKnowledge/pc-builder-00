@@ -19,9 +19,9 @@ import { resetCustomized, updateSummations } from "../slices/cutomizeSliceNoApi"
 import "./SumCustomize.css";
 
 const SumCustomize = () => {
-  const sumAmount = useSelector((state) => state.noApiCustomize.summations.sumAmount);
-  const sum_SRP = useSelector((state) => state.noApiCustomize.summations.sum_SRP);
-  const sumDiscount = useSelector((state) => state.noApiCustomize.summations.sumDiscount);
+  const sumAmount = useSelector((state) => state.customize.summations.sumAmount);
+  const sum_SRP = useSelector((state) => state.customize.summations.sum_SRP);
+  const sumDiscount = useSelector((state) => state.customize.summations.sumDiscount);
 
   const dispatch = useDispatch();
 

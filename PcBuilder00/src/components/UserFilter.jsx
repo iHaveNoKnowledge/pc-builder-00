@@ -24,7 +24,7 @@ const UserFilter = () => {
   const currentFilters = filtersSet.find((filterItem) => {
     return filterItem.name === currentCategory.toLowerCase();
   });
-  const parts = useSelector((state) => state.noApiCustomize.partData);
+  const parts = useSelector((state) => state.customize.partData);
   const { branches, loading } = useSelector((state) => state.products);
 
   //* isOptAvailable?

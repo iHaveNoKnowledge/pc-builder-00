@@ -16,7 +16,7 @@ import setsReducer from "./slices/setsSlice";
 export const store = configureStore({
   reducer: {
     category: categoryReducer,
-    noApiCustomize: noApiCustomizeReducer,
+    customize: noApiCustomizeReducer,
     [apiSlice.reducerPath]: apiSlice.reducer,
     [apiSliceDb.reducerPath]: apiSliceDb.reducer,
     [apiSliceJSONPlaceHolder.reducerPath]: apiSliceJSONPlaceHolder.reducer,

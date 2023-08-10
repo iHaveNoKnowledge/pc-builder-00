@@ -21,10 +21,8 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 const ReportDocument = () => {
   const partDataReport = useSelector((state) => state.report.partData);
-  const partDataReport2 = useSelector((state) => state.noApiCustomize.partData);
+  const partDataReport2 = useSelector((state) => state.customize.partData);
   const reportInfo = useSelector((state) => state.report.info);
-  console.log("มีพาทไรบ้าง:", partDataReport);
-  console.log("reportInfo:", reportInfo);
 
   let itemList = [];
 
@@ -34,7 +32,7 @@ const ReportDocument = () => {
       itemList = [...itemList, item2];
     });
   });
-  
+  const [alertOpen, setAlertOpen] = React.useState(false);
   const [open, setOpen] = React.useState(false);
   //* onclick เปิด Form ////////////////////////////////////////////////////////////////////
   const handleClickOpen = () => {

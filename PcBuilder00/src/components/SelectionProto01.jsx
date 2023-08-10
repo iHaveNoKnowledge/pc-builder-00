@@ -52,7 +52,7 @@ function PostCard({ items, totalRows }) {
 
   //* useSelector!!!!!!!!!!!!!!!
   const category = useSelector((state) => state.category.category);
-  const parts = useSelector((state) => state.noApiCustomize.partData);
+  const parts = useSelector((state) => state.customize.partData);
   const filters = useSelector((state) => state.userFilter.filtersSet);
   const { expression, textSearch, selectedBranches } = useSelector((state) => state.userFilter);
 
@@ -445,7 +445,7 @@ function SelectionProto01() {
   if (!category) dispatch(changeCategory("cpu"));
   const currentPage = useSelector((state) => state.pagination.currentPage);
   const { products, totalRows, loading, error, branches } = useSelector((state) => state.products);
-  const partData = useSelector((state) => state.noApiCustomize.partData);
+  const partData = useSelector((state) => state.customize.partData);
   const startPage = (currentPage - 1) * 6;
   const pageEnd = currentPage * 6;
   const { dbCategory } = partData.find((item) => item.category === category);

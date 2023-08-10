@@ -14,7 +14,7 @@ import { useUpdateDataMutation } from "../features/api/dataApiSlice";
 import { useGetSetsQuery } from "../features/api/dataApiSlice";
 
 export default function SaveBuildBtn() {
-  const partData = useSelector((state) => state.noApiCustomize.partData);
+  const partData = useSelector((state) => state.customize.partData);
   const [updateData, { isLoading, isError, error }] = useUpdateDataMutation();
 
   const dispatch = useDispatch();
