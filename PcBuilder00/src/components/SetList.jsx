@@ -192,15 +192,16 @@ export default function SetList() {
 
   //* Function DeleteSet
   const [deleteResource, response] = useDeleteResourceMutation();
-  const [deleteSet, setDeleteSet] = useState(0);
+  const [deleteSet, setDeleteSet] = useState({ setName: "", id: "" });
   const handleDelete = (e, index, id, curPageNum) => {
     const setIdx = (curPageNum - 1) * 10 + index;
-    console.log("sortedData: ", sortedData, setIdx, curPageNum);
     e.stopPropagation();
     setIdDelete(id);
     setOpentAlert(true);
     getSetsData();
-    setDeleteSet(sortedData[setIdx].setName);
+    setDeleteSet((prev) => {
+      return { ...prev, setName: sortedData[setIdx].setName, id };
+    });
   };
 
   //* Delete Alert!!
@@ -498,12 +499,12 @@ export default function SetList() {
                       aria-labelledby="alert-dialog-title"
                       aria-describedby="alert-dialog-description"
                     >
-                      <DialogTitle id="alert-dialog-title">
+                      <DialogTitle id="alert-dialog-title" variant="h5">
                         {"ต้องการลบเซ็ต DIY เซ็ตนี้จริงหรือไม่?"}
                       </DialogTitle>
                       <DialogContent>
-                        <DialogContentText id="alert-dialog-description">
-                          Set ที่กำลังจะลบ คือ {deleteSet}
+                        <DialogContentText id="alert-dialog-description" variant="h6">
+                          Set ที่กำลังจะลบ คือ: "{deleteSet.setName}", ID: "{deleteSet.id}"
                         </DialogContentText>
                       </DialogContent>
                       <DialogActions>
@@ -521,7 +522,7 @@ export default function SetList() {
                           variant="contained"
                           color="error"
                         >
-                          ลบดิ
+                          ลบเลย
                         </Button>
                       </DialogActions>
                     </Dialog>
