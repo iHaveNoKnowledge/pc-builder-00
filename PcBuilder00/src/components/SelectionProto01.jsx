@@ -19,6 +19,7 @@ import { getCategorizedData } from "../slices/userFilterSlice";
 import Bottom from "./BottomComponent";
 import { setDefault, setPageNum } from "../slices/paginationSlice";
 import { changeCategory } from "../slices/categorySlice";
+import { current } from "@reduxjs/toolkit";
 
 //* ------------------------------------------------Display*-----------------------------------------------------------------------------------------
 function PostCard({ items, totalRows }) {
@@ -198,16 +199,12 @@ function PostCard({ items, totalRows }) {
   const cardsPerPage = 9;
   const totalPages = Math.ceil(showProductWithFilter.length / cardsPerPage);
 
-  console.log(
-    "จำนวนหน้าcurItem:",
-    curItem.length,
-    "จำนวนหน้า: ",
-    showProductWithFilter.length,
-    "ตอนนี้อยู่",
-    curPageNum2,
-    "totalPages:",
-    totalPages
-  );
+  useEffect(() => {
+    if (curPageNum2 > totalPages) {
+      dispatch(setPageNum(1));
+    }
+  }, [totalPages]);
+
   const handleChangePage = (pageNum) => {
     dispatch(setPageNum(pageNum));
   };
@@ -221,7 +218,6 @@ function PostCard({ items, totalRows }) {
     dispatch(getCategorizedData({ showProduct, category }));
 
     if (curPageNum2 > totalPages) {
-      console.log("หน้าปัจจุบัน", curPageNum2, ">", totalPages);
       setCurPageNum(1);
       dispatch(setDefault());
     }
@@ -260,17 +256,22 @@ function PostCard({ items, totalRows }) {
           const pngPath = `/images/${item.compatible.toLowerCase().split(" ", 1)}.png`;
           const jpgPath = `/images/${item.compatible.toLowerCase()}.jpg`;
           const maxCardHeight = Math.max(...productPaginated.map((card) => card.height));
-          console.log("maxCardHeight", maxCardHeight);
+          const isAvailable = item.QTY.reduce((acc, QTYItem) => acc + QTYItem, 0) > 0;
           return (
             <Grid item xs={2} sm={4} md={4} key={index}>
-              <Card sx={{ boxShadow: "2px 2px 2px 1px rgba(92, 92, 92, 0.5)" }}>
+              <Card
+                sx={{
+                  boxShadow: "2px 2px 2px 1px rgba(92, 92, 92, 0.5)",
+                  pointerEvents: isAvailable ? "auto" : "none",
+                  opacity: isAvailable ? "100%" : "50%",
+                }}
+              >
                 <Card>
                   {isLoading ? (
                     isLoading && (
                       <CardMedia
                         component="img"
                         src={jpgPath || pngPath}
-                        // image={logoHeader}
                         alt={item.title}
                         title={item.title}
                         sx={{ height: "200px", objectFit: "contain" }}
@@ -450,7 +451,7 @@ function SelectionProto01() {
   const { dbCategory } = partData.find((item) => item.category === category);
 
   const { isLoading, isSuccess, isError } = useGetDbItemQuery(
-    { dbCategory, currentPage },
+    { dbCategory },
     {
       refetchOnMountOrArgChange: true,
     }

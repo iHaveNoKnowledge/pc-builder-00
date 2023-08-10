@@ -20,6 +20,7 @@ const productsSlice = createSlice({
         state.error = null;
       })
       .addMatcher(apiSliceDb.endpoints.getDbItem.matchFulfilled, (state, action) => {
+        state.branches = null;
         state.loading = false;
         state.products = action.payload.data;
         state.totalRows = action.payload.totalRows;

@@ -156,7 +156,7 @@ const CustomizationProto02 = () => {
                                             component="img"
                                             src={`/images/${miniItem.compatible
                                               .toLowerCase()
-                                              .split(" ", 1)}.png`}
+                                              .split(" ", 1)}.jpg`}
                                             alt={miniItem.title}
                                             sx={{ objectFit: "contain", width: 40, height: 40 }}
                                           />

@@ -385,7 +385,7 @@ export default function SetList() {
                                 ) : (
                                   <Box sx={{ margin: 1, width: "inherit" }}>
                                     <Typography variant="h6" gutterBottom component="div">
-                                      Items List
+                                      รายการสินค้า
                                     </Typography>
                                     <Table size="small" aria-label="purchases">
                                       <TableHead>

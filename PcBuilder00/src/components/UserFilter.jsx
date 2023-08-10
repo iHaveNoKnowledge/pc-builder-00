@@ -58,8 +58,6 @@ const UserFilter = () => {
   });
 
   //* AutoComplete
-  const Branches = ["B001", "B002", "B003", "B004", "B005", "B006", "B007"];
-
   const handleAutocompleteChange = (event, newValue) => {
     dispatch(branchSelect(newValue));
   };
