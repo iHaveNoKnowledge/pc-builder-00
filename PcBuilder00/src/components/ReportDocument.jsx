@@ -6,6 +6,7 @@ import { AppBar, Toolbar, Button, Dialog, IconButton, Typography, Slide, Box } f
 import CloseIcon from "@mui/icons-material/Close";
 import { PDFViewer } from "@react-pdf/renderer";
 import { useDispatch, useSelector } from "react-redux";
+import { PopupAlert } from "./generalModules/popupAlert";
 
 Font.register({ family: "Chakra_Petch", src: xx });
 
@@ -360,6 +361,8 @@ const ReportDocument = () => {
       >
         Report
       </Button>
+
+      <Dialog open={alertOpen} ><PopupAlert /></Dialog>
 
       <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
         <AppBar sx={{ position: "relative", backgroundColor: "#42528A" }}>
