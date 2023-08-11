@@ -1,8 +1,24 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Box, Typography, Button, Divider } from "@mui/material";
+import { Box, Typography, Button, Divider, Stack } from "@mui/material";
 import { resetCustomized, updateSummations } from "../slices/cutomizeSliceNoApi";
 import "./SumCustomize.css";
+
+const StyledTypography = ({ children, bg, role, type }) => {
+  const typographyStyle = {
+    fontSize: "1.9rem",
+    display: "flex",
+    flexBasis: 0,
+    fontWeight: "bolder",
+    color: "#303030",
+    padding: "7px 10px",
+    background:
+      bg === "green" ? "rgba(67, 255, 38, 0.5)" : role === "sumItem" ? "" : "rgba(82, 82, 82, 0.3)",
+    flexGrow: type === "value" ? 0 : 1,
+  };
+
+  return <Typography sx={typographyStyle}>{children}</Typography>;
+};
 
 const SumCustomize = () => {
   const sumAmount = useSelector((state) => state.customize.summations.sumAmount);
@@ -16,45 +32,36 @@ const SumCustomize = () => {
     dispatch(updateSummations());
   };
 
-  const boxStyle = {
-    flexGrow: 1,
-    flexBasis: 0,
-    fontWeight: "bolder",
-    color: "#303030",
-  };
-  const typoFontSize = "h5";
-
   return (
     <>
       <Box>
         <Box className="mainCard" sx={{}}>
           <Box sx={{ display: "flex", color: "#303030" }}>
-            <Typography variant={typoFontSize} sx={{ flexGrow: 1, fontWeight: "bolder" }}>
-              สินค้ารวม : {sumAmount}
-            </Typography>
-            {/* <Box>ประเภทสินค้า : {category}</Box> */}
+            <StyledTypography role="sumItem">สินค้ารวม : {sumAmount}</StyledTypography>
           </Box>
-          <Box sx={{ display: "flex", justifyContent: "center" }}>
-            <Typography
-              variant={typoFontSize}
-              sx={{ ...boxStyle, background: "rgba(82, 82, 82,0.5) " }}
-            >
-              ราคารวม : <br />฿{sum_SRP.toLocaleString()}
-            </Typography>
-            <Typography
-              variant={typoFontSize}
-              sx={{ ...boxStyle, background: "rgba(82, 82, 82,0.5) " }}
-            >
-              ส่วนลด : <br />฿{Math.round(sumDiscount).toLocaleString()}
-            </Typography>
 
-            <Typography
-              variant={typoFontSize}
-              sx={{ ...boxStyle, background: "rgba(0, 245, 25,0.5) " }}
-            >
-              ราคาสุทธิ : <br />฿{(sum_SRP - Math.round(sumDiscount)).toLocaleString()}
-            </Typography>
-          </Box>
+          <Stack sx={{ display: "flex", flexDirection: "column" }}>
+            <Box sx={{ display: "flex" }}>
+              <StyledTypography>ราคารวม :</StyledTypography>
+              <StyledTypography type="value">฿{sum_SRP.toLocaleString()}</StyledTypography>
+            </Box>
+
+            <Box sx={{ display: "flex" }}>
+              <StyledTypography> ส่วนลด : </StyledTypography>
+              <StyledTypography type="value">
+                ฿{Math.round(sumDiscount).toLocaleString()}
+              </StyledTypography>
+            </Box>
+
+            <Box sx={{ display: "flex" }}>
+              <StyledTypography bg="green" variant="h4">
+                ราคาสุทธิ :
+              </StyledTypography>
+              <StyledTypography bg="green" type="value">
+                ฿{(sum_SRP - Math.round(sumDiscount)).toLocaleString()}
+              </StyledTypography>
+            </Box>
+          </Stack>
         </Box>
         <Divider />
         <Box>

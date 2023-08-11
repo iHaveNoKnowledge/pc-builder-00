@@ -52,6 +52,10 @@ const UserFilter = () => {
     dispatch(changeTextSearch(query));
   }, [query]);
 
+  useEffect(() => {
+    dispatch(branchSelect([]));
+  }, [currentCategory]);
+
   //* DisplayCategory
   const { categoryDisplay } = parts.find((category) => {
     return category.category === currentCategory;

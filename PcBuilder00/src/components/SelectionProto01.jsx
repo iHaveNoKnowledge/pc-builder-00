@@ -173,7 +173,7 @@ function PostCard({ items, totalRows }) {
       QTY: sku.QTY.filter((_, index) => selectedBranches.includes(sku.BRANCH_CODE[index])),
     }));
 
-  console.log("BranchFiltered:", filteredSKUs, "initialData:", searchedShowProduct);
+  console.log("BranchFiltered:", filteredSKUs);
 
   //* นำ flter มา filter showproduct
   const filterProducts = (products, selectedOpts, expression) => {
