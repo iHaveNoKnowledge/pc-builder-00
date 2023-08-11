@@ -19,6 +19,8 @@ import { useForm } from "react-hook-form";
 import TableDocumentCashier from "./TableDocumentCashier";
 import { PDFViewer } from "@react-pdf/renderer";
 import CloseIcon from "@mui/icons-material/Close";
+import { theme } from "../SetList";
+import { ThemeProvider } from "@mui/material/styles";
 
 const AddSN = () => {
   const { register, handleSubmit, setValue, watch, reset } = useForm();
@@ -140,8 +142,6 @@ const AddSN = () => {
       return { ...item1, sn: updatedSN };
     });
     console.log("ผลลัพธ์", itemList);
-
-    console.log();
   };
 
   const handleChange = (event, index, index2) => {
@@ -176,9 +176,10 @@ const AddSN = () => {
   };
 
   return (
-    <>
+    <ThemeProvider theme={theme}>
       <Button
         variant="contained"
+        color="secondary"
         onClick={handleClickOpen}
         sx={{
           height: "27.5px",
@@ -335,7 +336,7 @@ const AddSN = () => {
           </DialogContent>
         </DialogContent>
       </Dialog>
-    </>
+    </ThemeProvider>
   );
 };
 

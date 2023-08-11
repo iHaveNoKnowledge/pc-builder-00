@@ -37,13 +37,16 @@ import { addProduct, resetCustomized, updateSummations } from "../slices/cutomiz
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import Pagination from "@mui/material/Pagination";
 import CircularProgress from "@mui/material/CircularProgress";
-import { throttle, debounce } from "lodash";
 import axios from "axios";
 
-const theme = createTheme({
+export const theme = createTheme({
   palette: {
     primary: {
       main: "#42528A",
+      contrastText: "#ffffff",
+    },
+    secondary: {
+      main: "#ff8d29",
     },
   },
   components: {
@@ -61,6 +64,10 @@ const theme = createTheme({
           height: "27.5px",
           borderRadius: "0px",
           fontFamily: "Chakra Petch",
+          "&:hover": {
+            backgroundColor: "##3a516b",
+            color: "#FFF",
+          },
         },
       },
     },
@@ -68,8 +75,8 @@ const theme = createTheme({
 });
 
 export default function SetList() {
-  const partData = useSelector((state) => state.customize.partData);
-  const products = useSelector((state) => state.products.products);
+  // const partData = useSelector((state) => state.customize.partData);
+  // const products = useSelector((state) => state.products.products);
   // const { sets, totalRows, loading } = useSelector((state) => state.sets);
 
   const dispatch = useDispatch();
@@ -77,7 +84,6 @@ export default function SetList() {
   const [open, setOpen] = useState(false);
 
   let searchResult = "";
-  let displayDataList = false;
 
   //* นำ api มาใช้
   const [
@@ -106,7 +112,6 @@ export default function SetList() {
   const handleSearch = (e) => {
     if (searchTxt.current.value.length > 0) {
       const txt = searchTxt.current.value;
-      console.log("searchว่า: ", txt);
       const searchResult = sortedData.filter((item) => item.setName.includes(txt));
       console.log("กดsearch แล้วได้ไรมา", searchResult);
       setSortedData(searchResult);
@@ -124,7 +129,6 @@ export default function SetList() {
       const response = await axios.get(`${import.meta.env.VITE_APP_DB_CONFIG3_HOST}/testProducts`);
       setProductsData(response.data);
       setLoadingAxios(false);
-      console.log("productsDataAxios:", response.data);
     } catch (error) {
       console.error("Error fetching axios:", error);
       setLoadingAxios(false);
@@ -150,6 +154,7 @@ export default function SetList() {
 
   //* Function กดเลือกSet
   const handleSelect = (e, index1, curPageNum) => {
+    e.stopPropagation();
     setOpen(false);
     console.log(
       "handleSelect clicked!!",
@@ -161,7 +166,6 @@ export default function SetList() {
       (curPageNum - 1) * 10 + index1
     );
     const arrIdx = (curPageNum - 1) * 10 + index1;
-    e.stopPropagation();
     dispatch(resetCustomized());
     const { setName, customerName, customerTel, sellerName, sellerTel } = sortedData[arrIdx];
     console.log("กดเลือกไรมา", sortedData[arrIdx]);

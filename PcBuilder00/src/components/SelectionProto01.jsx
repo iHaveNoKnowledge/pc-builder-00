@@ -316,7 +316,7 @@ function PostCard({ items, totalRows }) {
                     <Typography
                       textOverflow="clip"
                       variant="body2"
-                      sx={{ height: "80px", overflowY: "auto" }}
+                      sx={{ height: "80px", overflowY: "auto", marginTop:"5px" }}
                     >
                       {item.productDescription}
                     </Typography>

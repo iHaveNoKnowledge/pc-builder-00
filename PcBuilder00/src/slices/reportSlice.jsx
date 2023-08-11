@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   info: { setName: "", customerName: "", customerTel: "", sellerName: "", sellerTel: "" },
-  partData: [],
+
   sets: [],
 };
 

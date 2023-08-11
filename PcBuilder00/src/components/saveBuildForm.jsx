@@ -12,6 +12,8 @@ import { FormGroup, FormControlLabel, Checkbox } from "@mui/material";
 import "./saveBuildForm.css";
 import { useUpdateDataMutation } from "../features/api/dataApiSlice";
 import { useGetSetsQuery } from "../features/api/dataApiSlice";
+import { ThemeProvider } from "@mui/material/styles";
+import { theme } from "./SetList";
 
 export default function SaveBuildBtn() {
   const partData = useSelector((state) => state.customize.partData);
@@ -160,7 +162,7 @@ export default function SaveBuildBtn() {
   const sellerDigitDisplay = sellerTelInput.length > 1 ? "digits" : "digit";
 
   return (
-    <div>
+    <ThemeProvider theme={theme}>
       <Button
         variant="contained"
         onClick={handleClickOpen}
@@ -324,6 +326,6 @@ export default function SaveBuildBtn() {
           </Button>
         </DialogActions>
       </Dialog>
-    </div>
+    </ThemeProvider>
   );
 }

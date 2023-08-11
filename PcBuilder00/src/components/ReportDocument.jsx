@@ -1,12 +1,22 @@
 import React from "react";
-import { Page, Text, View, Document, Image, Font, StyleSheet } from "@react-pdf/renderer";
+import {
+  Page,
+  Text,
+  View,
+  Document,
+  Image,
+  Font,
+  StyleSheet,
+  PDFViewer,
+} from "@react-pdf/renderer";
 import logoHeader from "../../public/images/itLogo-1.png";
 import font from "../fonts/ChakraPetch-Regular.ttf";
 import { AppBar, Toolbar, Button, Dialog, IconButton, Typography, Slide, Box } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import { PDFViewer } from "@react-pdf/renderer";
 import { useDispatch, useSelector } from "react-redux";
 import PopupAlert from "./generalModules/PopupAlert";
+import { ThemeProvider } from "@mui/material/styles";
+import { theme } from "./SetList";
 
 Font.register({ family: "Chakra_Petch", src: font });
 
@@ -15,7 +25,6 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 const ReportDocument = () => {
-  const partDataReport = useSelector((state) => state.report.partData);
   const partDataReport2 = useSelector((state) => state.customize.partData);
   const reportInfo = useSelector((state) => state.report.info);
 
@@ -73,8 +82,10 @@ const ReportDocument = () => {
 
         <View style={tableColHeaderStyle}>
           <Text style={tableCellHeaderStyle}>
-            {WrapText("บริษัท ไอที ซิตี้ จำกัด  ")}&#40;มหาชน&#41;
+            {WrapText("บริษัท ไอที ซิตี้ จำกัด")} &#40;มหาชน&#41;
           </Text>
+          {/* คําแนะนํา อย่าใช้สระ ำ ให้ใช้เครื่องหมาย  ํ ยติภัง + สระ า เพราะ จำนวน index กับจำนวนตัวอักษรที่แสดงผลจะไม่ตรงกัน ทำให้แสดงผลไม่ครบ */}
+          <Text style={tableCellStyle}>{WrapText("ยายกินลําไยนําลายยายไหลย้อย มั้ง")}</Text>
         </View>
 
         <View style={tableColHeaderStyle}>
@@ -159,6 +170,7 @@ const ReportDocument = () => {
         </View>
         <View style={{ ...inlineStyle, ...inlineDescr }}>
           <Text>{WrapText("Description")}</Text>
+          {/* <Text>{WrapText("ยายกินลําไยนําลายยายไหลย้อย")}</Text> */}
         </View>
         <View style={{ ...inlineStyle, ...inlineQTY }}>
           <Text>{WrapText("QTY")}</Text>
@@ -356,7 +368,7 @@ const ReportDocument = () => {
   };
 
   return (
-    <div>
+    <ThemeProvider theme={theme}>
       <Button
         variant="contained"
         onClick={handleClickOpen}
@@ -388,7 +400,7 @@ const ReportDocument = () => {
           <PDFViewer style={viewerStyle}> {FinalizedDocument()}</PDFViewer>
         </Box>
       </Dialog>
-    </div>
+    </ThemeProvider>
   );
 };
 
@@ -465,7 +477,7 @@ const tableCellHeaderStyle = {
   fontWeight: "bold",
   width: 171,
   fontFamily: "Chakra_Petch",
-  textAlign: "justify",
+  textAlign: "center",
 };
 
 const inlineStyle = { padding: "10px", fontSize: 10 };
@@ -479,7 +491,7 @@ const inlineTotal = { width: "14%", textAlign: "right" };
 const tableCellStyle = {
   margin: 5,
   fontSize: 10,
-  width: 160,
+  // width: 160,
   flexGrow: 0,
   textAlign: "left",
   fontFamily: "Chakra_Petch",
