@@ -75,7 +75,7 @@ export const theme = createTheme({
 });
 
 export default function SetList() {
-  // const partData = useSelector((state) => state.customize.partData);
+  const partData = useSelector((state) => state.customize.partData);
   // const products = useSelector((state) => state.products.products);
   // const { sets, totalRows, loading } = useSelector((state) => state.sets);
 
@@ -145,8 +145,8 @@ export default function SetList() {
   };
 
   const handleClose = (e) => {
-    e.stopPropagation();
     setOpen(false);
+    e.stopPropagation();
 
     const updatedState = openSubTables.map(() => false);
     setOpenSubTables([]);
@@ -155,7 +155,6 @@ export default function SetList() {
   //* Function กดเลือกSet
   const handleSelect = (e, index1, curPageNum) => {
     e.stopPropagation();
-    setOpen(false);
     console.log(
       "handleSelect clicked!!",
       "indexnum:",
@@ -185,6 +184,10 @@ export default function SetList() {
 
     setOpenSubTables([]);
   };
+
+  useEffect(() => {
+    setOpen(false);
+  }, [partData]);
 
   //* Function ConfirmDelete
   const [idDelete, setIdDelete] = useState();

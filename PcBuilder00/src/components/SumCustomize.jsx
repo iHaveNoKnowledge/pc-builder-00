@@ -6,12 +6,12 @@ import "./SumCustomize.css";
 
 const StyledTypography = ({ children, bg, role, type }) => {
   const typographyStyle = {
-    fontSize: "1.9rem",
+    fontSize: "1.8rem",
     display: "flex",
     flexBasis: 0,
     fontWeight: "bolder",
     color: "#303030",
-    padding: "7px 10px",
+    padding: "6px 10px",
     background:
       bg === "green" ? "rgba(67, 255, 38, 0.5)" : role === "sumItem" ? "" : "rgba(82, 82, 82, 0.3)",
     flexGrow: type === "value" ? 0 : 1,
@@ -32,28 +32,39 @@ const SumCustomize = () => {
     dispatch(updateSummations());
   };
 
+  // สลับ flexDirection: "row" หรือ "column" เพื่อให้ได้รูปแบบที่ต่างกัน
+  const itemDirection = { flexDirection: "row" };
+  console.log("itemDirection:", itemDirection.flexDirection);
+
+  const stackStyle = {
+    sx: {
+      display: "flex",
+      flexDirection: itemDirection.flexDirection === "row" ? "column" : "row",
+    },
+  };
+
   return (
     <>
       <Box>
-        <Box className="mainCard" sx={{}}>
+        <Box className="mainCard">
           <Box sx={{ display: "flex", color: "#303030" }}>
             <StyledTypography role="sumItem">สินค้ารวม : {sumAmount}</StyledTypography>
           </Box>
 
-          <Stack sx={{ display: "flex", flexDirection: "column" }}>
-            <Box sx={{ display: "flex" }}>
+          <Stack {...stackStyle}>
+            <Box sx={{ display: "flex", ...itemDirection }}>
               <StyledTypography>ราคารวม :</StyledTypography>
               <StyledTypography type="value">฿{sum_SRP.toLocaleString()}</StyledTypography>
             </Box>
 
-            <Box sx={{ display: "flex" }}>
+            <Box sx={{ display: "flex", ...itemDirection }}>
               <StyledTypography> ส่วนลด : </StyledTypography>
               <StyledTypography type="value">
                 ฿{Math.round(sumDiscount).toLocaleString()}
               </StyledTypography>
             </Box>
 
-            <Box sx={{ display: "flex" }}>
+            <Box sx={{ display: "flex", ...itemDirection }}>
               <StyledTypography bg="green" variant="h4">
                 ราคาสุทธิ :
               </StyledTypography>
