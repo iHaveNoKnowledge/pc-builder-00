@@ -13,7 +13,7 @@ function Bottom() {
   return (
     <Box className="mainCardBottom" sx={{ minHeight: "28px" }}>
       {componentsToLazyLoad.map(({ path, label }) => (
-        <Suspense key={path.toString()} fallback={<div>Loading...</div>}>
+        <Suspense key={path.toString()} fallback={<></>}>
           <Box>{React.createElement(lazy(path), { label })}</Box>
         </Suspense>
       ))}
