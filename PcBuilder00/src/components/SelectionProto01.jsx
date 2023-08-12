@@ -303,6 +303,7 @@ function PostCard({ items, totalRows }) {
                       sx={{
                         display: "flex",
                         bgcolor: "background.paper",
+                        flexGrow: "1"
                       }}
                     >
                       <Typography
@@ -326,14 +327,14 @@ function PostCard({ items, totalRows }) {
                     <Typography
                       textOverflow="clip"
                       variant="body2"
-                      sx={{ height: "80px", overflowY: "auto", marginTop:"5px" }}
+                      sx={{ height: "80px", overflowY: "auto", marginTop:"5px",flexGrow: "1" }}
                     >
                       {item.productDescription}
                     </Typography>
 
                     <Divider sx={{ pt: 1 }} />
 
-                    <Box sx={{ display: "flex" }}>
+                    <Box sx={{ display: "flex", paddingTop:"1px", height:"35%"}}>
                       <ListItemText
                         sx={{ fontSize: "2rem" }}
                         primary={
@@ -341,12 +342,12 @@ function PostCard({ items, totalRows }) {
                             <Typography sx={{ fontSize: "1.2rem", fontWeight: "bolder" }}>
                                {priceDisplay()
                                 ? "฿ " + priceDisplay().toLocaleString() + ".-"
-                                : <>ไม่พบราคาสินค้าในระบบ</>}
+                                : <Typography>ไม่พบราคาสินค้าในระบบ</Typography>}
                             </Typography>
                           </>
                         }
                         secondary={
-                          priceDisplay() ? (
+                          item.promotionPrice-item.srp !== 0 ? (
                             <React.Fragment>
                               <Typography
                                 sx={{ display: "inline", fontSize: "0.9rem" }}
@@ -358,7 +359,16 @@ function PostCard({ items, totalRows }) {
                               </Typography>
                             </React.Fragment>
                           ) : (
-                            <></>
+                            <React.Fragment>
+                              <Typography
+                                sx={{ display: "inline", fontSize: "0.9rem" }}
+                                component="span"
+                                variant="caption"
+                                color="text.secondary"
+                              >
+                                
+                              </Typography>
+                            </React.Fragment>
                           )
                         }
                       />
