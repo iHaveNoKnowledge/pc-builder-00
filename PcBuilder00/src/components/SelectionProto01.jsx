@@ -256,6 +256,16 @@ function PostCard({ items, totalRows }) {
           const jpgPath = `/images/${item.compatible.toLowerCase()}.jpg`;
           const maxCardHeight = Math.max(...productPaginated.map((card) => card.height));
           const isAvailable = item.QTY.reduce((acc, QTYItem) => acc + QTYItem, 0) > 0;
+          const priceDisplay = ()=>{
+            if(item.promotionPrice  && item.srp  && item.promotionPrice-item.srp !== 0){
+              return item.promotionPrice 
+            } else if(item.promotionPrice || item.srp) {
+              return item.promotionPrice? item.promotionPrice: item.srp
+            } else {
+              return false
+            }
+          }
+          
           return (
             <Grid item xs={2} sm={4} md={4} key={index}>
               <Card
@@ -320,21 +330,23 @@ function PostCard({ items, totalRows }) {
                     >
                       {item.productDescription}
                     </Typography>
+
                     <Divider sx={{ pt: 1 }} />
+
                     <Box sx={{ display: "flex" }}>
                       <ListItemText
                         sx={{ fontSize: "2rem" }}
                         primary={
                           <>
                             <Typography sx={{ fontSize: "1.2rem", fontWeight: "bolder" }}>
-                              {item.promotionPrice
-                                ? "฿ " + item.promotionPrice.toLocaleString() + ".-"
-                                : "฿ " + item.srp + ".-"}
+                               {priceDisplay()
+                                ? "฿ " + priceDisplay().toLocaleString() + ".-"
+                                : <>ไม่พบราคาสินค้าในระบบ</>}
                             </Typography>
                           </>
                         }
                         secondary={
-                          item.promotionPrice ? (
+                          priceDisplay() ? (
                             <React.Fragment>
                               <Typography
                                 sx={{ display: "inline", fontSize: "0.9rem" }}
@@ -350,6 +362,7 @@ function PostCard({ items, totalRows }) {
                           )
                         }
                       />
+
                       <Button
                         sx={{ height: "35px", alignSelf: "center", backgroundColor: "#42528A" }}
                         variant="contained"
