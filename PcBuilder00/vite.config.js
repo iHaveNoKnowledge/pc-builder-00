@@ -12,5 +12,4 @@ export default defineConfig({
       "process.env.DB_CONFIG3_HOST": process.env,
     },
   },
-  base: `'/deploy/'`,
 });
