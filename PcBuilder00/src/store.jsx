@@ -1,12 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import categoryReducer from "./slices/categorySlice";
 import noApiCustomizeReducer from "./slices/cutomizeSliceNoApi";
-import {
-  apiSlice,
-  apiSliceDb,
-  apiPutSets,
-  apiSliceJSONPlaceHolder,
-} from "./features/api/dataApiSlice";
+import { apiSliceDb, apiPutSets } from "./features/api/dataApiSlice";
 import userFilterReducer from "./slices/userFilterSlice";
 import reportReducer from "./slices/reportSlice";
 import paginationReducer from "./slices/paginationSlice";
@@ -17,9 +12,7 @@ export const store = configureStore({
   reducer: {
     category: categoryReducer,
     customize: noApiCustomizeReducer,
-    [apiSlice.reducerPath]: apiSlice.reducer,
     [apiSliceDb.reducerPath]: apiSliceDb.reducer,
-    [apiSliceJSONPlaceHolder.reducerPath]: apiSliceJSONPlaceHolder.reducer,
     [apiPutSets.reducerPath]: apiPutSets.reducer,
     userFilter: userFilterReducer,
     report: reportReducer,
@@ -28,10 +21,5 @@ export const store = configureStore({
     sets: setsReducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(
-      apiSlice.middleware,
-      apiSliceDb.middleware,
-      apiPutSets.middleware,
-      apiSliceJSONPlaceHolder.middleware
-    ),
+    getDefaultMiddleware().concat(apiSliceDb.middleware, apiPutSets.middleware),
 });

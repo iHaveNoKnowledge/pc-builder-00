@@ -28,7 +28,6 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import SearchIcon from "@mui/icons-material/Search";
 import {
-  useGetPostsQuery,
   useGetDbItemQuery,
   useLazyGetSetsQuery,
   useDeleteResourceMutation,

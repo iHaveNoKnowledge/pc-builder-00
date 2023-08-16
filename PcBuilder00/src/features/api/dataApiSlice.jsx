@@ -1,60 +1,12 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-// import { queryCache } from "react-query";
-
-//* Fetch จาก JSON server
-export const apiSlice = createApi({
-  reducerPath: "apiSlice",
-  baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:3000",
-  }),
-  tagTypes: ["test"],
-  endpoints: (builder) => ({
-    getPosts: builder.query({
-      query: (args) => {
-        const { startPage, pageEnd, perPage, category } = args;
-        return `/items2?category=${category}&_limit=${pageEnd}`;
-      },
-      onSuccess: (data) => {
-        console.log("fetch เรียบร้อย", data);
-      },
-      onError: (err) => {
-        console.error(err);
-      },
-    }),
-  }),
-});
-
-//* Fetch จาก JSONplaceHolder
-export const apiSliceJSONPlaceHolder = createApi({
-  reducerPath: "apiSliceJSONPlaceHolder",
-  baseQuery: fetchBaseQuery({
-    baseUrl: "https://jsonplaceholder.typicode.com",
-  }),
-  tagTypes: ["placeholder"],
-  endpoints: (builder) => ({
-    getPhotos: builder.query({
-      // query: () => "/items2",
-      query: (args) => {
-        const { startPage, pageEnd, perPage, category } = args;
-        return `/photos?_start=${startPage}&_limit=54`;
-      },
-      onSuccess: (data) => {
-        console.log("fetch เรียบร้อย", data);
-      },
-      onError: (err) => {
-        console.error(err);
-      },
-    }),
-  }),
-});
-
-const baseUrl = "http://192.168.0.25:9000/api";
+const baseUrl = "http://192.168.0.17:49152/api";
+const baseUrlTest = "http://192.168.0.25:9000/api";
 
 //* Gets and a Delete Fetch จาก SQL server 192.168
 export const apiSliceDb = createApi({
   reducerPath: "apiSliceDb",
   baseQuery: fetchBaseQuery({
-    baseUrl,
+    baseUrlTest,
   }),
   tagTypes: ["Sets"],
   endpoints: (builder) => ({
@@ -104,15 +56,12 @@ export const apiPutSets = createApi({
 });
 
 //** ดึงข้อมูล
-export const { useGetPostsQuery, useLazyGetPostsQuery } = apiSlice;
 export const {
   useGetDbItemQuery,
   useGetSetsQuery,
   useLazyGetSetsQuery,
   useDeleteResourceMutation,
 } = apiSliceDb;
-
-export const { useGetPhotosQuery } = apiSliceJSONPlaceHolder;
 
 //** DB DATA Create
 export const { useUpdateDataMutation } = apiPutSets;
