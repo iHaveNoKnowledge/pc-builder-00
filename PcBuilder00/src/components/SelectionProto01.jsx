@@ -482,6 +482,7 @@ function SelectionProto01() {
   //** กรณีกำลังโหลด
   if (loading) {
     ///* ให้เก็บหน้า html ไว้ใน cardContent ดังนี้เอาไว้ return ภายหลัง
+    console.log("Loading....");
     cardContent = (
       <div className="d-flex justify-content-center">
         <div className="spinner-border" role="status">
@@ -498,6 +499,7 @@ function SelectionProto01() {
     //** กรณีError
   } else if (error) {
     ///* cardContent เก็บ div ก้อนนึง ทำหน้าที่โชว alert
+    console.log("error:", error);
     cardContent = (
       <div>
         <Stack sx={{ width: "100%" }} spacing={2}>

@@ -22,7 +22,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <ThemeProvider theme={THEME}>
           <BrowserRouter>
             <Routes>
-              <Route path="/" element={<App />} />
+              <Route path="" element={<App />} />
             </Routes>
           </BrowserRouter>
         </ThemeProvider>

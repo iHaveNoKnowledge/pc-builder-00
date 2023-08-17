@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { filter, map, chain, reduce, mapValues, value, findIndex, find } from "lodash";
+import { map, findIndex } from "lodash";
 
 const initialState = {
   partData: [

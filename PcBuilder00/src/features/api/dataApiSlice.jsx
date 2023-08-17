@@ -43,7 +43,7 @@ export const apiSliceDb = createApi({
 //* Post
 export const apiPutSets = createApi({
   reducerPath: "putSets",
-  baseQuery: fetchBaseQuery({ baseUrl }),
+  baseQuery: fetchBaseQuery({ baseUrlTest }),
   endpoints: (builder) => ({
     updateData: builder.mutation({
       query: (data) => ({
