@@ -13,7 +13,20 @@ import { clearSelectedFilter, branchSelect } from "../slices/userFilterSlice";
 import { setDefault } from "../slices/paginationSlice";
 
 const UserFilter = () => {
-  //* Static Variable
+  //* Style
+  const autoCompleteInput = {
+    ".MuiAutocomplete-input": {
+      minWidth: "0px !important",
+    },
+    ".MuiFormLabel-root": {
+      zIndex: "8999 !important",
+    },
+    ".MuiAutocomplete-inputRoot": {
+      zIndex: "8998 !important",
+      position: "absolute !important",
+      background: "white !important",
+    },
+  };
 
   //* useDispatch
   const dispatch = useDispatch();
@@ -110,6 +123,7 @@ const UserFilter = () => {
               </Box>
               <Box sx={{ width: "32.7%" }}>
                 <Autocomplete
+                  sx={autoCompleteInput}
                   size="small"
                   multiple
                   limitTags={2}

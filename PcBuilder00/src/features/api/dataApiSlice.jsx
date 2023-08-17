@@ -1,12 +1,12 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-const baseUrl = "http://192.168.0.17:49152/api";
-const baseUrlTest = "http://192.168.0.25:9000/api";
+// const baseUrl = "http://192.168.0.17:49152/api";
+const baseUrl = "http://192.168.0.25:9000/api";
 
-//* Gets and a Delete Fetch จาก SQL server 192.168
+// Gets and a Delete Fetch จาก SQL server 192.168
 export const apiSliceDb = createApi({
   reducerPath: "apiSliceDb",
   baseQuery: fetchBaseQuery({
-    baseUrlTest,
+    baseUrl,
   }),
   tagTypes: ["Sets"],
   endpoints: (builder) => ({
@@ -43,7 +43,7 @@ export const apiSliceDb = createApi({
 //* Post
 export const apiPutSets = createApi({
   reducerPath: "putSets",
-  baseQuery: fetchBaseQuery({ baseUrlTest }),
+  baseQuery: fetchBaseQuery({ baseUrl }),
   endpoints: (builder) => ({
     updateData: builder.mutation({
       query: (data) => ({
