@@ -61,17 +61,32 @@ const ReportDocument = () => {
   };
 
   //*
-  const WrapText = (text) => (
-    <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
-      {text?.match(/\w+|\W+/g)?.map((seg, i) => {
-        if (Number(seg) / Number(seg) === 1) {
-          return <Text key={i}>{Number(seg)}</Text>;
-        } else {
-          return <Text key={i}>{seg.toLocaleString()}</Text>;
-        }
-      })}
-    </View>
-  );
+  const WrapText = (text) => {
+    const numOccurrences = (str, target) => str.split(target).length - 1;
+    const count = numOccurrences(text, "ำ");
+    const newLength = text.length + count;
+
+    return (
+      <View
+        style={{
+          flexDirection: "row",
+          flexWrap: "wrap",
+        }}
+      >
+        {text?.match(/\w+|\W+/g)?.map((seg, i) => {
+          if (Number(seg) / Number(seg) === 1) {
+            return <Text key={i}>{Number(seg)}</Text>;
+          } else {
+            return (
+              <Text key={i} style={{ width: `${newLength}ch` }}>
+                {seg.toLocaleString().padEnd(newLength, " ")}
+              </Text>
+            );
+          }
+        })}
+      </View>
+    );
+  };
 
   const createMainTableHeader = () => {
     return (
@@ -81,11 +96,11 @@ const ReportDocument = () => {
         </View>
 
         <View style={tableColHeaderStyle}>
-          <Text style={tableCellHeaderStyle}>
-            {WrapText("บริษัท ไอที ซิตี้ จำกัด")} &#40;มหาชน&#41;
-          </Text>
+          <Text style={tableCellHeaderStyle}>{WrapText("บริษัท ไอที ซิตี้ จำกัด (มหาชน)")}</Text>
           {/* คําแนะนํา อย่าใช้สระ ำ ให้ใช้เครื่องหมาย  ํ ยติภัง + สระ า เพราะ จำนวน index กับจำนวนตัวอักษรที่แสดงผลจะไม่ตรงกัน ทำให้แสดงผลไม่ครบ */}
-          <Text style={tableCellStyle}>{WrapText("ยายกินลําไยนําลายยายไหลย้อย มั้ง")}</Text>
+          <Text style={{ ...tableCellStyle}}>
+            {WrapText("ยายกินลําไยนำลายยายไหลย้อย มั้ง")}
+          </Text>
         </View>
 
         <View style={tableColHeaderStyle}>
