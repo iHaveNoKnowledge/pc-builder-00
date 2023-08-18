@@ -5,7 +5,7 @@ import xxx from "../../../public/images/itLogo-1.png";
 import { Box } from "@mui/material";
 import { PDFViewer } from "@react-pdf/renderer";
 Font.register({ family: "Chakra_Petch", src: xx });
-
+import {pageStyle, tableStyle} from "../ReportDocument"
 const TableDocumentCashier = () => {
   const createMainTableHeader = () => {
     return (
@@ -53,13 +53,13 @@ const TableDocumentCashier = () => {
 
           <View style={{ ...subTableDisplay, ...{ flexDirection: "row" } }}>
             <View style={{ fontSize: 10, width: "17%" }}>
-              <Text>Sale</Text>
+              <Text>Seller</Text>
             </View>
             <View>
               <Text style={{ fontSize: 10 }}>:</Text>
             </View>
             <View style={{ fontSize: 9, marginVertical: 1, marginLeft: 3, width: 130 }}>
-              <Text>รับตัวแปร saler ทำconditional display </Text>
+              <Text>รับตัวแปร seller ทำconditional display </Text>
             </View>
           </View>
         </View>
@@ -199,20 +199,20 @@ const TableDocumentCashier = () => {
 };
 
 //style------------------------------------------------------------------------------------
-const pageStyle = {
-  display: "flex",
-  flexDirection: "row",
-  justifyContent: "center",
-  paddingTop: 16,
-  paddingHorizontal: 40,
-  paddingBottom: 56,
-};
+// const pageStyle = {
+//   display: "flex",
+//   flexDirection: "row",
+//   justifyContent: "center",
+//   paddingTop: 16,
+//   paddingHorizontal: 40,
+//   paddingBottom: 56,
+// };
 
-const tableStyle = {
-  display: "table",
-  width: "auto",
-  fontFamily: "Chakra_Petch",
-};
+// const tableStyle = {
+//   display: "table",
+//   width: "auto",
+//   fontFamily: "Chakra_Petch",
+// };
 
 const tableRowStyle = {
   flexDirection: "row",

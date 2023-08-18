@@ -26,7 +26,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 const ReportDocument = () => {
   const partDataReport2 = useSelector((state) => state.customize.partData);
-  const reportInfo = useSelector((state) => state.report.info);
+  const { info, branch } = useSelector((state) => state.report);
 
   let itemList = [];
 
@@ -91,8 +91,6 @@ const ReportDocument = () => {
   };
 
   const createMainTableHeader = () => {
-    const branchAddress =
-      "อาคาร ศูนย์การค้า เดอะ พาลาเดียม เวิลด์ ช็อปปิง ชั้นที่ B1,B2,5 เลขที่ 555 ถนน ราชปรารภ แขวงมักกะสัน เขตราชเทวี กรุงเทพมหานคร 10400";
     return (
       <View style={tableRowStyle} fixed>
         <View style={firstTableColHeaderStyle}>
@@ -102,7 +100,7 @@ const ReportDocument = () => {
         <View style={tableColHeaderStyle}>
           <Text style={tableCellHeaderStyle}>{WrapText("บริษัท ไอที ซิตี้ จำกัด (มหาชน)")}</Text>
           {/* คําแนะนํา อย่าใช้สระ ำ ให้ใช้เครื่องหมาย  ํ ยติภัง + สระ า เพราะ จำนวน index กับจำนวนตัวอักษรที่แสดงผลจะไม่ตรงกัน ทำให้แสดงผลไม่ครบ */}
-          <Text style={tableCellStyle}>{WrapText(branchAddress)}</Text>
+          <Text style={tableCellStyle}>{WrapText(branch.address)}</Text>
         </View>
 
         <View style={tableColHeaderStyle}>
@@ -115,7 +113,7 @@ const ReportDocument = () => {
             </View>
             <View style={{ fontSize: 9, marginVertical: 1, marginLeft: 3, width: 130 }}>
               {/* <Text>รับตัวแปร Cus str ทำconditional display</Text> */}
-              <Text>{reportInfo.customerName}</Text>
+              <Text>{info.customerName}</Text>
             </View>
           </View>
 
@@ -128,7 +126,7 @@ const ReportDocument = () => {
             </View>
             <View style={{ fontSize: 9, marginVertical: 1, marginLeft: 3, width: 130 }}>
               {/* <Text>รับตัวแปร custel str ทำconditional display</Text> */}
-              <Text>{reportInfo.customerTel}</Text>
+              <Text>{info.customerTel}</Text>
             </View>
           </View>
 
@@ -147,7 +145,7 @@ const ReportDocument = () => {
             </View>
             <View style={{ fontSize: 9, marginVertical: 1, marginLeft: 3, width: 130 }}>
               {/* <Text>รับตัวแปร saler ทำconditional display </Text> */}
-              <Text>{reportInfo.sellerName} </Text>
+              <Text>{info.sellerName} </Text>
             </View>
           </View>
 
@@ -160,7 +158,7 @@ const ReportDocument = () => {
             </View>
             <View style={{ fontSize: 9, marginVertical: 1, marginLeft: 3, width: 130 }}>
               {/* <Text>รับตัวแปร custel str ทำconditional display</Text> */}
-              <Text>{reportInfo.sellerTel}</Text>
+              <Text>{info.sellerTel}</Text>
             </View>
           </View>
         </View>
@@ -430,7 +428,7 @@ const ReportDocument = () => {
 };
 
 //style------------------------------------------------------------------------------------
-const pageStyle = {
+export const pageStyle = {
   display: "flex",
   flexDirection: "row",
   justifyContent: "center",
@@ -439,18 +437,18 @@ const pageStyle = {
   paddingBottom: 56,
 };
 
-const tableStyle = {
+export const tableStyle = {
   display: "table",
   width: "auto",
   fontFamily: "Chakra_Petch",
 };
 
-const tableRowStyle = {
+export const tableRowStyle = {
   flexDirection: "row",
   display: "flex",
 };
 
-const firstTableColHeaderStyle = {
+export const firstTableColHeaderStyle = {
   // width: "28vh",
   width: "16vw",
   borderStyle: "solid",
@@ -462,7 +460,7 @@ const firstTableColHeaderStyle = {
   justifyContent: "center",
 };
 
-const tableColHeaderStyle = {
+export const tableColHeaderStyle = {
   width: "36vw",
   // width: "100%",
   // borderStyle: "solid",
@@ -475,7 +473,7 @@ const tableColHeaderStyle = {
   justifyContent: "center",
 };
 
-const firstTableColStyle = {
+export const firstTableColStyle = {
   // width: "28vh",
   width: "100%",
   borderStyle: "solid",
@@ -485,7 +483,7 @@ const firstTableColStyle = {
   whiteSpace: "normal",
 };
 
-const tableColStyle = {
+export const tableColStyle = {
   // width: "28vh",
   width: "100%",
   borderStyle: "solid",
@@ -496,7 +494,7 @@ const tableColStyle = {
   whiteSpace: "pre",
 };
 
-const tableCellHeaderStyle = {
+export const tableCellHeaderStyle = {
   // margin: 4,
   fontSize: 12,
   padding: "8 2 0",
@@ -504,15 +502,15 @@ const tableCellHeaderStyle = {
   textAlign: "center",
 };
 
-const inlineStyle = { padding: "5px 10px", fontSize: 8.5 };
-const inlineOrder = { width: "6.5%", textAlign: "right" };
-const inlineCode = { width: "14%" };
-const inlineDescr = { width: "37.5%" };
-const inlineQTY = { width: "14%", textAlign: "right" };
-const inlinePrice = { width: "16%", textAlign: "right" };
-const inlineTotal = { width: "15%", textAlign: "right" };
+export const inlineStyle = { padding: "5px 10px", fontSize: 8.5 };
+export const inlineOrder = { width: "6.5%", textAlign: "right" };
+export const inlineCode = { width: "14%" };
+export const inlineDescr = { width: "37.5%" };
+export const inlineQTY = { width: "14%", textAlign: "right" };
+export const inlinePrice = { width: "16%", textAlign: "right" };
+export const inlineTotal = { width: "15%", textAlign: "right" };
 
-const tableCellStyle = {
+export const tableCellStyle = {
   fontSize: 8.5,
   width: "100%",
   flexGrow: 0,
@@ -522,25 +520,25 @@ const tableCellStyle = {
   padding: 8,
 };
 
-const image = {
+export const image = {
   marginVertical: 1,
   marginHorizontal: 15,
   backgroundColor: "#0033E6",
 };
 
-const subTableDisplay = {
+export const subTableDisplay = {
   margin: 4,
   display: "flex",
 };
 
-const viewerStyle = {
+export const viewerStyle = {
   display: "block",
   margin: "0 auto",
   width: "70vw",
   height: "100vh",
 };
 
-const contactStyle = {
+export const contactStyle = {
   fontSize: 9,
   width: "17%",
 };

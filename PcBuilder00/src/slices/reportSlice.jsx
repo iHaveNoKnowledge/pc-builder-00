@@ -2,7 +2,12 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   info: { setName: "", customerName: "", customerTel: "", sellerName: "", sellerTel: "" },
-
+  branch: {
+    code: "",
+    name: "",
+    address:
+      "อาคาร ศูนย์การค้า เดอะ พาลาเดียม เวิลด์ ช็อปปิง ชั้นที่ B1,B2,5 เลขที่ 555 ถนน ราชปรารภ แขวงมักกะสัน เขตราชเทวี กรุงเทพมหานคร 10400",
+  },
   sets: [],
 };
 
