@@ -67,15 +67,14 @@ const ReportDocument = () => {
     const newLength = text.length + count;
 
     return (
-      <View
-        style={{
-          flexDirection: "row",
-          flexWrap: "wrap",
-        }}
-      >
-        {text?.match(/\w+|\W+/g)?.map((seg, i) => {
+      <View>
+        {/* {text?.match(/\w+|\W+/g)?.map((seg, i) => {
           if (Number(seg) / Number(seg) === 1) {
-            return <Text key={i}>{Number(seg)}</Text>;
+            return (
+              <Text key={i} style={{ width: `${newLength}ch` }}>
+                {text}
+              </Text>
+            );
           } else {
             return (
               <Text key={i} style={{ width: `${newLength}ch` }}>
@@ -83,12 +82,17 @@ const ReportDocument = () => {
               </Text>
             );
           }
-        })}
+        })} */}
+        <Text style={{ width: `${newLength}ch` }}>
+          {text.toLocaleString().padEnd(newLength, " ")}
+        </Text>
       </View>
     );
   };
 
   const createMainTableHeader = () => {
+    const branchAddress =
+      "อาคาร ศูนย์การค้า เดอะ พาลาเดียม เวิลด์ ช็อปปิง ชั้นที่ B1,B2,5 เลขที่ 555 ถนน ราชปรารภ แขวงมักกะสัน เขตราชเทวี กรุงเทพมหานคร 10400";
     return (
       <View style={tableRowStyle} fixed>
         <View style={firstTableColHeaderStyle}>
@@ -98,18 +102,16 @@ const ReportDocument = () => {
         <View style={tableColHeaderStyle}>
           <Text style={tableCellHeaderStyle}>{WrapText("บริษัท ไอที ซิตี้ จำกัด (มหาชน)")}</Text>
           {/* คําแนะนํา อย่าใช้สระ ำ ให้ใช้เครื่องหมาย  ํ ยติภัง + สระ า เพราะ จำนวน index กับจำนวนตัวอักษรที่แสดงผลจะไม่ตรงกัน ทำให้แสดงผลไม่ครบ */}
-          <Text style={{ ...tableCellStyle}}>
-            {WrapText("ยายกินลำไยน้ำลายยายไหลย้อย มั้ง")}
-          </Text>
+          <Text style={tableCellStyle}>{WrapText(branchAddress)}</Text>
         </View>
 
         <View style={tableColHeaderStyle}>
           <View style={{ ...subTableDisplay, ...{ flexDirection: "row", marginTop: "8px" } }}>
-            <View style={{ fontSize: 10, width: "17%" }}>
+            <View style={contactStyle}>
               <Text>ลูกค้า</Text>
             </View>
             <View>
-              <Text style={{ fontSize: 10 }}>:</Text>
+              <Text style={{ fontSize: 9 }}>:</Text>
             </View>
             <View style={{ fontSize: 9, marginVertical: 1, marginLeft: 3, width: 130 }}>
               {/* <Text>รับตัวแปร Cus str ทำconditional display</Text> */}
@@ -118,7 +120,7 @@ const ReportDocument = () => {
           </View>
 
           <View style={{ ...subTableDisplay, flexDirection: "row" }}>
-            <View style={{ fontSize: 10, width: "17%" }}>
+            <View style={contactStyle}>
               <Text>โทร</Text>
             </View>
             <View>
@@ -137,11 +139,11 @@ const ReportDocument = () => {
           ></View>
 
           <View style={{ ...subTableDisplay, flexDirection: "row" }}>
-            <View style={{ fontSize: 10, width: "17%" }}>
+            <View style={contactStyle}>
               <Text>ผู้ขาย</Text>
             </View>
             <View>
-              <Text style={{ fontSize: 10 }}>:</Text>
+              <Text style={{ fontSize: 9 }}>:</Text>
             </View>
             <View style={{ fontSize: 9, marginVertical: 1, marginLeft: 3, width: 130 }}>
               {/* <Text>รับตัวแปร saler ทำconditional display </Text> */}
@@ -150,11 +152,11 @@ const ReportDocument = () => {
           </View>
 
           <View style={{ ...subTableDisplay, flexDirection: "row" }}>
-            <View style={{ fontSize: 10, width: "17%" }}>
+            <View style={contactStyle}>
               <Text>โทร</Text>
             </View>
             <View>
-              <Text style={{ fontSize: 10 }}>:</Text>
+              <Text style={{ fontSize: 9 }}>:</Text>
             </View>
             <View style={{ fontSize: 9, marginVertical: 1, marginLeft: 3, width: 130 }}>
               {/* <Text>รับตัวแปร custel str ทำconditional display</Text> */}
@@ -168,7 +170,7 @@ const ReportDocument = () => {
 
   const createTableRowIT = (rows) => {
     return (
-      <View style={tableRowStyle}>
+      <View>
         <View style={firstTableColStyle}>{createTableRowITDYN(rows)}</View>
       </View>
     );
@@ -261,20 +263,22 @@ const ReportDocument = () => {
                     </View>
                     <View style={{ ...inlineStyle, ...inlinePrice }}>
                       {/* <Text>{WrapText("9999")}</Text> */}
-                      <Text>{`${itemList[index + 1].srp.toLocaleString()}`}</Text>
+                      <Text>{`${itemList[index + 1].srp
+                        .toFixed(2)
+                        .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</Text>
                     </View>
                     <View style={{ ...inlineStyle, ...inlineTotal }}>
                       {/* <Text>{WrapText("99999")}</Text> */}
-                      <Text>{`${(
-                        itemList[index + 1].srp * itemList[index + 1].selectAmount
-                      ).toLocaleString()}`}</Text>
+                      <Text>{`${(itemList[index + 1].srp * itemList[index + 1].selectAmount)
+                        .toFixed(2)
+                        .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</Text>
                     </View>
                   </View>
                 </View>
               );
             })}
 
-            <View style={{ bordertop: "1px solid black" }}>
+            <View style={{ borderTop: "1px solid #000" }}>
               <View break={true} style={{ display: "flex", flexDirection: "row" }}>
                 <View style={{ ...inlineStyle, ...inlineOrder }}>
                   {/* <Text>{WrapText(`${2 + index}`)}</Text> */}
@@ -288,10 +292,10 @@ const ReportDocument = () => {
                 <View style={{ ...inlineStyle, ...inlineQTY }}>
                   {/* <Text>{WrapText("99")}</Text> */}
                 </View>
-                <View style={{ ...inlineStyle, ...inlinePrice }}>
+                <View style={{ ...inlineStyle, ...inlinePrice, borderBottom: "1px groove  #000" }}>
                   <Text>ราคารวม</Text>
                 </View>
-                <View style={{ ...inlineStyle, ...inlineTotal }}>
+                <View style={{ ...inlineStyle, ...inlineTotal, borderBottom: "1px groove  #000" }}>
                   <Text>
                     {itemList
                       .reduce((acc, item) => acc + item.srp * (100 / 107) * item.selectAmount, 0)
@@ -316,10 +320,16 @@ const ReportDocument = () => {
                 <View style={{ ...inlineStyle, ...inlineQTY }}>
                   {/* <Text>{WrapText("99")}</Text> */}
                 </View>
-                <View style={{ ...inlineStyle, ...inlinePrice }}>
-                  <Text>ภาษีมูลค่าเพิ่ม</Text>
+                <View
+                  style={{
+                    ...inlineStyle,
+                    ...inlinePrice,
+                    borderBottom: "1px groove  #000",
+                  }}
+                >
+                  <Text style={{}}>ภาษีมูลค่าเพิ่ม</Text>
                 </View>
-                <View style={{ ...inlineStyle, ...inlineTotal }}>
+                <View style={{ ...inlineStyle, ...inlineTotal, borderBottom: "1px groove  #000" }}>
                   <Text>
                     {itemList
                       .reduce(
@@ -348,10 +358,10 @@ const ReportDocument = () => {
                 <View style={{ ...inlineStyle, ...inlineQTY }}>
                   {/* <Text>{WrapText("99")}</Text> */}
                 </View>
-                <View style={{ ...inlineStyle, ...inlinePrice }}>
+                <View style={{ ...inlineStyle, ...inlinePrice, borderBottom: "1px groove  #000" }}>
                   <Text>ราคาสุทธิ</Text>
                 </View>
-                <View style={{ ...inlineStyle, ...inlineTotal }}>
+                <View style={{ ...inlineStyle, ...inlineTotal, borderBottom: "1px groove  #000" }}>
                   <Text>
                     {itemList
                       .reduce((acc, item) => acc + item.srp * item.selectAmount, 0)
@@ -402,7 +412,7 @@ const ReportDocument = () => {
 
       <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
         <AppBar sx={{ position: "relative", backgroundColor: "#42528A" }}>
-          <Toolbar>
+          <Toolbar style={{ minHeight: "1px !important" }}>
             <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
               Print Customer Report / สำหรับลูกค้า
             </Typography>
@@ -442,7 +452,7 @@ const tableRowStyle = {
 
 const firstTableColHeaderStyle = {
   // width: "28vh",
-  width: "100%",
+  width: "16vw",
   borderStyle: "solid",
   borderColor: "#000",
   borderBottomColor: "#000",
@@ -453,14 +463,14 @@ const firstTableColHeaderStyle = {
 };
 
 const tableColHeaderStyle = {
-  // width: "28vh",
-  width: "100%",
-  borderStyle: "solid",
-  borderColor: "#000",
-  borderBottomColor: "#000",
+  width: "36vw",
+  // width: "100%",
+  // borderStyle: "solid",
+  // borderColor: "#000",
+  // borderBottomColor: "#000",
   borderWidth: 1,
   borderLeftWidth: 0,
-  backgroundColor: "#bdbdbd",
+  // backgroundColor: "#bdbdbd",
   display: "flex",
   justifyContent: "center",
 };
@@ -489,27 +499,27 @@ const tableColStyle = {
 const tableCellHeaderStyle = {
   // margin: 4,
   fontSize: 12,
-  fontWeight: "bold",
-  width: 171,
-  fontFamily: "Chakra_Petch",
+  padding: "8 2 0",
+  width: "100%",
   textAlign: "center",
 };
 
-const inlineStyle = { padding: "10px", fontSize: 10 };
+const inlineStyle = { padding: "5px 10px", fontSize: 8.5 };
 const inlineOrder = { width: "6.5%", textAlign: "right" };
 const inlineCode = { width: "14%" };
 const inlineDescr = { width: "37.5%" };
 const inlineQTY = { width: "14%", textAlign: "right" };
 const inlinePrice = { width: "16%", textAlign: "right" };
-const inlineTotal = { width: "14%", textAlign: "right" };
+const inlineTotal = { width: "15%", textAlign: "right" };
 
 const tableCellStyle = {
-  margin: 5,
-  fontSize: 10,
-  // width: 160,
+  fontSize: 8.5,
+  width: "100%",
   flexGrow: 0,
   textAlign: "left",
   fontFamily: "Chakra_Petch",
+  whiteSpace: "normal",
+  padding: 8,
 };
 
 const image = {
@@ -527,7 +537,12 @@ const viewerStyle = {
   display: "block",
   margin: "0 auto",
   width: "70vw",
-  height: "90vh",
+  height: "100vh",
+};
+
+const contactStyle = {
+  fontSize: 9,
+  width: "17%",
 };
 
 export default ReportDocument;
