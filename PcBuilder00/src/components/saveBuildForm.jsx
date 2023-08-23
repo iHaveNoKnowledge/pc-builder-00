@@ -14,6 +14,7 @@ import { useUpdateDataMutation } from "../features/api/dataApiSlice";
 import { useGetSetsQuery } from "../features/api/dataApiSlice";
 import { ThemeProvider } from "@mui/material/styles";
 import { theme } from "./SetList";
+import PopupAlert from "./generalModules/PopupAlert";
 
 export default function SaveBuildBtn() {
   const partData = useSelector((state) => state.customize.partData);
@@ -161,6 +162,8 @@ export default function SaveBuildBtn() {
   const custDigitDisplay = custTelInput.length > 1 ? "digits" : "digit";
   const sellerDigitDisplay = sellerTelInput.length > 1 ? "digits" : "digit";
 
+  const [alertOpen, setAlertOpen] = useState(false);
+
   return (
     <ThemeProvider theme={theme}>
       <Button
@@ -174,6 +177,10 @@ export default function SaveBuildBtn() {
       >
         Save Set
       </Button>
+
+      <Dialog open={alertOpen} onClose={handleClose}>
+        <PopupAlert type="selected" />
+      </Dialog>
 
       <Dialog open={open} onClose={handleClose} style={{ zoom: "115%" }}>
         <DialogContent sx={{ width: "auto", minWidth: "400.927px" }}>

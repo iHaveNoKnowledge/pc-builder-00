@@ -405,7 +405,7 @@ const ReportDocument = () => {
       </Button>
 
       <Dialog open={alertOpen} onClose={handleClose}>
-        <PopupAlert />
+        <PopupAlert type="selected" />
       </Dialog>
 
       <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>

@@ -2,6 +2,7 @@ import React from "react";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 
+// options
 const AlertContent1 = () => {
   return (
     <>
@@ -11,12 +12,22 @@ const AlertContent1 = () => {
   );
 };
 
-export const PopupAlert = () => {
-  return (
-    <Alert severity="warning">
-      <AlertContent1 />
-    </Alert>
-  );
+//Selecter
+const selector = {
+  selected: <AlertContent1 />,
+};
+
+const displayComponents = (obj, propertyName) => {
+  if (obj.hasOwnProperty(propertyName)) {
+    return obj[propertyName];
+  } else {
+    return <>No alert type</>;
+  }
+};
+
+//Exporter
+export const PopupAlert = ({ type }) => {
+  return <Alert severity="warning">{displayComponents(selector, type)}</Alert>;
 };
 
 export default PopupAlert;
