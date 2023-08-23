@@ -63,8 +63,8 @@ export default function SaveBuildBtn() {
         setName: setNameInput,
         customerName: "",
         customerTel: "",
-        sellerName: "",
-        sellerTel: "",
+        sellerName: sellerNameInput,
+        sellerTel: sellerTelInput,
       };
     }
 
@@ -176,7 +176,7 @@ export default function SaveBuildBtn() {
       </Button>
 
       <Dialog open={open} onClose={handleClose} style={{ zoom: "115%" }}>
-        <DialogContent sx={{ width: "auto" }}>
+        <DialogContent sx={{ width: "auto", minWidth: "400.927px" }}>
           <Box mb={1}>
             <DialogContentText
               sx={{
@@ -212,61 +212,65 @@ export default function SaveBuildBtn() {
                     name="contactInfoBool"
                   />
                 }
-                label="ข้อมูลการติดต่อ"
+                label="ข้อมูลลูกค้า"
               />
             </FormGroup>
           </Box>
+
           <Box sx={{ position: "relative" }}>
-            <Box className={!checkedItem.contactInfoBool ? "disableElement" : ""}></Box>
+            {/* <Box className={!checkedItem.contactInfoBool ? "disableElement" : ""}></Box> */}
             <>
               <DialogContent
                 sx={{ borderLeft: "10px solid #0033E6", backgroundColor: "#4141", zIndex: "-1" }}
               >
-                <Box
-                  sx={{
-                    backgroundColor: "#414151",
-                    fontSize: 18,
-                    color: "#e6e6e6",
-                    px: "10px",
-                    pt: "5px",
-                  }}
-                >
-                  ข้อมูลติดต่อลูกค้า
-                </Box>
-                <Box mb={2}>
-                  <TextField
-                    autoFocus
-                    multiline
-                    maxRows={4}
-                    margin="dense"
-                    id="custNameInput"
-                    label="ชื่อ"
-                    fullWidth
-                    variant="standard"
-                    value={custNameInput}
-                    onChange={handleChange}
-                  />
-                  <TextField
-                    margin="dense"
-                    id="cusTelInput"
-                    label={
-                      <Box>
-                        เบอร์ติดต่อ{" "}
-                        {custTelInput.length !== 0 ? (
-                          <>
-                            (Current {custDigitDisplay}: {custTelInput.length})
-                          </>
-                        ) : (
-                          ""
-                        )}
-                      </Box>
-                    }
-                    fullWidth
-                    variant="standard"
-                    value={custTelInput}
-                    onChange={handleChange}
-                  />
-                </Box>
+                {checkedItem.contactInfoBool && (
+                  <>
+                    <Box
+                      sx={{
+                        backgroundColor: "#414151",
+                        fontSize: 18,
+                        color: "#e6e6e6",
+                        px: "10px",
+                        pt: "5px",
+                      }}
+                    >
+                      ข้อมูลติดต่อลูกค้า
+                    </Box>
+                    <Box mb={2}>
+                      <TextField
+                        multiline
+                        maxRows={4}
+                        margin="dense"
+                        id="custNameInput"
+                        label="ชื่อ"
+                        fullWidth
+                        variant="standard"
+                        value={custNameInput}
+                        onChange={handleChange}
+                      />
+                      <TextField
+                        margin="dense"
+                        id="cusTelInput"
+                        label={
+                          <Box>
+                            เบอร์ติดต่อ{" "}
+                            {custTelInput.length !== 0 ? (
+                              <>
+                                (Current {custDigitDisplay}: {custTelInput.length})
+                              </>
+                            ) : (
+                              ""
+                            )}
+                          </Box>
+                        }
+                        fullWidth
+                        variant="standard"
+                        value={custTelInput}
+                        onChange={handleChange}
+                      />
+                    </Box>
+                  </>
+                )}
 
                 <Box>
                   <DialogContentText
@@ -278,7 +282,7 @@ export default function SaveBuildBtn() {
                       pt: "5px",
                     }}
                   >
-                    ผู้ขาย
+                    ข้อมูลผู้ขาย
                   </DialogContentText>
 
                   <TextField
