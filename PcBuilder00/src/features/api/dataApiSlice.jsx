@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-// const baseUrl = "http://192.168.0.17:49152/api";
-const baseUrl = "http://192.168.0.25:9000/api";
+const baseUrl = "http://115.31.167.30:49152/api";
+// const baseUrl = "http://192.168.0.25:9000/api";
 
 // Gets and a Delete Fetch จาก SQL server 192.168
 export const apiSliceDb = createApi({
