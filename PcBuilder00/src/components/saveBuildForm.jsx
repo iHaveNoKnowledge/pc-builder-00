@@ -17,12 +17,11 @@ import { theme } from "./SetList";
 import PopupAlert from "./generalModules/PopupAlert";
 
 export default function SaveBuildBtn() {
-  const partData = useSelector((state) => state.customize.partData);
+  const { partData, itemsList } = useSelector((state) => state.customize);
   const [updateData, { isLoading, isError, error }] = useUpdateDataMutation();
 
   const dispatch = useDispatch();
 
-  const [open, setOpen] = useState(false);
   const [inputData, setInputData] = useState({});
 
   //** conditional Renderring
@@ -37,14 +36,25 @@ export default function SaveBuildBtn() {
     });
   };
 
+  //* form //////////////////////////////////////////////////////////////////////////////////////
+  const [open, setOpen] = useState(false);
+  const [alertOpen, setAlertOpen] = useState(false);
   //** onclick เปิด Form ////////////////////////////////////////////////////////////////////
   const handleClickOpen = () => {
-    setOpen(true);
+    if (!itemsList.length && !alertOpen) {
+      setAlertOpen(true);
+    } else {
+      setOpen(true);
+    }
   };
 
   //** onclick ปิด Form ////////////////////////////////////////////////////////////////////
   const handleClose = () => {
-    setOpen(false);
+    if (alertOpen === true) {
+      setAlertOpen(false);
+    } else {
+      setOpen(false);
+    }
   };
   //** onclick สำหรับกด save SPEC ////////////////////////////////////////////////////////////////////
   const { refetch: setsRefetch } = useGetSetsQuery();
@@ -102,7 +112,7 @@ export default function SaveBuildBtn() {
     setCustNameInput("");
     setCustTelInput("");
 
-    handleClose();
+    setOpen(false);
   };
 
   //** SetName Input ไม่ต้องมี valid
@@ -161,8 +171,6 @@ export default function SaveBuildBtn() {
 
   const custDigitDisplay = custTelInput.length > 1 ? "digits" : "digit";
   const sellerDigitDisplay = sellerTelInput.length > 1 ? "digits" : "digit";
-
-  const [alertOpen, setAlertOpen] = useState(false);
 
   return (
     <ThemeProvider theme={theme}>

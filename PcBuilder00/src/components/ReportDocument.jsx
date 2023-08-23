@@ -26,21 +26,15 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 const ReportDocument = () => {
   const partDataReport2 = useSelector((state) => state.customize.partData);
+  const { partData, itemsList } = useSelector((state) => state.customize);
   const { info, branch } = useSelector((state) => state.report);
 
-  let itemList = [];
-
-  //ใช้ partDataReport2 เพราะมัน update realtime ถ้าใช้ partDataReport มันจะอัพเดทเฉพาะตอนกดเซฟ
-  partDataReport2.map((item1) => {
-    item1.listItems.map((item2) => {
-      itemList = [...itemList, item2];
-    });
-  });
+  ////* Form //////////////////////////////////////////////////////////////////////////////////////////////////////
   const [alertOpen, setAlertOpen] = React.useState(false);
   const [open, setOpen] = React.useState(false);
   //* onclick เปิด Form ////////////////////////////////////////////////////////////////////
   const handleClickOpen = () => {
-    if (!itemList.length && !alertOpen) {
+    if (!itemsList.length && !alertOpen) {
       setAlertOpen(true);
     } else {
       setOpen(true);
@@ -201,8 +195,7 @@ const ReportDocument = () => {
   };
 
   const createTableRowITDYN = (itemArr) => {
-    console.log("itemList", itemList);
-    const itemsAmt = itemList.length;
+    const itemsAmt = itemsList.length;
     const formattedNumber = (itemsAmt - (itemsAmt - 1)).toString().padStart(6, "0");
     switch (true) {
       case itemsAmt >= 1:
@@ -216,24 +209,23 @@ const ReportDocument = () => {
                   <Text>{WrapText("1")}</Text>
                 </View>
                 <View style={{ ...inlineStyle, ...inlineCode }}>
-                  {/* <Text>{`XXX-${formattedNumber}`}</Text> */}
-                  <Text>{`${itemList[0].code}`}</Text>
+                  <Text>{`${itemsList[0].code}`}</Text>
                 </View>
                 <View style={{ ...inlineStyle, ...inlineDescr }}>
-                  {/* <Text>{WrapText("loremfa-rotate-180")}</Text> */}
-                  <Text>{`${itemList[0].productDescription}`}</Text>
+                  <Text>{`${itemsList[0].productDescription}`}</Text>
                 </View>
                 <View style={{ ...inlineStyle, ...inlineQTY }}>
-                  {/* <Text>{WrapText("99")}</Text> */}
-                  <Text>{`${itemList[0].selectAmount.toLocaleString()}`}</Text>
+                  <Text>{`${itemsList[0].selectAmount.toLocaleString()}`}</Text>
                 </View>
                 <View style={{ ...inlineStyle, ...inlinePrice }}>
-                  {/* <Text>{WrapText("9999")}</Text> */}
-                  <Text>{`${itemList[0].srp.toLocaleString()}`}</Text>
+                  <Text>{`${itemsList[0].srp
+                    .toFixed(2)
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</Text>
                 </View>
                 <View style={{ ...inlineStyle, ...inlineTotal }}>
-                  {/* <Text>{WrapText("99999")}</Text> */}
-                  <Text>{`${(itemList[0].srp * itemList[0].selectAmount).toLocaleString()}`}</Text>
+                  <Text>{`${(itemsList[0].srp * itemsList[0].selectAmount)
+                    .toFixed(2)
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</Text>
                 </View>
               </View>
             </View>
@@ -244,30 +236,24 @@ const ReportDocument = () => {
                 <View key={index}>
                   <View break={true} style={{ display: "flex", flexDirection: "row" }}>
                     <View style={{ ...inlineStyle, ...inlineOrder }}>
-                      {/* <Text>{WrapText(`${2 + index}`)}</Text> */}
                       <Text>{WrapText(`${2 + index}`)}</Text>
                     </View>
                     <View style={{ ...inlineStyle, ...inlineCode }}>
-                      {/* <Text>{`XXX-${formattedNumberx}`}</Text> */}
-                      <Text>{`${itemList[index + 1].code}`}</Text>
+                      <Text>{`${itemsList[index + 1].code}`}</Text>
                     </View>
                     <View style={{ ...inlineStyle, ...inlineDescr }}>
-                      {/* <Text>{WrapText("loremfa-rotate-180asdasd")}</Text> */}
-                      <Text>{`${itemList[index + 1].productDescription}`}</Text>
+                      <Text>{`${itemsList[index + 1].productDescription}`}</Text>
                     </View>
                     <View style={{ ...inlineStyle, ...inlineQTY }}>
-                      {/* <Text>{WrapText("99")}</Text> */}
-                      <Text>{`${itemList[index + 1].selectAmount.toLocaleString()}`}</Text>
+                      <Text>{`${itemsList[index + 1].selectAmount.toLocaleString()}`}</Text>
                     </View>
                     <View style={{ ...inlineStyle, ...inlinePrice }}>
-                      {/* <Text>{WrapText("9999")}</Text> */}
-                      <Text>{`${itemList[index + 1].srp
+                      <Text>{`${itemsList[index + 1].srp
                         .toFixed(2)
                         .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</Text>
                     </View>
                     <View style={{ ...inlineStyle, ...inlineTotal }}>
-                      {/* <Text>{WrapText("99999")}</Text> */}
-                      <Text>{`${(itemList[index + 1].srp * itemList[index + 1].selectAmount)
+                      <Text>{`${(itemsList[index + 1].srp * itemsList[index + 1].selectAmount)
                         .toFixed(2)
                         .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</Text>
                     </View>
@@ -278,24 +264,16 @@ const ReportDocument = () => {
 
             <View style={{ borderTop: "1px solid #000" }}>
               <View break={true} style={{ display: "flex", flexDirection: "row" }}>
-                <View style={{ ...inlineStyle, ...inlineOrder }}>
-                  {/* <Text>{WrapText(`${2 + index}`)}</Text> */}
-                </View>
-                <View style={{ ...inlineStyle, ...inlineCode }}>
-                  {/* <Text>{`XXX-${formattedNumberx}`}</Text> */}
-                </View>
-                <View style={{ ...inlineStyle, ...inlineDescr }}>
-                  {/* <Text>{WrapText("loremfa-rotate-180asdasd")}</Text> */}
-                </View>
-                <View style={{ ...inlineStyle, ...inlineQTY }}>
-                  {/* <Text>{WrapText("99")}</Text> */}
-                </View>
+                <View style={{ ...inlineStyle, ...inlineOrder }}></View>
+                <View style={{ ...inlineStyle, ...inlineCode }}></View>
+                <View style={{ ...inlineStyle, ...inlineDescr }}></View>
+                <View style={{ ...inlineStyle, ...inlineQTY }}></View>
                 <View style={{ ...inlineStyle, ...inlinePrice, borderBottom: "1px groove  #000" }}>
                   <Text>ราคารวม</Text>
                 </View>
                 <View style={{ ...inlineStyle, ...inlineTotal, borderBottom: "1px groove  #000" }}>
                   <Text>
-                    {itemList
+                    {itemsList
                       .reduce((acc, item) => acc + item.srp * (100 / 107) * item.selectAmount, 0)
                       .toFixed(2)
                       .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
@@ -306,18 +284,10 @@ const ReportDocument = () => {
 
             <View>
               <View break={true} style={{ display: "flex", flexDirection: "row" }}>
-                <View style={{ ...inlineStyle, ...inlineOrder }}>
-                  {/* <Text>{WrapText(`${2 + index}`)}</Text> */}
-                </View>
-                <View style={{ ...inlineStyle, ...inlineCode }}>
-                  {/* <Text>{`XXX-${formattedNumberx}`}</Text> */}
-                </View>
-                <View style={{ ...inlineStyle, ...inlineDescr }}>
-                  {/* <Text>{WrapText("loremfa-rotate-180asdasd")}</Text> */}
-                </View>
-                <View style={{ ...inlineStyle, ...inlineQTY }}>
-                  {/* <Text>{WrapText("99")}</Text> */}
-                </View>
+                <View style={{ ...inlineStyle, ...inlineOrder }}></View>
+                <View style={{ ...inlineStyle, ...inlineCode }}></View>
+                <View style={{ ...inlineStyle, ...inlineDescr }}></View>
+                <View style={{ ...inlineStyle, ...inlineQTY }}></View>
                 <View
                   style={{
                     ...inlineStyle,
@@ -329,7 +299,7 @@ const ReportDocument = () => {
                 </View>
                 <View style={{ ...inlineStyle, ...inlineTotal, borderBottom: "1px groove  #000" }}>
                   <Text>
-                    {itemList
+                    {itemsList
                       .reduce(
                         (acc, item) =>
                           acc + (item.srp - item.srp * (100 / 107)) * item.selectAmount,
@@ -344,24 +314,16 @@ const ReportDocument = () => {
 
             <View>
               <View break={true} style={{ display: "flex", flexDirection: "row" }}>
-                <View style={{ ...inlineStyle, ...inlineOrder }}>
-                  {/* <Text>{WrapText(`${2 + index}`)}</Text> */}
-                </View>
-                <View style={{ ...inlineStyle, ...inlineCode }}>
-                  {/* <Text>{`XXX-${formattedNumberx}`}</Text> */}
-                </View>
-                <View style={{ ...inlineStyle, ...inlineDescr }}>
-                  {/* <Text>{WrapText("loremfa-rotate-180asdasd")}</Text> */}
-                </View>
-                <View style={{ ...inlineStyle, ...inlineQTY }}>
-                  {/* <Text>{WrapText("99")}</Text> */}
-                </View>
+                <View style={{ ...inlineStyle, ...inlineOrder }}></View>
+                <View style={{ ...inlineStyle, ...inlineCode }}></View>
+                <View style={{ ...inlineStyle, ...inlineDescr }}></View>
+                <View style={{ ...inlineStyle, ...inlineQTY }}></View>
                 <View style={{ ...inlineStyle, ...inlinePrice, borderBottom: "1px groove  #000" }}>
                   <Text>ราคาสุทธิ</Text>
                 </View>
                 <View style={{ ...inlineStyle, ...inlineTotal, borderBottom: "1px groove  #000" }}>
                   <Text>
-                    {itemList
+                    {itemsList
                       .reduce((acc, item) => acc + item.srp * item.selectAmount, 0)
                       .toFixed(2)
                       .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}

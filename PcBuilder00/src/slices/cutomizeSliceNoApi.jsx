@@ -132,7 +132,7 @@ const initialState = {
       listItems: [],
     },
   ],
-
+  itemsList: [],
   summations: { sumAmount: 0, sum_SRP: 0, sumDiscount: 0, sumPrice: 0 },
 };
 
@@ -221,6 +221,7 @@ export const customizeSlice = createSlice({
       }
 
       state.partData[categoryIndex].typeAmount = totalAmount; // Assign the total amount to the typeAmount property of the RAM object
+      state.itemsList = state.partData.flatMap((part) => part.listItems.map((item) => item));
     },
 
     removeProduct: (state, action) => {
@@ -249,6 +250,7 @@ export const customizeSlice = createSlice({
         state.partData[index].typeAmount = totalAmount; // Assign the total amount to the typeAmount property of the RAM object
         // state.partData[index] = initialState.partData[index];
       }
+      state.itemsList = state.partData.flatMap((part) => part.listItems.map((item) => item));
     },
 
     incAmount: (state, action) => {
@@ -310,6 +312,7 @@ export const customizeSlice = createSlice({
 
     resetCustomized: (state, action) => {
       state.partData = initialState.partData;
+      state.itemsList = state.partData.flatMap((part) => part.listItems.map((item) => item));
     },
 
     setTypeAmount: (state, action) => {

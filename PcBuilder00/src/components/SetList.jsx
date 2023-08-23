@@ -101,7 +101,7 @@ export default function SetList() {
 
   const [openSubTables, setOpenSubTables] = useState([]);
 
-  //* เพิ่มความเนียนของ transition
+  //* เพิ่มความเนียนของ subtable transition
   const [isAnimating, setIsAnimating] = useState(false);
   const isTransition = { transition: "none" };
 
@@ -206,7 +206,13 @@ export default function SetList() {
     setOpentAlert(true);
     getSetsData();
     setDeleteSet((prev) => {
-      return { ...prev, setName: sortedData[setIdx].setName, id };
+      return {
+        ...prev,
+        setName: sortedData[setIdx].setName
+          ? sortedData[setIdx].setName
+          : sortedData[setIdx].DefaultName,
+        id,
+      };
     });
   };
 
@@ -390,7 +396,7 @@ export default function SetList() {
                           </TableRow>
                           {/* subtableZone */}
                           <TableRow>
-                            <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+                            <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={8}>
                               <Collapse
                                 in={isOpen}
                                 timeout="auto"
@@ -431,12 +437,15 @@ export default function SetList() {
                                           item2.listItems.map((item3, index3) => {
                                             i += 1;
                                             return (
-                                              <TableRow key={index3}>
+                                              <TableRow key={index3} sx={{ height: "515" }}>
                                                 <TableCell
                                                   align="center"
                                                   component="th"
                                                   scope="row"
-                                                  sx={{ width: 38, paddingInline: 1 }}
+                                                  sx={{
+                                                    width: 38,
+                                                    paddingInline: 1,
+                                                  }}
                                                 >
                                                   {i}
                                                 </TableCell>
@@ -519,7 +528,7 @@ export default function SetList() {
                           size="large"
                           variant="contained"
                         >
-                          ช้าก่อน
+                          ยกเลิก
                         </Button>
                         <Button
                           onClick={confirmDelete}
@@ -528,7 +537,7 @@ export default function SetList() {
                           variant="contained"
                           color="error"
                         >
-                          ลบเลย
+                          ยืนยัน
                         </Button>
                       </DialogActions>
                     </Dialog>
