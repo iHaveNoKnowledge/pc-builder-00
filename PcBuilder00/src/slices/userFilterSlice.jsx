@@ -4,11 +4,11 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   textSearch: "",
   selectedBranches: [],
-  selectedOption: {
-    CPU: { brand: "", model: "", socket: "" },
-    Mainboard: { formFactor: "", brand: "", socket: "", chipset: "", slot: 0 },
-    RAM: { brand: "", type: "", count: 0 },
-  },
+  // selectedOption: {
+  //   CPU: { brand: "", model: "", socket: "" },
+  //   Mainboard: { formFactor: "", brand: "", socket: "", chipset: "", slot: 0 },
+  //   RAM: { brand: "", type: "", count: 0 },
+  // },
   filterOptions: null,
   expression: ` (!selectedOpts.brand || product.brand === selectedOpts.brand) &&
   (!selectedOpts.model || product.model === selectedOpts.model) &&
@@ -17,7 +17,7 @@ const initialState = {
     {
       name: "cpu",
       filters: [
-        { name: "compatible", displayName: "Brand", choices: [] },
+        { name: "brand", displayName: "Brand", choices: [] },
         { name: "model", displayName: "Model", choices: [] },
         { name: "socket", displayName: "Socket", choices: [] },
       ],
@@ -27,7 +27,7 @@ const initialState = {
       name: "mb",
       filters: [
         { name: "formFactor", displayName: "FormFactor", choices: [] },
-        { name: "compatible", displayName: "Brand", choices: [] },
+        { name: "brand", displayName: "Brand", choices: [] },
         { name: "socket", displayName: "Socket", choices: [] },
         { name: "chipset", displayName: "Chipset", choices: [] },
         { name: "slot", displayName: "Slot", choices: [] },
@@ -37,7 +37,7 @@ const initialState = {
     {
       name: "ram",
       filters: [
-        { name: "compatible", displayName: "Brand", choices: [] },
+        { name: "brand", displayName: "Brand", choices: [] },
         { name: "typeRam", displayName: "Type", choices: [] },
         { name: "countItem", displayName: "Count", choices: [] },
       ],
@@ -100,12 +100,12 @@ export const filterSlice = createSlice({
       state.filterOptions = null;
       ///สร้าง options ให้ dropdown
       if (checkCategory(category) === "cpu") {
-        const cpuBrandOptions = [...new Set(categorizedData?.map((item) => item.compatible))];
+        const cpuBrandOptions = [...new Set(categorizedData?.map((item) => item.brand))];
         const cpuModelOptions = [...new Set(categorizedData?.map((item) => item.model))];
         const cpuSocketOptions = [...new Set(categorizedData?.map((item) => item.socket))];
 
         state.filterOptions = [
-          { filterName: "brand", value: cpuBrandOptions.sort() },
+          { filterName: "compatible", value: cpuBrandOptions.sort() },
           { filterName: "model", value: cpuModelOptions.sort() },
           { filterName: "socket", value: cpuSocketOptions.sort() },
         ];
@@ -122,7 +122,7 @@ export const filterSlice = createSlice({
         ///สร้าง options ให้ dropdown
         state.filterOptions = [
           { filterName: "formFactor", value: mbFormFactorOpts.sort() },
-          { filterName: "brand", value: mbBrandOpts.sort() },
+          { filterName: "compatible", value: mbBrandOpts.sort() },
           { filterName: "socket", value: mbSocketOpts.sort() },
           { filterName: "chipset", value: mbChipsetOpts.sort() },
           { filterName: "slot", value: Number(mbSlotOpts.sort()) },

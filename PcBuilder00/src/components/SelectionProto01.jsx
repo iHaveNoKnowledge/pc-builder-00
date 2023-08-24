@@ -220,7 +220,8 @@ function PostCard({ items, totalRows }) {
       setCurPageNum(1);
       dispatch(setDefault());
     }
-  }, [category, parts, products]);
+  }, [category, products]);
+  // }, [category, parts, products]); ถ้าใส่ parts ไว้เวลาเปลี่ยนแปลงจำนวนสินค้ามันจะ fetch เรื่อยๆ
 
   //* imgLoading
   const [isLoading, setIsLoading] = useState(true);

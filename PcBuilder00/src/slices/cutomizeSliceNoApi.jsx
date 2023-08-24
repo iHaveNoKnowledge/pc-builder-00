@@ -288,7 +288,6 @@ export const customizeSlice = createSlice({
     },
 
     decAmount: (state, action) => {
-      console.log("decAmount ใน store ทำงาน");
       const index = state.partData.findIndex(
         (item) => item.category === action.payload.category.toLowerCase().replace(" ", "")
       );
@@ -331,8 +330,8 @@ export const customizeSlice = createSlice({
     //Sub Action (ใช้ ร่วมกับ action หลัก)----------------------------------
     //actionนี้ถูกใช้หลังจากเช็คว่าไอเท็มที่แอดมา เป็น mainboard หรือไม่ ถ้ามีให้ใช้ action
     setMax: (state, action) => {
-      const index = state.partData.findIndex((item) => item.category === "RAM");
-      console.log("setMaxทำงาน: ", index);
+      const index = state.partData.findIndex((item) => item.category === "ram");
+      console.log("setMaxทำงาน: ", index, "Payload:", action.payload);
 
       if (index !== -1) {
         if (action.payload) {
@@ -345,6 +344,7 @@ export const customizeSlice = createSlice({
             action.payload
           );
         } else {
+          console.log("ไม่มี Payload");
           state.partData[index].typeMax = initialState.partData[index].typeMax;
           if (state.partData[1].listItems[0]) {
             //มีเมนบอร์ดป่าว?
