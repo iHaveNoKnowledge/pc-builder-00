@@ -112,7 +112,7 @@ export default function SetList() {
     if (searchTxt.current.value.length > 0) {
       const txt = searchTxt.current.value;
       const searchResult = sortedData.filter((item) => item.setName.includes(txt));
-      console.log("กดsearch แล้วได้ไรมา", searchResult);
+      
       setSortedData(searchResult);
     } else {
       setSortedData(sets?.updatedRecordset);
@@ -166,11 +166,11 @@ export default function SetList() {
     const arrIdx = (curPageNum - 1) * 10 + index1;
     dispatch(resetCustomized());
     const { setName, customerName, customerTel, sellerName, sellerTel } = sortedData[arrIdx];
-    console.log("กดเลือกไรมา", sortedData[arrIdx]);
+    
     const itemsSet = sortedData[arrIdx].partData.flatMap((category) =>
       category.listItems.map((item) => item)
     );
-    console.log("itemsSet: ", itemsSet);
+    
     const itemsSetID = itemsSet.map((item) => item.id);
     const amountPerItem = itemsSet.map((item) => item.selectAmount);
     const itemsToAdd = posts
@@ -192,7 +192,7 @@ export default function SetList() {
   const [idDelete, setIdDelete] = useState();
   const confirmDelete = (id) => {
     setOpentAlert(false);
-    console.log("ลบแล้วเรียบร้อย: ", idDelete);
+    
     deleteResource(idDelete);
   };
 
@@ -328,7 +328,7 @@ export default function SetList() {
                               const updatedOpenSubTables = [...openSubTables];
                               updatedOpenSubTables[index] = !isOpen;
                               setIsAnimating(false);
-                              console.log("isOpenคือไร:", isOpen);
+                              
                               setOpenSubTables(updatedOpenSubTables);
                             }}
                             hover

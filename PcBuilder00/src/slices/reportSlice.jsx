@@ -26,7 +26,7 @@ export const reportSlice = createSlice({
 
     saveSet: (state, action) => {
       const { updatedInputData, partData } = action.payload;
-      console.log("กด save แล้วได้ไรมา", JSON.stringify(updatedInputData), partData);
+      
       state.info = updatedInputData;
       state.partData = partData;
     },

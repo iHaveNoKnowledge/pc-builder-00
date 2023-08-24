@@ -48,14 +48,14 @@ const UserFilter = () => {
 
   //*  handleFunctions
   const handleSearch = (e) => {
-    console.log("ค้นห่าสินค้า", e.target);
+  
     e.preventDefault();
   };
 
   const handleChangeOption = (e, currentCategory, keyName) => {
     const value = e.target.value;
     const test = value == Number(value);
-    console.log("ตรวจType:", value, ":", typeof value, "ลบกันได้ไหม", test);
+  
     dispatch(setSelectedValuesCopy({ value, currentCategory, keyName }));
     dispatch(setDefault());
   };
@@ -96,6 +96,7 @@ const UserFilter = () => {
                 value={query}
                 onChange={(event) => {
                   setQuery(event.target.value);
+                
                 }}
                 label={`Product ${categoryDisplay}`}
                 InputProps={{
@@ -137,10 +138,11 @@ const UserFilter = () => {
               </Box>
             </form>
           </Box>
+
           {/* เอาไว้ดูค่าใน state สำหรับ dev
-          <Box>{JSON.stringify(filtersSet[0].selectedOptionState)}</Box>
-          <Box>{JSON.stringify(filtersSet[1].selectedOptionState)}</Box>
-          <Box>{JSON.stringify(filtersSet[2].selectedOptionState)}</Box> */}
+      <Box>{JSON.stringify(filtersSet[0].selectedOptionState)}</Box>
+      <Box>{JSON.stringify(filtersSet[1].selectedOptionState)}</Box>
+      <Box>{JSON.stringify(filtersSet[2].selectedOptionState)}</Box> */}
           <Box>
             <Grid
               sx={{
@@ -156,7 +158,6 @@ const UserFilter = () => {
               {isFiltContained ? (
                 <>
                   {filtersSet.map((item, index) => {
-                    console.log("filtersSet:", filtersSet);
                     if (item.name === currentCategory.toLowerCase()) {
                       return (
                         <React.Fragment key={index}>

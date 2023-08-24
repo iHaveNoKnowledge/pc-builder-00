@@ -24,7 +24,7 @@ import { changeCategory } from "../slices/categorySlice";
 function PostCard({ items, totalRows }) {
   //* useState!!!!!!!!!!!!!!!!!!!
   const [curItem, setCurItem] = useState(items);
-  console.log("curItemใช้ได้ยัง :", curItem);
+  
   //* dispatchZone!!!!!!!!!
   const dispatch = useDispatch();
 
@@ -117,7 +117,7 @@ function PostCard({ items, totalRows }) {
     if (socket_CPU === "" && typeRAM_RAM === "") {
       return item.category.toLowerCase().replace(" ", "") === "mb";
     } else if (socket_CPU === "" && typeRAM_RAM !== "") {
-      console.log(`CPUยังไม่เลือก แต่เลือก RAM`);
+      
       return item.category.toLowerCase().replace(" ", "") === "mb" && item.typeRam === typeRAM_RAM;
     } else if (socket_CPU !== "" && typeRAM_RAM === "") {
       return item.category.toLowerCase().replace(" ", "") === "mb" && item.socket === socket_CPU;
@@ -149,11 +149,11 @@ function PostCard({ items, totalRows }) {
 
   //* นำ display ทั้งหมดที่มีการกรองและไม่มีการกรอง มารวมกัน
   const combinedProduct = unconditionProduct.concat(CPU_display, mainBoard_display, RAM_display);
-  console.log("RAM_display:", RAM_display);
-  console.log("combinedProduct:", combinedProduct);
+  
+  
 
   //* นำ displayed ทั้งหมดมา filter เฉพาะ ประเภทที่ user เลือก
-  console.log("combinedProduct[0].category:", combinedProduct, category);
+  
   const showProduct = combinedProduct.filter(
     (item) => item.category.toLowerCase().replace(" ", "") === category
   );
@@ -173,7 +173,7 @@ function PostCard({ items, totalRows }) {
       QTY: sku.QTY.filter((_, index) => selectedBranches.includes(sku.BRANCH_CODE[index])),
     }));
 
-  console.log("BranchFiltered:", filteredSKUs);
+  
 
   //* นำ flter มา filter showproduct
   const filterProducts = (products, selectedOpts, expression) => {
@@ -233,7 +233,7 @@ function PostCard({ items, totalRows }) {
   const [isOpen, setIsOpen] = useState(false);
   const [stockByBranchs, setstockByBranchs] = useState();
   const togglePopup = (e, index) => {
-    console.log("เลข index:", productPaginated[index]);
+    
     setstockByBranchs(productPaginated[index]);
     setIsOpen(!isOpen);
     document.body.style.overflow = isOpen ? "auto" : "hidden";
@@ -483,7 +483,7 @@ function SelectionProto01() {
   //** กรณีกำลังโหลด
   if (loading) {
     ///* ให้เก็บหน้า html ไว้ใน cardContent ดังนี้เอาไว้ return ภายหลัง
-    console.log("Loading....");
+    
     cardContent = (
       <div className="d-flex justify-content-center">
         <div className="spinner-border" role="status">
@@ -493,14 +493,14 @@ function SelectionProto01() {
     );
     //** กรณีโหลดสำเร็จ
   } else if (products && !error && branches) {
-    console.log("data เป็นไง", products, "postsได้ยัง: ", products);
+    
 
     cardContent = <PostCard items={products} totalRows={totalRows} />;
 
     //** กรณีError
   } else if (error) {
     ///* cardContent เก็บ div ก้อนนึง ทำหน้าที่โชว alert
-    console.log("error:", error);
+    
     cardContent = (
       <div>
         <Stack sx={{ width: "100%" }} spacing={2}>

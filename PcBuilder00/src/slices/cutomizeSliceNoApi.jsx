@@ -146,8 +146,6 @@ export const customizeSlice = createSlice({
         (item) => item.category === action.payload.category.toLowerCase().replace(" ", "")
       );
 
-      console.log("ใน slice", action.payload);
-
       //* เก็บค่าใหม่ที่รับเข้ามาดองไว้ใน object ก่อน
       const newArray2 = { ...action.payload };
 
@@ -161,11 +159,9 @@ export const customizeSlice = createSlice({
       newArray2["selectAmount"] = newArray2["selectAmount"] > 1 ? newArray2["selectAmount"] : 1;
       newArray2["category"] = newArray2["category"].toLowerCase().replace(" ", "");
       newArray2["countItem"] = newArray2["countItem"] ? newArray2["countItem"] : 1;
-      console.log("newArray2: ", newArray2);
 
       //* เช็คสมาชิกใหม่ว่า load เท่าไหร่ เนื่องจากมี max capa ทำให้ต้องดู load ว่าเกิน max capaหรือไม่
       const typeMaxConsumtion = newArray2.selectAmount * newArray2.countItem;
-      console.log("ค่าโหลดของสินค้าที่ Add เท่าไหร่: ", typeMaxConsumtion);
 
       if (categoryIndex !== -1) {
         const currentStateType = state.partData[categoryIndex]; ///currentStateType จะเป็นการเลือก สมาชิกที่ filter category มาแล้ว
@@ -184,29 +180,21 @@ export const customizeSlice = createSlice({
               currentStateType.listItems[0] = newArray2;
             } else {
               if (currentStateType.typeAmount + typeMaxConsumtion <= currentStateType.typeMax) {
-                console.log("สินค้ายังไม่เกินกว่ากำหนด");
                 if (isFoundItem) {
-                  console.log("เจอซ้ำ", isFoundItem.id);
                   isFoundItem.selectAmount += 1;
                 } else {
-                  console.log("ไม่เจอ", isFoundItem);
                   currentStateType.listItems.push(newArray2);
                 }
               } else {
-                console.log("สินค้าเกินจำนวนที่กำหนด");
               }
-              console.log("หน้าตาเป็นไงแล้ว:", JSON.stringify(currentStateType.listItems));
             }
           }
         } else {
-          console.log(currentStateType.category, "ไม่มีtypeMaxนี่นา");
           if (currentStateType.listItems.length > 0) {
-            console.log("มีไอเต็มใน", currentStateType.category, "หรือไม่");
             if (isFoundItem) {
               isFoundItem.selectAmount++;
             }
           } else {
-            console.log("ใส่ลงไป");
             currentStateType.listItems.push(newArray2);
           }
         }
@@ -230,19 +218,15 @@ export const customizeSlice = createSlice({
       );
       //categorizedList เป็น array เก็บค่าในหมวดหมู่นั้นๆ
       const categorizedListItem = state.partData[index].listItems;
-      console.log("Arrayในประเภทที่เลือก: ", JSON.stringify(categorizedListItem));
 
       const miniIndex = action.payload.miniIndex;
 
       if (index !== -1) {
-        console.log("indexที่เอามา splice: ", miniIndex);
         categorizedListItem.splice(miniIndex, 1);
-        console.log("splice แล้วเหลือไร: ", JSON.stringify(categorizedListItem));
 
         let totalAmount = 0; // Initialize the total amount to 0
         //ใช้ for loop เพื่อดึงค่า selectAmount(จำนวนสินค้าที่เลือกย่อย) ของสมาชิกที่เหลือแต่ละตัว เพื่อจะได้ไปรวมที่ typeAmount(รวมจำนวนสินค้าทั้งหมด)
         for (let i = 0; i < categorizedListItem.length; i++) {
-          console.log("ติดไร: ", JSON.stringify(categorizedListItem.length), i);
           let item = categorizedListItem[i];
           totalAmount += item.selectAmount * (item.countItem ? item.countItem : 1); // Add the product of selectAmount and count to the total amount
         }
@@ -268,7 +252,6 @@ export const customizeSlice = createSlice({
           } else {
             categorizedListItem[miniIndex].selectAmount = 1;
           }
-          console.log("มีป่าวหว่า: ", JSON.stringify(categorizedListItem[miniIndex]));
         }
 
         let totalAmount = 0; // Initialize the total amount to 0
@@ -279,10 +262,8 @@ export const customizeSlice = createSlice({
         }
         state.partData[index].typeAmount = totalAmount; // Assign the total amount to the typeAmount property of the RAM object
       } else {
-        console.log("ไม่มี Typemax");
         if (index !== -1) {
           categorizedListItem[miniIndex].selectAmount++;
-          console.log("มีป่าวหว่า: ", JSON.stringify(categorizedListItem[miniIndex]));
         }
       }
     },
@@ -323,7 +304,7 @@ export const customizeSlice = createSlice({
       state.partData[index].listItems.map((item) => {
         sumAllItem += item.selectAmount;
       });
-      console.log("sumAllItem มีค่าเท่าไหร่", sumAllItem);
+
       state.partData[index].typeAmount = sumAllItem;
     },
 
@@ -331,27 +312,17 @@ export const customizeSlice = createSlice({
     //actionนี้ถูกใช้หลังจากเช็คว่าไอเท็มที่แอดมา เป็น mainboard หรือไม่ ถ้ามีให้ใช้ action
     setMax: (state, action) => {
       const index = state.partData.findIndex((item) => item.category === "ram");
-      console.log("setMaxทำงาน: ", index, "Payload:", action.payload);
 
       if (index !== -1) {
         if (action.payload) {
           state.partData[index].typeMax = action.payload;
-          console.log(
-            "setMaxทำงาน:เงื่อนไขแรก ",
-            JSON.stringify(state.partData[index]),
-            " ",
-            "slotที่ได้: ",
-            action.payload
-          );
         } else {
-          console.log("ไม่มี Payload");
           state.partData[index].typeMax = initialState.partData[index].typeMax;
           if (state.partData[1].listItems[0]) {
             //มีเมนบอร์ดป่าว?
-            console.log("มีเมนบอด: ");
+
             state.partData[index].typeMax = state.partData[1].listItems[0].slot; //มีก็set max slot ไว้
           } else {
-            console.log("ไม่มีเมนบอด: ");
             state.partData[index].typeMax = initialState.partData[index].typeMax; // ไม่มีก็set เป็นค่าเริ่มต้น
           }
         }
@@ -388,7 +359,6 @@ export const customizeSlice = createSlice({
         });
       });
 
-      console.log("ราคาทั้งหมด: ", sumAllPrices);
       state.summations.sum_SRP = sumAll_SRP_Prices;
       state.summations.sumDiscount = sumAllDiscount;
       state.summations.sumPrice = sumAllPrices;

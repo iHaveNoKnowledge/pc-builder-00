@@ -34,7 +34,7 @@ const SumCustomize = () => {
 
   // สลับ flexDirection: "row" หรือ "column" เพื่อให้ได้รูปแบบที่ต่างกัน
   const itemDirection = { flexDirection: "row" };
-  console.log("itemDirection:", itemDirection.flexDirection);
+  
 
   const stackStyle = {
     sx: {

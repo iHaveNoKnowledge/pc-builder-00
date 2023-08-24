@@ -103,7 +103,7 @@ const AddSN = () => {
   };
   //* onclick สำหรับกด save  ////////////////////////////////////////////////////////////////////
   const handleSave = () => {
-    console.log("กด Save!! S/N");
+    
     handleClose();
     handlePrintClickOpen();
   };
@@ -129,7 +129,7 @@ const AddSN = () => {
     });
   });
 
-  console.log("ไอนี่แอดได้", itemList);
+  
 
   itemList.forEach((item) => {
     const times = item.selectAmount;
@@ -141,7 +141,7 @@ const AddSN = () => {
       const updatedSN = item1.sn.map((sn, snIndex) => watch(`Item${index1}SN${snIndex}`));
       return { ...item1, sn: updatedSN };
     });
-    console.log("ผลลัพธ์", itemList);
+    
   };
 
   const handleChange = (event, index, index2) => {
@@ -153,7 +153,7 @@ const AddSN = () => {
   const textFieldsRef = React.useRef([]);
 
   const handleKeyDown = (event, currentIndex, parentIndex) => {
-    console.log("item2คือไร");
+    
     if (event.key === "Enter") {
       event.preventDefault();
       const nextIndex = currentIndex + 1;

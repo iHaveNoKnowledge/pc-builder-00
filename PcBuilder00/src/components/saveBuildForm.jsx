@@ -59,7 +59,7 @@ export default function SaveBuildBtn() {
   //** onclick สำหรับกด save SPEC ////////////////////////////////////////////////////////////////////
   const { refetch: setsRefetch } = useGetSetsQuery();
   const handleSave = () => {
-    console.log("กด Save!!", inputData);
+    
     let updatedInputData;
     if (checkedItem.contactInfoBool) {
       updatedInputData = {
@@ -91,7 +91,7 @@ export default function SaveBuildBtn() {
       updateData(dataForUpdate)
         .unwrap()
         .then((response) => {
-          console.log("บันทึกสำเร็จ");
+          
           setsRefetch();
           return response;
         })
@@ -149,12 +149,12 @@ export default function SaveBuildBtn() {
     const dataValidation = patternInt.test(value);
 
     if (e.target.id === "cusTelInput") {
-      console.log("แกกำลังกรอกเบอร์โทรศัพท์ ");
+      
       if (value === "" || dataValidation) {
         setCustTelInput(value);
       }
     } else if (e.target.id === "custNameInput") {
-      console.log("แกกำลังกรอกชื่อลูกค้า");
+      
       setCustNameInput(value);
     } else if (e.target.id === "sellerNameInput") {
       setsellerNameInput(value);

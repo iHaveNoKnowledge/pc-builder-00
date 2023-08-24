@@ -84,7 +84,7 @@ export const filterSlice = createSlice({
   initialState,
   reducers: {
     changeTextSearch: (state, action) => {
-      console.log("redux action: ", action.payload);
+      
       state.textSearch = action.payload;
     },
     createFilter: (state, action) => {
@@ -95,7 +95,7 @@ export const filterSlice = createSlice({
     getCategorizedData: (state, action) => {
       //ใช้รับ showProduct จาก selectionProto(ภายในuseEffect), showProductเป็น รายการproducts ที่ได้ผ่านจากการเลือก category มาแล้ว ถือว่าเป็น categorizedData
       const { showProduct: categorizedData, category } = action.payload;
-      console.log("categorizedData", categorizedData);
+      
 
       state.filterOptions = null;
       ///สร้าง options ให้ dropdown
@@ -141,7 +141,7 @@ export const filterSlice = createSlice({
           (filter, index) => (filter.choices = [...optsPerFilter[index]])
         );
       }
-      console.log("เช็คfilter", JSON.stringify(state.filtersSet[0].selectedOptionState));
+      
     },
 
     clearSelectedFilter: (state, action) => {
@@ -151,7 +151,7 @@ export const filterSlice = createSlice({
     },
 
     setSelectedValuesCopy: (state, action) => {
-      console.log("destrucไม่ได้", action.payload);
+      
 
       if (action.payload) {
         const { value, currentCategory, keyName } = action.payload;
@@ -178,13 +178,13 @@ export const filterSlice = createSlice({
           .join(" && ");
         // Update the expression state
         state.expression = expression;
-        console.log("จะได้ expressionแบบไหน", expression);
+        
       } else {
-        console.log("ไม่มี Payload ของ action");
+        
       }
     },
     branchSelect: (state, action) => {
-      console.log("BRanchesSelect:", action.payload);
+      
       state.selectedBranches = [...action.payload];
     },
   },

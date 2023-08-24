@@ -37,7 +37,7 @@ const CustomizationProto02 = () => {
 
   //function
   const handleChange = (category) => {
-    console.log("handleChanged", category);
+    
     dispatch(changeCategory(category.toLowerCase().replace(" ", "")));
     dispatch(setDefault());
     if (currentCategory !== category.toLowerCase().replace(" ", ""))
@@ -46,18 +46,18 @@ const CustomizationProto02 = () => {
 
   const handleIncAmt = (category, miniIndex) => {
     dispatch(incAmount({ category, miniIndex }));
-    console.log("เพิ่ม");
+    
     dispatch(updateSummations());
   };
 
   const handleDecAmt = (category, miniIndex) => {
     dispatch(decAmount({ category, miniIndex }));
-    console.log("ลด");
+    
     dispatch(updateSummations());
   };
 
   const handleClear = (category, id, miniIndex) => {
-    console.log("clear data");
+    
     dispatch(removeProduct({ category, id, miniIndex }));
     dispatch(setMax());
     dispatch(updateSummations());
@@ -224,7 +224,7 @@ const CustomizationProto02 = () => {
                                       <Typography
                                         disableripple={true}
                                         onClick={(e) => {
-                                          console.log("innerBtnActivated");
+                                          
                                         }}
                                       >
                                         {miniItem.productDescription}

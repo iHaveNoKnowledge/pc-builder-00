@@ -9,7 +9,7 @@ export const categorySlice = createSlice({
   initialState,
   reducers: {
     changeCategory: (state, action) => {
-      console.log("checking category: ", action.payload);
+      
       state.category = action.payload;
     },
   },
