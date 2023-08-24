@@ -28,7 +28,8 @@
     font-weight: bolder;
     box-shadow: 0px 1px 0px 1px rgba(80, 80, 80, 1);
     height: 20px;
-    width:22px;
+    width:25px;
+    max-width: 25px;
     align-items: center;
     background-color: #42528A;
     color: #fafafa;
