@@ -70,6 +70,7 @@ const CustomizationProto02 = () => {
         {/* <div>ปัจจุบันเลือกไร: {currentCategory}</div> */}
         <Box>
           {parts.map((item, index) => {
+            console.log(item.category, "item.typeMax:", item.typeMax);
             return (
               <React.Fragment key={index}>
                 {item.listItems[0] ? (

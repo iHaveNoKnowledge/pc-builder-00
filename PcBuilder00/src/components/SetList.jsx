@@ -373,7 +373,9 @@ export default function SetList() {
                               {item.customerTel ? item.customerTel : "-"}
                             </TableCell>
                             <TableCell align="right">
-                              {new Date(item.timeStamp).toLocaleDateString("th-TH")}
+                              {new Date(item.timeStamp).toLocaleDateString("th-TH", {
+                                timeZone: "UTC",
+                              })}
                               {"_"}
                               {new Date(item.timeStamp).toLocaleTimeString("th-TH", {
                                 timeZone: "UTC",

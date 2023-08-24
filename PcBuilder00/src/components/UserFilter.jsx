@@ -156,7 +156,6 @@ const UserFilter = () => {
               {isFiltContained ? (
                 <>
                   {filtersSet.map((item, index) => {
-                    console.log("filtersSet:", filtersSet);
                     if (item.name === currentCategory.toLowerCase()) {
                       return (
                         <React.Fragment key={index}>
@@ -183,7 +182,7 @@ const UserFilter = () => {
                                     {item2.choices.map((option, indexOption) => {
                                       return (
                                         <option value={option} key={indexOption}>
-                                          {option}
+                                          {option ? option : "ไม่มี"}
                                         </option>
                                       );
                                     })}
