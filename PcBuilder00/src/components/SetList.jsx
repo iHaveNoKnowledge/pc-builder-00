@@ -112,7 +112,7 @@ export default function SetList() {
     if (searchTxt.current.value.length > 0) {
       const txt = searchTxt.current.value;
       const searchResult = sortedData.filter((item) => item.setName.includes(txt));
-      
+
       setSortedData(searchResult);
     } else {
       setSortedData(sets?.updatedRecordset);
@@ -166,11 +166,11 @@ export default function SetList() {
     const arrIdx = (curPageNum - 1) * 10 + index1;
     dispatch(resetCustomized());
     const { setName, customerName, customerTel, sellerName, sellerTel } = sortedData[arrIdx];
-    
+
     const itemsSet = sortedData[arrIdx].partData.flatMap((category) =>
       category.listItems.map((item) => item)
     );
-    
+
     const itemsSetID = itemsSet.map((item) => item.id);
     const amountPerItem = itemsSet.map((item) => item.selectAmount);
     const itemsToAdd = posts
@@ -192,7 +192,7 @@ export default function SetList() {
   const [idDelete, setIdDelete] = useState();
   const confirmDelete = (id) => {
     setOpentAlert(false);
-    
+
     deleteResource(idDelete);
   };
 
@@ -328,7 +328,7 @@ export default function SetList() {
                               const updatedOpenSubTables = [...openSubTables];
                               updatedOpenSubTables[index] = !isOpen;
                               setIsAnimating(false);
-                              
+
                               setOpenSubTables(updatedOpenSubTables);
                             }}
                             hover
@@ -373,7 +373,9 @@ export default function SetList() {
                               {item.customerTel ? item.customerTel : "-"}
                             </TableCell>
                             <TableCell align="right">
-                              {new Date(item.timeStamp).toLocaleDateString("th-TH")}
+                              {new Date(item.timeStamp).toLocaleDateString("th-TH", {
+                                timeZone: "UTC",
+                              })}
                               {"_"}
                               {new Date(item.timeStamp).toLocaleTimeString("th-TH", {
                                 timeZone: "UTC",
