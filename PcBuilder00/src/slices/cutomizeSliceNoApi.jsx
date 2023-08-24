@@ -333,7 +333,10 @@ export const customizeSlice = createSlice({
       const index = state.partData.findIndex((item) => item.category === "ram");
       console.log("setMaxทำงาน: ", state.partData[index].category, "Payload:", action.payload);
 
-      if (index !== -1) {
+      //มีผลกับ MaxRAM ตรวจว่ามี mainboard หรือไม่ สำหรับเช็ค maxRAM
+      const isMbSelected = state.partData[1].listItems.length;
+
+      if (index !== -1 || isMbSelected) {
         //กรณีมี Payload
         if (action.payload) {
           state.partData[index].typeMax = action.payload;

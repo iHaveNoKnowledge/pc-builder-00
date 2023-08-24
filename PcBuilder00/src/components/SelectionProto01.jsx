@@ -37,7 +37,7 @@ function PostCard({ items, totalRows }) {
   }, [products]);
 
   // *นี่คือ dispatch ข้างในบรรจุ action
-  const handleChange = (item) => {
+  const handleSelect = (item) => {
     dispatch(addProduct(item));
     if (category === "mb") {
       dispatch(setMax(item.slot));
@@ -378,7 +378,7 @@ function PostCard({ items, totalRows }) {
                         sx={{ height: "35px", alignSelf: "center", backgroundColor: "#42528A" }}
                         variant="contained"
                         onClick={(e) => {
-                          handleChange(item);
+                          handleSelect(item);
                         }}
                       >
                         เลือก

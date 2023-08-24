@@ -102,7 +102,7 @@ const CustomizationProto02 = () => {
                                     <div>
                                       {/* {miniItem.selectAmount * miniItem.count} */}
                                       {item.typeMax ? item.typeAmount : <></>}
-                                      {item.typeMax !== null && <>/{item.typeMax}</>}
+                                      {item.typeMax  && <>/{item.typeMax}</>}
                                     </div>
                                   </Box>
 
@@ -271,7 +271,7 @@ const CustomizationProto02 = () => {
                         <Box>
                           <div>
                             {item.selectAmount * item.count ? item.selectAmount * item.count : 0}
-                            {item.typeMax !== null && <>/{item.typeMax}</>}
+                            {item.typeMax  && <>/{item.typeMax}</>}
                           </div>
                         </Box>
                       </ListItem>
