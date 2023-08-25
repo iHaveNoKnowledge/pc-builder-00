@@ -10,8 +10,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { saveSet } from "../slices/reportSlice";
 import { FormGroup, FormControlLabel, Checkbox } from "@mui/material";
 import "./saveBuildForm.css";
-import { useUpdateDataMutation } from "../features/api/dataApiSlice";
-import { useGetSetsQuery } from "../features/api/dataApiSlice";
+import {
+  useUpdateDataMutation,
+  useUpdateByPatternMutation,
+  useGetSetsQuery,
+} from "../features/api/dataApiSlice";
 import { ThemeProvider } from "@mui/material/styles";
 import { theme } from "./SetList";
 import PopupAlert from "./generalModules/PopupAlert";
@@ -20,6 +23,7 @@ import SaveSetByPAT from "./generalModules/MyButtons";
 export default function SaveBuildBtn() {
   const { partData, itemsList } = useSelector((state) => state.customize);
   const [updateData, { isLoading, isError, error }] = useUpdateDataMutation();
+  const [updateByPattern] = useUpdateByPatternMutation();
 
   const dispatch = useDispatch();
 
@@ -340,7 +344,15 @@ export default function SaveBuildBtn() {
         <DialogActions>
           {/* <SaveSetByPAT /> ต้องรับ Prop เข้ามา ตามนี้ setName, customerName, customerTel, sellerName, sellerTel, partData */}
           <SaveSetByPAT
-            data={{ setNameInput, custNameInput, custTelInput, sellerNameInput, sellerTelInput }}
+            data={{
+              setNameInput,
+              custNameInput,
+              custTelInput,
+              sellerNameInput,
+              sellerTelInput,
+              partData,
+              updateByPattern,
+            }}
           />
           <Button onClick={handleClose} variant="contained" color="error">
             Cancel
