@@ -52,6 +52,13 @@ export const apiPutSets = createApi({
         body: data,
       }),
     }),
+    updateByPattern: builder.mutation({
+      query: (data) => ({
+        url: "/create-set-by-pattern",
+        method: "POST",
+        body: data,
+      }),
+    })
   }),
 });
 
@@ -64,7 +71,7 @@ export const {
 } = apiSliceDb;
 
 //** DB DATA Create
-export const { useUpdateDataMutation } = apiPutSets;
+export const { useUpdateDataMutation, useUpdateByPatternMutation } = apiPutSets;
 
 ///source
 ///https://www.positronx.io/react-fetch-data-with-redux-toolkit-rtk-query-tutorial/

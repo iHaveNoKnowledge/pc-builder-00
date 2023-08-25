@@ -23,7 +23,7 @@ const initialState = {
       category: "ram",
       categoryDisplay: "RAM",
       dbCategory: "RAM",
-      typeMax: 4,
+      typeMax: null,
       typeAmount: 0,
       listItems: [],
     },
@@ -168,46 +168,46 @@ export const customizeSlice = createSlice({
       console.log("ค่าโหลดของสินค้าที่ Add เท่าไหร่: ", typeMaxConsumtion);
 
       if (categoryIndex !== -1) {
-        const currentStateType = state.partData[categoryIndex]; ///currentStateType จะเป็นการเลือก สมาชิกที่ filter category มาแล้ว
-        const isFoundItem = currentStateType.listItems.find(
+        const targetCategory = state.partData[categoryIndex]; ///targetCategory จะเป็นการเลือก สมาชิกที่ filter category มาแล้ว
+        const isFoundItem = targetCategory.listItems.find(
           (item) => item.id === action.payload.id
         ); //* ตรวจสอบว่ามีแล้วหรือไม่ ถ้าเป็น true isFoundItem เป็น obj ที่เป็นสมาชิก Arr listItems, false จะเป็น undefined ต้องสร้าง obj ใหม่
-        if (currentStateType.typeMax) {
-          if (currentStateType.typeAmount === 0) {
-            currentStateType.listItems.push(newArray2);
+        if (targetCategory.typeMax) {
+          if (targetCategory.typeAmount === 0) {
+            targetCategory.listItems.push(newArray2);
           } else {
             if (
-              currentStateType.typeAmount / currentStateType.typeMax === 1 &&
-              currentStateType.listItems.length < 2 &&
-              currentStateType.typeAmount <= 1
+              targetCategory.typeAmount / targetCategory.typeMax === 1 &&
+              targetCategory.listItems.length < 2 &&
+              targetCategory.typeAmount <= 1
             ) {
-              currentStateType.listItems[0] = newArray2;
+              targetCategory.listItems[0] = newArray2;
             } else {
-              if (currentStateType.typeAmount + typeMaxConsumtion <= currentStateType.typeMax) {
+              if (targetCategory.typeAmount + typeMaxConsumtion <= targetCategory.typeMax) {
                 console.log("สินค้ายังไม่เกินกว่ากำหนด");
                 if (isFoundItem) {
                   console.log("เจอซ้ำ", isFoundItem.id);
                   isFoundItem.selectAmount += 1;
                 } else {
                   console.log("ไม่เจอ", isFoundItem);
-                  currentStateType.listItems.push(newArray2);
+                  targetCategory.listItems.push(newArray2);
                 }
               } else {
                 console.log("สินค้าเกินจำนวนที่กำหนด");
               }
-              console.log("หน้าตาเป็นไงแล้ว:", JSON.stringify(currentStateType.listItems));
+              console.log("หน้าตาเป็นไงแล้ว:", JSON.stringify(targetCategory.listItems));
             }
           }
         } else {
-          console.log(currentStateType.category, "ไม่มีtypeMaxนี่นา");
-          if (currentStateType.listItems.length > 0) {
-            console.log("มีไอเต็มใน", currentStateType.category, "หรือไม่");
+          console.log(targetCategory.category, "ไม่มีtypeMaxนี่นา");
+          if (targetCategory.listItems.length > 0) {
+            console.log("มีไอเต็มใน", targetCategory.category, "หรือไม่");
             if (isFoundItem) {
               isFoundItem.selectAmount++;
             }
           } else {
-            console.log(`ไม่เคยมี Item ใน category ${currentStateType.category} มาก่อนต้องใส่ลงไป`);
-            currentStateType.listItems.push(newArray2);
+            console.log(`ไม่เคยมี Item ใน category ${targetCategory.category} มาก่อนต้องใส่ลงไป`);
+            targetCategory.listItems.push(newArray2);
           }
         }
       }

@@ -15,6 +15,7 @@ import { useGetSetsQuery } from "../features/api/dataApiSlice";
 import { ThemeProvider } from "@mui/material/styles";
 import { theme } from "./SetList";
 import PopupAlert from "./generalModules/PopupAlert";
+import SaveSetByPAT from "./generalModules/MyButtons";
 
 export default function SaveBuildBtn() {
   const { partData, itemsList } = useSelector((state) => state.customize);
@@ -24,7 +25,7 @@ export default function SaveBuildBtn() {
 
   const [inputData, setInputData] = useState({});
 
-  //** conditional Renderring
+  //** conditional Renderring for checkbox
   const [checkedItem, setCheckedItem] = useState({ contactInfoBool: false });
   const handleCheckBoxChange = (e) => {
     if (!checkedItem.contactInfoBool) {
@@ -337,6 +338,10 @@ export default function SaveBuildBtn() {
           </Box>
         </DialogContent>
         <DialogActions>
+          {/* <SaveSetByPAT /> ต้องรับ Prop เข้ามา ตามนี้ setName, customerName, customerTel, sellerName, sellerTel, partData */}
+          <SaveSetByPAT
+            data={{ setNameInput, custNameInput, custTelInput, sellerNameInput, sellerTelInput }}
+          />
           <Button onClick={handleClose} variant="contained" color="error">
             Cancel
           </Button>
