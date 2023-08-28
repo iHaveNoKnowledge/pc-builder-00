@@ -9,7 +9,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@david.kucsai/react-pdf-table": "^0.4.1",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.11.11",
@@ -20,6 +19,7 @@
     "@reduxjs/toolkit": "^1.9.3",
     "axios": "^1.4.0",
     "csbbust": "^1.0.1",
+    "formik": "^2.4.3",
     "html2canvas": "^1.4.1",
     "jspdf": "^2.5.1",
     "loader-utils": "^3.2.1",
@@ -35,11 +35,12 @@
     "react-scripts": "^5.0.1",
     "react-select": "^5.7.2",
     "redux-persist": "^6.0.0",
-    "styled-components": "^5.3.9"
+    "styled-components": "^5.3.9",
+    "yup": "^1.2.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.6.4",
-    "@babel/core": "5.0.1",
+    "@babel/core": "^7.0.0",
     "@babel/preset-env": "^7.20.2",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
