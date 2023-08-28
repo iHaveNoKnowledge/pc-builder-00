@@ -85,16 +85,15 @@ export default function SetList() {
   let searchResult = "";
 
   //* นำ api มาใช้
-  const [
-    getSetsData,
-    { data: sets, error, isLoading, isSuccess, isUninitialized },
-  ] = useLazyGetSetsQuery();
+  const [getSetsData, { data: sets, error, isLoading, isSuccess, isUninitialized }] =
+    useLazyGetSetsQuery();
   const [sortedData, setSortedData] = useState([]);
   const [rows, setRows] = useState(0);
 
   useEffect(() => {
     if (open) {
       setSortedData(sets.updatedRecordset);
+
       setRows(sets.totalRows);
     }
   }, [open, sets]); //เมื่อเปิด กับ เมื่อค่า sets มีการเปลี่ยนแปลง ซึ่งความเปลี่ยนแปลง redux monitor ให้
@@ -105,14 +104,21 @@ export default function SetList() {
   const [isAnimating, setIsAnimating] = useState(false);
   const isTransition = { transition: "none" };
 
+  //* array for test
+  const testArr = [{ setName: "set1" }, { setName: "set2" }, { setName: "set3" }];
+
   //* -------------------------------FUNCTIONS------------------------------------------------------
   //* Function SearchSets
   const searchTxt = useRef();
   const handleSearch = (e) => {
     if (searchTxt.current.value.length > 0) {
       const txt = searchTxt.current.value;
-      const searchResult = sortedData.filter((item) => item.setName.includes(txt));
-      console.log("กดsearch แล้วได้ไรมา", searchResult);
+      console.log("sortedData: ", sets.updatedRecordset);
+      const searchResult = sets.updatedRecordset.filter(
+        (item) => item.setName && item.setName.includes(txt)
+      );
+      console.log("searchResult:", searchResult);
+
       setSortedData(searchResult);
     } else {
       setSortedData(sets?.updatedRecordset);

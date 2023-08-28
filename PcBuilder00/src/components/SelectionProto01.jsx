@@ -284,7 +284,7 @@ function PostCard({ items, totalRows }) {
                         src={jpgPath || pngPath}
                         alt={item.title}
                         title={item.title}
-                        sx={{ height: "200px", objectFit: "contain" }}
+                        sx={{ height: "150px", objectFit: "contain" }}
                       />
                     )
                   ) : (
@@ -293,7 +293,7 @@ function PostCard({ items, totalRows }) {
                       src={item.img}
                       alt={item.title}
                       title={item.title}
-                      sx={{ height: "200px", objectFit: "contain" }}
+                      sx={{ height: "150px", objectFit: "contain" }}
                       onLoad={handleImageLoad}
                     />
                   )}
