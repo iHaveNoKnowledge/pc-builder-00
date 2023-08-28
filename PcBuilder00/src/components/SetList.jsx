@@ -85,10 +85,8 @@ export default function SetList() {
   let searchResult = "";
 
   //* นำ api มาใช้
-  const [
-    getSetsData,
-    { data: sets, error, isLoading, isSuccess, isUninitialized },
-  ] = useLazyGetSetsQuery();
+  const [getSetsData, { data: sets, error, isLoading, isSuccess, isUninitialized }] =
+    useLazyGetSetsQuery();
   const [sortedData, setSortedData] = useState([]);
   const [rows, setRows] = useState(0);
 
@@ -111,7 +109,11 @@ export default function SetList() {
   const handleSearch = (e) => {
     if (searchTxt.current.value.length > 0) {
       const txt = searchTxt.current.value;
-      const searchResult = sortedData.filter((item) => item.setName.includes(txt));
+      const searchResult = sortedData.filter(
+        (item) =>
+          item.setName.toLowerCase().includes(txt.toLowerCase()) ||
+          item.DefaultName.toLowerCase().includes(txt.toLowerCase())
+      );
       console.log("กดsearch แล้วได้ไรมา", searchResult);
       setSortedData(searchResult);
     } else {

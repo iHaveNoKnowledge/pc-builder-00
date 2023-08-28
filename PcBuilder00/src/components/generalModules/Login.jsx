@@ -65,7 +65,7 @@ const Login = () => {
         <div className={`login-box ${inputHovered ? "input-hovered" : ""}`}>
           <Form>
             <h2>Login</h2>
-            <TextFieldWithFormik name="name" label="UserName" />
+            <TextFieldWithFormik name="name" label="Username" />
             <TextFieldWithFormik name="pwd" label="Password" type="password" />
             <Button
               type="submit"
@@ -86,21 +86,30 @@ const Login = () => {
 
 const TextFieldWithFormik = ({ name, label, type = "text" }) => {
   const [field, meta] = useField(name);
-  const icons = { name: <PersonIcon />, pwd: <LockIcon /> };
-  console.log("ไหงเปนงี้", icons[name]);
+  const icons = {
+    name: <PersonIcon sx={{ color: "rgba(0, 0, 0, 0.45)" }} />,
+    pwd: <LockIcon sx={{ color: "rgba(0, 0, 0, 0.45)" }} />,
+  };
   return (
-    <div className="test">
-      <TextField
-        {...field}
-        placeholder={label}
-        type={type}
-        error={meta.touched && Boolean(meta.error)}
-        helperText={meta.touched && meta.error}
-        InputProps={{
-          startAdornment: <InputAdornment position="start">{icons[name]}</InputAdornment>,
-        }}
-      />
-    </div>
+    <TextField
+      style={{ marginBottom: "10px", paddingLeft: "0px" }}
+      className="input"
+      {...field}
+      placeholder={label}
+      type={type}
+      error={meta.touched && Boolean(meta.error)}
+      helperText={meta.touched && meta.error}
+      InputProps={{
+        startAdornment: (
+          <InputAdornment
+            sx={{ padding: "20.5px 10px", borderRadius: "5px", background: "#bbbb" }}
+            position="start"
+          >
+            {icons[name]}
+          </InputAdornment>
+        ),
+      }}
+    />
   );
 };
 
