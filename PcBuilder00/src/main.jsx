@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
-
+import Login from "./components/generalModules/Login";
 import { store } from "./store";
 import { Provider } from "react-redux";
 import { ApiProvider } from "@reduxjs/toolkit/dist/query/react";
@@ -23,6 +23,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           <BrowserRouter>
             <Routes>
               <Route path="" element={<App />} />
+              <Route path="/login" element={<Login />}></Route>
             </Routes>
           </BrowserRouter>
         </ThemeProvider>
