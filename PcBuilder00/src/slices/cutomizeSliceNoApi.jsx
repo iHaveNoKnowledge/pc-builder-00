@@ -29,7 +29,7 @@ const initialState = {
     },
     {
       category: "vga",
-      categoryDisplay: "VGA",
+      categoryDisplay: "GPU",
       dbCategory: "VGA",
       typeMax: null,
       typeAmount: 0,
@@ -47,6 +47,22 @@ const initialState = {
       category: "hdd",
       categoryDisplay: "HDD",
       dbCategory: "HDD",
+      typeMax: null,
+      typeAmount: 0,
+      listItems: [],
+    },
+    {
+      category: "powersupply",
+      categoryDisplay: "Power supply",
+      dbCategory: "Power supply",
+      typeMax: null,
+      typeAmount: 0,
+      listItems: [],
+    },
+    {
+      category: "case",
+      categoryDisplay: "CASE",
+      dbCategory: "CASE",
       typeMax: null,
       typeAmount: 0,
       listItems: [],
@@ -115,22 +131,6 @@ const initialState = {
       typeAmount: 0,
       listItems: [],
     },
-    {
-      category: "powersupply",
-      categoryDisplay: "Power supply",
-      dbCategory: "Power supply",
-      typeMax: null,
-      typeAmount: 0,
-      listItems: [],
-    },
-    {
-      category: "case",
-      categoryDisplay: "CASE",
-      dbCategory: "CASE",
-      typeMax: null,
-      typeAmount: 0,
-      listItems: [],
-    },
   ],
   itemsList: [],
   summations: { sumAmount: 0, sum_SRP: 0, sumDiscount: 0, sumPrice: 0 },
@@ -195,6 +195,7 @@ export const customizeSlice = createSlice({
               isFoundItem.selectAmount++;
             }
           } else {
+            console.log(`ไม่เคยมี Item ใน category ${currentStateType.category} มาก่อนต้องใส่ลงไป`);
             currentStateType.listItems.push(newArray2);
           }
         }
@@ -222,9 +223,12 @@ export const customizeSlice = createSlice({
       const miniIndex = action.payload.miniIndex;
 
       if (index !== -1) {
+        console.log("indexที่เอามา splice: ", miniIndex);
         categorizedListItem.splice(miniIndex, 1);
+        console.log("splice แล้วเหลือไร: ", JSON.stringify(categorizedListItem));
 
-        let totalAmount = 0; // Initialize the total amount to 0
+        //เป็นการรวม SelectAmountที่เหลืออยู่
+        let totalAmount = 0; // การจะนับของก็ต้องทำตะกร้าให้เป็น 0 สะก่อน แล้วใช้ for loop ค่อยๆโยนแล้วนับจำนวน
         //ใช้ for loop เพื่อดึงค่า selectAmount(จำนวนสินค้าที่เลือกย่อย) ของสมาชิกที่เหลือแต่ละตัว เพื่อจะได้ไปรวมที่ typeAmount(รวมจำนวนสินค้าทั้งหมด)
         for (let i = 0; i < categorizedListItem.length; i++) {
           let item = categorizedListItem[i];
@@ -312,15 +316,17 @@ export const customizeSlice = createSlice({
     //actionนี้ถูกใช้หลังจากเช็คว่าไอเท็มที่แอดมา เป็น mainboard หรือไม่ ถ้ามีให้ใช้ action
     setMax: (state, action) => {
       const index = state.partData.findIndex((item) => item.category === "ram");
+      console.log("setMaxทำงาน: ", index, "Payload:", action.payload);
 
-      if (index !== -1) {
+      if (index !== -1 || isMbSelected) {
+        //กรณีมี Payload
         if (action.payload) {
           state.partData[index].typeMax = action.payload;
         } else {
           state.partData[index].typeMax = initialState.partData[index].typeMax;
-          if (state.partData[1].listItems[0]) {
+          if (state.partData[1].listItems[0] && !action.payload) {
             //มีเมนบอร์ดป่าว?
-
+            console.log("มีเมนบอด: ");
             state.partData[index].typeMax = state.partData[1].listItems[0].slot; //มีก็set max slot ไว้
           } else {
             state.partData[index].typeMax = initialState.partData[index].typeMax; // ไม่มีก็set เป็นค่าเริ่มต้น

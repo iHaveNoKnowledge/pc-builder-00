@@ -10,9 +10,10 @@ const initialState = {
   //   RAM: { brand: "", type: "", count: 0 },
   // },
   filterOptions: null,
-  expression: ` (!selectedOpts.brand || product.brand === selectedOpts.brand) &&
-  (!selectedOpts.model || product.model === selectedOpts.model) &&
-  (!selectedOpts.socket || product.socket === selectedOpts.socket)`,
+  // expression: ` (!selectedOpts.brand || product.brand === selectedOpts.brand) &&
+  // (!selectedOpts.model || product.model === selectedOpts.model) &&
+  // (!selectedOpts.socket || product.socket === selectedOpts.socket)`,
+  expression: null,
   filtersSet: [
     {
       name: "cpu",
@@ -60,6 +61,7 @@ const initialState = {
 };
 
 // --------------------------------------------------------------------FUNCTIONS-------------------------------------------------------------------
+
 const checkCategory = (category) => {
   category = category.toLowerCase();
 
@@ -68,7 +70,7 @@ const checkCategory = (category) => {
     cpu: ["cpu"],
     ram: ["ram"],
   };
-
+  // เอา category ที่รับจาก user มาตรวจสอบว่าตรงกับค่าใดๆในarrของpropใดของ obj validCategories หรือไม่ เพื่อเพิ่มความหลากหลายในการเช็ค เผื่อกรณีชื่อ column จาก DB เปลี่ยน
   for (const key in validCategories) {
     if (validCategories[key].includes(category)) {
       return key;
@@ -153,10 +155,10 @@ export const filterSlice = createSlice({
     setSelectedValuesCopy: (state, action) => {
       
 
-      if (action.payload) {
-        const { value, currentCategory, keyName } = action.payload;
+      if (action.payload !== "initial") {
+        const { value, currentCategory, filterKeyName } = action.payload;
         const numTypeKey = ["slot", "count"];
-        const testResult = numTypeKey.find((item) => item === keyName);
+        const testResult = numTypeKey.find((item) => item === filterKeyName);
         let newValue = value;
 
         if (testResult) {
@@ -166,7 +168,7 @@ export const filterSlice = createSlice({
         const filterTarget = state.filtersSet.find(
           (filterSetItem) => filterSetItem.name === currentCategory.toLowerCase()
         );
-        Object.assign(filterTarget.selectedOptionState, { [keyName]: newValue });
+        Object.assign(filterTarget.selectedOptionState, { [filterKeyName]: newValue });
 
         // Generate filter expression dynamically
         // กรณีอยากloop obj แต่ obj มัน loop ไม่ได้ ใช้ตัวนี้-> Object.keys(objParam)
@@ -178,7 +180,16 @@ export const filterSlice = createSlice({
           .join(" && ");
         // Update the expression state
         state.expression = expression;
-        
+        console.log("จะได้ expressionแบบไหน", expression);
+      } else if (action.payload === "initial") {
+        let expression = Object.keys(state.filtersSet[0].selectedOptionState)
+          .map((filter) => {
+            return `(!selectedOpts.${filter} || product.${filter} == selectedOpts.${filter})`;
+          })
+          .join(" && ");
+        // Update the expression state
+        state.expression = expression;
+        console.log("Payload initial");
       } else {
         
       }

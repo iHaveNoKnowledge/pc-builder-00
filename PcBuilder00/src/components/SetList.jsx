@@ -85,19 +85,20 @@ export default function SetList() {
   let searchResult = "";
 
   //* นำ api มาใช้
-  const [
-    getSetsData,
-    { data: sets, error, isLoading, isSuccess, isUninitialized },
-  ] = useLazyGetSetsQuery();
+  const [getSetsData, { data: sets, error, isLoading, isSuccess, isUninitialized }] =
+    useLazyGetSetsQuery();
   const [sortedData, setSortedData] = useState([]);
   const [rows, setRows] = useState(0);
 
   useEffect(() => {
-    if (open) {
+    if (isLoading) {
+    }
+    if (open && isSuccess) {
       setSortedData(sets.updatedRecordset);
+
       setRows(sets.totalRows);
     }
-  }, [open, sets]); //เมื่อเปิด กับ เมื่อค่า sets มีการเปลี่ยนแปลง ซึ่งความเปลี่ยนแปลง redux monitor ให้
+  }, [open, sets, isSuccess]); //เมื่อเปิด กับ เมื่อค่า sets มีการเปลี่ยนแปลง ซึ่งความเปลี่ยนแปลง redux monitor ให้
 
   const [openSubTables, setOpenSubTables] = useState([]);
 
@@ -105,13 +106,22 @@ export default function SetList() {
   const [isAnimating, setIsAnimating] = useState(false);
   const isTransition = { transition: "none" };
 
+  //* array for test
+  const testArr = [{ setName: "set1" }, { setName: "set2" }, { setName: "set3" }];
+
   //* -------------------------------FUNCTIONS------------------------------------------------------
   //* Function SearchSets
   const searchTxt = useRef();
   const handleSearch = (e) => {
     if (searchTxt.current.value.length > 0) {
       const txt = searchTxt.current.value;
-      const searchResult = sortedData.filter((item) => item.setName.includes(txt));
+      console.log("sortedData: ", sets.updatedRecordset);
+      const searchResult = sets.updatedRecordset.filter(
+        (item) =>
+          (item.setName && item.setName.includes(txt)) ||
+          (item.DefaultName && item.DefaultName.toLowerCase().includes(txt.toLowerCase()))
+      );
+      console.log("searchResult:", searchResult);
 
       setSortedData(searchResult);
     } else {
@@ -312,9 +322,13 @@ export default function SetList() {
                   <TableCell colSpan={1} style={{ width: 80 }}></TableCell>
                 </TableRow>
               </TableHead>
-              <TableBody>
+              <TableBody style={isLoading ? { height: "100px" } : {}}>
                 {/* ต้องเอา API มาแทนค่าตรงนี้ */}
-                {isLoading && <CircularProgress />}
+                {isLoading && (
+                  <TableCell colSpan={11} align="center">
+                    <CircularProgress />
+                  </TableCell>
+                )}
                 {sets && (
                   <React.Fragment>
                     {dataPaginated?.map((item, index) => {
