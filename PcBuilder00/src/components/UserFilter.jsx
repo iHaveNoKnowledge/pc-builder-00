@@ -52,11 +52,12 @@ const UserFilter = () => {
     e.preventDefault();
   };
 
-  const handleChangeOption = (e, currentCategory, keyName) => {
+  const handleChangeOption = (e, currentCategory, filterKeyName) => {
     const value = e.target.value;
     const test = value == Number(value);
     console.log("ตรวจType:", value, ":", typeof value, "ลบกันได้ไหม", test);
-    dispatch(setSelectedValuesCopy({ value, currentCategory, keyName }));
+    console.log("ใครเป็นใครวะ", value, currentCategory, filterKeyName)
+    dispatch(setSelectedValuesCopy({ value, currentCategory, filterKeyName }));
     dispatch(setDefault());
   };
 
@@ -174,8 +175,8 @@ const UserFilter = () => {
                                     value={item.selectedOptionState[filterName]}
                                     style={{ width: "100%" }}
                                     onChange={(e) => {
-                                      const keyName = item2.name;
-                                      handleChangeOption(e, currentCategory, keyName);
+                                      const filterKeyName = item2.name;
+                                      handleChangeOption(e, currentCategory, filterKeyName);
                                     }}
                                   >
                                     <option value="">Please Select</option>

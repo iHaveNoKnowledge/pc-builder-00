@@ -91,12 +91,14 @@ export default function SetList() {
   const [rows, setRows] = useState(0);
 
   useEffect(() => {
-    if (open) {
+    if (isLoading) {
+    }
+    if (open && isSuccess) {
       setSortedData(sets.updatedRecordset);
 
       setRows(sets.totalRows);
     }
-  }, [open, sets]); //เมื่อเปิด กับ เมื่อค่า sets มีการเปลี่ยนแปลง ซึ่งความเปลี่ยนแปลง redux monitor ให้
+  }, [open, sets, isSuccess]); //เมื่อเปิด กับ เมื่อค่า sets มีการเปลี่ยนแปลง ซึ่งความเปลี่ยนแปลง redux monitor ให้
 
   const [openSubTables, setOpenSubTables] = useState([]);
 
@@ -115,7 +117,9 @@ export default function SetList() {
       const txt = searchTxt.current.value;
       console.log("sortedData: ", sets.updatedRecordset);
       const searchResult = sets.updatedRecordset.filter(
-        (item) => item.setName && item.setName.includes(txt)
+        (item) =>
+          (item.setName && item.setName.includes(txt)) ||
+          (item.DefaultName && item.DefaultName.toLowerCase().includes(txt.toLowerCase()))
       );
       console.log("searchResult:", searchResult);
 
@@ -318,9 +322,13 @@ export default function SetList() {
                   <TableCell colSpan={1} style={{ width: 80 }}></TableCell>
                 </TableRow>
               </TableHead>
-              <TableBody>
+              <TableBody style={isLoading ? { height: "100px" } : {}}>
                 {/* ต้องเอา API มาแทนค่าตรงนี้ */}
-                {isLoading && <CircularProgress />}
+                {isLoading && (
+                  <TableCell colSpan={11} align="center">
+                    <CircularProgress />
+                  </TableCell>
+                )}
                 {sets && (
                   <React.Fragment>
                     {dataPaginated?.map((item, index) => {

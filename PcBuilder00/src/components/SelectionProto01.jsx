@@ -15,7 +15,7 @@ import { addProduct, setMax, updateSummations } from "../slices/cutomizeSliceNoA
 import "./Selection.css";
 import UserFilter from "./UserFilter";
 import { useGetDbItemQuery } from "../features/api/dataApiSlice";
-import { getCategorizedData } from "../slices/userFilterSlice";
+import { getCategorizedData, setSelectedValuesCopy } from "../slices/userFilterSlice";
 import Bottom from "./BottomComponent";
 import { setDefault, setPageNum } from "../slices/paginationSlice";
 import { changeCategory } from "../slices/categorySlice";
@@ -176,6 +176,7 @@ function PostCard({ items, totalRows }) {
   console.log("BranchFiltered:", filteredSKUs);
 
   //* นำ flter มา filter showproduct
+  console.log("expressionเปลี่ยนไหม?:", expression, "datatype:", typeof !!expression);
   const filterProducts = (products, selectedOpts, expression) => {
     const filteredProducts = products.filter((product) => eval(expression));
     return filteredProducts;
@@ -222,6 +223,11 @@ function PostCard({ items, totalRows }) {
     }
   }, [category, products]);
   // }, [category, parts, products]); ถ้าใส่ parts ไว้เวลาเปลี่ยนแปลงจำนวนสินค้ามันจะ fetch เรื่อยๆ
+
+  //* สำหรับทำ filter ค่าเริ่มต้นให้ CPU(DefaultCategory)
+  useEffect(() => {
+    dispatch(setSelectedValuesCopy("initial"));
+  }, []);
 
   //* imgLoading
   const [isLoading, setIsLoading] = useState(true);
