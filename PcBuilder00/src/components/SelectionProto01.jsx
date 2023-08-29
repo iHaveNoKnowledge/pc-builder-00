@@ -196,7 +196,7 @@ function PostCard({ items, totalRows }) {
   //* pagination////
   const curPageNum2 = useSelector((state) => state.pagination.currentPage);
   const [curPageNum, setCurPageNum] = useState(1);
-  const cardsPerPage = 9;
+  const cardsPerPage = 12;
   const totalPages = Math.ceil(showProductWithFilter.length / cardsPerPage);
 
   useEffect(() => {
@@ -257,6 +257,7 @@ function PostCard({ items, totalRows }) {
   return (
     <>
       <UserFilter />
+      <Bottom />
       <Grid container spacing="10" columns={{ xs: 4, sm: 12, md: 12 }}>
         {productPaginated.map((item, index) => {
           const pngPath = `/images/${item.compatible.toLowerCase().split(" ", 1)}.png`;
@@ -274,7 +275,7 @@ function PostCard({ items, totalRows }) {
           };
 
           return (
-            <Grid item xs={2} sm={4} md={4} key={index}>
+            <Grid item xs={2} sm={3} md={3} key={index}>
               <Card
                 sx={{
                   boxShadow: "2px 2px 2px 1px rgba(92, 92, 92, 0.5)",
@@ -458,8 +459,6 @@ function PostCard({ items, totalRows }) {
           page={curPageNum2}
         />
       </Stack>
-
-      <Bottom />
     </>
   );
 }

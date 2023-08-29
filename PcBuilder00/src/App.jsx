@@ -10,7 +10,7 @@ function App() {
       sx={{
         height: "auto",
         "@media (min-width: 0px)": {
-          maxWidth: "1200px",
+          maxWidth: "1400px",
         },
       }}
     >
@@ -19,14 +19,13 @@ function App() {
           <Box sx={{ px: 1 }}></Box>
         </Grid>
 
-        <Grid item xs={4} md={4}>
+        <Grid item xs={4} md={3}>
           <CustomizationProto02 />
         </Grid>
 
-        <Grid item xs={4} md={8}>
+        <Grid item xs={4} md={9}>
           <Box sx={{ pl: 2 }}>
             <SelectionProto01 />
-            
           </Box>
         </Grid>
       </Grid>
