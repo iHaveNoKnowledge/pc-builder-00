@@ -60,6 +60,7 @@ export const theme = createTheme({
     MuiButton: {
       styleOverrides: {
         root: {
+          zoom: "120%",
           height: "27.5px",
           borderRadius: "0px",
           fontFamily: "Chakra Petch",
@@ -70,6 +71,7 @@ export const theme = createTheme({
         },
       },
     },
+    typography: {},
   },
 });
 
