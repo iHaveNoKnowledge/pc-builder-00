@@ -56,7 +56,6 @@ const UserFilter = () => {
     const value = e.target.value;
     const test = value == Number(value);
     console.log("ตรวจType:", value, ":", typeof value, "ลบกันได้ไหม", test);
-    console.log("ใครเป็นใครวะ", value, currentCategory, filterKeyName)
     dispatch(setSelectedValuesCopy({ value, currentCategory, filterKeyName }));
     dispatch(setDefault());
   };
@@ -90,7 +89,7 @@ const UserFilter = () => {
           <Box>
             <form onSubmit={handleSearch} style={{ display: "flex" }}>
               <TextField
-                sx={{ width: "57%", paddingRight: "8px" }}
+                sx={{ width: "57%", paddingRight: "8px", flexGrow: 1 }}
                 placeholder="ค้นหาสินค้า"
                 type="search"
                 id="input-with-icon-textfield"
