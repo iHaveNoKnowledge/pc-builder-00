@@ -370,27 +370,19 @@ function PostCard({ items, totalRows }) {
                           </>
                         }
                         secondary={
-                          item.promotionPrice - item.srp !== 0 ? (
-                            <React.Fragment>
-                              <Typography
-                                sx={{ display: "inline", fontSize: "0.9rem" }}
-                                component="span"
-                                variant="caption"
-                                color="text.secondary"
-                              >
-                                ราคาปกติ ฿ {item.srp.toLocaleString()}.-
-                              </Typography>
-                            </React.Fragment>
-                          ) : (
-                            <React.Fragment>
-                              <Typography
-                                sx={{ display: "inline", fontSize: "0.9rem" }}
-                                component="span"
-                                variant="caption"
-                                color="text.secondary"
-                              ></Typography>
-                            </React.Fragment>
-                          )
+                          <React.Fragment>
+                            <Typography
+                              sx={{ display: "inline", fontSize: "0.9rem" }}
+                              component="span"
+                              variant="caption"
+                              color="text.secondary"
+                            >
+                              {item.promotionPrice - item.srp !== 0
+                                ? `ราคาปกติ ฿
+                              ${item.srp.toLocaleString()}.-`
+                                : ""}
+                            </Typography>
+                          </React.Fragment>
                         }
                       />
 
