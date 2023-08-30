@@ -308,10 +308,11 @@ function PostCard({ items, totalRows }) {
 
                   <CardContent
                     style={{
-                      height: "165px",
+                      minHeight: "165px",
                       display: "flex",
                       flexDirection: "column",
-                      paddingBottom: "1px",
+                      paddingBottom: "6px",
+                      flex: "auto",
                     }}
                   >
                     <Box
@@ -357,7 +358,6 @@ function PostCard({ items, totalRows }) {
 
                     <Box sx={{ display: "flex", paddingTop: "1px", height: "35%" }}>
                       <ListItemText
-                        sx={{ fontSize: "2rem" }}
                         primary={
                           <>
                             <Typography sx={{ fontSize: "1.2rem", fontWeight: "bolder" }}>
