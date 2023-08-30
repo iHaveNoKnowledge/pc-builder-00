@@ -10,3 +10,8 @@
 -directly-
 2.ปรับขนาดของ content ให้กว้าง ส่งผลให้ต้องเพิ่มการแสดงผล pagination ให้เข้ากับความกว้าง โดยตั้งค่าเป็น 12 cards per page
 3.ย้าย Bottom ขึ้นมาข้างบน ใต้ userfilter
+4.เพิ่มขนาด ให้ปุ่มบน Button component
+
+30/08/2023
+1.ลดขนาด Code ลงมานิดนึง => 1.2rem => 1.1rem
+2.เพิ่มขนาด font-size ของ ชื่อรุ่น  default (11px) => 1rem (14px)

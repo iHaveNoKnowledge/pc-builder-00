@@ -306,19 +306,25 @@ function PostCard({ items, totalRows }) {
                   )}
                   {!isLoading && !item.img && <span>ไม่มีภาพ</span>}
 
-                  <CardContent sx={{ height: "165px" }}>
+                  <CardContent
+                    style={{
+                      height: "165px",
+                      display: "flex",
+                      flexDirection: "column",
+                      paddingBottom: "1px",
+                    }}
+                  >
                     <Box
                       sx={{
-                        display: "flex",
                         bgcolor: "background.paper",
-                        flexGrow: "1",
+                        display: "flex",
                       }}
                     >
                       <Typography
                         variant="body1"
                         sx={{
                           flexGrow: "1",
-                          fontSize: "1.2rem",
+                          fontSize: "1.1rem",
                           fontWeight: "bolder",
                         }}
                       >
@@ -335,10 +341,17 @@ function PostCard({ items, totalRows }) {
                     <Typography
                       textOverflow="clip"
                       variant="body2"
-                      sx={{ height: "80px", overflowY: "auto", marginTop: "5px", flexGrow: "1" }}
+                      sx={{
+                        height: "auto",
+
+                        marginTop: "5px",
+                        fontSize: "1rem",
+                      }}
                     >
                       {item.productDescription}
                     </Typography>
+
+                    <Box sx={{ flexGrow: 1 }}></Box>
 
                     <Divider sx={{ pt: 1 }} />
 

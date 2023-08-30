@@ -1,5 +1,6 @@
 // Popup.js
 import React, { useState } from "react";
+import { zIndexCollections } from "./zindexs";
 
 const Popup = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -54,7 +55,7 @@ const popupStyle = {
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  zIndex: "1000",
+  zIndex: `${zIndexCollections.stock}`,
 };
 
 const popupContentStyle = {

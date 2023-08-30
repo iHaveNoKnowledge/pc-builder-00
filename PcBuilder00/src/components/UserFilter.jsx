@@ -11,6 +11,7 @@ import { changeTextSearch, setSelectedValuesCopy } from "../slices/userFilterSli
 import { Typography, Autocomplete } from "@mui/material";
 import { clearSelectedFilter, branchSelect } from "../slices/userFilterSlice";
 import { setDefault } from "../slices/paginationSlice";
+import { zIndexCollections } from "./zindexs";
 
 const UserFilter = () => {
   //* Style
@@ -19,10 +20,10 @@ const UserFilter = () => {
       minWidth: "0px !important",
     },
     ".MuiFormLabel-root": {
-      zIndex: "8999 !important",
+      zIndex: `${zIndexCollections.branchFilter + 1} !important`,
     },
     ".MuiAutocomplete-inputRoot": {
-      zIndex: "8998 !important",
+      zIndex: `${zIndexCollections.branchFilter} !important`,
       position: "absolute !important",
       background: "white !important",
     },

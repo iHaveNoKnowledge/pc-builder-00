@@ -1,14 +1,5 @@
 import React from "react";
-import {
-  Page,
-  Text,
-  View,
-  Document,
-  Image,
-  Font,
-  StyleSheet,
-  PDFViewer,
-} from "@react-pdf/renderer";
+import { Page, Text, View, Document, Image, Font, PDFViewer } from "@react-pdf/renderer";
 import logoHeader from "../../public/images/itLogo-1.png";
 import font from "../fonts/ChakraPetch-Regular.ttf";
 import { AppBar, Toolbar, Button, Dialog, IconButton, Typography, Slide, Box } from "@mui/material";
