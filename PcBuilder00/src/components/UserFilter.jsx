@@ -69,9 +69,10 @@ const UserFilter = () => {
     dispatch(changeTextSearch(query));
   }, [query]);
 
-  useEffect(() => {
-    dispatch(branchSelect([]));
-  }, [currentCategory]);
+  //todo อันนี้ยังใช้ได้ ถ้าเปิดจะทำให้ ค่า .ใน branch filter ถูก reset
+  // useEffect(() => {
+  //   dispatch(branchSelect([]));
+  // }, [currentCategory]);
 
   //* DisplayCategory
   const { categoryDisplay } = parts.find((category) => {
@@ -88,6 +89,7 @@ const UserFilter = () => {
 
   console.log("uniqueBranches:", uniqueBranches);
   console.log("branches:", branches);
+
   return (
     <Box className="mainCardFilter">
       {!loading && (
@@ -132,10 +134,12 @@ const UserFilter = () => {
                   size="small"
                   multiple
                   limitTags={2}
-                  groupBy={(option) => option.firstLetter}
+                  // groupBy={(option) => option.Branch_Code}
                   // options={branches}
-                  options={uniqueBranches}
-                  getOptionLabel={(branch) => branch.BR_CODE}
+                  options={uniqueBranches.sort(
+                    (a, b) => -b.Branch_Code.localeCompare(a.Branch_Code)
+                  )}
+                  getOptionLabel={(branch) => branch.Branch_Code}
                   // defaultValue={[Branches[0], Branches[1], Branches[2]]}
                   renderInput={(params) => (
                     <TextField {...params} label="Branch" variant="standard" />
@@ -149,85 +153,88 @@ const UserFilter = () => {
           <Box>{JSON.stringify(filtersSet[0].selectedOptionState)}</Box>
           <Box>{JSON.stringify(filtersSet[1].selectedOptionState)}</Box>
           <Box>{JSON.stringify(filtersSet[2].selectedOptionState)}</Box> */}
-          <Box>
-            <Grid
-              sx={{
-                pt: "5px",
-                mb: "5px",
-
-                boxSizing: "border-box",
-              }}
-              container
-              rowSpacing={0}
-              columnSpacing={1}
-            >
-              {isFiltContained ? (
-                <>
-                  {filtersSet.map((item, index) => {
-                    if (item.name === currentCategory.toLowerCase()) {
-                      return (
-                        <React.Fragment key={index}>
-                          {item.filters.map((item2, index2) => {
-                            const filterName = item2.name;
-                            return (
-                              <React.Fragment key={index2}>
-                                <Grid className="dropDown" item xs={4}>
-                                  <Box style={{ textAlign: "center" }}>
-                                    <Typography variant="h6" fontWeight={{ sm: "600" }}>
-                                      {/* {item2.name.charAt(0).toUpperCase() + item2.name.slice(1)} */}
-                                      {item2.displayName}
-                                    </Typography>
-                                  </Box>
-                                  <select
-                                    value={item.selectedOptionState[filterName]}
-                                    style={{ width: "100%" }}
-                                    onChange={(e) => {
-                                      const filterKeyName = item2.name;
-                                      handleChangeOption(e, currentCategory, filterKeyName);
-                                    }}
-                                  >
-                                    <option value="">Please Select</option>
-                                    {item2.choices.map((option, indexOption) => {
-                                      return (
-                                        <option value={option} key={indexOption}>
-                                          {option ? option : "ไม่มี"}
-                                        </option>
-                                      );
-                                    })}
-                                  </select>
-                                </Grid>
-                              </React.Fragment>
-                            );
-                          })}
-                        </React.Fragment>
-                      );
-                    }
-                  })}
-                </>
-              ) : (
-                <>
-                  <Box sx={{ display: "flex" }}>
-                    <Box sx={{ flexGrow: 1, height: "51.72px" }}></Box>
-                  </Box>
-                </>
-              )}
-            </Grid>
-          </Box>
           {isFiltContained.length > 0 ? (
-            <>
-              <Box className="resetBtn">
-                <Button
-                  disableRipple={true}
-                  sx={{ p: 0, backgroundColor: "#42528A" }}
-                  onClick={() => dispatch(clearSelectedFilter())}
-                  variant="contained"
+            <Box>
+              <Box>
+                <Grid
+                  sx={{
+                    pt: "5px",
+                    mb: "5px",
+
+                    boxSizing: "border-box",
+                  }}
+                  container
+                  rowSpacing={0}
+                  columnSpacing={1}
                 >
-                  reset
-                </Button>
+                  <>
+                    {filtersSet.map((item, index) => {
+                      if (item.name === currentCategory.toLowerCase()) {
+                        return (
+                          <React.Fragment key={index}>
+                            {item.filters.map((item2, index2) => {
+                              const filterName = item2.name;
+                              return (
+                                <React.Fragment key={index2}>
+                                  <Grid className="dropDown" item xs={4}>
+                                    <Box style={{ textAlign: "center" }}>
+                                      <Typography variant="h6" fontWeight={{ sm: "600" }}>
+                                        {/* {item2.name.charAt(0).toUpperCase() + item2.name.slice(1)} */}
+                                        {item2.displayName}
+                                      </Typography>
+                                    </Box>
+                                    <select
+                                      value={item.selectedOptionState[filterName]}
+                                      style={{ width: "100%" }}
+                                      onChange={(e) => {
+                                        const filterKeyName = item2.name;
+                                        handleChangeOption(e, currentCategory, filterKeyName);
+                                      }}
+                                    >
+                                      <option value="">Please Select</option>
+                                      {item2.choices.map((option, indexOption) => {
+                                        return (
+                                          <option value={option} key={indexOption}>
+                                            {option ? option : "ไม่มี"}
+                                          </option>
+                                        );
+                                      })}
+                                    </select>
+                                  </Grid>
+                                </React.Fragment>
+                              );
+                            })}
+                          </React.Fragment>
+                        );
+                      }
+                    })}
+                  </>
+                </Grid>
+              </Box>
+              <>
+                <Box className="resetBtn">
+                  <Button
+                    disableRipple={true}
+                    sx={{ p: 0, backgroundColor: "#42528A" }}
+                    onClick={() => dispatch(clearSelectedFilter())}
+                    variant="contained"
+                  >
+                    reset
+                  </Button>
+                </Box>
+              </>
+            </Box>
+          ) : (
+            <>
+              {/*กำหนด minHeight: "82.152px" เพื่อให้มีค่าเริ่มต้นความสูงเท่ากับความสูงในกรณีที่มีfilter rowเดียว */}
+              <Box sx={{ display: "flex", minHeight: "82.152px" }}>
+                <Box
+                  sx={{
+                    flexGrow: 1,
+                  }}
+                ></Box>
               </Box>
             </>
-          ) : (
-            <></>
           )}
         </>
       )}
