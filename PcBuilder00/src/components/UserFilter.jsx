@@ -39,7 +39,10 @@ const UserFilter = () => {
     return filterItem.name === currentCategory.toLowerCase();
   });
   const parts = useSelector((state) => state.customize.partData);
-  const { branches, loading } = useSelector((state) => state.products);
+  const { branches, loading, plainBranches } = useSelector((state) => state.products);
+  const uniqueBranches = Array.from(new Set(plainBranches.map((item) => JSON.stringify(item)))).map(
+    (item) => JSON.parse(item)
+  );
 
   //* isOptAvailable?
   const isFiltContained = Object.keys(currentFilters.selectedOptionState);
@@ -83,6 +86,8 @@ const UserFilter = () => {
     return <>Loading...</>;
   }
 
+  console.log("uniqueBranches:", uniqueBranches);
+  console.log("branches:", branches);
   return (
     <Box className="mainCardFilter">
       {!loading && (
@@ -127,8 +132,10 @@ const UserFilter = () => {
                   size="small"
                   multiple
                   limitTags={2}
-                  options={branches}
-                  getOptionLabel={(branch) => branch}
+                  groupBy={(option) => option.firstLetter}
+                  // options={branches}
+                  options={uniqueBranches}
+                  getOptionLabel={(branch) => branch.BR_CODE}
                   // defaultValue={[Branches[0], Branches[1], Branches[2]]}
                   renderInput={(params) => (
                     <TextField {...params} label="Branch" variant="standard" />
