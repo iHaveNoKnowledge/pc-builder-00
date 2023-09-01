@@ -195,8 +195,17 @@ export const filterSlice = createSlice({
       }
     },
     branchSelect: (state, action) => {
-      console.log("BRanchesSelect:", action.payload);
-      state.selectedBranches = [...action.payload];
+      const [data] = action.payload;
+
+      const BR_CODE = data?.BR_CODE;
+      if (typeof action.payload === "object") {
+        const payload = action.payload.map((item) => item.BR_CODE);
+        console.log("yes this shit is an fucking object", BR_CODE, "payload:", payload);
+        state.selectedBranches = [...payload];
+      } else {
+        console.log("BRanchesSelect:", action.payload);
+        state.selectedBranches = [...action.payload];
+      }
     },
   },
 });

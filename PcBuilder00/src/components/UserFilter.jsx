@@ -44,6 +44,30 @@ const UserFilter = () => {
     (item) => JSON.parse(item)
   );
 
+  // สร้างออบเจกต์ Map เพื่อเก็บค่า BR_CODE ที่ไม่ซ้ำกัน
+  const uniqueBRCodeMap = new Map();
+
+  plainBranches.forEach((item) => {
+    const { BR_CODE, BR_NAME } = item;
+
+    // ถ้า BR_CODE ยังไม่ถูกเพิ่มใน Map
+    if (!uniqueBRCodeMap.has(BR_CODE)) {
+      // ใส่ BR_CODE ลงใน Map และกำหนด BR_NAME เป็นอาร์เรย์ที่มี BR_NAME เดียว
+      uniqueBRCodeMap.set(BR_CODE, [BR_NAME]);
+    } else {
+      // ถ้า BR_CODE มีอยู่แล้วใน Map ให้นำ BR_NAME ไปเพิ่มในอาร์เรย์ที่มีอยู่แล้ว
+      uniqueBRCodeMap.get(BR_CODE).push(BR_NAME);
+    }
+  });
+
+  // แปลงค่า Map เป็นรายการข้อมูลใหม่
+  const uniqueData = Array.from(uniqueBRCodeMap, ([BR_CODE, BR_NAME]) => ({
+    BR_CODE,
+    BR_NAME: BR_NAME.join(", "), // รวม BR_NAME เป็น string ด้วยเครื่องหมายคอมม่า
+  }));
+
+  console.log("uniqueData:", uniqueData);
+
   //* isOptAvailable?
   const isFiltContained = Object.keys(currentFilters.selectedOptionState);
 
@@ -80,6 +104,7 @@ const UserFilter = () => {
 
   //* AutoComplete
   const handleAutocompleteChange = (event, newValue) => {
+    console.log("newValue:", newValue);
     dispatch(branchSelect(newValue));
   };
   if (loading) {
@@ -132,14 +157,16 @@ const UserFilter = () => {
                   size="small"
                   multiple
                   limitTags={2}
-                  groupBy={(option) => option.firstLetter}
                   // options={branches}
-                  options={uniqueBranches}
+                  options={uniqueData}
                   getOptionLabel={(branch) => branch.BR_CODE}
                   // defaultValue={[Branches[0], Branches[1], Branches[2]]}
                   renderInput={(params) => (
                     <TextField {...params} label="Branch" variant="standard" />
                   )}
+                  isOptionEqualToValue={(option, value) =>
+                    option.BR_CODE === value.BR_CODE && option.BR_NAME === value.BR_NAME
+                  }
                   onChange={handleAutocompleteChange}
                 />
               </Box>

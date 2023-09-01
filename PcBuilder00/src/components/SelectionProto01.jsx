@@ -164,7 +164,7 @@ function PostCard({ items, totalRows }) {
       item.productDescription.toLowerCase().includes(textSearch.toLowerCase())
     );
   });
-
+  console.log("selectedBranches", selectedBranches);
   let filteredSKUs = searchedShowProduct
     .filter((sku) => sku.BRANCH_CODE.some((branch) => selectedBranches.includes(branch)))
     .map((sku) => ({
