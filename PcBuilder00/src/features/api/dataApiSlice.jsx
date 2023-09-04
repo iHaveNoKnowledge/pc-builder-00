@@ -8,7 +8,7 @@ export const apiSliceDb = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl,
   }),
-  tagTypes: ["Sets"],
+  tagTypes: ["Sets", "DbItems"],
   endpoints: (builder) => ({
     getDbItem: builder.query({
       query: ({ dbCategory, currentPage }) =>
@@ -18,7 +18,7 @@ export const apiSliceDb = createApi({
 
     getSets: builder.query({
       query: () => "/sets",
-      providesTags: ["Sets"], //Add Tag ให้กับข้อมูล]ที่ fetch มา
+      providesTags: (result, err, arg) => [{ type: "Sets", id: "all" }], //Add Tag ให้กับข้อมูล]ที่ fetch มา
     }),
 
     updateData: builder.mutation({
@@ -35,7 +35,10 @@ export const apiSliceDb = createApi({
         url: `/pop/${resourceID}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["Sets"], //หากTagที่ระบุมีการเปลี่ยนแปลงจากฟังชั่นนี้ สมาชิกใน cache ตัวใดๆที่มีTagที่ระบุนี้จะถูกสร้างใหม่หากข้อมูลไม่ตรงกัน
+      invalidatesTags: (result, error, arg) => [
+        { type: "Sets", id: "all" },
+        { type: "Sets", id: arg.id },
+      ], //หากTagที่ระบุมีการเปลี่ยนแปลงจากฟังชั่นนี้ สมาชิกใน cache ตัวใดๆที่มีTagที่ระบุนี้จะถูกสร้างใหม่หากข้อมูลไม่ตรงกัน
     }),
   }),
 });
