@@ -65,8 +65,8 @@ const CustomizationProto02 = () => {
 
   return (
     <>
-      <List sx={{ width: "97%", paddingLeft: "8px" }}>
-        <SumCustomize />
+      <List sx={{ width: "97%", paddingLeft: "8px", paddingTop: "0px" }}>
+        {/* <SumCustomize /> */}
         {/* <div>ปัจจุบันเลือกไร: {currentCategory}</div> */}
         <Box>
           {parts.map((item, index) => {

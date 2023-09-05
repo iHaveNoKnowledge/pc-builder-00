@@ -5,3 +5,8 @@
     margin-bottom: 6px;
     box-shadow: 2px 2px 2px 1px rgba(92, 92, 92, 0.5) ;
 }
+
+div > .css-11v1nmh-MuiButtonBase-root-MuiButton-root {
+    margin: 10px;
+    color: rgb(88, 88, 88) !important;
+}

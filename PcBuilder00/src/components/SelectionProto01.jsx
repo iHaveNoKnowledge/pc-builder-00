@@ -256,8 +256,8 @@ function PostCard({ items, totalRows }) {
   //** หน้าเว็บ
   return (
     <>
-      <UserFilter />
-      <Bottom />
+      {/* <UserFilter /> */}
+      {/* <Bottom /> */}
       <Grid container spacing="10" columns={{ xs: 4, sm: 12, md: 12 }}>
         {productPaginated.map((item, index) => {
           const pngPath = `/images/${item.compatible.toLowerCase().split(" ", 1)}.png`;
