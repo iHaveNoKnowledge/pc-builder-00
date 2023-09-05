@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
 import SearchIcon from "@mui/icons-material/Search";
@@ -26,6 +26,12 @@ const UserFilter = () => {
       zIndex: `${zIndexCollections.branchFilter} !important`,
       position: "absolute !important",
       background: "white !important",
+    },
+    ".MuiPopper-root": {
+      zoom: "75% !important",
+      color: "pink !important",
+      width: "2500px !important",
+      position: "static !important",
     },
   };
 
@@ -80,6 +86,7 @@ const UserFilter = () => {
 
   //* usestate
   const [query, setQuery] = useState("");
+  const [anchorEl, setAnchorEl] = useState(null);
 
   //*  handleFunctions
   const handleSearch = (e) => {
@@ -112,6 +119,7 @@ const UserFilter = () => {
   //* AutoComplete
   const handleAutocompleteChange = (event, newValue) => {
     console.log("newValue:", newValue);
+
     dispatch(branchSelect(newValue));
   };
   if (loading) {
@@ -159,9 +167,7 @@ const UserFilter = () => {
               </Box>
               <Box sx={{ width: "32.7%" }}>
                 <Autocomplete
-                  fullWidth={true}
-                  disablePortal={true}
-                  sx={autoCompleteInput}
+                  style={autoCompleteInput}
                   size="small"
                   multiple
                   limitTags={2}
