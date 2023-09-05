@@ -9,7 +9,10 @@ const initialState = {
   //   Mainboard: { formFactor: "", brand: "", socket: "", chipset: "", slot: 0 },
   //   RAM: { brand: "", type: "", count: 0 },
   // },
-  filterOptions: null,
+
+  //! ไม่แน่ใจว่าได้ใช้ไหมทดลอง comment ดู //ยกเลิก หมดอายุ
+  // filterOptions: null,
+
   // expression: ` (!selectedOpts.brand || product.brand === selectedOpts.brand) &&
   // (!selectedOpts.model || product.model === selectedOpts.model) &&
   // (!selectedOpts.socket || product.socket === selectedOpts.socket)`,
@@ -95,7 +98,7 @@ export const filterSlice = createSlice({
     },
 
     getCategorizedData: (state, action) => {
-      //ใช้รับ showProduct จาก selectionProto(ภายในuseEffect), showProductเป็น รายการproducts ที่ได้ผ่านจากการเลือก category มาแล้ว ถือว่าเป็น categorizedData
+      //ใช้รับ showProduct จาก selectionProto01(ภายในuseEffect), showProductเป็น รายการproducts ที่ได้ผ่านจากการเลือก category มาแล้ว ถือว่าเป็น categorizedData
       const { showProduct: categorizedData, category } = action.payload;
       console.log("categorizedData", categorizedData);
 
@@ -106,11 +109,13 @@ export const filterSlice = createSlice({
         const cpuModelOptions = [...new Set(categorizedData?.map((item) => item.model))];
         const cpuSocketOptions = [...new Set(categorizedData?.map((item) => item.socket))];
 
-        state.filterOptions = [
-          { filterName: "compatible", value: cpuBrandOptions.sort() },
-          { filterName: "model", value: cpuModelOptions.sort() },
-          { filterName: "socket", value: cpuSocketOptions.sort() },
-        ];
+        //! s
+        // state.filterOptions = [
+        //   { filterName: "compatible", value: cpuBrandOptions.sort() },
+        //   { filterName: "model", value: cpuModelOptions.sort() },
+        //   { filterName: "socket", value: cpuSocketOptions.sort() },
+        // ];
+
         // นำ options ที่สร้างมาใส่ใน filter แต่ละรายการ
         state.filtersSet[0].filters[0].choices = cpuBrandOptions;
         state.filtersSet[0].filters[1].choices = cpuModelOptions;

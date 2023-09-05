@@ -287,6 +287,7 @@ function PostCard({ items, totalRows }) {
                   {isLoading ? (
                     isLoading && (
                       <CardMedia
+                        loading="lazy"
                         component="img"
                         src={jpgPath || pngPath}
                         alt={item.title}
@@ -296,6 +297,7 @@ function PostCard({ items, totalRows }) {
                     )
                   ) : (
                     <CardMedia
+                      loading="lazy"
                       component="img"
                       src={item.img}
                       alt={item.title}

@@ -40,9 +40,6 @@ const UserFilter = () => {
   });
   const parts = useSelector((state) => state.customize.partData);
   const { branches, loading, plainBranches } = useSelector((state) => state.products);
-  const uniqueBranches = Array.from(new Set(plainBranches.map((item) => JSON.stringify(item)))).map(
-    (item) => JSON.parse(item)
-  );
 
   // สร้างออบเจกต์ Map เพื่อเก็บค่า BR_CODE ที่ไม่ซ้ำกัน
   const uniqueBRCodeMap = new Map();
@@ -66,7 +63,17 @@ const UserFilter = () => {
     BR_NAME: BR_NAME.join(", "), // รวม BR_NAME เป็น string ด้วยเครื่องหมายคอมม่า
   }));
 
-  console.log("uniqueData:", uniqueData);
+  const sortedUniqueData = uniqueData.sort((a, b) => {
+    if (a.BR_CODE < b.BR_CODE) {
+      return -1;
+    } else if (a.BR_CODE > b.BR_CODE) {
+      return 1;
+    } else {
+      return 0;
+    }
+  });
+
+  console.log("sorted uniqueData:", sortedUniqueData);
 
   //* isOptAvailable?
   const isFiltContained = Object.keys(currentFilters.selectedOptionState);
@@ -111,7 +118,6 @@ const UserFilter = () => {
     return <>Loading...</>;
   }
 
-  console.log("uniqueBranches:", uniqueBranches);
   console.log("branches:", branches);
   return (
     <Box className="mainCardFilter">
@@ -153,6 +159,8 @@ const UserFilter = () => {
               </Box>
               <Box sx={{ width: "32.7%" }}>
                 <Autocomplete
+                  fullWidth={true}
+                  disablePortal={true}
                   sx={autoCompleteInput}
                   size="small"
                   multiple
