@@ -17,28 +17,34 @@ function App() {
         },
       }}
     >
-      <Grid container columns={{ xs: 4, md: 12 }} rowHeight={25}>
-        <Grid item xs={12} md={12}>
-          <Box sx={{ px: 1 }}></Box>
+      <Grid container columns={{ xs: 4, md: 12 }}>
+        <Grid item xs={4} md={3} rowHeight={25} columns={{ xs: 4, md: 12 }}>
+          <Grid item xs={4} md={12}>
+            <SumCustomize />
+          </Grid>
+
+          <Grid item xs={4} md={12}>
+            <CustomizationProto02 />
+          </Grid>
         </Grid>
 
-        <Grid item xs={4} md={3}>
-          <SumCustomize />
-        </Grid>
-        <Grid item xs={4} md={9}>
-          <Box sx={{ pl: 2 }}>
-            <UserFilter /> <Bottom />
-          </Box>
-        </Grid>
+        <Grid item xs={4} md={9} rowHeight={25}>
+          <Grid item xs={12} md={12} columns={{ xs: 4, md: 12 }}>
+            <Box sx={{ pl: 2, display: "flex", flexDirection: "column" }}>
+              <Box sx={{ flexGrow: 1 }}>
+                <UserFilter />
+              </Box>
+              <Box>
+                <Bottom />
+              </Box>
+            </Box>
+          </Grid>
 
-        <Grid item xs={4} md={3}>
-          <CustomizationProto02 />
-        </Grid>
-
-        <Grid item xs={4} md={9}>
-          <Box sx={{ pl: 2 }}>
-            <SelectionProto01 />
-          </Box>
+          <Grid item xs={12} md={12}>
+            <Box sx={{ pl: 2 }}>
+              <SelectionProto01 />
+            </Box>
+          </Grid>
         </Grid>
       </Grid>
     </Container>
