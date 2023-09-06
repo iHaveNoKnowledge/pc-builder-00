@@ -1,0 +1,16 @@
+เอาไว้เช็คเบอร์โทร แบบ 9 digit กับ 10 digit
+const validate = (value) => {
+    const $9DigitPattern = /^0[2,3,4,5,7]\d{7}$/;
+    const $10DigitPattern = /^(06|08|09)\d{8}$/;
+    if (checkedItem.contactInfoBool != true) {
+      setBtnSwitch(true);
+    } else if ($9DigitPattern.test(value)) {
+      setBtnSwitch(true);
+    } else if ($10DigitPattern.test(value)) {
+      setBtnSwitch(true);
+    } else {
+      setBtnSwitch(false);
+    }
+
+    return "";
+  };

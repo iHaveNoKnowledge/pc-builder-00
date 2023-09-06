@@ -157,7 +157,7 @@ function PostCard({ items, totalRows }) {
       item.productDescription.toLowerCase().includes(textSearch.toLowerCase())
     );
   });
-
+  console.log("selectedBranches", selectedBranches);
   let filteredSKUs = searchedShowProduct
     .filter((sku) => sku.BRANCH_CODE.some((branch) => selectedBranches.includes(branch)))
     .map((sku) => ({
@@ -187,7 +187,7 @@ function PostCard({ items, totalRows }) {
   //* pagination////
   const curPageNum2 = useSelector((state) => state.pagination.currentPage);
   const [curPageNum, setCurPageNum] = useState(1);
-  const cardsPerPage = 9;
+  const cardsPerPage = 12;
   const totalPages = Math.ceil(showProductWithFilter.length / cardsPerPage);
 
   useEffect(() => {
@@ -246,7 +246,8 @@ function PostCard({ items, totalRows }) {
   //** หน้าเว็บ
   return (
     <>
-      <UserFilter />
+      {/* <UserFilter /> */}
+      {/* <Bottom /> */}
       <Grid container spacing="10" columns={{ xs: 4, sm: 12, md: 12 }}>
         {productPaginated.map((item, index) => {
           const pngPath = `/images/${item.compatible.toLowerCase().split(" ", 1)}.png`;
@@ -264,7 +265,7 @@ function PostCard({ items, totalRows }) {
           };
 
           return (
-            <Grid item xs={2} sm={4} md={4} key={index}>
+            <Grid item xs={2} sm={3} md={3} key={index}>
               <Card
                 sx={{
                   boxShadow: "2px 2px 2px 1px rgba(92, 92, 92, 0.5)",
@@ -276,6 +277,7 @@ function PostCard({ items, totalRows }) {
                   {isLoading ? (
                     isLoading && (
                       <CardMedia
+                        loading="lazy"
                         component="img"
                         src={jpgPath || pngPath}
                         alt={item.title}
@@ -285,6 +287,7 @@ function PostCard({ items, totalRows }) {
                     )
                   ) : (
                     <CardMedia
+                      loading="lazy"
                       component="img"
                       src={item.img}
                       alt={item.title}
@@ -295,19 +298,26 @@ function PostCard({ items, totalRows }) {
                   )}
                   {!isLoading && !item.img && <span>ไม่มีภาพ</span>}
 
-                  <CardContent sx={{ height: "165px" }}>
+                  <CardContent
+                    style={{
+                      minHeight: "165px",
+                      display: "flex",
+                      flexDirection: "column",
+                      paddingBottom: "6px",
+                      flex: "auto",
+                    }}
+                  >
                     <Box
                       sx={{
-                        display: "flex",
                         bgcolor: "background.paper",
-                        flexGrow: "1",
+                        display: "flex",
                       }}
                     >
                       <Typography
                         variant="body1"
                         sx={{
                           flexGrow: "1",
-                          fontSize: "1.2rem",
+                          fontSize: "1.1rem",
                           fontWeight: "bolder",
                         }}
                       >
@@ -324,16 +334,22 @@ function PostCard({ items, totalRows }) {
                     <Typography
                       textOverflow="clip"
                       variant="body2"
-                      sx={{ height: "80px", overflowY: "auto", marginTop: "5px", flexGrow: "1" }}
+                      sx={{
+                        height: "auto",
+
+                        marginTop: "5px",
+                        fontSize: "1rem",
+                      }}
                     >
                       {item.productDescription}
                     </Typography>
+
+                    <Box sx={{ flexGrow: 1 }}></Box>
 
                     <Divider sx={{ pt: 1 }} />
 
                     <Box sx={{ display: "flex", paddingTop: "1px", height: "35%" }}>
                       <ListItemText
-                        sx={{ fontSize: "2rem" }}
                         primary={
                           <>
                             <Typography sx={{ fontSize: "1.2rem", fontWeight: "bolder" }}>
@@ -346,27 +362,19 @@ function PostCard({ items, totalRows }) {
                           </>
                         }
                         secondary={
-                          item.promotionPrice - item.srp !== 0 ? (
-                            <React.Fragment>
-                              <Typography
-                                sx={{ display: "inline", fontSize: "0.9rem" }}
-                                component="span"
-                                variant="caption"
-                                color="text.secondary"
-                              >
-                                ราคาปกติ ฿ {item.srp.toLocaleString()}.-
-                              </Typography>
-                            </React.Fragment>
-                          ) : (
-                            <React.Fragment>
-                              <Typography
-                                sx={{ display: "inline", fontSize: "0.9rem" }}
-                                component="span"
-                                variant="caption"
-                                color="text.secondary"
-                              ></Typography>
-                            </React.Fragment>
-                          )
+                          <React.Fragment>
+                            <Typography
+                              sx={{ display: "inline", fontSize: "0.9rem" }}
+                              component="span"
+                              variant="caption"
+                              color="text.secondary"
+                            >
+                              {item.promotionPrice - item.srp !== 0
+                                ? `ราคาปกติ ฿
+                              ${item.srp.toLocaleString()}.-`
+                                : ""}
+                            </Typography>
+                          </React.Fragment>
                         }
                       />
 
@@ -448,8 +456,6 @@ function PostCard({ items, totalRows }) {
           page={curPageNum2}
         />
       </Stack>
-
-      <Bottom />
     </>
   );
 }

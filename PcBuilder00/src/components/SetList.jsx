@@ -60,6 +60,7 @@ export const theme = createTheme({
     MuiButton: {
       styleOverrides: {
         root: {
+          zoom: "120%",
           height: "27.5px",
           borderRadius: "0px",
           fontFamily: "Chakra Petch",
@@ -70,6 +71,7 @@ export const theme = createTheme({
         },
       },
     },
+    typography: {},
   },
 });
 
@@ -85,7 +87,7 @@ export default function SetList() {
   let searchResult = "";
 
   //* นำ api มาใช้
-  const [getSetsData, { data: sets, error, isLoading, isSuccess, isUninitialized }] =
+  const [lazyGetSetsData, { data: sets, error, isLoading, isSuccess, isUninitialized }] =
     useLazyGetSetsQuery();
   const [sortedData, setSortedData] = useState([]);
   const [rows, setRows] = useState(0);
@@ -149,7 +151,7 @@ export default function SetList() {
   // onclick เปิด Dialog
   const handleClickOpen = () => {
     setOpen(true);
-    getSetsData();
+    lazyGetSetsData();
     fetchData();
   };
 
@@ -214,7 +216,7 @@ export default function SetList() {
     e.stopPropagation();
     setIdDelete(id);
     setOpentAlert(true);
-    getSetsData();
+    lazyGetSetsData();
     setDeleteSet((prev) => {
       return {
         ...prev,

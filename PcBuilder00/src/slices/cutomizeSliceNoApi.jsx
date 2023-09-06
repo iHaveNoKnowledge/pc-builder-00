@@ -10,6 +10,7 @@ const initialState = {
       typeMax: 1,
       typeAmount: 0,
       listItems: [],
+      isStackable: false,
     },
     {
       category: "mb",
@@ -18,6 +19,7 @@ const initialState = {
       typeMax: 1,
       typeAmount: 0,
       listItems: [],
+      isStackable: false,
     },
     {
       category: "ram",
@@ -26,6 +28,7 @@ const initialState = {
       typeMax: 4,
       typeAmount: 0,
       listItems: [],
+      isStackable: true,
     },
     {
       category: "vga",
@@ -34,6 +37,7 @@ const initialState = {
       typeMax: null,
       typeAmount: 0,
       listItems: [],
+      isStackable: false,
     },
     {
       category: "ssd",
@@ -42,6 +46,7 @@ const initialState = {
       typeMax: null,
       typeAmount: 0,
       listItems: [],
+      isStackable: true,
     },
     {
       category: "hdd",
@@ -50,6 +55,7 @@ const initialState = {
       typeMax: null,
       typeAmount: 0,
       listItems: [],
+      isStackable: true,
     },
     {
       category: "powersupply",
@@ -58,6 +64,7 @@ const initialState = {
       typeMax: null,
       typeAmount: 0,
       listItems: [],
+      isStackable: false,
     },
     {
       category: "case",
@@ -66,6 +73,7 @@ const initialState = {
       typeMax: null,
       typeAmount: 0,
       listItems: [],
+      isStackable: false,
     },
     {
       category: "liquidcooling",
@@ -74,6 +82,7 @@ const initialState = {
       typeMax: null,
       typeAmount: 0,
       listItems: [],
+      isStackable: false,
     },
     {
       category: "aircooling",
@@ -82,6 +91,7 @@ const initialState = {
       typeMax: null,
       typeAmount: 0,
       listItems: [],
+      isStackable: false,
     },
     {
       category: "fancase",
@@ -90,6 +100,7 @@ const initialState = {
       typeMax: null,
       typeAmount: 0,
       listItems: [],
+      isStackable: false,
     },
     {
       category: "thermalcompound",
@@ -98,6 +109,7 @@ const initialState = {
       typeMax: null,
       typeAmount: 0,
       listItems: [],
+      isStackable: false,
     },
     {
       category: "sleevecable",
@@ -106,6 +118,7 @@ const initialState = {
       typeMax: null,
       typeAmount: 0,
       listItems: [],
+      isStackable: false,
     },
     {
       category: "lcs",
@@ -114,6 +127,7 @@ const initialState = {
       typeMax: null,
       typeAmount: 0,
       listItems: [],
+      isStackable: false,
     },
     {
       category: "gpuextender",
@@ -122,6 +136,7 @@ const initialState = {
       typeMax: null,
       typeAmount: 0,
       listItems: [],
+      isStackable: false,
     },
     {
       category: "gpuholder",
@@ -130,6 +145,7 @@ const initialState = {
       typeMax: null,
       typeAmount: 0,
       listItems: [],
+      isStackable: false,
     },
   ],
   itemsList: [],
@@ -190,13 +206,27 @@ export const customizeSlice = createSlice({
             }
           }
         } else {
-          if (currentStateType.listItems.length > 0) {
+          console.log(currentStateType.category, "ไม่มีtypeMaxนี่นา");
+          if (currentStateType.isStackable) {
             if (isFoundItem) {
-              isFoundItem.selectAmount++;
+              console.log("เจอซ้ำ", isFoundItem.id);
+              isFoundItem.selectAmount += 1;
+            } else {
+              console.log("ไม่เจอ", isFoundItem);
+              currentStateType.listItems.push(newArray2);
             }
           } else {
-            console.log(`ไม่เคยมี Item ใน category ${currentStateType.category} มาก่อนต้องใส่ลงไป`);
-            currentStateType.listItems.push(newArray2);
+            if (currentStateType.listItems.length > 0) {
+              console.log("มีไอเต็มใน", currentStateType.category, "หรือไม่");
+              if (isFoundItem) {
+                isFoundItem.selectAmount++;
+              }
+            } else {
+              console.log(
+                `ไม่เคยมี Item ใน category ${currentStateType.category} มาก่อนต้องใส่ลงไป`
+              );
+              currentStateType.listItems.push(newArray2);
+            }
           }
         }
       }

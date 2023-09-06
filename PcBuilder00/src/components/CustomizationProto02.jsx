@@ -65,12 +65,11 @@ const CustomizationProto02 = () => {
 
   return (
     <>
-      <List sx={{ width: "97%", paddingLeft: "8px" }}>
-        <SumCustomize />
+      <List sx={{ width: "97%", paddingLeft: "8px", paddingTop: "0px" }}>
+        {/* <SumCustomize /> */}
         {/* <div>ปัจจุบันเลือกไร: {currentCategory}</div> */}
         <Box>
           {parts.map((item, index) => {
-            console.log(item.category, "item.typeMax:", item.typeMax);
             return (
               <React.Fragment key={index}>
                 {item.listItems[0] ? (
@@ -102,7 +101,7 @@ const CustomizationProto02 = () => {
                                     <div>
                                       {/* {miniItem.selectAmount * miniItem.count} */}
                                       {item.typeMax ? item.typeAmount : <></>}
-                                      {item.typeMax  && <>/{item.typeMax}</>}
+                                      {item.typeMax && <>/{item.typeMax}</>}
                                     </div>
                                   </Box>
 
@@ -271,7 +270,7 @@ const CustomizationProto02 = () => {
                         <Box>
                           <div>
                             {item.selectAmount * item.count ? item.selectAmount * item.count : 0}
-                            {item.typeMax  && <>/{item.typeMax}</>}
+                            {item.typeMax && <>/{item.typeMax}</>}
                           </div>
                         </Box>
                       </ListItem>

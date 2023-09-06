@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { apiSliceDb } from "../features/api/dataApiSlice";
+import plainBranches from "../json/filtered_data.json";
 
 const initialState = {
   products: [],
@@ -7,6 +8,7 @@ const initialState = {
   error: null,
   totalRows: 1,
   branches: null,
+  plainBranches,
 };
 
 const productsSlice = createSlice({

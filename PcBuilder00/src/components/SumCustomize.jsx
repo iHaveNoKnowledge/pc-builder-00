@@ -76,7 +76,9 @@ const SumCustomize = () => {
         </Box>
         <Divider />
         <Box>
-          <Button onClick={(e) => handleReset()}>Reset</Button>
+          <Button variant="outlined" onClick={(e) => handleReset()}>
+            Clear
+          </Button>
         </Box>
       </Box>
     </>
