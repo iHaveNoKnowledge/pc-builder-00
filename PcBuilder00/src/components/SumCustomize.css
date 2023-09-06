@@ -6,7 +6,7 @@
     box-shadow: 2px 2px 2px 1px rgba(92, 92, 92, 0.5) ;
 }
 
-div > .css-11v1nmh-MuiButtonBase-root-MuiButton-root {
+div > .MuiButton-outlined {
     margin: 7.5px;
     color: rgb(0, 90, 163) !important;
 }
