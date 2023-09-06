@@ -31,3 +31,16 @@
    height: 25px;
    border-radius: 2px;
 }
+
+
+
+/* div[role="presentation"] {
+    transform: translate(85%) !important;
+    transition: transform 0.3s ease !important;
+    color: pink !important;
+    transform: scale(85%) !important;
+    left: 0% !important;
+    zoom:85%;
+    
+} */
+

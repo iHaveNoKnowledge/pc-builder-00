@@ -8,10 +8,20 @@ import Box from "@mui/material/Box";
 import "./UserFilter.css";
 import { useDispatch, useSelector } from "react-redux";
 import { changeTextSearch, setSelectedValuesCopy } from "../slices/userFilterSlice";
-import { Typography, Autocomplete } from "@mui/material";
+import { Typography, Autocomplete, Popper } from "@mui/material";
 import { clearSelectedFilter, branchSelect } from "../slices/userFilterSlice";
 import { setDefault } from "../slices/paginationSlice";
 import { zIndexCollections } from "./zindexs";
+import { CustomPopper } from "../components/CustomMUI/CustomPoper";
+
+// const CustomPopper = (props)=>{
+//   const {} = props
+//   return(
+//     <Popper>
+
+//     </Popper>
+//   )
+// }
 
 const UserFilter = () => {
   //* Style
@@ -26,12 +36,6 @@ const UserFilter = () => {
       zIndex: `${zIndexCollections.branchFilter} !important`,
       position: "absolute !important",
       background: "white !important",
-    },
-    ".MuiPopperRoot": {
-      zoom: "75% !important",
-      color: "pink !important",
-      width: "2500px !important",
-      position: "static !important",
     },
   };
 
@@ -116,6 +120,7 @@ const UserFilter = () => {
 
   //* AutoComplete
   const handleAutocompleteChange = (event, newValue) => {
+    console.log("newValue:", newValue);
     dispatch(branchSelect(newValue));
   };
   // if (loading) {
@@ -176,6 +181,13 @@ const UserFilter = () => {
                   option.BR_CODE === value.BR_CODE && option.BR_NAME === value.BR_NAME
                 }
                 onChange={handleAutocompleteChange}
+                PopperComponent={(popperProps) => (
+                  <CustomPopper
+                    {...popperProps}
+                    options={uniqueData}
+                    onSelect={handleAutocompleteChange}
+                  />
+                )}
               />
             </Box>
           </form>

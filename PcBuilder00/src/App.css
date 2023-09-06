@@ -1,13 +1,18 @@
-html {
-  font-size: 83.5%;
+#root {
+ 
+   /* transform: scale(0.85);
+  transform-origin:1 0;  */
+} 
+
+/* body {
   background-color: rgb(211, 211, 211);
-  zoom: 85%;
+
+} */
+
+html {
+  background-color: rgb(211, 211, 211);
+  zoom: 0.85;
+  font-size: 83.5%;
   font-family: 'Chakra Petch', sans-serif;
   box-sizing: border-box;
-  padding: 0;
-  /* transform: scale(0.85);
-  transform-origin:50% 0; */
-  
 }
-
-
