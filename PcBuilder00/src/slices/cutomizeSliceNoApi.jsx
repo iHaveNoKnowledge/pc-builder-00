@@ -206,25 +206,23 @@ export const customizeSlice = createSlice({
             }
           }
         } else {
-          console.log(currentStateType.category, "ไม่มีtypeMaxนี่นา");
+          
           if (currentStateType.isStackable) {
             if (isFoundItem) {
-              console.log("เจอซ้ำ", isFoundItem.id);
+              
               isFoundItem.selectAmount += 1;
             } else {
-              console.log("ไม่เจอ", isFoundItem);
+              
               currentStateType.listItems.push(newArray2);
             }
           } else {
             if (currentStateType.listItems.length > 0) {
-              console.log("มีไอเต็มใน", currentStateType.category, "หรือไม่");
+              
               if (isFoundItem) {
                 isFoundItem.selectAmount++;
               }
             } else {
-              console.log(
-                `ไม่เคยมี Item ใน category ${currentStateType.category} มาก่อนต้องใส่ลงไป`
-              );
+              
               currentStateType.listItems.push(newArray2);
             }
           }
@@ -253,9 +251,9 @@ export const customizeSlice = createSlice({
       const miniIndex = action.payload.miniIndex;
 
       if (index !== -1) {
-        console.log("indexที่เอามา splice: ", miniIndex);
+        
         categorizedListItem.splice(miniIndex, 1);
-        console.log("splice แล้วเหลือไร: ", JSON.stringify(categorizedListItem));
+        
 
         //เป็นการรวม SelectAmountที่เหลืออยู่
         let totalAmount = 0; // การจะนับของก็ต้องทำตะกร้าให้เป็น 0 สะก่อน แล้วใช้ for loop ค่อยๆโยนแล้วนับจำนวน
@@ -346,7 +344,7 @@ export const customizeSlice = createSlice({
     //actionนี้ถูกใช้หลังจากเช็คว่าไอเท็มที่แอดมา เป็น mainboard หรือไม่ ถ้ามีให้ใช้ action
     setMax: (state, action) => {
       const index = state.partData.findIndex((item) => item.category === "ram");
-      console.log("setMaxทำงาน: ", index, "Payload:", action.payload);
+      
 
       if (index !== -1 || isMbSelected) {
         //กรณีมี Payload
@@ -356,7 +354,7 @@ export const customizeSlice = createSlice({
           state.partData[index].typeMax = initialState.partData[index].typeMax;
           if (state.partData[1].listItems[0] && !action.payload) {
             //มีเมนบอร์ดป่าว?
-            console.log("มีเมนบอด: ");
+            
             state.partData[index].typeMax = state.partData[1].listItems[0].slot; //มีก็set max slot ไว้
           } else {
             state.partData[index].typeMax = initialState.partData[index].typeMax; // ไม่มีก็set เป็นค่าเริ่มต้น

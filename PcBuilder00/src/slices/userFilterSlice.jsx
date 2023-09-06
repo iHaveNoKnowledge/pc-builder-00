@@ -185,7 +185,7 @@ export const filterSlice = createSlice({
           .join(" && ");
         // Update the expression state
         state.expression = expression;
-        console.log("จะได้ expressionแบบไหน", expression);
+        
       } else if (action.payload === "initial") {
         let expression = Object.keys(state.filtersSet[0].selectedOptionState)
           .map((filter) => {
@@ -194,7 +194,7 @@ export const filterSlice = createSlice({
           .join(" && ");
         // Update the expression state
         state.expression = expression;
-        console.log("Payload initial");
+        
       } else {
         
       }
@@ -205,10 +205,10 @@ export const filterSlice = createSlice({
       const BR_CODE = data?.BR_CODE;
       if (typeof action.payload === "object") {
         const payload = action.payload.map((item) => item.BR_CODE);
-        console.log("yes this shit is an fucking object", BR_CODE, "payload:", payload);
+        
         state.selectedBranches = [...payload];
       } else {
-        console.log("BRanchesSelect:", action.payload);
+        
         state.selectedBranches = [...action.payload];
       }
     },

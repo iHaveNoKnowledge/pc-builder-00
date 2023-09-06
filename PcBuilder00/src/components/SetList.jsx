@@ -117,13 +117,13 @@ export default function SetList() {
   const handleSearch = (e) => {
     if (searchTxt.current.value.length > 0) {
       const txt = searchTxt.current.value;
-      console.log("sortedData: ", sets.updatedRecordset);
+      
       const searchResult = sets.updatedRecordset.filter(
         (item) =>
           (item.setName && item.setName.includes(txt)) ||
           (item.DefaultName && item.DefaultName.toLowerCase().includes(txt.toLowerCase()))
       );
-      console.log("searchResult:", searchResult);
+      
 
       setSortedData(searchResult);
     } else {
@@ -166,15 +166,7 @@ export default function SetList() {
   //* Function กดเลือกSet
   const handleSelect = (e, index1, curPageNum) => {
     e.stopPropagation();
-    console.log(
-      "handleSelect clicked!!",
-      "indexnum:",
-      index1,
-      "indexpage:",
-      curPageNum - 1,
-      "ArrayIndex",
-      (curPageNum - 1) * 10 + index1
-    );
+    
     const arrIdx = (curPageNum - 1) * 10 + index1;
     dispatch(resetCustomized());
     const { setName, customerName, customerTel, sellerName, sellerTel } = sortedData[arrIdx];

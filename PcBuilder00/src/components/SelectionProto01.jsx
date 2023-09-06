@@ -157,7 +157,7 @@ function PostCard({ items, totalRows }) {
       item.productDescription.toLowerCase().includes(textSearch.toLowerCase())
     );
   });
-  console.log("selectedBranches", selectedBranches);
+  
   let filteredSKUs = searchedShowProduct
     .filter((sku) => sku.BRANCH_CODE.some((branch) => selectedBranches.includes(branch)))
     .map((sku) => ({
@@ -167,7 +167,7 @@ function PostCard({ items, totalRows }) {
     }));
 
   //* นำ flter มา filter showproduct
-  console.log("expressionเปลี่ยนไหม?:", expression, "datatype:", typeof !!expression);
+  
   const filterProducts = (products, selectedOpts, expression) => {
     const filteredProducts = products.filter((product) => eval(expression));
     return filteredProducts;

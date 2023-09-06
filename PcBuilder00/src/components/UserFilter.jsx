@@ -27,7 +27,7 @@ const UserFilter = () => {
       position: "absolute !important",
       background: "white !important",
     },
-    ".MuiPopper-root": {
+    ".MuiPopperRoot": {
       zoom: "75% !important",
       color: "pink !important",
       width: "2500px !important",
@@ -79,8 +79,6 @@ const UserFilter = () => {
     }
   });
 
-  console.log("sorted uniqueData:", sortedUniqueData);
-
   //* isOptAvailable?
   const isFiltContained = Object.keys(currentFilters.selectedOptionState);
 
@@ -90,14 +88,13 @@ const UserFilter = () => {
 
   //*  handleFunctions
   const handleSearch = (e) => {
-  
     e.preventDefault();
   };
 
   const handleChangeOption = (e, currentCategory, filterKeyName) => {
     const value = e.target.value;
     const test = value == Number(value);
-    console.log("ตรวจType:", value, ":", typeof value, "ลบกันได้ไหม", test);
+
     dispatch(setSelectedValuesCopy({ value, currentCategory, filterKeyName }));
     dispatch(setDefault());
   };
@@ -119,15 +116,12 @@ const UserFilter = () => {
 
   //* AutoComplete
   const handleAutocompleteChange = (event, newValue) => {
-    console.log("newValue:", newValue);
-
     dispatch(branchSelect(newValue));
   };
   // if (loading) {
   //   return <>Loading...</>;
   // }
 
-  console.log("branches:", branches);
   return (
     <Box className="mainCardFilter">
       <>
