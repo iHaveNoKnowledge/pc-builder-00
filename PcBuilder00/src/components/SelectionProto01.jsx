@@ -157,7 +157,7 @@ function PostCard({ items, totalRows }) {
       item.productDescription.toLowerCase().includes(textSearch.toLowerCase())
     );
   });
-  
+
   let filteredSKUs = searchedShowProduct
     .filter((sku) => sku.BRANCH_CODE.some((branch) => selectedBranches.includes(branch)))
     .map((sku) => ({
@@ -167,7 +167,7 @@ function PostCard({ items, totalRows }) {
     }));
 
   //* นำ flter มา filter showproduct
-  
+
   const filterProducts = (products, selectedOpts, expression) => {
     const filteredProducts = products.filter((product) => eval(expression));
     return filteredProducts;
@@ -344,11 +344,18 @@ function PostCard({ items, totalRows }) {
                       {item.productDescription}
                     </Typography>
 
-                    <Box sx={{ flexGrow: 1 }}></Box>
+                    <Box sx={{ flexGrow: 1, height: "100%" }}></Box>
 
                     <Divider sx={{ pt: 1 }} />
 
-                    <Box sx={{ display: "flex", paddingTop: "1px", height: "35%" }}>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        paddingTop: "1px",
+                        minHeight: "7vh",
+                        height: "auto",
+                      }}
+                    >
                       <ListItemText
                         primary={
                           <>

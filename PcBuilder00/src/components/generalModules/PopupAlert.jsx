@@ -14,7 +14,7 @@ const AlertContent1 = () => {
 
 //Selecter
 const selector = {
-  selected: <AlertContent1 />,
+  select: <AlertContent1 />,
 };
 
 const displayComponents = (obj, propertyName) => {

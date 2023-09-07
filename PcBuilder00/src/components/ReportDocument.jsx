@@ -358,10 +358,16 @@ const ReportDocument = () => {
       </Button>
 
       <Dialog open={alertOpen} onClose={handleClose}>
-        <PopupAlert type="selected" />
+        <PopupAlert type="select" />
       </Dialog>
 
-      <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
+      <Dialog
+        sx={{ overFlow: "hidden" }}
+        fullScreen
+        open={open}
+        onClose={handleClose}
+        TransitionComponent={Transition}
+      >
         <AppBar sx={{ position: "relative", backgroundColor: "#42528A" }}>
           <Toolbar style={{ minHeight: "1px !important" }}>
             <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
@@ -487,7 +493,7 @@ export const subTableDisplay = {
 export const viewerStyle = {
   display: "block",
   margin: "0 auto",
-  width: "70vw",
+  width: "70%",
   height: "100vh",
 };
 
