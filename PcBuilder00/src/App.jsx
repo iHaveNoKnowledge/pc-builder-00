@@ -28,8 +28,8 @@ function App() {
           </Grid>
         </Grid>
 
-        <Grid item xs={4} md={9} rowHeight={25}>
-          <Grid item xs={12} md={12} columns={{ xs: 4, md: 12 }}>
+        <Grid item xs={4} md={9} rowHeight={25} columns={{ xs: 4, sm: 6, md: 12 }}>
+          <Grid item xs={4} sm={5} md={12}>
             <Box sx={{ pl: 2, display: "flex", flexDirection: "column" }}>
               <Box sx={{ flexGrow: 1 }}>
                 <UserFilter />
@@ -40,7 +40,7 @@ function App() {
             </Box>
           </Grid>
 
-          <Grid item xs={12} md={12}>
+          <Grid item xs={4} sm={6} md={12}>
             <Box sx={{ pl: 2 }}>
               <SelectionProto01 />
             </Box>

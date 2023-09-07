@@ -8,7 +8,7 @@ import Box from "@mui/material/Box";
 import "./UserFilter.css";
 import { useDispatch, useSelector } from "react-redux";
 import { changeTextSearch, setSelectedValuesCopy } from "../slices/userFilterSlice";
-import { Typography, Autocomplete, Popper } from "@mui/material";
+import { Typography, Autocomplete, Tooltip } from "@mui/material";
 import { clearSelectedFilter, branchSelect } from "../slices/userFilterSlice";
 import { setDefault } from "../slices/paginationSlice";
 import { zIndexCollections } from "./zindexs";
@@ -184,8 +184,7 @@ const UserFilter = () => {
                 PopperComponent={(popperProps) => (
                   <CustomPopper
                     {...popperProps}
-                    options={uniqueData}
-                    onSelect={handleAutocompleteChange}
+                    options={uniqueData}                
                   />
                 )}
               />
@@ -252,6 +251,7 @@ const UserFilter = () => {
             </>
           </Grid>
         </Box>
+
         {isFiltContained.length > 0 ? (
           <>
             <Box className="resetBtn">
