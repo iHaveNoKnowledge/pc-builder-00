@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useLayoutEffect, useEffect } from "react";
 import Popper from "@mui/material/Popper";
 import Paper from "@mui/material/Paper";
 import List from "@mui/material/List";
@@ -10,16 +10,18 @@ import Button from "@mui/material/Button";
 export const CustomPopper = (props) => {
   const { open, anchorEl, options, onSelect, children } = props;
   const [selectedIndex, setSelectedIndex] = useState(-1);
-  const [styleComponent, setStyleComponent] = useState({ width: 0 });
+  const [styleComponent, setStyleComponent] = useState(0);
 
-  console.log("children: ", children);
   //! รับค่าความกว้่างของ element ต้นทาง เพื่อ anchor แต่มันสามารถเขียนง่ายๆได้จากการรับ prop anchorEl.clientWidth จบ
   const anchorElRect = anchorEl.getBoundingClientRect();
+
   useEffect(() => {
     setStyleComponent((prev) => {
       return { ...prev, width: anchorElRect.width };
     });
-  }, [anchorElRect]);
+    //!ถ้าเปิดอันนี้มันจะ error รัวๆ
+    // }, [anchorElRect]);
+  }, []);
 
   const style = {
     overflow: "auto",
