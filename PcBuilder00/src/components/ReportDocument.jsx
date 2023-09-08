@@ -20,9 +20,14 @@ const ReportDocument = () => {
   const { partData, itemsList } = useSelector((state) => state.customize);
   const { info, branch } = useSelector((state) => state.report);
 
+  //* Rows
+  const rowsPerPage = 28;
+  const emptyRows = rowsPerPage - itemsList.length;
+
   ////* Form //////////////////////////////////////////////////////////////////////////////////////////////////////
   const [alertOpen, setAlertOpen] = React.useState(false);
   const [open, setOpen] = React.useState(false);
+
   //* onclick เปิด Form ////////////////////////////////////////////////////////////////////
   const handleClickOpen = () => {
     if (!itemsList.length && !alertOpen) {
@@ -312,8 +317,8 @@ const ReportDocument = () => {
             })}
 
             {/* space ROWS */}
-            {[...Array(9)].map((table, index) => {
-              const islastChild = 
+            {[...Array(emptyRows)].map((table, index) => {
+              const islastChild = index + 1 - emptyRows === 0;
               return (
                 <View key={index}>
                   <View break={true} style={{ display: "flex", flexDirection: "row" }}>
@@ -328,9 +333,9 @@ const ReportDocument = () => {
                       <Text></Text>
                     </View>
                     <View style={{ ...inlineStyle, ...inlineCode, ...celUnderline }}></View>
-                    <View
-                      style={{ ...inlineStyle, ...inlineDescr, ...celUnderline, flexGrow: 1 }}
-                    ></View>
+                    <View style={{ ...inlineStyle, ...inlineDescr, ...celUnderline, flexGrow: 1 }}>
+                      {islastChild && <Text>เป็น Last</Text>}
+                    </View>
                     <View style={{ ...celUnderline }}></View>
                     <View style={{ ...inlineStyle, ...inlineQTY, ...celUnderline }}></View>
                     <View style={{ ...inlineStyle, ...inlinePrice, ...celUnderline }}>
@@ -553,7 +558,7 @@ export const tableCellHeaderStyle = {
 };
 
 export const celUnderline = {
-  borderBottom: "1px groove rgba(130, 195, 255, 1)", 
+  borderBottom: "1px groove rgba(130, 195, 255, 1)",
 };
 
 export const inlineStyle = {

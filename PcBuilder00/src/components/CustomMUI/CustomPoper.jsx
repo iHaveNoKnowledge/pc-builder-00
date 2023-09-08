@@ -11,16 +11,13 @@ export const CustomPopper = (props) => {
   const { open, anchorEl, options, onSelect, children, isFocus } = props;
   const [selectedIndex, setSelectedIndex] = useState(-1);
   const [styleComponent, setStyleComponent] = useState(anchorEl.clientWidth);
-
   //! รับค่าความกว้่างของ element ต้นทาง เพื่อ anchor แต่มันสามารถเขียนง่ายๆได้จากการรับ prop anchorEl.clientWidth จบ
   const anchorElRect = anchorEl.getBoundingClientRect();
 
   useEffect(() => {
     if (open && isFocus) {
       setTimeout(() => {
-        setStyleComponent((prev) => {
-          return { ...prev, width: anchorElRect.width };
-        });
+        setStyleComponent(anchorElRect.width);
       }, 75);
     }
 
