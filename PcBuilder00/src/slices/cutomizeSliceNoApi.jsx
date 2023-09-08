@@ -206,23 +206,18 @@ export const customizeSlice = createSlice({
             }
           }
         } else {
-          
           if (currentStateType.isStackable) {
             if (isFoundItem) {
-              
               isFoundItem.selectAmount += 1;
             } else {
-              
               currentStateType.listItems.push(newArray2);
             }
           } else {
             if (currentStateType.listItems.length > 0) {
-              
               if (isFoundItem) {
                 isFoundItem.selectAmount++;
               }
             } else {
-              
               currentStateType.listItems.push(newArray2);
             }
           }
@@ -251,9 +246,7 @@ export const customizeSlice = createSlice({
       const miniIndex = action.payload.miniIndex;
 
       if (index !== -1) {
-        
         categorizedListItem.splice(miniIndex, 1);
-        
 
         //เป็นการรวม SelectAmountที่เหลืออยู่
         let totalAmount = 0; // การจะนับของก็ต้องทำตะกร้าให้เป็น 0 สะก่อน แล้วใช้ for loop ค่อยๆโยนแล้วนับจำนวน
@@ -298,6 +291,7 @@ export const customizeSlice = createSlice({
           categorizedListItem[miniIndex].selectAmount++;
         }
       }
+      state.itemsList = state.partData.flatMap((part) => part.listItems.map((item) => item));
     },
 
     decAmount: (state, action) => {
@@ -320,6 +314,7 @@ export const customizeSlice = createSlice({
         totalAmount += item.selectAmount * (item.countItem ? item.countItem : 1); // Add the product of selectAmount and count to the total amount
       }
       state.partData[index].typeAmount = totalAmount; // Assign the total amount to the typeAmount property of the RAM object
+      state.itemsList = state.partData.flatMap((part) => part.listItems.map((item) => item));
     },
 
     resetCustomized: (state, action) => {
@@ -344,7 +339,6 @@ export const customizeSlice = createSlice({
     //actionนี้ถูกใช้หลังจากเช็คว่าไอเท็มที่แอดมา เป็น mainboard หรือไม่ ถ้ามีให้ใช้ action
     setMax: (state, action) => {
       const index = state.partData.findIndex((item) => item.category === "ram");
-      
 
       if (index !== -1 || isMbSelected) {
         //กรณีมี Payload
@@ -354,7 +348,7 @@ export const customizeSlice = createSlice({
           state.partData[index].typeMax = initialState.partData[index].typeMax;
           if (state.partData[1].listItems[0] && !action.payload) {
             //มีเมนบอร์ดป่าว?
-            
+
             state.partData[index].typeMax = state.partData[1].listItems[0].slot; //มีก็set max slot ไว้
           } else {
             state.partData[index].typeMax = initialState.partData[index].typeMax; // ไม่มีก็set เป็นค่าเริ่มต้น

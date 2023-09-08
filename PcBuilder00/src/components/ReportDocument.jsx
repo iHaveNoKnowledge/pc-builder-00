@@ -4,7 +4,7 @@ import logoHeader from "../../public/images/itLogo-1.png";
 import font from "../fonts/ChakraPetch-Regular.ttf";
 import { AppBar, Toolbar, Button, Dialog, IconButton, Typography, Slide, Box } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import PopupAlert from "./generalModules/PopupAlert";
 import { ThemeProvider } from "@mui/material/styles";
 import { theme } from "./SetList";
@@ -168,11 +168,11 @@ const ReportDocument = () => {
         <View style={{ ...inlineStyle, ...inlineCode }}>
           <Text>{WrapText(`Code`)}</Text>
         </View>
-        <View style={{ ...inlineStyle, ...inlineDescr }}>
+        <View style={{ ...inlineStyle, ...inlineDescr, flexGrow: 1 }}>
           <Text>{WrapText("Description")}</Text>
           {/* <Text>{WrapText("ยายกินลําไยนําลายยายไหลย้อย")}</Text> */}
         </View>
-        <View style={{ flexGrow: 1 }}></View>
+        <View style={{}}></View>
         <View style={{ ...inlineStyle, ...inlineQTY }}>
           <Text>{WrapText("QTY")}</Text>
         </View>
@@ -197,19 +197,45 @@ const ReportDocument = () => {
             {/* 1st row */}
             <View>
               <View style={{ display: "flex", flexDirection: "row" }}>
-                <View style={{ ...inlineStyle, ...inlineOrder }}>
+                <View
+                  style={{
+                    ...inlineStyle,
+                    ...inlineOrder,
+                    ...celUnderline,
+                  }}
+                >
                   <Text>{WrapText("1")}</Text>
                 </View>
 
-                <View style={{ ...inlineStyle, ...inlineCode }}>
+                <View
+                  style={{
+                    ...inlineStyle,
+                    ...inlineCode,
+                    ...celUnderline,
+                  }}
+                >
                   <Text>{`${itemsList[0].code}`}</Text>
                 </View>
 
-                <View style={{ ...inlineStyle, ...inlineDescr }}>
+                <View
+                  style={{
+                    ...inlineStyle,
+                    ...inlineDescr,
+                    ...celUnderline,
+                  }}
+                >
                   <Text>{`${itemsList[0].productDescription}`}</Text>
                 </View>
-                <View style={{ flexGrow: 1 }}></View>
-                <View style={{ ...inlineStyle, ...inlineQTY }}>
+                <View
+                  style={{ flexGrow: 1, borderBottom: "1px groove rgba(130, 195, 255, 1)" }}
+                ></View>
+                <View
+                  style={{
+                    ...inlineStyle,
+                    ...inlineQTY,
+                    ...celUnderline,
+                  }}
+                >
                   <Text>{`${itemsList[0].selectAmount.toLocaleString()}`}</Text>
                 </View>
 
@@ -230,19 +256,44 @@ const ReportDocument = () => {
             {[...Array(itemsAmt - 1)].map((table, index) => {
               const formattedNumberx = (index + 2).toString().padStart(6, "0");
               return (
-                <View key={index}>
+                <View key={index} style={{ borderCollapse: "collapse" }}>
                   <View break={true} style={{ display: "flex", flexDirection: "row" }}>
-                    <View style={{ ...inlineStyle, ...inlineOrder }}>
+                    <View
+                      style={{
+                        ...inlineStyle,
+                        ...inlineOrder,
+                        ...celUnderline,
+                      }}
+                    >
                       <Text>{WrapText(`${2 + index}`)}</Text>
                     </View>
-                    <View style={{ ...inlineStyle, ...inlineCode }}>
+                    <View
+                      style={{
+                        ...inlineStyle,
+                        ...inlineCode,
+                        ...celUnderline,
+                      }}
+                    >
                       <Text>{`${itemsList[index + 1].code}`}</Text>
                     </View>
-                    <View style={{ ...inlineStyle, ...inlineDescr }}>
+                    <View
+                      style={{
+                        ...inlineStyle,
+                        ...inlineDescr,
+                        ...celUnderline,
+                        flexGrow: 1,
+                      }}
+                    >
                       <Text>{`${itemsList[index + 1].productDescription}`}</Text>
                     </View>
-                    <View style={{ flexGrow: 1 }}></View>
-                    <View style={{ ...inlineStyle, ...inlineQTY }}>
+                    <View style={{ borderBottom: "1px groove rgba(130, 195, 255, 1)" }}></View>
+                    <View
+                      style={{
+                        ...inlineStyle,
+                        ...inlineQTY,
+                        ...celUnderline,
+                      }}
+                    >
                       <Text>{`${itemsList[index + 1].selectAmount.toLocaleString()}`}</Text>
                     </View>
                     {/* <View style={{ ...inlineStyle, ...inlinePrice }}>
@@ -262,27 +313,40 @@ const ReportDocument = () => {
 
             {/* space ROWS */}
             {[...Array(9)].map((table, index) => {
+              const islastChild = 
               return (
                 <View key={index}>
                   <View break={true} style={{ display: "flex", flexDirection: "row" }}>
-                    <View style={{ ...inlineStyle, ...inlineOrder, minHeight: "20px" }}>
+                    <View
+                      style={{
+                        ...inlineStyle,
+                        ...inlineOrder,
+                        minHeight: "20px",
+                        ...celUnderline,
+                      }}
+                    >
                       <Text></Text>
                     </View>
-                    <View style={{ ...inlineStyle, ...inlineCode }}></View>
-                    <View style={{ ...inlineStyle, ...inlineDescr }}></View>
-                    <View style={{ flexGrow: 1 }}></View>
-                    <View style={{ ...inlineStyle, ...inlineQTY }}></View>
-                    <View style={{ ...inlineStyle, ...inlinePrice }}>
+                    <View style={{ ...inlineStyle, ...inlineCode, ...celUnderline }}></View>
+                    <View
+                      style={{ ...inlineStyle, ...inlineDescr, ...celUnderline, flexGrow: 1 }}
+                    ></View>
+                    <View style={{ ...celUnderline }}></View>
+                    <View style={{ ...inlineStyle, ...inlineQTY, ...celUnderline }}></View>
+                    <View style={{ ...inlineStyle, ...inlinePrice, ...celUnderline }}>
                       <Text></Text>
                     </View>
-                    <View style={{ ...inlineStyle, ...inlineTotal }}>
+                    <View style={{ ...inlineStyle, ...inlineTotal, ...celUnderline }}>
                       <Text></Text>
                     </View>
                   </View>
                 </View>
               );
             })}
-            <View style={{ borderTop: "1px solid #000" }}>
+
+            {/* summary rows */}
+            {/* <View style={{ borderTop: "1px solid #000" }}> */}
+            <View>
               <View break={true} style={{ display: "flex", flexDirection: "row" }}>
                 <View style={{ ...inlineStyle, ...inlineOrder }}></View>
                 <View style={{ ...inlineStyle, ...inlineCode }}></View>
@@ -314,7 +378,7 @@ const ReportDocument = () => {
                     borderBottom: "1px groove  #000",
                   }}
                 >
-                  <Text style={{}}>ภาษีมูลค่าเพิ่ม</Text>
+                  <Text>ภาษีมูลค่าเพิ่ม</Text>
                 </View>
                 <View style={{ ...inlineStyle, ...inlineTotal, borderBottom: "1px groove  #000" }}>
                   <Text>
@@ -418,7 +482,7 @@ export const pageStyle = {
   display: "flex",
   flexDirection: "row",
   justifyContent: "center",
-  paddingTop: 16,
+  paddingTop: 55,
   paddingHorizontal: 40,
   paddingBottom: 56,
 };
@@ -488,11 +552,18 @@ export const tableCellHeaderStyle = {
   textAlign: "center",
 };
 
-export const inlineStyle = { padding: "5px 10px", fontSize: 8.5 };
+export const celUnderline = {
+  borderBottom: "1px groove rgba(130, 195, 255, 1)", 
+};
+
+export const inlineStyle = {
+  padding: "5px 10px",
+  fontSize: 8.5,
+};
 export const inlineOrder = { width: "6.5%", textAlign: "right" };
 export const inlineCode = { width: "14%" };
 export const inlineDescr = { width: "37.5%" };
-export const inlineQTY = { width: "14%", textAlign: "right" };
+export const inlineQTY = { width: "14%", textAlign: "center" };
 export const inlinePrice = { width: "16%", textAlign: "right" };
 export const inlineTotal = { width: "15%", textAlign: "right" };
 
