@@ -34,13 +34,12 @@ export const CustomPopper = (props) => {
     minHeight: "10vh",
     height: "500px",
     width: styleComponent,
-    left: 0,
   };
 
   return (
     <ListItem>
       <Popper
-        sx={style}
+        style={style}
         open={open}
         anchorEl={anchorEl}
         placement="bottom-start"
@@ -49,8 +48,8 @@ export const CustomPopper = (props) => {
             name: "flip",
             enabled: false,
             // options: {
-            //   altBoundary: false,
-            //   rootBoundary: "document",
+            //   altBoundary: true,
+            //   rootBoundary: "viewport",
             //   padding: 8,
             // },
           },
@@ -58,11 +57,12 @@ export const CustomPopper = (props) => {
             name: "preventOverflow",
             enabled: false,
             // options: {
-            //   altAxis: false,
-            //   altBoundary: false,
-            //   tether: false,
+            //   altAxis: true,
+            //   altBoundary: true,
+            //   tether: true,
             //   rootBoundary: "document",
-            //   padding: 8,
+            //   padding: 0,
+            //   bottom: 0,
             // },
           },
         ]}

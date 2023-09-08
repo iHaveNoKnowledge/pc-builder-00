@@ -59,7 +59,6 @@ export default function SaveBuildBtn() {
   //** onclick สำหรับกด save SPEC ////////////////////////////////////////////////////////////////////
   const { refetch: setsRefetch } = useGetSetsQuery();
   const handleSave = () => {
-    
     let updatedInputData;
     if (checkedItem.contactInfoBool) {
       updatedInputData = {
@@ -91,7 +90,6 @@ export default function SaveBuildBtn() {
       updateData(dataForUpdate)
         .unwrap()
         .then((response) => {
-          
           setsRefetch();
           return response;
         })
@@ -149,12 +147,10 @@ export default function SaveBuildBtn() {
     const dataValidation = patternInt.test(value);
 
     if (e.target.id === "cusTelInput") {
-      
       if (value === "" || dataValidation) {
         setCustTelInput(value);
       }
     } else if (e.target.id === "custNameInput") {
-      
       setCustNameInput(value);
     } else if (e.target.id === "sellerNameInput") {
       setsellerNameInput(value);
@@ -187,7 +183,7 @@ export default function SaveBuildBtn() {
       </Button>
 
       <Dialog open={alertOpen} onClose={handleClose}>
-        <PopupAlert type="selected" />
+        <PopupAlert type="select" />
       </Dialog>
 
       <Dialog open={open} onClose={handleClose} style={{ zoom: "115%" }}>

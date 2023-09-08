@@ -172,15 +172,16 @@ const ReportDocument = () => {
           <Text>{WrapText("Description")}</Text>
           {/* <Text>{WrapText("ยายกินลําไยนําลายยายไหลย้อย")}</Text> */}
         </View>
+        <View style={{ flexGrow: 1 }}></View>
         <View style={{ ...inlineStyle, ...inlineQTY }}>
           <Text>{WrapText("QTY")}</Text>
         </View>
-        <View style={{ ...inlineStyle, ...inlinePrice }}>
+        {/* <View style={{ ...inlineStyle, ...inlinePrice }}>
           <Text>{WrapText("Price")}</Text>
         </View>
         <View style={{ ...inlineStyle, ...inlineTotal }}>
           <Text>{WrapText("Total")}</Text>
-        </View>
+        </View> */}
       </View>
     );
   };
@@ -193,34 +194,39 @@ const ReportDocument = () => {
         return (
           <View style={subTableDisplay}>
             {headerSubTable()}
-
+            {/* 1st row */}
             <View>
               <View style={{ display: "flex", flexDirection: "row" }}>
                 <View style={{ ...inlineStyle, ...inlineOrder }}>
                   <Text>{WrapText("1")}</Text>
                 </View>
+
                 <View style={{ ...inlineStyle, ...inlineCode }}>
                   <Text>{`${itemsList[0].code}`}</Text>
                 </View>
+
                 <View style={{ ...inlineStyle, ...inlineDescr }}>
                   <Text>{`${itemsList[0].productDescription}`}</Text>
                 </View>
+                <View style={{ flexGrow: 1 }}></View>
                 <View style={{ ...inlineStyle, ...inlineQTY }}>
                   <Text>{`${itemsList[0].selectAmount.toLocaleString()}`}</Text>
                 </View>
-                <View style={{ ...inlineStyle, ...inlinePrice }}>
+
+                {/* <View style={{ ...inlineStyle, ...inlinePrice }}>
                   <Text>{`${itemsList[0].srp
                     .toFixed(2)
                     .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</Text>
                 </View>
+
                 <View style={{ ...inlineStyle, ...inlineTotal }}>
                   <Text>{`${(itemsList[0].srp * itemsList[0].selectAmount)
                     .toFixed(2)
                     .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</Text>
-                </View>
+                </View> */}
               </View>
             </View>
-
+            {/* the following rows */}
             {[...Array(itemsAmt - 1)].map((table, index) => {
               const formattedNumberx = (index + 2).toString().padStart(6, "0");
               return (
@@ -235,10 +241,11 @@ const ReportDocument = () => {
                     <View style={{ ...inlineStyle, ...inlineDescr }}>
                       <Text>{`${itemsList[index + 1].productDescription}`}</Text>
                     </View>
+                    <View style={{ flexGrow: 1 }}></View>
                     <View style={{ ...inlineStyle, ...inlineQTY }}>
                       <Text>{`${itemsList[index + 1].selectAmount.toLocaleString()}`}</Text>
                     </View>
-                    <View style={{ ...inlineStyle, ...inlinePrice }}>
+                    {/* <View style={{ ...inlineStyle, ...inlinePrice }}>
                       <Text>{`${itemsList[index + 1].srp
                         .toFixed(2)
                         .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</Text>
@@ -247,12 +254,34 @@ const ReportDocument = () => {
                       <Text>{`${(itemsList[index + 1].srp * itemsList[index + 1].selectAmount)
                         .toFixed(2)
                         .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</Text>
-                    </View>
+                    </View> */}
                   </View>
                 </View>
               );
             })}
 
+            {/* space ROWS */}
+            {[...Array(9)].map((table, index) => {
+              return (
+                <View key={index}>
+                  <View break={true} style={{ display: "flex", flexDirection: "row" }}>
+                    <View style={{ ...inlineStyle, ...inlineOrder, minHeight: "20px" }}>
+                      <Text></Text>
+                    </View>
+                    <View style={{ ...inlineStyle, ...inlineCode }}></View>
+                    <View style={{ ...inlineStyle, ...inlineDescr }}></View>
+                    <View style={{ flexGrow: 1 }}></View>
+                    <View style={{ ...inlineStyle, ...inlineQTY }}></View>
+                    <View style={{ ...inlineStyle, ...inlinePrice }}>
+                      <Text></Text>
+                    </View>
+                    <View style={{ ...inlineStyle, ...inlineTotal }}>
+                      <Text></Text>
+                    </View>
+                  </View>
+                </View>
+              );
+            })}
             <View style={{ borderTop: "1px solid #000" }}>
               <View break={true} style={{ display: "flex", flexDirection: "row" }}>
                 <View style={{ ...inlineStyle, ...inlineOrder }}></View>
@@ -272,7 +301,6 @@ const ReportDocument = () => {
                 </View>
               </View>
             </View>
-
             <View>
               <View break={true} style={{ display: "flex", flexDirection: "row" }}>
                 <View style={{ ...inlineStyle, ...inlineOrder }}></View>
@@ -302,7 +330,6 @@ const ReportDocument = () => {
                 </View>
               </View>
             </View>
-
             <View>
               <View break={true} style={{ display: "flex", flexDirection: "row" }}>
                 <View style={{ ...inlineStyle, ...inlineOrder }}></View>
