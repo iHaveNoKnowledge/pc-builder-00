@@ -127,6 +127,15 @@ const UserFilter = () => {
   //   return <>Loading...</>;
   // }
 
+  const [focusInput, setFocusInput] = useState(false);
+  const handleIsFocus = () => {
+    if (!focusInput) {
+      setFocusInput(true);
+    } else {
+      setFocusInput(false);
+    }
+  };
+
   return (
     <Box className="mainCardFilter">
       <>
@@ -164,8 +173,11 @@ const UserFilter = () => {
                 ค้นหา
               </Button>
             </Box>
+
             <Box sx={{ width: "32.7%" }}>
               <Autocomplete
+                onFocus={handleIsFocus}
+                onBlur={handleIsFocus}
                 style={autoCompleteInput}
                 size="small"
                 multiple
@@ -182,10 +194,7 @@ const UserFilter = () => {
                 }
                 onChange={handleAutocompleteChange}
                 PopperComponent={(popperProps) => (
-                  <CustomPopper
-                    {...popperProps}
-                    options={uniqueData}                
-                  />
+                  <CustomPopper {...popperProps} options={uniqueData} isFocus={focusInput} />
                 )}
               />
             </Box>

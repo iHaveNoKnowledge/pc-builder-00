@@ -8,20 +8,26 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 
 export const CustomPopper = (props) => {
-  const { open, anchorEl, options, onSelect, children } = props;
+  const { open, anchorEl, options, onSelect, children, isFocus } = props;
   const [selectedIndex, setSelectedIndex] = useState(-1);
-  const [styleComponent, setStyleComponent] = useState(0);
+  const [styleComponent, setStyleComponent] = useState(anchorEl.clientWidth);
 
   //! รับค่าความกว้่างของ element ต้นทาง เพื่อ anchor แต่มันสามารถเขียนง่ายๆได้จากการรับ prop anchorEl.clientWidth จบ
   const anchorElRect = anchorEl.getBoundingClientRect();
 
   useEffect(() => {
-    setStyleComponent((prev) => {
-      return { ...prev, width: anchorElRect.width };
-    });
+    if (open && isFocus) {
+      setTimeout(() => {
+        setStyleComponent((prev) => {
+          return { ...prev, width: anchorElRect.width };
+        });
+      }, 75);
+    }
+
     //!ถ้าเปิดอันนี้มันจะ error รัวๆ
-    // }, [anchorElRect]);
-  }, []);
+    //* แก้ได้ด้วยการใช้ setTimeout มันจะทำให้ error รัวๆไม่เกิดขึ้น แต่ไม่รู้แก้ได้จริงป่าว
+  }, [anchorElRect]);
+  // }, []);
 
   const style = {
     overflow: "auto",
@@ -42,22 +48,22 @@ export const CustomPopper = (props) => {
           {
             name: "flip",
             enabled: false,
-            options: {
-              altBoundary: false,
-              rootBoundary: "document",
-              padding: 8,
-            },
+            // options: {
+            //   altBoundary: false,
+            //   rootBoundary: "document",
+            //   padding: 8,
+            // },
           },
           {
             name: "preventOverflow",
             enabled: false,
-            options: {
-              altAxis: false,
-              altBoundary: false,
-              tether: false,
-              rootBoundary: "document",
-              padding: 8,
-            },
+            // options: {
+            //   altAxis: false,
+            //   altBoundary: false,
+            //   tether: false,
+            //   rootBoundary: "document",
+            //   padding: 8,
+            // },
           },
         ]}
       >
