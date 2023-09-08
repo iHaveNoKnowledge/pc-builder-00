@@ -32,7 +32,12 @@ import {
   useLazyGetSetsQuery,
   useDeleteResourceMutation,
 } from "../features/api/dataApiSlice";
-import { addProduct, resetCustomized, updateSummations } from "../slices/cutomizeSliceNoApi";
+import {
+  addProduct,
+  resetCustomized,
+  updateSummations,
+  setMax,
+} from "../slices/customizeSliceNoApi";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import Pagination from "@mui/material/Pagination";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -89,14 +94,14 @@ export default function SetList() {
   //* นำ api มาใช้
   const [lazyGetSetsData, { data: sets, error, isLoading, isSuccess, isUninitialized }] =
     useLazyGetSetsQuery();
-  const [sortedData, setSortedData] = useState([]);
+  const [sortedDataSets, setsortedDataSets] = useState([]);
   const [rows, setRows] = useState(0);
 
   useEffect(() => {
     if (isLoading) {
     }
     if (open && isSuccess) {
-      setSortedData(sets.updatedRecordset);
+      setsortedDataSets(sets.updatedRecordset);
 
       setRows(sets.totalRows);
     }
@@ -117,28 +122,27 @@ export default function SetList() {
   const handleSearch = (e) => {
     if (searchTxt.current.value.length > 0) {
       const txt = searchTxt.current.value;
-      
+
       const searchResult = sets.updatedRecordset.filter(
         (item) =>
           (item.setName && item.setName.includes(txt)) ||
           (item.DefaultName && item.DefaultName.toLowerCase().includes(txt.toLowerCase()))
       );
-      
 
-      setSortedData(searchResult);
+      setsortedDataSets(searchResult);
     } else {
-      setSortedData(sets?.updatedRecordset);
+      setsortedDataSets(sets?.updatedRecordset);
     }
   };
 
   //* function Fetch
-  const [productsData, setProductsData] = useState(null);
+  const [rawProductsData, setRawProductsData] = useState(null);
   const [loadingAxios, setLoadingAxios] = useState(false);
   const fetchData = async () => {
     try {
       setLoadingAxios(true);
       const response = await axios.get(`${import.meta.env.VITE_APP_DB_API_PUBLIC}/testProducts`);
-      setProductsData(response.data);
+      setRawProductsData(response.data);
       setLoadingAxios(false);
     } catch (error) {
       console.error("Error fetching axios:", error);
@@ -146,7 +150,7 @@ export default function SetList() {
     }
   };
 
-  const posts = productsData?.data;
+  const productsData = rawProductsData?.data;
 
   // onclick เปิด Dialog
   const handleClickOpen = () => {
@@ -166,22 +170,30 @@ export default function SetList() {
   //* Function กดเลือกSet
   const handleSelect = (e, index1, curPageNum) => {
     e.stopPropagation();
-    
+
     const arrIdx = (curPageNum - 1) * 10 + index1;
     dispatch(resetCustomized());
-    const { setName, customerName, customerTel, sellerName, sellerTel } = sortedData[arrIdx];
+    const { setName, customerName, customerTel, sellerName, sellerTel } = sortedDataSets[arrIdx];
 
-    const itemsSet = sortedData[arrIdx].partData.flatMap((category) =>
+    const itemsSet = sortedDataSets[arrIdx].partData.flatMap((category) =>
       category.listItems.map((item) => item)
     );
 
     const itemsSetID = itemsSet.map((item) => item.id);
     const amountPerItem = itemsSet.map((item) => item.selectAmount);
-    const itemsToAdd = posts
+    const itemsToAdd = productsData
       .filter((item) => itemsSetID.includes(item.id))
       .map((item, index) => ({ ...item, selectAmount: amountPerItem[index] }));
 
-    itemsToAdd.map((item) => dispatch(addProduct(item)));
+    console.log("itemsToAdd รูปร่างเป็นไง:", itemsToAdd);
+    itemsToAdd.map((item) => {
+      if (item.category.toLowerCase() === "mb") {
+        const mbSlot = item.slot;
+        const isFromSets = true;
+        dispatch(setMax({ mbSlot, isFromSets }));
+      }
+      dispatch(addProduct(item));
+    });
     dispatch(updateSummations());
     dispatch(addInfo({ setName, customerName, customerTel, sellerName, sellerTel }));
 
@@ -212,9 +224,9 @@ export default function SetList() {
     setDeleteSet((prev) => {
       return {
         ...prev,
-        setName: sortedData[setIdx].setName
-          ? sortedData[setIdx].setName
-          : sortedData[setIdx].DefaultName,
+        setName: sortedDataSets[setIdx].setName
+          ? sortedDataSets[setIdx].setName
+          : sortedDataSets[setIdx].DefaultName,
         id,
       };
     });
@@ -226,14 +238,14 @@ export default function SetList() {
   //* pagination////------------------------------------------------------
   const [curPageNum, setCurPageNum] = useState(1);
   const cardsPerPage = 10;
-  const totalPages = Math.ceil(sortedData.length / cardsPerPage);
+  const totalPages = Math.ceil(sortedDataSets.length / cardsPerPage);
   const handleChangePage = (pageNum) => {
     setIsAnimating(true);
     setCurPageNum(pageNum);
     setOpenSubTables([]);
   };
 
-  const dataPaginated = sortedData.slice(
+  const dataPaginated = sortedDataSets.slice(
     (curPageNum - 1) * cardsPerPage,
     curPageNum * cardsPerPage
   );
@@ -470,7 +482,7 @@ export default function SetList() {
                                                   {item3.selectAmount}
                                                 </TableCell>
                                                 <TableCell align="right">
-                                                  {posts
+                                                  {productsData
                                                     .find((post, postIDX) => {
                                                       if (post.id === item3.id) {
                                                         return post.srp.toLocaleString();
@@ -480,7 +492,7 @@ export default function SetList() {
                                                 </TableCell>
 
                                                 <TableCell align="right">
-                                                  {posts
+                                                  {productsData
                                                     .find((post, postIDX) => {
                                                       if (post.id === item3.id) {
                                                         return post.promotionPrice;
@@ -491,7 +503,7 @@ export default function SetList() {
 
                                                 <TableCell align="right">
                                                   {(
-                                                    posts.find((post, postIDX) => {
+                                                    productsData.find((post, postIDX) => {
                                                       if (post.id === item3.id) {
                                                         const totalPrice =
                                                           post.promotionPrice * item3.selectAmount;

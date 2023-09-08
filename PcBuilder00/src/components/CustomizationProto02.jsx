@@ -21,7 +21,7 @@ import {
   decAmount,
   updateSummations,
   setMax,
-} from "../slices/cutomizeSliceNoApi";
+} from "../slices/customizeSliceNoApi";
 import { clearSelectedFilter } from "../slices/userFilterSlice";
 import "./CustomizationProto01.css";
 import SumCustomize from "./SumCustomize";
@@ -37,7 +37,6 @@ const CustomizationProto02 = () => {
 
   //function
   const handleChange = (category) => {
-    
     dispatch(changeCategory(category.toLowerCase().replace(" ", "")));
     dispatch(setDefault());
     if (currentCategory !== category.toLowerCase().replace(" ", ""))
@@ -46,18 +45,17 @@ const CustomizationProto02 = () => {
 
   const handleIncAmt = (category, miniIndex) => {
     dispatch(incAmount({ category, miniIndex }));
-    
+
     dispatch(updateSummations());
   };
 
   const handleDecAmt = (category, miniIndex) => {
     dispatch(decAmount({ category, miniIndex }));
-    
+
     dispatch(updateSummations());
   };
 
   const handleClear = (category, id, miniIndex) => {
-    
     dispatch(removeProduct({ category, id, miniIndex }));
     dispatch(setMax());
     dispatch(updateSummations());
@@ -221,12 +219,7 @@ const CustomizationProto02 = () => {
                                     <Divider />
                                     {/* // ย่อย2 ------------------ //// */}
                                     <Box>
-                                      <Typography
-                                        disableripple={true}
-                                        onClick={(e) => {
-                                          
-                                        }}
-                                      >
+                                      <Typography disableripple={true} onClick={(e) => {}}>
                                         {miniItem.productDescription}
                                       </Typography>
                                     </Box>

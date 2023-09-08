@@ -11,7 +11,7 @@ import Box from "@mui/material/Box";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import { Divider, Alert } from "@mui/material";
-import { addProduct, setMax, updateSummations } from "../slices/cutomizeSliceNoApi";
+import { addProduct, setMax, updateSummations } from "../slices/customizeSliceNoApi";
 import "./Selection.css";
 import UserFilter from "./UserFilter";
 import { useGetDbItemQuery } from "../features/api/dataApiSlice";
@@ -40,7 +40,9 @@ function PostCard({ items, totalRows }) {
   const handleSelect = (item) => {
     dispatch(addProduct(item));
     if (category === "mb") {
-      dispatch(setMax(item.slot));
+      const mbSlot = item.slot;
+      const isFromSets = false;
+      dispatch(setMax({ mbSlot, isFromSets }));
     }
     dispatch(updateSummations());
   };

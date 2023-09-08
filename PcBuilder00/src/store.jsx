@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import categoryReducer from "./slices/categorySlice";
-import noApiCustomizeReducer from "./slices/cutomizeSliceNoApi";
+import noApiCustomizeReducer from "./slices/customizeSliceNoApi";
 import { apiSliceDb, apiPutSets } from "./features/api/dataApiSlice";
 import userFilterReducer from "./slices/userFilterSlice";
 import reportReducer from "./slices/reportSlice";

@@ -156,7 +156,7 @@ export const customizeSlice = createSlice({
   name: "customize",
   initialState,
   reducers: {
-    //Main Action (1 action ต่อ 1 ปุ่ม)///////////////////////////////////////////////
+    //Main Action (1 action ต่อ 1 ปุ่ม) ---------------------------------------------------
     addProduct: (state, action) => {
       const categoryIndex = state.partData.findIndex(
         (item) => item.category === action.payload.category.toLowerCase().replace(" ", "")
@@ -337,19 +337,20 @@ export const customizeSlice = createSlice({
 
     //Sub Action (ใช้ ร่วมกับ action หลัก)----------------------------------
     //actionนี้ถูกใช้หลังจากเช็คว่าไอเท็มที่แอดมา เป็น mainboard หรือไม่ ถ้ามีให้ใช้ action
+    //* ทำงานจากการรับ MB แต่ Action นี้จะเปลี่ยนค่า Max ของ ram  Setmax ให้ RAM เท่านั้น ยังไม่สามารถ ใช้กับตัวอื่นได้
     setMax: (state, action) => {
+      const { mbSlot, isFromSets } = action.payload;
       const index = state.partData.findIndex((item) => item.category === "ram");
-
+      console.log("ทำงานหรือไม่ รับค่าไรมา : ", action.payload);
       if (index !== -1 || isMbSelected) {
         //กรณีมี Payload
-        if (action.payload) {
-          state.partData[index].typeMax = action.payload;
-        } else {
+        if (mbSlot) {
+          state.partData[index].typeMax = mbSlot;
+        } else if (!mbSlot) {
           state.partData[index].typeMax = initialState.partData[index].typeMax;
-          if (state.partData[1].listItems[0] && !action.payload) {
+          if ((state.partData[1].listItems[0] && !mbSlot) || isFromSets) {
             //มีเมนบอร์ดป่าว?
-
-            state.partData[index].typeMax = state.partData[1].listItems[0].slot; //มีก็set max slot ไว้
+            state.partData[index].typeMax = state.partData[1].listItems[0].mbSlot; //มีก็set max slot ไว้
           } else {
             state.partData[index].typeMax = initialState.partData[index].typeMax; // ไม่มีก็set เป็นค่าเริ่มต้น
           }

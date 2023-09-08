@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Box, Typography, Button, Divider, Stack } from "@mui/material";
-import { resetCustomized, updateSummations } from "../slices/cutomizeSliceNoApi";
+import { resetCustomized, updateSummations } from "../slices/customizeSliceNoApi";
 import "./SumCustomize.css";
 
 const StyledTypography = ({ children, bg, role, type }) => {
@@ -34,7 +34,6 @@ const SumCustomize = () => {
 
   // สลับ flexDirection: "row" หรือ "column" เพื่อให้ได้รูปแบบที่ต่างกัน
   const itemDirection = { flexDirection: "row" };
-  
 
   const stackStyle = {
     sx: {
