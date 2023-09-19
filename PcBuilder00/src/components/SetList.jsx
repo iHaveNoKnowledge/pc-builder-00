@@ -173,11 +173,14 @@ export default function SetList() {
 
     const arrIdx = (curPageNum - 1) * 10 + index1;
     dispatch(resetCustomized());
+    //* ดึงเอาข้อมูลทั่วไปของ Set ไม่รวมรายการสินค้า
     const { setName, customerName, customerTel, sellerName, sellerTel } = sortedDataSets[arrIdx];
-
+    //* ดึงเอารายการสั่งซื้อของลูกค้าออกมา
     const itemsSet = sortedDataSets[arrIdx].partData.flatMap((category) =>
       category.listItems.map((item) => item)
     );
+
+    console.log("itemsSet: ", itemsSet);
 
     const itemsSetID = itemsSet.map((item) => item.id);
     const amountPerItem = itemsSet.map((item) => item.selectAmount);
