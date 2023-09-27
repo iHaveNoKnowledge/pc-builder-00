@@ -344,21 +344,21 @@ export const customizeSlice = createSlice({
       console.log("ทำงานหรือไม่ รับค่าไรมา : ", action.payload);
       if (index !== -1 || isMbSelected) {
         //กรณีมี Payload
-        if (mbSlot) {
-          state.partData[index].typeMax = mbSlot;
-        } else if (!mbSlot) {
-          // state.partData[index].typeMax = initialState.partData[index].typeMax;
-          // if ((state.partData[1].listItems[0] && !mbSlot) || isFromSets) {
-          //   //มีเมนบอร์ดป่าว?
-          //   state.partData[index].typeMax = state.partData[1].listItems[0].mbSlot; //มีก็set max slot ไว้
-          // } else {
-          //   state.partData[index].typeMax = initialState.partData[index].typeMax; // ไม่มีก็set เป็นค่าเริ่มต้น
-          // }
-          if(isFromSets) {
-            
+        if (state.partData[1].listItems.length > 0) {
+          if (mbSlot) {
+            state.partData[index].typeMax = mbSlot;
           } else {
-            state.partData[index].typeMax = initialState.partData[index].typeMax;
+            // state.partData[index].typeMax = initialState.partData[index].typeMax;
+            // if ((state.partData[1].listItems[0] && !mbSlot) || isFromSets) {
+            //   //มีเมนบอร์ดป่าว?
+            //   state.partData[index].typeMax = state.partData[1].listItems[0].mbSlot; //มีก็set max slot ไว้
+            // } else {
+            //   state.partData[index].typeMax = initialState.partData[index].typeMax; // ไม่มีก็set เป็นค่าเริ่มต้น
+            // }
+            state.partData[index].typeMax = mbSlot;
           }
+        } else {
+          state.partData[index].typeMax = initialState.partData[index].typeMax;
         }
 
         let categorizedListItem = state.partData[index].listItems;

@@ -190,13 +190,13 @@ export default function SetList() {
 
     console.log("itemsToAdd รูปร่างเป็นไง:", itemsToAdd);
     itemsToAdd.map((item) => {
+      dispatch(addProduct(item));
       if (item.category.toLowerCase() === "mb") {
         const mbSlot = item.slot;
-        console.log("mbslot:", mbSlot)
+        console.log("mbslot:", mbSlot);
         const isFromSets = true;
         dispatch(setMax({ mbSlot, isFromSets }));
       }
-      dispatch(addProduct(item));
     });
     dispatch(updateSummations());
     dispatch(addInfo({ setName, customerName, customerTel, sellerName, sellerTel }));
