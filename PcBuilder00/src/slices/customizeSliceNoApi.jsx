@@ -347,12 +347,17 @@ export const customizeSlice = createSlice({
         if (mbSlot) {
           state.partData[index].typeMax = mbSlot;
         } else if (!mbSlot) {
-          state.partData[index].typeMax = initialState.partData[index].typeMax;
-          if ((state.partData[1].listItems[0] && !mbSlot) || isFromSets) {
-            //มีเมนบอร์ดป่าว?
-            state.partData[index].typeMax = state.partData[1].listItems[0].mbSlot; //มีก็set max slot ไว้
+          // state.partData[index].typeMax = initialState.partData[index].typeMax;
+          // if ((state.partData[1].listItems[0] && !mbSlot) || isFromSets) {
+          //   //มีเมนบอร์ดป่าว?
+          //   state.partData[index].typeMax = state.partData[1].listItems[0].mbSlot; //มีก็set max slot ไว้
+          // } else {
+          //   state.partData[index].typeMax = initialState.partData[index].typeMax; // ไม่มีก็set เป็นค่าเริ่มต้น
+          // }
+          if(isFromSets) {
+            
           } else {
-            state.partData[index].typeMax = initialState.partData[index].typeMax; // ไม่มีก็set เป็นค่าเริ่มต้น
+            state.partData[index].typeMax = initialState.partData[index].typeMax;
           }
         }
 

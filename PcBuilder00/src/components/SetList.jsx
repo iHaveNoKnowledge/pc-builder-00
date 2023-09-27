@@ -192,6 +192,7 @@ export default function SetList() {
     itemsToAdd.map((item) => {
       if (item.category.toLowerCase() === "mb") {
         const mbSlot = item.slot;
+        console.log("mbslot:", mbSlot)
         const isFromSets = true;
         dispatch(setMax({ mbSlot, isFromSets }));
       }
