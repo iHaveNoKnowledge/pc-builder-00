@@ -120,7 +120,7 @@ const UserFilter = () => {
 
   //* AutoComplete
   const handleAutocompleteChange = (event, newValue) => {
-    console.log("newValue:", newValue);
+    
     dispatch(branchSelect(newValue));
   };
   // if (loading) {

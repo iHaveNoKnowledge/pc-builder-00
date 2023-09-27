@@ -180,7 +180,7 @@ export default function SetList() {
       category.listItems.map((item) => item)
     );
 
-    console.log("itemsSet: ", itemsSet);
+    
 
     const itemsSetID = itemsSet.map((item) => item.id);
     const amountPerItem = itemsSet.map((item) => item.selectAmount);
@@ -188,12 +188,12 @@ export default function SetList() {
       .filter((item) => itemsSetID.includes(item.id))
       .map((item, index) => ({ ...item, selectAmount: amountPerItem[index] }));
 
-    console.log("itemsToAdd รูปร่างเป็นไง:", itemsToAdd);
+    
     itemsToAdd.map((item) => {
       dispatch(addProduct(item));
       if (item.category.toLowerCase() === "mb") {
         const mbSlot = item.slot;
-        console.log("mbslot:", mbSlot);
+        
         const isFromSets = true;
         dispatch(setMax({ mbSlot, isFromSets }));
       }

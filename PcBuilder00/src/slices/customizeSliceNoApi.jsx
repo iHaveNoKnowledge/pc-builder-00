@@ -341,7 +341,7 @@ export const customizeSlice = createSlice({
     setMax: (state, action) => {
       const { mbSlot, isFromSets } = action.payload;
       const index = state.partData.findIndex((item) => item.category === "ram");
-      console.log("ทำงานหรือไม่ รับค่าไรมา : ", action.payload);
+      
       if (index !== -1 || isMbSelected) {
         //กรณีมี Payload
         if (state.partData[1].listItems.length > 0) {
