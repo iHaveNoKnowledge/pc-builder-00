@@ -1,5 +1,5 @@
-import React from "react";
-import { Page, Text, View, Document, Image, Font, PDFViewer } from "@react-pdf/renderer";
+import React, { useRef, useEffect, useState } from "react";
+import { Page, Text, View, Document, Image, Font, PDFViewer, usePDF } from "@react-pdf/renderer";
 import logoHeader from "../../public/images/itLogo-1.png";
 import font from "../fonts/ChakraPetch-Regular.ttf";
 import { AppBar, Toolbar, Button, Dialog, IconButton, Typography, Slide, Box } from "@mui/material";
@@ -427,10 +427,13 @@ const ReportDocument = () => {
   };
 
   const FinalizedDocument = () => {
+    const [pageNumber, setPageNumber] = useState();
+    const [totalPage, setTotalPage] = useState();
     return (
       <Document>
         <Page style={pageStyle} size="A4" orientation="portrait">
           <View style={tableStyle}>
+            <Text render={({ pageNumber, totalPages }) => `${pageNumber} / ${totalPages}`} fixed />
             {createMainTableHeader()}
             {createTableRowIT(5)}
           </View>
