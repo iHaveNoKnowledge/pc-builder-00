@@ -184,6 +184,7 @@ const UserFilter = () => {
                 onBlur={handleIsFocus}
                 style={autoCompleteInput}
                 size="small"
+                
                 multiple
                 limitTags={2}
                 // options={branches}
