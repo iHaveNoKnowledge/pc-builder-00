@@ -253,7 +253,7 @@ function PostCard({ items, totalRows }) {
       <Grid container spacing="10" columns={{ xs: 4, sm: 12, md: 12 }}>
         {productPaginated.map((item, index) => {
           const pngPath = `/images/${item.compatible.toLowerCase().split(" ", 1)}.png`;
-          const jpgPath = `/images/${item.compatible.toLowerCase()}.jpg`;
+          const jpgPath = `/images/${item.compatible.toLowerCase().split(" ", 1)}.jpg`;
           const maxCardHeight = Math.max(...productPaginated.map((card) => card.height));
           const isAvailable = item.QTY.reduce((acc, QTYItem) => acc + QTYItem, 0) > 0;
           const priceDisplay = () => {
