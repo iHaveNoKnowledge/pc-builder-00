@@ -264,7 +264,7 @@ const ReportDocument = () => {
               return (
                 <View key={index} style={{ borderCollapse: "collapse" }}>
                   <View
-                    break={itemsList % 20 === 0}
+                    break={itemsList.length > 18}
                     style={{ display: "flex", flexDirection: "row" }}
                   >
                     <View
