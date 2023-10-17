@@ -21,7 +21,7 @@ const ReportDocument = () => {
   const { info, branch } = useSelector((state) => state.report);
 
   //* Rows
-  const rowsPerPage = 28;
+  const rowsPerPage = 22;
   const emptyRows = rowsPerPage - itemsList.length;
 
   ////* Form //////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -260,9 +260,13 @@ const ReportDocument = () => {
             {/* the following rows */}
             {[...Array(itemsAmt - 1)].map((table, index) => {
               const formattedNumberx = (index + 2).toString().padStart(6, "0");
+              // https://stackoverflow.com/questions/75039805/how-to-break-a-page-conditionally-with-react-pdf-renderer อันนี้ช่วยได้
               return (
                 <View key={index} style={{ borderCollapse: "collapse" }}>
-                  <View break={true} style={{ display: "flex", flexDirection: "row" }}>
+                  <View
+                    break={itemsList % 20 === 0}
+                    style={{ display: "flex", flexDirection: "row" }}
+                  >
                     <View
                       style={{
                         ...inlineStyle,
@@ -426,14 +430,31 @@ const ReportDocument = () => {
     }
   };
 
+  const reportRef = useRef(null);
+  const [reportHeight, setReportHeight] = useState(0);
+  useEffect(() => {
+    setReportHeight(reportRef);
+  });
+
   const FinalizedDocument = () => {
-    const [pageNumber, setPageNumber] = useState();
-    const [totalPage, setTotalPage] = useState();
+    const [repPageNumber, setRepPageNumber] = useState();
+    const [repTotalPage, setRepTotalPage] = useState();
+    const [renderTImes, setRenderTimes] = useState(0);
+    console.log(reportHeight);
     return (
       <Document>
-        <Page style={pageStyle} size="A4" orientation="portrait">
+        <Page style={pageStyle} size="A4" orientation="portrait" ref={reportRef}>
           <View style={tableStyle}>
-            <Text render={({ pageNumber, totalPages }) => `${pageNumber} / ${totalPages}`} fixed />
+            <Text
+              style={{ display: "block", marginLeft: "auto" }}
+              render={({ pageNumber, totalPages }) => {
+                setRepPageNumber(pageNumber);
+                setRepTotalPage(totalPages);
+                return `${pageNumber} / ${totalPages} `;
+              }}
+              fixed
+            />
+            <Text>แมว</Text>
             {createMainTableHeader()}
             {createTableRowIT(5)}
           </View>
@@ -568,7 +589,7 @@ export const inlineStyle = {
   padding: "5px 10px",
   fontSize: 8.5,
 };
-export const inlineOrder = { width: "6.5%", textAlign: "right" };
+export const inlineOrder = { width: "6.5%", textAlign: "center" };
 export const inlineCode = { width: "14%" };
 export const inlineDescr = { width: "37.5%" };
 export const inlineQTY = { width: "14%", textAlign: "center" };

@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 const publicApi = import.meta.env.VITE_APP_DB_API_PUBLIC;
 const testApi = import.meta.env.VITE_APP_DB_API_TEST;
-const baseUrl = `${publicApi}`;
+const baseUrl = `${testApi}`;
 
 // Gets and a Delete Fetch จาก SQL server 192.168
 export const apiSliceDb = createApi({

@@ -9,6 +9,8 @@ import { apiSliceDb, apiPutSets } from "./features/api/dataApiSlice";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
+import Preview from "./components/pdfTest/pdfTest";
+
 const THEME = createTheme({
   typography: {
     fontFamily: ["'Chakra Petch', sans-serif"].join(","),
@@ -23,6 +25,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           <BrowserRouter>
             <Routes>
               <Route path="" element={<App />} />
+              <Route path="/pdfTest" element={<Preview />} />
             </Routes>
           </BrowserRouter>
         </ThemeProvider>
