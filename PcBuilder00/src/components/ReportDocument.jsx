@@ -190,6 +190,7 @@ const ReportDocument = () => {
   };
 
   //* Rows
+  const itemsAmt = itemsList.length;
   let rowsPerPage = 20;
   if (itemsList.length > rowsPerPage) {
     rowsPerPage = rowsPerPage * 2;
@@ -198,7 +199,6 @@ const ReportDocument = () => {
   const pages = Math.ceil(itemsAmt / rowsPerPage);
 
   const createTableRowITDYN = (itemArr, totalpage) => {
-    const itemsAmt = itemsList.length;
     const formattedNumber = (itemsAmt - (itemsAmt - 1)).toString().padStart(6, "0");
     switch (true) {
       case itemsAmt >= 1:
