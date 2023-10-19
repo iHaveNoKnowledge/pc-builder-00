@@ -56,6 +56,7 @@ const CustomizationProto02 = () => {
   };
 
   const handleClear = (category, id, miniIndex) => {
+    console.log("กด clear")
     dispatch(removeProduct({ category, id, miniIndex }));
     dispatch(setMax());
     dispatch(updateSummations());

@@ -21,7 +21,10 @@ const ReportDocument = () => {
   const { info, branch } = useSelector((state) => state.report);
 
   //* Rows
-  const rowsPerPage = 22;
+  let rowsPerPage = 20;
+  if (itemsList.length > rowsPerPage) {
+    rowsPerPage = rowsPerPage * 2;
+  }
   const emptyRows = rowsPerPage - itemsList.length;
 
   ////* Form //////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -156,13 +159,15 @@ const ReportDocument = () => {
     );
   };
 
-  const createTableRowIT = (rows) => {
-    return (
-      <View>
-        <View style={firstTableColStyle}>{createTableRowITDYN(rows)}</View>
-      </View>
-    );
-  };
+  //! มีไว้หุ้มตารางด้านนอกไม่รู้จะต้องใช้อีกไหม เพราะตอนนี้หุ้มที่ตัวตารางโดยตรงได้แล้ว ตารางหุ้มมาจาก ตัวแปร firstTableColStyle
+  // const createTableRowIT = (rows, totalpage) => {
+  //   return (
+  //     <View>
+  //       <View style={firstTableColStyle}>{createTableRowITDYN(rows, totalpage)}</View>
+  //       <View>{lastTable()}</View>
+  //     </View>
+  //   );
+  // };
 
   const headerSubTable = () => {
     return (
@@ -191,7 +196,7 @@ const ReportDocument = () => {
     );
   };
 
-  const createTableRowITDYN = (itemArr) => {
+  const createTableRowITDYN = (itemArr, totalpage) => {
     const itemsAmt = itemsList.length;
     const formattedNumber = (itemsAmt - (itemsAmt - 1)).toString().padStart(6, "0");
     switch (true) {
@@ -229,7 +234,9 @@ const ReportDocument = () => {
                     ...celUnderline,
                   }}
                 >
-                  <Text>{`${itemsList[0].productDescription}`}</Text>
+                  <Text
+                    style={{ whiteSpace: "nowrap" }}
+                  >{`${itemsList[0].productDescription}`}</Text>
                 </View>
                 <View
                   style={{ flexGrow: 1, borderBottom: "1px groove rgba(130, 195, 255, 1)" }}
@@ -261,11 +268,13 @@ const ReportDocument = () => {
             {[...Array(itemsAmt - 1)].map((table, index) => {
               const formattedNumberx = (index + 2).toString().padStart(6, "0");
               // https://stackoverflow.com/questions/75039805/how-to-break-a-page-conditionally-with-react-pdf-renderer อันนี้ช่วยได้
+              const isBreak = totalpage;
+              console.log("เริ่มที่", index);
               return (
-                <View key={index} style={{ borderCollapse: "collapse" }}>
+                <View key={index} style={{ borderCollapse: "separate" }} break={index + 1 / 20 === 1}>
                   <View
-                    break={itemsList.length > 18}
                     style={{ display: "flex", flexDirection: "row" }}
+                    
                   >
                     <View
                       style={{
@@ -324,8 +333,8 @@ const ReportDocument = () => {
             {[...Array(emptyRows)].map((table, index) => {
               const islastChild = index + 1 - emptyRows === 0;
               return (
-                <View key={index}>
-                  <View break={true} style={{ display: "flex", flexDirection: "row" }}>
+                <View key={index} break>
+                  <View style={{ display: "flex", flexDirection: "row" }}>
                     <View
                       style={{
                         ...inlineStyle,
@@ -338,7 +347,7 @@ const ReportDocument = () => {
                     </View>
                     <View style={{ ...inlineStyle, ...inlineCode, ...celUnderline }}></View>
                     <View style={{ ...inlineStyle, ...inlineDescr, ...celUnderline, flexGrow: 1 }}>
-                      {islastChild && <Text>เป็น Last</Text>}
+                      {islastChild && <Text>เป็น Last {totalpage}</Text>}
                     </View>
                     <View style={{ ...celUnderline }}></View>
                     <View style={{ ...inlineStyle, ...inlineQTY, ...celUnderline }}></View>
@@ -355,7 +364,7 @@ const ReportDocument = () => {
 
             {/* summary rows */}
             {/* <View style={{ borderTop: "1px solid #000" }}> */}
-            <View>
+            <View break>
               <View break={true} style={{ display: "flex", flexDirection: "row" }}>
                 <View style={{ ...inlineStyle, ...inlineOrder }}></View>
                 <View style={{ ...inlineStyle, ...inlineCode }}></View>
@@ -430,6 +439,10 @@ const ReportDocument = () => {
     }
   };
 
+  const lastTable = () => {
+    return <Text>แมว</Text>;
+  };
+
   const reportRef = useRef(null);
   const [reportHeight, setReportHeight] = useState(0);
   useEffect(() => {
@@ -455,8 +468,9 @@ const ReportDocument = () => {
               fixed
             />
             <Text>แมว</Text>
-            {createMainTableHeader()}
-            {createTableRowIT(5)}
+            <View fixed>{createMainTableHeader()}</View>
+            <View style={firstTableColStyle}>{createTableRowITDYN(5, repTotalPage)}</View>
+            <View>{lastTable()}</View>
           </View>
         </Page>
       </Document>
@@ -587,7 +601,7 @@ export const celUnderline = {
 
 export const inlineStyle = {
   padding: "5px 10px",
-  fontSize: 8.5,
+  fontSize: 8,
 };
 export const inlineOrder = { width: "6.5%", textAlign: "center" };
 export const inlineCode = { width: "14%" };
