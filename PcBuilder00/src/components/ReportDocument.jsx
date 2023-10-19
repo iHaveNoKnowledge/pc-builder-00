@@ -20,13 +20,6 @@ const ReportDocument = () => {
   const { partData, itemsList } = useSelector((state) => state.customize);
   const { info, branch } = useSelector((state) => state.report);
 
-  //* Rows
-  let rowsPerPage = 20;
-  if (itemsList.length > rowsPerPage) {
-    rowsPerPage = rowsPerPage * 2;
-  }
-  const emptyRows = rowsPerPage - itemsList.length;
-
   ////* Form //////////////////////////////////////////////////////////////////////////////////////////////////////
   const [alertOpen, setAlertOpen] = React.useState(false);
   const [open, setOpen] = React.useState(false);
@@ -196,6 +189,14 @@ const ReportDocument = () => {
     );
   };
 
+  //* Rows
+  let rowsPerPage = 20;
+  if (itemsList.length > rowsPerPage) {
+    rowsPerPage = rowsPerPage * 2;
+  }
+  const emptyRows = rowsPerPage - itemsList.length;
+  const pages = Math.ceil(itemsAmt / rowsPerPage);
+
   const createTableRowITDYN = (itemArr, totalpage) => {
     const itemsAmt = itemsList.length;
     const formattedNumber = (itemsAmt - (itemsAmt - 1)).toString().padStart(6, "0");
@@ -271,11 +272,12 @@ const ReportDocument = () => {
               const isBreak = totalpage;
               console.log("เริ่มที่", index);
               return (
-                <View key={index} style={{ borderCollapse: "separate" }} break={index + 1 / 20 === 1}>
-                  <View
-                    style={{ display: "flex", flexDirection: "row" }}
-                    
-                  >
+                <View
+                  key={index}
+                  style={{ borderCollapse: "collapse" }}
+                  break={index + 1 / 20 === 1}
+                >
+                  <View style={{ display: "flex", flexDirection: "row" }}>
                     <View
                       style={{
                         ...inlineStyle,
