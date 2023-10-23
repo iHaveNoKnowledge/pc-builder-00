@@ -561,10 +561,17 @@ const ReportDocument = () => {
           const endIndex = Math.min((pageIndex + 1) * rowsPerPage, itemsAmt);
           const itemsInPage = itemsList.slice(startIndex, endIndex);
 
-          // // Add empty placeholders if the number of items is less than the rowsPerPage
+          // Add empty placeholders if the number of items is less than the rowsPerPage
           while (itemsInPage.length < rowsPerPage) {
             itemsInPage.push([
-              { id: " ", code: "", productDescription: " ", category: " ", selectAmount: " " },
+              {
+                id: " ",
+                code: "",
+                productDescription: " ",
+                category: " ",
+                selectAmount: " ",
+                isPlaceholder: true,
+              },
             ]); // Add empty object as a placeholder
           }
           console.log("itemsInPage: ", itemsInPage);
@@ -584,44 +591,76 @@ const ReportDocument = () => {
                     {itemsInPage.map((item, index) => (
                       <View key={index} style={{ display: "flex", flexDirection: "row" }}>
                         <View
-                          style={{
-                            ...inlineStyle,
-                            ...inlineOrder,
-                            ...celUnderline,
-                          }}
+                          style={
+                            (startIndex + index + 1) % rowsPerPage === 0
+                              ? {
+                                  ...inlineStyle,
+                                  ...inlineOrder,
+                                }
+                              : {
+                                  ...inlineStyle,
+                                  ...inlineOrder,
+                                  ...celUnderline,
+                                }
+                          }
                         >
-                          {itemsList.code !== "" && (
-                            <Text>{index + 1 + pageIndex * rowsPerPage}</Text>
+                          {startIndex + index + 1 > itemsAmt ? (
+                            <Text style={{ color: "white" }}> {startIndex + index + 1}</Text>
+                          ) : (
+                            <Text style={{}}> {startIndex + index + 1}</Text>
                           )}
                         </View>
 
                         <View
-                          style={{
-                            ...inlineStyle,
-                            ...inlineCode,
-                            ...celUnderline,
-                          }}
+                          style={
+                            (startIndex + index + 1) % rowsPerPage === 0
+                              ? {
+                                  ...inlineStyle,
+                                  ...inlineCode,
+                                }
+                              : {
+                                  ...inlineStyle,
+                                  ...inlineCode,
+                                  ...celUnderline,
+                                }
+                          }
                         >
                           <Text>{item.code}</Text>
                         </View>
 
                         <View
-                          style={{
-                            ...inlineStyle,
-                            ...inlineDescr,
-                            ...celUnderline,
-                            flexGrow: 1,
-                          }}
+                          style={
+                            (startIndex + index + 1) % rowsPerPage === 0
+                              ? {
+                                  ...inlineStyle,
+                                  ...inlineDescr,
+
+                                  flexGrow: 1,
+                                }
+                              : {
+                                  ...inlineStyle,
+                                  ...inlineDescr,
+                                  ...celUnderline,
+                                  flexGrow: 1,
+                                }
+                          }
                         >
                           <Text style={{ whiteSpace: "nowrap" }}>{item?.productDescription}</Text>
                         </View>
 
                         <View
-                          style={{
-                            ...inlineStyle,
-                            ...inlineQTY,
-                            ...celUnderline,
-                          }}
+                          style={
+                            (startIndex + index + 1) % rowsPerPage === 0
+                              ? {
+                                  ...inlineStyle,
+                                  ...inlineQTY,
+                                }
+                              : {
+                                  ...inlineStyle,
+                                  ...inlineQTY,
+                                  ...celUnderline,
+                                }
+                          }
                         >
                           <Text>{item.selectAmount?.toLocaleString()}</Text>
                         </View>
