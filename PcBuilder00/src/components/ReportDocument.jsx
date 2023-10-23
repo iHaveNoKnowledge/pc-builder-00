@@ -94,9 +94,11 @@ const ReportDocument = () => {
             <View style={contactStyle}>
               <Text>ลูกค้า</Text>
             </View>
+
             <View>
               <Text style={{ fontSize: 9 }}>:</Text>
             </View>
+
             <View style={{ fontSize: 9, marginVertical: 1, marginLeft: 3, width: 130 }}>
               {/* <Text>รับตัวแปร Cus str ทำconditional display</Text> */}
               <Text>{info.customerName}</Text>
@@ -189,23 +191,14 @@ const ReportDocument = () => {
     );
   };
 
-  //* Rows
-  const itemsAmt = itemsList.length;
-  let rowsPerPage = 20;
-  if (itemsList.length > rowsPerPage) {
-    rowsPerPage = rowsPerPage * 2;
-  }
-  const emptyRows = rowsPerPage - itemsList.length;
-  const pages = Math.ceil(itemsAmt / rowsPerPage);
-
-  const createTableRowITDYN = (itemArr, totalpage) => {
+  const createTableRowITDYN = (itemArr, itemsInPagex, numOfItem, countItems) => {
     const formattedNumber = (itemsAmt - (itemsAmt - 1)).toString().padStart(6, "0");
     switch (true) {
       case itemsAmt >= 1:
         return (
           <View style={subTableDisplay}>
             {headerSubTable()}
-            {/* 1st row */}
+            {/* 1st row (column name row)*/}
             <View>
               <View style={{ display: "flex", flexDirection: "row" }}>
                 <View
@@ -215,7 +208,7 @@ const ReportDocument = () => {
                     ...celUnderline,
                   }}
                 >
-                  <Text>{WrapText("1")}</Text>
+                  <Text>{countItems}</Text>
                 </View>
 
                 <View
@@ -225,7 +218,7 @@ const ReportDocument = () => {
                     ...celUnderline,
                   }}
                 >
-                  <Text>{`${itemsList[0].code}`}</Text>
+                  <Text>{`${itemsInPagex?.code}`}</Text>
                 </View>
 
                 <View
@@ -237,7 +230,7 @@ const ReportDocument = () => {
                 >
                   <Text
                     style={{ whiteSpace: "nowrap" }}
-                  >{`${itemsList[0].productDescription}`}</Text>
+                  >{`${itemsInPagex?.productDescription}`}</Text>
                 </View>
                 <View
                   style={{ flexGrow: 1, borderBottom: "1px groove rgba(130, 195, 255, 1)" }}
@@ -249,7 +242,7 @@ const ReportDocument = () => {
                     ...celUnderline,
                   }}
                 >
-                  <Text>{`${itemsList[0].selectAmount.toLocaleString()}`}</Text>
+                  <Text>{`${itemsInPagex?.selectAmount.toLocaleString()}`}</Text>
                 </View>
 
                 {/* <View style={{ ...inlineStyle, ...inlinePrice }}>
@@ -269,7 +262,7 @@ const ReportDocument = () => {
             {[...Array(itemsAmt - 1)].map((table, index) => {
               const formattedNumberx = (index + 2).toString().padStart(6, "0");
               // https://stackoverflow.com/questions/75039805/how-to-break-a-page-conditionally-with-react-pdf-renderer อันนี้ช่วยได้
-              const isBreak = totalpage;
+
               console.log("เริ่มที่", index);
               return (
                 <View
@@ -294,7 +287,7 @@ const ReportDocument = () => {
                         ...celUnderline,
                       }}
                     >
-                      <Text>{`${itemsList[index + 1].code}`}</Text>
+                      <Text>{`${itemsInPagex[index + 1]?.code}`}</Text>
                     </View>
                     <View
                       style={{
@@ -304,7 +297,7 @@ const ReportDocument = () => {
                         flexGrow: 1,
                       }}
                     >
-                      <Text>{`${itemsList[index + 1].productDescription}`}</Text>
+                      <Text>{`${itemsInPagex[index + 1]?.productDescription}`}</Text>
                     </View>
                     <View style={{ borderBottom: "1px groove rgba(130, 195, 255, 1)" }}></View>
                     <View
@@ -314,7 +307,7 @@ const ReportDocument = () => {
                         ...celUnderline,
                       }}
                     >
-                      <Text>{`${itemsList[index + 1].selectAmount.toLocaleString()}`}</Text>
+                      <Text>{`${itemsInPagex[index + 1]?.selectAmount.toLocaleString()}`}</Text>
                     </View>
                     {/* <View style={{ ...inlineStyle, ...inlinePrice }}>
                       <Text>{`${itemsList[index + 1].srp
@@ -332,7 +325,7 @@ const ReportDocument = () => {
             })}
 
             {/* space ROWS */}
-            {[...Array(emptyRows)].map((table, index) => {
+            {/* {[...Array(emptyRows)].map((table, index) => {
               const islastChild = index + 1 - emptyRows === 0;
               return (
                 <View key={index} break>
@@ -349,7 +342,7 @@ const ReportDocument = () => {
                     </View>
                     <View style={{ ...inlineStyle, ...inlineCode, ...celUnderline }}></View>
                     <View style={{ ...inlineStyle, ...inlineDescr, ...celUnderline, flexGrow: 1 }}>
-                      {islastChild && <Text>เป็น Last {totalpage}</Text>}
+                      {islastChild && <Text>เป็น Last</Text>}
                     </View>
                     <View style={{ ...celUnderline }}></View>
                     <View style={{ ...inlineStyle, ...inlineQTY, ...celUnderline }}></View>
@@ -362,11 +355,11 @@ const ReportDocument = () => {
                   </View>
                 </View>
               );
-            })}
+            })} */}
 
             {/* summary rows */}
             {/* <View style={{ borderTop: "1px solid #000" }}> */}
-            <View break>
+            {/* <View break>
               <View break={true} style={{ display: "flex", flexDirection: "row" }}>
                 <View style={{ ...inlineStyle, ...inlineOrder }}></View>
                 <View style={{ ...inlineStyle, ...inlineCode }}></View>
@@ -432,7 +425,7 @@ const ReportDocument = () => {
                   </Text>
                 </View>
               </View>
-            </View>
+            </View> */}
           </View>
         );
 
@@ -442,7 +435,105 @@ const ReportDocument = () => {
   };
 
   const lastTable = () => {
-    return <Text>แมว</Text>;
+    return (
+      <View>
+        <View break>
+          <View break={true} style={{ display: "flex", flexDirection: "row" }}>
+            <View style={{ ...inlineStyle, ...inlineOrder }}></View>
+            <View style={{ ...inlineStyle, ...inlineCode }}></View>
+            <View style={{ ...inlineStyle, ...inlineDescr }}></View>
+            <View style={{ ...inlineStyle, ...inlineQTY }}></View>
+            <View style={{ ...inlineStyle, ...inlinePrice, borderBottom: "1px groove  #000" }}>
+              <Text>ราคารวม</Text>
+            </View>
+            <View
+              style={{
+                ...inlineStyle,
+                ...inlineTotal,
+                borderBottom: "1px groove  #000",
+                marginHorizontal: "-1",
+              }}
+            >
+              <Text>
+                {itemsList
+                  .reduce((acc, item) => acc + item.srp * (100 / 107) * item.selectAmount, 0)
+                  .toFixed(2)
+                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+              </Text>
+            </View>
+          </View>
+        </View>
+
+        <View>
+          <View break={true} style={{ display: "flex", flexDirection: "row" }}>
+            <View style={{ ...inlineStyle, ...inlineOrder }}></View>
+            <View style={{ ...inlineStyle, ...inlineCode }}></View>
+            <View style={{ ...inlineStyle, ...inlineDescr }}></View>
+            <View style={{ ...inlineStyle, ...inlineQTY }}></View>
+            <View
+              style={{
+                ...inlineStyle,
+                ...inlinePrice,
+                borderBottom: "1px groove  #000",
+              }}
+            >
+              <Text>ภาษีมูลค่าเพิ่ม</Text>
+            </View>
+            <View
+              style={{
+                ...inlineStyle,
+                ...inlineTotal,
+                borderBottom: "1px groove  #000",
+                marginHorizontal: "-1",
+              }}
+            >
+              <Text>
+                {itemsList
+                  .reduce(
+                    (acc, item) => acc + (item.srp - item.srp * (100 / 107)) * item.selectAmount,
+                    0
+                  )
+                  .toFixed(2)
+                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+              </Text>
+            </View>
+          </View>
+        </View>
+
+        <View>
+          <View break={true} style={{ display: "flex", flexDirection: "row" }}>
+            <View style={{ ...inlineStyle, ...inlineOrder }}></View>
+            <View style={{ ...inlineStyle, ...inlineCode }}></View>
+            <View style={{ ...inlineStyle, ...inlineDescr }}></View>
+            <View style={{ ...inlineStyle, ...inlineQTY }}></View>
+            <View
+              style={{
+                ...inlineStyle,
+                ...inlinePrice,
+                borderBottom: "1px groove  #000",
+              }}
+            >
+              <Text>ราคาสุทธิ</Text>
+            </View>
+            <View
+              style={{
+                ...inlineStyle,
+                ...inlineTotal,
+                borderBottom: "1px groove  #000",
+                marginHorizontal: "-1",
+              }}
+            >
+              <Text>
+                {itemsList
+                  .reduce((acc, item) => acc + item.srp * item.selectAmount, 0)
+                  .toFixed(2)
+                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+              </Text>
+            </View>
+          </View>
+        </View>
+      </View>
+    );
   };
 
   const reportRef = useRef(null);
@@ -451,30 +542,102 @@ const ReportDocument = () => {
     setReportHeight(reportRef);
   });
 
+  //* Rows
+  const itemsAmt = itemsList.length;
+  let rowsPerPage = 20;
+  // if (itemsList.length > rowsPerPage) {
+  //   rowsPerPage = rowsPerPage * 2;
+  // }
+  const emptyRows = rowsPerPage - itemsList.length;
+  const pages = Math.ceil(itemsAmt / rowsPerPage);
+
   const FinalizedDocument = () => {
-    const [repPageNumber, setRepPageNumber] = useState();
-    const [repTotalPage, setRepTotalPage] = useState();
-    const [renderTImes, setRenderTimes] = useState(0);
-    console.log(reportHeight);
+    console.log("itemsList:", itemsList);
+    let countItems = 0;
     return (
       <Document>
-        <Page style={pageStyle} size="A4" orientation="portrait" ref={reportRef}>
-          <View style={tableStyle}>
-            <Text
-              style={{ display: "block", marginLeft: "auto" }}
-              render={({ pageNumber, totalPages }) => {
-                setRepPageNumber(pageNumber);
-                setRepTotalPage(totalPages);
-                return `${pageNumber} / ${totalPages} `;
-              }}
-              fixed
-            />
-            <Text>แมว</Text>
-            <View fixed>{createMainTableHeader()}</View>
-            <View style={firstTableColStyle}>{createTableRowITDYN(5, repTotalPage)}</View>
-            <View>{lastTable()}</View>
-          </View>
-        </Page>
+        {Array.from({ length: pages }).map((_, pageIndex) => {
+          const startIndex = pageIndex * rowsPerPage;
+          const endIndex = Math.min((pageIndex + 1) * rowsPerPage, itemsAmt);
+          const itemsInPage = itemsList.slice(startIndex, endIndex);
+
+          // // Add empty placeholders if the number of items is less than the rowsPerPage
+          while (itemsInPage.length < rowsPerPage) {
+            itemsInPage.push([
+              { id: " ", code: "", productDescription: " ", category: " ", selectAmount: " " },
+            ]); // Add empty object as a placeholder
+          }
+          console.log("itemsInPage: ", itemsInPage);
+          return (
+            <Page
+              style={pageStyle}
+              size="A4"
+              orientation="portrait"
+              ref={reportRef}
+              key={pageIndex}
+            >
+              <View style={tableStyle}>
+                <View fixed>{createMainTableHeader()}</View>
+                <View style={firstTableColStyle}>
+                  <View style={subTableDisplay}>
+                    {headerSubTable()}
+                    {itemsInPage.map((item, index) => (
+                      <View key={index} style={{ display: "flex", flexDirection: "row" }}>
+                        <View
+                          style={{
+                            ...inlineStyle,
+                            ...inlineOrder,
+                            ...celUnderline,
+                          }}
+                        >
+                          {itemsList.code !== "" && (
+                            <Text>{index + 1 + pageIndex * rowsPerPage}</Text>
+                          )}
+                        </View>
+
+                        <View
+                          style={{
+                            ...inlineStyle,
+                            ...inlineCode,
+                            ...celUnderline,
+                          }}
+                        >
+                          <Text>{item.code}</Text>
+                        </View>
+
+                        <View
+                          style={{
+                            ...inlineStyle,
+                            ...inlineDescr,
+                            ...celUnderline,
+                            flexGrow: 1,
+                          }}
+                        >
+                          <Text style={{ whiteSpace: "nowrap" }}>{item?.productDescription}</Text>
+                        </View>
+
+                        <View
+                          style={{
+                            ...inlineStyle,
+                            ...inlineQTY,
+                            ...celUnderline,
+                          }}
+                        >
+                          <Text>{item.selectAmount?.toLocaleString()}</Text>
+                        </View>
+                      </View>
+                    ))}
+                  </View>
+                </View>
+
+                {/* <View style={firstTableColStyle}>
+                  {createTableRowITDYN(5, itemsInPage, itemsAmt, countItems)}
+                </View> */}
+                {pageIndex === pages - 1 && <View>{lastTable()}</View>}
+              </View>
+            </Page>
+          );
+        })}
       </Document>
     );
   };
@@ -599,6 +762,7 @@ export const tableCellHeaderStyle = {
 
 export const celUnderline = {
   borderBottom: "1px groove rgba(130, 195, 255, 1)",
+  marginHorizontal: "-1px",
 };
 
 export const inlineStyle = {
