@@ -205,7 +205,7 @@ const ReportDocument = () => {
                   style={{
                     ...inlineStyle,
                     ...inlineOrder,
-                    ...celUnderline,
+                    ...celUnderline,                  
                   }}
                 >
                   <Text>{countItems}</Text>
@@ -600,6 +600,7 @@ const ReportDocument = () => {
                               ? {
                                   ...inlineStyle,
                                   ...inlineOrder,
+                                  marginHorizontal: "-1px",
                                 }
                               : {
                                   ...inlineStyle,
@@ -621,6 +622,7 @@ const ReportDocument = () => {
                               ? {
                                   ...inlineStyle,
                                   ...inlineCode,
+                                  marginHorizontal: "-1px",
                                 }
                               : {
                                   ...inlineStyle,
@@ -638,6 +640,7 @@ const ReportDocument = () => {
                               ? {
                                   ...inlineStyle,
                                   ...inlineDescr,
+                                  marginHorizontal: "-1px",
 
                                   flexGrow: 1,
                                 }
@@ -658,6 +661,7 @@ const ReportDocument = () => {
                               ? {
                                   ...inlineStyle,
                                   ...inlineQTY,
+                                  marginHorizontal: "-1px",
                                 }
                               : {
                                   ...inlineStyle,

@@ -21,6 +21,7 @@ import { PDFViewer } from "@react-pdf/renderer";
 import CloseIcon from "@mui/icons-material/Close";
 import { theme } from "../SetList";
 import { ThemeProvider } from "@mui/material/styles";
+import { useSelector } from "react-redux";
 
 const AddSN = () => {
   const { register, handleSubmit, setValue, watch, reset } = useForm();
@@ -103,7 +104,6 @@ const AddSN = () => {
   };
   //* onclick สำหรับกด save  ////////////////////////////////////////////////////////////////////
   const handleSave = () => {
-    
     handleClose();
     handlePrintClickOpen();
   };
@@ -122,18 +122,21 @@ const AddSN = () => {
 
   //* ทำตัวแปรสำหรับเก็บค่าเพื่อออกเอกสาร////////////////////////////////////////////////////////// itemList
   let itemList = [];
-
-  selectedItem.partData.map((item1) => {
-    item1.listItems.map((item2) => {
-      itemList = [...itemList, item2];
-    });
-  });
-
-  
+  const { partData, itemsList } = useSelector((state) => state.customize);
+  console.log("partDataReport2 มีค่าว่าไร: ", itemList);
+  itemList = [...itemsList]
+  // itemsList.partData.map((item1) => {
+  //   item1.listItems.map((item2) => {
+  //     itemList = [...itemList, item2];
+  //   });
+  // });
+  console.log("itemList = [...itemsList]", itemList)
 
   itemList.forEach((item) => {
     const times = item.selectAmount;
-    item.sn = Array(times).fill("");
+    const newItem = Object.assign({}, item);
+    newItem.sn = Array(times).fill("");
+    itemList[itemList.indexOf(item)] = newItem;
   });
 
   const onSubmit = () => {
@@ -141,7 +144,6 @@ const AddSN = () => {
       const updatedSN = item1.sn.map((sn, snIndex) => watch(`Item${index1}SN${snIndex}`));
       return { ...item1, sn: updatedSN };
     });
-    
   };
 
   const handleChange = (event, index, index2) => {
@@ -153,7 +155,6 @@ const AddSN = () => {
   const textFieldsRef = React.useRef([]);
 
   const handleKeyDown = (event, currentIndex, parentIndex) => {
-    
     if (event.key === "Enter") {
       event.preventDefault();
       const nextIndex = currentIndex + 1;
@@ -332,7 +333,7 @@ const AddSN = () => {
             </Toolbar>
           </AppBar>
           <DialogContent sx={{ mt: "25px" }}>
-            <TableDocumentCashier />
+            <TableDocumentCashier  />
           </DialogContent>
         </DialogContent>
       </Dialog>
