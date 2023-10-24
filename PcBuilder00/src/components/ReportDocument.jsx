@@ -79,17 +79,17 @@ const ReportDocument = () => {
   const createMainTableHeader = () => {
     return (
       <View style={tableRowStyle} fixed>
-        <View style={firstTableColHeaderStyle}>
+        <View style={firstTablereportColumnstyle}>
           <Image src={logoHeader} style={image} />
         </View>
 
-        <View style={tableColHeaderStyle}>
+        <View style={tablereportColumnstyle}>
           <Text style={tableCellHeaderStyle}>{WrapText("บริษัท ไอที ซิตี้ จำกัด (มหาชน)")}</Text>
           {/* คําแนะนํา อย่าใช้สระ ำ ให้ใช้เครื่องหมาย  ํ ยติภัง + สระ า เพราะ จำนวน index กับจำนวนตัวอักษรที่แสดงผลจะไม่ตรงกัน ทำให้แสดงผลไม่ครบ */}
           <Text style={tableCellStyle}>{WrapText(branch.address)}</Text>
         </View>
 
-        <View style={tableColHeaderStyle}>
+        <View style={tablereportColumnstyle}>
           <View style={{ ...subTableDisplay, ...{ flexDirection: "row", marginTop: "8px" } }}>
             <View style={contactStyle}>
               <Text>ลูกค้า</Text>
@@ -164,7 +164,7 @@ const ReportDocument = () => {
   //   );
   // };
 
-  const headerSubTable = () => {
+  const reportColumns = () => {
     return (
       <View style={{ display: "flex", flexDirection: "row" }} fixed>
         <View style={{ ...inlineStyle, ...inlineOrder }}>
@@ -197,7 +197,7 @@ const ReportDocument = () => {
       case itemsAmt >= 1:
         return (
           <View style={subTableDisplay}>
-            {headerSubTable()}
+            {reportColumns()}
             {/* 1st row (column name row)*/}
             <View>
               <View style={{ display: "flex", flexDirection: "row" }}>
@@ -583,11 +583,15 @@ const ReportDocument = () => {
               ref={reportRef}
               key={pageIndex}
             >
+              <Text
+                style={pageDisplayStyle}
+                render={({ pageNumber, totalPages }) => `${pageNumber} / ${totalPages}`}
+              />
               <View style={tableStyle}>
                 <View fixed>{createMainTableHeader()}</View>
                 <View style={firstTableColStyle}>
                   <View style={subTableDisplay}>
-                    {headerSubTable()}
+                    {reportColumns()}
                     {itemsInPage.map((item, index) => (
                       <View key={index} style={{ display: "flex", flexDirection: "row" }}>
                         <View
@@ -745,7 +749,7 @@ export const tableRowStyle = {
   display: "flex",
 };
 
-export const firstTableColHeaderStyle = {
+export const firstTablereportColumnstyle = {
   // width: "28vh",
   width: "16vw",
   borderStyle: "solid",
@@ -757,7 +761,7 @@ export const firstTableColHeaderStyle = {
   justifyContent: "center",
 };
 
-export const tableColHeaderStyle = {
+export const tablereportColumnstyle = {
   width: "36vw",
   // width: "100%",
   // borderStyle: "solid",
@@ -846,6 +850,15 @@ export const viewerStyle = {
 export const contactStyle = {
   fontSize: 9,
   width: "17%",
+};
+
+export const pageDisplayStyle = {
+  // display: "block",
+  position: "absolute",
+  width: "50px",
+  top: "4%",
+  right: "4%",
+  fontSize: ""
 };
 
 export default ReportDocument;
