@@ -2,46 +2,56 @@ import React from "react";
 import { Page, Text, View, Document, Image, Font } from "@react-pdf/renderer";
 import xx from "../../fonts/ChakraPetch-Regular.ttf";
 import xxx from "../../../public/images/itLogo-1.png";
+
 import { Box } from "@mui/material";
 import { PDFViewer } from "@react-pdf/renderer";
 Font.register({ family: "Chakra_Petch", src: xx });
-import {pageStyle, tableStyle} from "../ReportDocument"
+import { pageStyle, tableStyle } from "../ReportDocument";
+import { useSelector } from "react-redux";
+import { bwipjs } from "bwip-js";
+
 const TableDocumentCashier = () => {
+  const partDataReport2 = useSelector((state) => state.customize.partData);
+  const { partData, itemsList } = useSelector((state) => state.customize);
+  const { info, branch } = useSelector((state) => state.report);
   const createMainTableHeader = () => {
     return (
       <View style={tableRowStyle} fixed>
-        <View style={firstTableColHeaderStyle}>
+        <View style={firstTablereportColumnstyle}>
           <Image src={xxx} style={image} />
         </View>
 
-        <View style={tableColHeaderStyle}>
-          <Text style={tableCellHeaderStyle}>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque, eligendi!
-          </Text>
+        <View style={tablereportColumnstyle}>
+          <Text style={tableCellHeaderStyle}>{WrapText("บริษัท ไอที ซิตี้ จำกัด (มหาชน)")}</Text>
+          <Text style={tableCellStyle}>{WrapText(branch.address)}</Text>
         </View>
 
-        <View style={tableColHeaderStyle}>
+        <View style={tablereportColumnstyle}>
           <View style={{ ...subTableDisplay, ...{ flexDirection: "row", marginTop: "8px" } }}>
-            <View style={{ fontSize: 10, width: "17%" }}>
+            <View style={contactStyle}>
               <Text>ลูกค้า</Text>
             </View>
+
             <View>
-              <Text style={{ fontSize: 10 }}>:</Text>
+              <Text style={{ fontSize: 9 }}>:</Text>
             </View>
+
             <View style={{ fontSize: 9, marginVertical: 1, marginLeft: 3, width: 130 }}>
-              <Text>รับตัวแปร Cus str ทำconditional display</Text>
+              {/* <Text>รับตัวแปร Cus str ทำconditional display</Text> */}
+              <Text>{info.customerName}</Text>
             </View>
           </View>
 
-          <View style={{ ...subTableDisplay, ...{ flexDirection: "row" } }}>
-            <View style={{ fontSize: 10, width: "17%" }}>
+          <View style={{ ...subTableDisplay, flexDirection: "row" }}>
+            <View style={contactStyle}>
               <Text>โทร</Text>
             </View>
             <View>
               <Text style={{ fontSize: 10 }}>:</Text>
             </View>
             <View style={{ fontSize: 9, marginVertical: 1, marginLeft: 3, width: 130 }}>
-              <Text>รับตัวแปร custel str ทำconditional display</Text>
+              {/* <Text>รับตัวแปร custel str ทำconditional display</Text> */}
+              <Text>{info.customerTel}</Text>
             </View>
           </View>
 
@@ -51,15 +61,29 @@ const TableDocumentCashier = () => {
             }}
           ></View>
 
-          <View style={{ ...subTableDisplay, ...{ flexDirection: "row" } }}>
-            <View style={{ fontSize: 10, width: "17%" }}>
-              <Text>Seller</Text>
+          <View style={{ ...subTableDisplay, flexDirection: "row" }}>
+            <View style={contactStyle}>
+              <Text>ผู้ขาย</Text>
             </View>
             <View>
-              <Text style={{ fontSize: 10 }}>:</Text>
+              <Text style={{ fontSize: 9 }}>:</Text>
             </View>
             <View style={{ fontSize: 9, marginVertical: 1, marginLeft: 3, width: 130 }}>
-              <Text>รับตัวแปร seller ทำconditional display </Text>
+              {/* <Text>รับตัวแปร saler ทำconditional display </Text> */}
+              <Text>{info.sellerName} </Text>
+            </View>
+          </View>
+
+          <View style={{ ...subTableDisplay, flexDirection: "row" }}>
+            <View style={contactStyle}>
+              <Text>โทร</Text>
+            </View>
+            <View>
+              <Text style={{ fontSize: 9 }}>:</Text>
+            </View>
+            <View style={{ fontSize: 9, marginVertical: 1, marginLeft: 3, width: 130 }}>
+              {/* <Text>รับตัวแปร custel str ทำconditional display</Text> */}
+              <Text>{info.sellerTel}</Text>
             </View>
           </View>
         </View>
@@ -75,7 +99,7 @@ const TableDocumentCashier = () => {
     );
   };
 
-  const headerSubTable = () => {
+  const reportColumns = () => {
     return (
       <View style={{ display: "flex", flexDirection: "row" }} fixed>
         <View style={{ ...inlineStyle, ...inlineOrder }}>
@@ -112,13 +136,48 @@ const TableDocumentCashier = () => {
     </View>
   );
 
+  function BarcodeGenerator() {
+    const barcodesToGenerate = ['Coa-0001', 'co6-000160'];
+    const [barcodeImages, setBarcodeImages] = useState([]);
+  
+    useEffect(() => {
+      const generateBarcodes = async () => {
+        const images = await Promise.all(
+          barcodesToGenerate.map(async (data) => {
+            return new Promise((resolve, reject) => {
+              bwipjs.toBuffer(
+                {
+                  bcid: 'code128', // ประเภทของบาร์โค้ด
+                  text: data, // ข้อมูลที่คุณต้องการสร้างเป็นบาร์โค้ด
+                  scale: 3, // ขนาดของบาร์โค้ด
+                  includetext: true, // รวมข้อความกับบาร์โค้ด
+                },
+                (err, png) => {
+                  if (err) {
+                    reject(err);
+                  } else {
+                    // แปลงรูปภาพบาร์โค้ดเป็น base64
+                    const base64 = Buffer.from(png).toString('base64');
+                    resolve('data:image/png;base64,' + base64);
+                  }
+                }
+              );
+            });
+          })
+        );
+        setBarcodeImages(images);
+      };
+  
+      generateBarcodes();
+    }, []);
+
   const createTableRowITDYN = (x) => {
     const formattedNumber = (x - (x - 1)).toString().padStart(6, "0");
     switch (true) {
       case x >= 1:
         return (
           <View style={subTableDisplay}>
-            {headerSubTable()}
+            {reportColumns()}
 
             <View>
               <View style={{ display: "flex", flexDirection: "row" }}>
@@ -199,29 +258,15 @@ const TableDocumentCashier = () => {
 };
 
 //style------------------------------------------------------------------------------------
-// const pageStyle = {
-//   display: "flex",
-//   flexDirection: "row",
-//   justifyContent: "center",
-//   paddingTop: 16,
-//   paddingHorizontal: 40,
-//   paddingBottom: 56,
-// };
 
-// const tableStyle = {
-//   display: "table",
-//   width: "auto",
-//   fontFamily: "Chakra_Petch",
-// };
-
-const tableRowStyle = {
+export const tableRowStyle = {
   flexDirection: "row",
   display: "flex",
 };
 
-const firstTableColHeaderStyle = {
+export const firstTablereportColumnstyle = {
   // width: "28vh",
-  width: "100%",
+  width: "16vw",
   borderStyle: "solid",
   borderColor: "#000",
   borderBottomColor: "#000",
@@ -231,20 +276,20 @@ const firstTableColHeaderStyle = {
   justifyContent: "center",
 };
 
-const tableColHeaderStyle = {
-  // width: "28vh",
-  width: "100%",
-  borderStyle: "solid",
-  borderColor: "#000",
-  borderBottomColor: "#000",
+export const tablereportColumnstyle = {
+  width: "36vw",
+  // width: "100%",
+  // borderStyle: "solid",
+  // borderColor: "#000",
+  // borderBottomColor: "#000",
   borderWidth: 1,
   borderLeftWidth: 0,
-  backgroundColor: "#bdbdbd",
+  // backgroundColor: "#bdbdbd",
   display: "flex",
   justifyContent: "center",
 };
 
-const firstTableColStyle = {
+export const firstTableColStyle = {
   // width: "28vh",
   width: "100%",
   borderStyle: "solid",
@@ -254,38 +299,81 @@ const firstTableColStyle = {
   whiteSpace: "normal",
 };
 
-const tableCellHeaderStyle = {
-  margin: 4,
-  fontSize: 12,
-  fontWeight: "bold",
-  width: 171,
-  fontFamily: "Chakra_Petch",
+export const tableColStyle = {
+  // width: "28vh",
+  width: "100%",
+  borderStyle: "solid",
+  borderColor: "#000",
+  borderWidth: 1,
+  borderLeftWidth: 0,
+  borderTopWidth: 0,
+  whiteSpace: "pre",
 };
 
-const inlineStyle = { padding: "10px", fontSize: 10 };
-const inlineOrder = { width: "6.5%", textAlign: "right" };
-const inlineCode = { width: "14%" };
-const inlineDescr = { width: "37.5%" };
-const inlineQTY = { width: "14%" };
-const inlinePrice = { width: "14%" };
-const inlineTotal = { width: "14%" };
+export const tableCellHeaderStyle = {
+  // margin: 4,
+  fontSize: 12,
+  padding: "8 2 0",
+  width: "100%",
+  textAlign: "center",
+};
 
-const image = {
+export const celUnderline = {
+  borderBottom: "1px groove rgba(130, 195, 255, 1)",
+  marginHorizontal: "-1px",
+};
+
+export const inlineStyle = {
+  padding: "5px 10px",
+  fontSize: 8,
+};
+export const inlineOrder = { width: "6.5%", textAlign: "center" };
+export const inlineCode = { width: "14%" };
+export const inlineDescr = { width: "37.5%" };
+export const inlineQTY = { width: "14%", textAlign: "center" };
+export const inlinePrice = { width: "16%", textAlign: "right" };
+export const inlineTotal = { width: "15%", textAlign: "right" };
+
+export const tableCellStyle = {
+  fontSize: 8.5,
+  width: "100%",
+  flexGrow: 0,
+  textAlign: "left",
+  fontFamily: "Chakra_Petch",
+  whiteSpace: "normal",
+  padding: 8,
+};
+
+export const image = {
   marginVertical: 1,
   marginHorizontal: 15,
   backgroundColor: "#0033E6",
 };
 
-const subTableDisplay = {
+export const subTableDisplay = {
   margin: 4,
   display: "flex",
 };
 
-const viewerStyle = {
+export const viewerStyle = {
   display: "block",
   margin: "0 auto",
-  width: "70vw",
+  width: "70%",
   height: "100vh",
+};
+
+export const contactStyle = {
+  fontSize: 9,
+  width: "17%",
+};
+
+export const pageDisplayStyle = {
+  // display: "block",
+  position: "absolute",
+  width: "50px",
+  top: "4%",
+  right: "4%",
+  fontSize: "",
 };
 
 export default TableDocumentCashier;

@@ -85,7 +85,6 @@ const ReportDocument = () => {
 
         <View style={tablereportColumnstyle}>
           <Text style={tableCellHeaderStyle}>{WrapText("บริษัท ไอที ซิตี้ จำกัด (มหาชน)")}</Text>
-          {/* คําแนะนํา อย่าใช้สระ ำ ให้ใช้เครื่องหมาย  ํ ยติภัง + สระ า เพราะ จำนวน index กับจำนวนตัวอักษรที่แสดงผลจะไม่ตรงกัน ทำให้แสดงผลไม่ครบ */}
           <Text style={tableCellStyle}>{WrapText(branch.address)}</Text>
         </View>
 
