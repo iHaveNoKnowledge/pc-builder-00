@@ -139,7 +139,7 @@ const TableDocumentCashier = () => {
   function BarcodeGenerator() {
     const barcodesToGenerate = ['Coa-0001', 'co6-000160'];
     const [barcodeImages, setBarcodeImages] = useState([]);
-  
+    // https://www.npmjs.com/package/react-barcode ลองไปดูในนี้เผื่อจะง่ายขึ้น
     useEffect(() => {
       const generateBarcodes = async () => {
         const images = await Promise.all(
