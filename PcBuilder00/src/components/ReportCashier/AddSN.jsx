@@ -124,13 +124,13 @@ const AddSN = () => {
   let itemList = [];
   const { partData, itemsList } = useSelector((state) => state.customize);
   console.log("partDataReport2 มีค่าว่าไร: ", itemList);
-  itemList = [...itemsList]
+  itemList = [...itemsList];
   // itemsList.partData.map((item1) => {
   //   item1.listItems.map((item2) => {
   //     itemList = [...itemList, item2];
   //   });
   // });
-  console.log("itemList = [...itemsList]", itemList)
+  console.log("itemList = [...itemsList]", itemList);
 
   itemList.forEach((item) => {
     const times = item.selectAmount;
@@ -187,26 +187,35 @@ const AddSN = () => {
           borderRadius: "0px",
           backgroundColor: "#ff8d29",
           color: "#303030",
+          // borderLeft: "7px solid #414151",
         }}
       >
         Add SN
       </Button>
 
-      <Dialog open={open} onClose={handleClose} maxWidth="none">
+      <Dialog open={open} onClose={handleClose} maxWidth="none" >
         {/* <DialogTitle>Subscribe</DialogTitle> */}
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <DialogContent sx={{ width: "71vw", minWidth: "700px" }}>
+        <form onSubmit={handleSubmit(onSubmit)} style={{borderLeft: "10px solid #414151",}}>
+          <DialogContent sx={{ width: "71vw", minWidth: "700px", padding:"0", background:"#96918c" }}>
             {/* <DialogContentText>Enter Your Build Name</DialogContentText> */}
             <DialogContentText
-              sx={{ backgroundColor: "#414151", fontSize: 18, color: "#e6e6e6", px: "10px" }}
+              sx={{
+                backgroundColor: "#414151",
+                fontSize: 24,
+                color: "#e6e6e6",
+                px: "10px",
+                overflow: "hidden",
+              }}
             >
               Add S/N
             </DialogContentText>
             <DialogContent
               sx={{
-                borderLeft: "10px solid #0033E6",
+                
                 backgroundColor: "#4141",
                 flexDirection: "column",
+                overflow: "scroll",
+                height: "700px",
               }}
             >
               <Box
@@ -217,12 +226,12 @@ const AddSN = () => {
                   textAlign: "center",
                 }}
               >
-                <Box sx={{ flexGrow: 0.2, width: "4.5%" }}>No.</Box>
-                <Box sx={{ flexGrow: 0.3, width: "14%" }}>Code</Box>
-                <Box sx={{ flexGrow: 1, width: "50.5%" }}>Description</Box>
-                <Box sx={{ flexGrow: 0.2, width: "7%" }}>QTY</Box>
-                <Box sx={{ flexGrow: 0.2, width: "11%" }}>Price</Box>
-                <Box sx={{ flexGrow: 0.2, width: "13%" }}>Total</Box>
+                <Box sx={{ ...inlineOrder }}>No.</Box>
+                <Box sx={{ ...inlineCode }}>Code</Box>
+                <Box sx={{ ...inlineDescr }}>Description</Box>
+                <Box sx={{ ...inlineQTY }}>QTY</Box>
+                <Box sx={{ ...inlinePrice }}>Price</Box>
+                <Box sx={{ ...inlineTotal }}>Total</Box>
               </Box>
               <Divider />
 
@@ -232,20 +241,26 @@ const AddSN = () => {
                   <React.Fragment key={index}>
                     <Box
                       // container
-                      sx={{ display: "flex", textAlign: "center", my: "10px", fontSize: 14 }}
+                      sx={{
+                        display: "flex",
+                        textAlign: "center",
+                        my: "10px",
+                        fontSize: 14,
+                        overflow: "auto",
+                      }}
                     >
-                      <Box sx={{ flexGrow: 0.2, width: "4.5%" }}>{index + 1}</Box>
-                      <Box sx={{ flexGrow: 0.3, width: "14%" }}>{item.code}</Box>
-                      <Box sx={{ flexGrow: 1, width: "50.5%" }}>{item.description}</Box>
-                      <Box sx={{ flexGrow: 0.2, width: "7%" }}>{item.selectAmount}</Box>
-                      <Box sx={{ flexGrow: 0.2, width: "11%" }}>{item.srp}</Box>
-                      <Box sx={{ flexGrow: 0.2, width: "13%" }}>
+                      <Box sx={{ ...inlineOrder }}>{index + 1}</Box>
+                      <Box sx={{ ...inlineCode }}>{item.code}</Box>
+                      <Box sx={{ ...inlineDescr }}>{item.productDescription}</Box>
+                      <Box sx={{ ...inlineQTY }}>{item.selectAmount}</Box>
+                      <Box sx={{ ...inlinePrice }}>{item.srp}</Box>
+                      <Box sx={{ ...inlineTotal }}>
                         {item.srp * item.selectAmount} {item.sn}
                       </Box>
                     </Box>
 
                     {/* S/N Part */}
-                    <Box sx={{ overflow: "auto", maxHeight: "150px" }}>
+                    <Box sx={{ maxHeight: "150px" }}>
                       {item.sn.map((item2, index2) => {
                         return (
                           <React.Fragment key={index2}>
@@ -255,7 +270,7 @@ const AddSN = () => {
                                 display: "flex",
                                 textAlign: "center",
                                 my: "4.5px",
-                                ml: "5.5vw",
+                                ml: "3.8vw",
                               }}
                             >
                               <TextField
@@ -333,12 +348,19 @@ const AddSN = () => {
             </Toolbar>
           </AppBar>
           <DialogContent sx={{ mt: "25px" }}>
-            <TableDocumentCashier  />
+            <TableDocumentCashier />
           </DialogContent>
         </DialogContent>
       </Dialog>
     </ThemeProvider>
   );
 };
+
+export const inlineOrder = { width: "6%", textAlign: "center" };
+export const inlineCode = { width: "10%", textAlign: "left" };
+export const inlineDescr = { width: "62%", flexGrow: 1, textAlign: "left" };
+export const inlineQTY = { width: "4%", textAlign: "center", paddingInline: "5px" };
+export const inlinePrice = { width: "10%", textAlign: "right", paddingInline: "5px"  };
+export const inlineTotal = { width: "10%", textAlign: "right", paddingInline: "5px"  };
 
 export default AddSN;

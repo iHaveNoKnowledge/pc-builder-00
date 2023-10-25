@@ -27,6 +27,7 @@
     "node-cache": "^5.1.2",
     "pdfmake": "^0.2.7",
     "react": "^18.2.0",
+    "react-barcode": "^1.4.6",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.45.1",
     "react-query": "^3.39.3",

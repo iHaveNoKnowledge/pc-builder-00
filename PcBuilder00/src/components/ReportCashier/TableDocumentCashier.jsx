@@ -2,13 +2,14 @@ import React from "react";
 import { Page, Text, View, Document, Image, Font } from "@react-pdf/renderer";
 import xx from "../../fonts/ChakraPetch-Regular.ttf";
 import xxx from "../../../public/images/itLogo-1.png";
-
 import { Box } from "@mui/material";
 import { PDFViewer } from "@react-pdf/renderer";
-Font.register({ family: "Chakra_Petch", src: xx });
 import { pageStyle, tableStyle } from "../ReportDocument";
 import { useSelector } from "react-redux";
 import { bwipjs } from "bwip-js";
+import Barcode from "react-barcode";
+
+Font.register({ family: "Chakra_Petch", src: xx });
 
 const TableDocumentCashier = () => {
   const partDataReport2 = useSelector((state) => state.customize.partData);
@@ -124,20 +125,37 @@ const TableDocumentCashier = () => {
     );
   };
 
-  const WrapText = (text) => (
-    <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
-      {text?.match(/\w+|\W+/g)?.map((seg, i) => {
-        if (Number(seg) / Number(seg) === 1) {
-          return <Text key={i}>{Number(seg).toLocaleString()}</Text>;
-        } else {
-          return <Text key={i}>{seg.toLocaleString()}</Text>;
-        }
-      })}
-    </View>
-  );
+  const WrapText = (text) => {
+    const numOccurrences = (str, target) => str.split(target).length - 1;
+    const count = numOccurrences(text, "ำ");
+    const newLength = text.length + count;
 
+    return (
+      <View>
+        {/* {text?.match(/\w+|\W+/g)?.map((seg, i) => {
+          if (Number(seg) / Number(seg) === 1) {
+            return (
+              <Text key={i} style={{ width: `${newLength}ch` }}>
+                {text}
+              </Text>
+            );
+          } else {
+            return (
+              <Text key={i} style={{ width: `${newLength}ch` }}>
+                {seg.toLocaleString().padEnd(newLength, " ")}
+              </Text>
+            );
+          }
+        })} */}
+        <Text style={{ width: `${newLength}ch` }}>
+          {text.toLocaleString().padEnd(newLength, " ")}
+        </Text>
+      </View>
+    );
+  };
+  
   function BarcodeGenerator() {
-    const barcodesToGenerate = ['Coa-0001', 'co6-000160'];
+    const barcodesToGenerate = ["Coa-0001", "co6-000160"];
     const [barcodeImages, setBarcodeImages] = useState([]);
     // https://www.npmjs.com/package/react-barcode ลองไปดูในนี้เผื่อจะง่ายขึ้น
     useEffect(() => {
@@ -147,7 +165,7 @@ const TableDocumentCashier = () => {
             return new Promise((resolve, reject) => {
               bwipjs.toBuffer(
                 {
-                  bcid: 'code128', // ประเภทของบาร์โค้ด
+                  bcid: "code128", // ประเภทของบาร์โค้ด
                   text: data, // ข้อมูลที่คุณต้องการสร้างเป็นบาร์โค้ด
                   scale: 3, // ขนาดของบาร์โค้ด
                   includetext: true, // รวมข้อความกับบาร์โค้ด
@@ -157,8 +175,8 @@ const TableDocumentCashier = () => {
                     reject(err);
                   } else {
                     // แปลงรูปภาพบาร์โค้ดเป็น base64
-                    const base64 = Buffer.from(png).toString('base64');
-                    resolve('data:image/png;base64,' + base64);
+                    const base64 = Buffer.from(png).toString("base64");
+                    resolve("data:image/png;base64," + base64);
                   }
                 }
               );
@@ -167,9 +185,10 @@ const TableDocumentCashier = () => {
         );
         setBarcodeImages(images);
       };
-  
+
       generateBarcodes();
     }, []);
+  }
 
   const createTableRowITDYN = (x) => {
     const formattedNumber = (x - (x - 1)).toString().padStart(6, "0");

@@ -47,6 +47,7 @@ const ReportDocument = () => {
   };
 
   //*
+  // แก้ปัญหาสระ "ำ" ด้วยการเพิ่ม length
   const WrapText = (text) => {
     const numOccurrences = (str, target) => str.split(target).length - 1;
     const count = numOccurrences(text, "ำ");
