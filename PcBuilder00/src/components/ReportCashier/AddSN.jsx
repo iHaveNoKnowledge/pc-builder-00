@@ -22,6 +22,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { theme } from "../SetList";
 import { ThemeProvider } from "@mui/material/styles";
 import { useSelector } from "react-redux";
+import "./AddSN.css";
 
 const AddSN = () => {
   const { register, handleSubmit, setValue, watch, reset } = useForm();
@@ -141,7 +142,11 @@ const AddSN = () => {
 
   const onSubmit = () => {
     itemList = itemList.map((item1, index1) => {
-      const updatedSN = item1.sn.map((sn, snIndex) => watch(`Item${index1}SN${snIndex}`));
+      const updatedSN = item1.sn.map((sn, snIndex) => {
+        console.log("ได้ไร", watch(`Item${index1}SN${snIndex}`));
+        return watch(`Item${index1}SN${snIndex}`);
+      });
+
       return { ...item1, sn: updatedSN };
     });
   };
@@ -197,7 +202,7 @@ const AddSN = () => {
         {/* <DialogTitle>Subscribe</DialogTitle> */}
         <form onSubmit={handleSubmit(onSubmit)} style={{ borderLeft: "10px solid #414151" }}>
           <DialogContent
-            sx={{ width: "71vw", minWidth: "700px", padding: "0", background: "#d1ccc5" }}
+            sx={{ width: "71vw", minWidth: "700px", padding: "0", background: "#dedbd7" }}
           >
             {/* <DialogContentText>Enter Your Build Name</DialogContentText> */}
             <DialogContentText
@@ -215,7 +220,7 @@ const AddSN = () => {
               sx={{
                 backgroundColor: "#4141",
                 flexDirection: "column",
-                overflow: "scroll",
+                overflowY: "scroll",
                 height: "74vh",
               }}
             >
@@ -297,7 +302,9 @@ const AddSN = () => {
                   </React.Fragment>
                 );
               })}
+            </DialogContent>
 
+            <DialogContent>
               {/* ท้ายตารางสรุปรวมยอด */}
               <Box sx={{ display: "flex", mt: "10px" }}>
                 <Box sx={{ flexGrow: 9.5, textAlign: "end", mr: "5px" }}>

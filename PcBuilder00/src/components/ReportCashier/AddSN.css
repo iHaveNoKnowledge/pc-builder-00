@@ -1,0 +1,19 @@
+/* เลื่อนด้านข้าง */
+::-webkit-scrollbar {
+    width: 15px;
+  }
+  
+  /* กรอบของ scrollbar */
+  ::-webkit-scrollbar-track {
+    background: #e2e2e2;
+  }
+  
+  /* ช่องที่สามารถคลิกและลาก scrollbar */
+  ::-webkit-scrollbar-thumb {
+    background: #555;
+  }
+  
+  /* การแสดงของ scrollbar ขณะค้างไว้ */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #4e4e4e;
+  }
