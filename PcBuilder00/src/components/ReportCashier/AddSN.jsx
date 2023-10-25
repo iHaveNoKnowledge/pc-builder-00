@@ -21,10 +21,12 @@ import { PDFViewer } from "@react-pdf/renderer";
 import CloseIcon from "@mui/icons-material/Close";
 import { theme } from "../SetList";
 import { ThemeProvider } from "@mui/material/styles";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import "./AddSN.css";
+import { setSN } from "../../slices/reportSlice";
 
 const AddSN = () => {
+  const dispatch = useDispatch();
   const { register, handleSubmit, setValue, watch, reset } = useForm();
   const [open, setOpen] = React.useState(false);
   const [openPrint, setOpenPrint] = React.useState(false);
@@ -149,6 +151,8 @@ const AddSN = () => {
 
       return { ...item1, sn: updatedSN };
     });
+    console.log("สุดท้ายได้ไร: ", itemList);
+    dispatch(setSN(itemList));
   };
 
   const handleChange = (event, index, index2) => {
@@ -201,9 +205,7 @@ const AddSN = () => {
       <Dialog open={open} onClose={handleClose} maxWidth="none">
         {/* <DialogTitle>Subscribe</DialogTitle> */}
         <form onSubmit={handleSubmit(onSubmit)} style={{ borderLeft: "10px solid #414151" }}>
-          <DialogContent
-            sx={{ width: "71vw", minWidth: "700px", padding: "0", background: "#dedbd7" }}
-          >
+          <DialogContent sx={{ width: "71vw", minWidth: "700px", padding: "0" }}>
             {/* <DialogContentText>Enter Your Build Name</DialogContentText> */}
             <DialogContentText
               sx={{
@@ -365,8 +367,8 @@ const AddSN = () => {
 };
 
 export const inlineOrder = { width: "6%", textAlign: "center" };
-export const inlineCode = { width: "10%", textAlign: "left" };
-export const inlineDescr = { width: "62%", flexGrow: 1, textAlign: "left" };
+export const inlineCode = { width: "15%", textAlign: "left" };
+export const inlineDescr = { width: "57%", flexGrow: 1, textAlign: "left" };
 export const inlineQTY = { width: "4%", textAlign: "center", paddingInline: "5px" };
 export const inlinePrice = { width: "10%", textAlign: "right", paddingInline: "5px" };
 export const inlineTotal = { width: "10%", textAlign: "right", paddingInline: "5px" };

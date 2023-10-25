@@ -14,7 +14,7 @@ Font.register({ family: "Chakra_Petch", src: xx });
 const TableDocumentCashier = () => {
   const partDataReport2 = useSelector((state) => state.customize.partData);
   const { partData, itemsList } = useSelector((state) => state.customize);
-  const { info, branch } = useSelector((state) => state.report);
+  const { info, branch, SNs } = useSelector((state) => state.report);
   const createMainTableHeader = () => {
     return (
       <View style={tableRowStyle} fixed>
@@ -92,13 +92,13 @@ const TableDocumentCashier = () => {
     );
   };
 
-  const createTableRowIT = (x) => {
-    return (
-      <View style={tableRowStyle}>
-        <View style={firstTableColStyle}>{createTableRowITDYN(x)}</View>
-      </View>
-    );
-  };
+  // const createTableRowIT = (x) => {
+  //   return (
+  //     <View style={tableRowStyle}>
+  //       <View style={firstTableColStyle}>{createTableRowITDYN(x)}</View>
+  //     </View>
+  //   );
+  // };
 
   const reportColumns = () => {
     return (
@@ -153,7 +153,7 @@ const TableDocumentCashier = () => {
       </View>
     );
   };
-  
+
   function BarcodeGenerator() {
     const barcodesToGenerate = ["Coa-0001", "co6-000160"];
     const [barcodeImages, setBarcodeImages] = useState([]);
@@ -256,22 +256,291 @@ const TableDocumentCashier = () => {
     }
   };
 
-  const FinalizeDocument = () => {
+  const lastTable = () => {
+    return (
+      <View>
+        <View break>
+          <View break={true} style={{ display: "flex", flexDirection: "row" }}>
+            <View style={{ ...inlineStyle, ...inlineOrder }}></View>
+            <View style={{ ...inlineStyle, ...inlineCode }}></View>
+            <View style={{ ...inlineStyle, ...inlineDescr }}></View>
+            <View style={{ ...inlineStyle, ...inlineQTY }}></View>
+            <View style={{ ...inlineStyle, ...inlinePrice, borderBottom: "1px groove  #000" }}>
+              <Text>ราคารวม</Text>
+            </View>
+            <View
+              style={{
+                ...inlineStyle,
+                ...inlineTotal,
+                borderBottom: "1px groove  #000",
+                marginHorizontal: "-1",
+              }}
+            >
+              <Text>
+                {itemsList
+                  .reduce((acc, item) => acc + item.srp * (100 / 107) * item.selectAmount, 0)
+                  .toFixed(2)
+                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+              </Text>
+            </View>
+          </View>
+        </View>
+
+        <View>
+          <View break={true} style={{ display: "flex", flexDirection: "row" }}>
+            <View style={{ ...inlineStyle, ...inlineOrder }}></View>
+            <View style={{ ...inlineStyle, ...inlineCode }}></View>
+            <View style={{ ...inlineStyle, ...inlineDescr }}></View>
+            <View style={{ ...inlineStyle, ...inlineQTY }}></View>
+            <View
+              style={{
+                ...inlineStyle,
+                ...inlinePrice,
+                borderBottom: "1px groove  #000",
+              }}
+            >
+              <Text>ภาษีมูลค่าเพิ่ม</Text>
+            </View>
+            <View
+              style={{
+                ...inlineStyle,
+                ...inlineTotal,
+                borderBottom: "1px groove  #000",
+                marginHorizontal: "-1",
+              }}
+            >
+              <Text>
+                {itemsList
+                  .reduce(
+                    (acc, item) => acc + (item.srp - item.srp * (100 / 107)) * item.selectAmount,
+                    0
+                  )
+                  .toFixed(2)
+                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+              </Text>
+            </View>
+          </View>
+        </View>
+
+        <View>
+          <View break={true} style={{ display: "flex", flexDirection: "row" }}>
+            <View style={{ ...inlineStyle, ...inlineOrder }}></View>
+            <View style={{ ...inlineStyle, ...inlineCode }}></View>
+            <View style={{ ...inlineStyle, ...inlineDescr }}></View>
+            <View style={{ ...inlineStyle, ...inlineQTY }}></View>
+            <View
+              style={{
+                ...inlineStyle,
+                ...inlinePrice,
+                borderBottom: "1px groove  #000",
+              }}
+            >
+              <Text>ราคาสุทธิ</Text>
+            </View>
+            <View
+              style={{
+                ...inlineStyle,
+                ...inlineTotal,
+                borderBottom: "1px groove  #000",
+                marginHorizontal: "-1",
+              }}
+            >
+              <Text>
+                {itemsList
+                  .reduce((acc, item) => acc + item.srp * item.selectAmount, 0)
+                  .toFixed(2)
+                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+              </Text>
+            </View>
+          </View>
+        </View>
+      </View>
+    );
+  };
+
+  //* Rows
+  const itemsAmt = itemsList.length;
+  let rowsPerPage = 20;
+  // if (itemsList.length > rowsPerPage) {
+  //   rowsPerPage = rowsPerPage * 2;
+  // }
+  const emptyRows = rowsPerPage - itemsList.length;
+  const pages = Math.ceil(itemsAmt / rowsPerPage);
+
+  const FinalizedDocument = () => {
+    console.log("itemsList:", itemsList);
+    let countItems = 0;
     return (
       <Document>
-        <Page style={pageStyle} size="A4" orientation="portrait">
-          <View style={tableStyle}>
-            {createMainTableHeader()}
-            {createTableRowIT(5)}
-          </View>
-        </Page>
+        {Array.from({ length: pages }).map((_, pageIndex) => {
+          const startIndex = pageIndex * rowsPerPage;
+          const endIndex = Math.min((pageIndex + 1) * rowsPerPage, itemsAmt);
+          const itemsInPage = itemsList.slice(startIndex, endIndex);
+
+          // Add empty placeholders if the number of items is less than the rowsPerPage
+          while (itemsInPage.length < rowsPerPage) {
+            itemsInPage.push([
+              {
+                id: " ",
+                code: "",
+                productDescription: " ",
+                category: " ",
+                selectAmount: " ",
+                isPlaceholder: true,
+              },
+            ]); // Add empty object as a placeholder
+          }
+          console.log("itemsInPage: ", itemsInPage);
+          return (
+            <Page style={pageStyle} size="A4" orientation="portrait" key={pageIndex}>
+              <Text
+                style={pageDisplayStyle}
+                render={({ pageNumber, totalPages }) => `${pageNumber} / ${totalPages}`}
+              />
+              <View style={tableStyle}>
+                <View fixed>{createMainTableHeader()}</View>
+                <View style={firstTableColStyle}>
+                  <View style={subTableDisplay}>
+                    {reportColumns()}
+                    {itemsInPage.map((item, index) => (
+                      <View key={index} style={{ display: "flex", flexDirection: "row" }}>
+                        <View
+                          style={
+                            (startIndex + index + 1) % rowsPerPage === 0
+                              ? {
+                                  ...inlineStyle,
+                                  ...inlineOrder,
+                                  marginHorizontal: "-1px",
+                                }
+                              : {
+                                  ...inlineStyle,
+                                  ...inlineOrder,
+                                  ...celUnderline,
+                                }
+                          }
+                        >
+                          {startIndex + index + 1 > itemsAmt ? (
+                            <Text style={{ color: "white" }}> {startIndex + index + 1}</Text>
+                          ) : (
+                            <Text style={{}}> {startIndex + index + 1}</Text>
+                          )}
+                        </View>
+
+                        <View
+                          style={
+                            (startIndex + index + 1) % rowsPerPage === 0
+                              ? {
+                                  ...inlineStyle,
+                                  ...inlineCode,
+                                  marginHorizontal: "-1px",
+                                }
+                              : {
+                                  ...inlineStyle,
+                                  ...inlineCode,
+                                  ...celUnderline,
+                                }
+                          }
+                        >
+                          <Text>{item.code}</Text>
+                          <Text>อิอิ</Text>
+                        </View>
+
+                        <View
+                          style={
+                            (startIndex + index + 1) % rowsPerPage === 0
+                              ? {
+                                  ...inlineStyle,
+                                  ...inlineDescr,
+                                  marginHorizontal: "-1px",
+
+                                  flexGrow: 1,
+                                }
+                              : {
+                                  ...inlineStyle,
+                                  ...inlineDescr,
+                                  ...celUnderline,
+                                  flexGrow: 1,
+                                }
+                          }
+                        >
+                          <Text style={{ whiteSpace: "nowrap" }}>{item?.productDescription}</Text>
+                        </View>
+
+                        <View
+                          style={
+                            (startIndex + index + 1) % rowsPerPage === 0
+                              ? {
+                                  ...inlineStyle,
+                                  ...inlineQTY,
+                                  marginHorizontal: "-1px",
+                                }
+                              : {
+                                  ...inlineStyle,
+                                  ...inlineQTY,
+                                  ...celUnderline,
+                                }
+                          }
+                        >
+                          <Text>{item.selectAmount?.toLocaleString()}</Text>
+                        </View>
+
+                        <View
+                          style={
+                            (startIndex + index + 1) % rowsPerPage === 0
+                              ? {
+                                  ...inlineStyle,
+                                  ...inlinePrice,
+                                  marginHorizontal: "-1px",
+                                }
+                              : {
+                                  ...inlineStyle,
+                                  ...inlinePrice,
+                                  ...celUnderline,
+                                }
+                          }
+                        >
+                          <Text>{item.srp?.toLocaleString()}</Text>
+                        </View>
+
+                        <View
+                          style={
+                            (startIndex + index + 1) % rowsPerPage === 0
+                              ? {
+                                  ...inlineStyle,
+                                  ...inlineTotal,
+                                  marginHorizontal: "-1px",
+                                }
+                              : {
+                                  ...inlineStyle,
+                                  ...inlineTotal,
+                                  ...celUnderline,
+                                }
+                          }
+                        >
+                          {item.srp ? (
+                            <Text>{(item.srp * item.selectAmount).toLocaleString()}</Text>
+                          ) : (
+                            <Text>{""}</Text>
+                          )}
+                        </View>
+                      </View>
+                    ))}
+                  </View>
+                </View>
+
+                {pageIndex === pages - 1 && <View>{lastTable()}</View>}
+              </View>
+            </Page>
+          );
+        })}
       </Document>
     );
   };
 
   return (
     <Box>
-      <PDFViewer style={viewerStyle}> {FinalizeDocument()}</PDFViewer>
+      <Barcode value="123456789" />
+      <PDFViewer style={viewerStyle}> {FinalizedDocument()}</PDFViewer>
     </Box>
   );
 };
