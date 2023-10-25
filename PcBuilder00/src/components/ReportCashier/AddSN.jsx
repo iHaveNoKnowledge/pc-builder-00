@@ -193,10 +193,12 @@ const AddSN = () => {
         Add SN
       </Button>
 
-      <Dialog open={open} onClose={handleClose} maxWidth="none" >
+      <Dialog open={open} onClose={handleClose} maxWidth="none">
         {/* <DialogTitle>Subscribe</DialogTitle> */}
-        <form onSubmit={handleSubmit(onSubmit)} style={{borderLeft: "10px solid #414151",}}>
-          <DialogContent sx={{ width: "71vw", minWidth: "700px", padding:"0", background:"#96918c" }}>
+        <form onSubmit={handleSubmit(onSubmit)} style={{ borderLeft: "10px solid #414151" }}>
+          <DialogContent
+            sx={{ width: "71vw", minWidth: "700px", padding: "0", background: "#d1ccc5" }}
+          >
             {/* <DialogContentText>Enter Your Build Name</DialogContentText> */}
             <DialogContentText
               sx={{
@@ -211,11 +213,10 @@ const AddSN = () => {
             </DialogContentText>
             <DialogContent
               sx={{
-                
                 backgroundColor: "#4141",
                 flexDirection: "column",
                 overflow: "scroll",
-                height: "700px",
+                height: "74vh",
               }}
             >
               <Box
@@ -360,7 +361,7 @@ export const inlineOrder = { width: "6%", textAlign: "center" };
 export const inlineCode = { width: "10%", textAlign: "left" };
 export const inlineDescr = { width: "62%", flexGrow: 1, textAlign: "left" };
 export const inlineQTY = { width: "4%", textAlign: "center", paddingInline: "5px" };
-export const inlinePrice = { width: "10%", textAlign: "right", paddingInline: "5px"  };
-export const inlineTotal = { width: "10%", textAlign: "right", paddingInline: "5px"  };
+export const inlinePrice = { width: "10%", textAlign: "right", paddingInline: "5px" };
+export const inlineTotal = { width: "10%", textAlign: "right", paddingInline: "5px" };
 
 export default AddSN;
