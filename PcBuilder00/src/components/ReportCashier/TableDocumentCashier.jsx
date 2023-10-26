@@ -6,7 +6,7 @@ import { Box } from "@mui/material";
 import { PDFViewer } from "@react-pdf/renderer";
 import { pageStyle, tableStyle } from "../ReportDocument";
 import { useSelector } from "react-redux";
-import bwipjs from "bwip-js";
+
 
 Font.register({ family: "Chakra_Petch", src: xx });
 
@@ -136,24 +136,7 @@ const TableDocumentCashier = () => {
     );
   };
 
-  //ทำfunction สร้าง barcode
-  const generateBarcodes = (barcodeDataArray) => {
-    const barcodePromises = barcodeDataArray.map((barcodeData) => {
-      return new Promise((resolve, reject) => {
-        const canvas = document.createElement("canvas");
-        const options = { bcid: "code128", text: barcodeData.code };
-        bwipjs.toCanvas(canvas, options, (err, cvs) => {
-          if (!err) {
-            resolve(cvs.toDataURL("image/png"));
-          } else {
-            reject(err);
-          }
-        });
-      });
-    });
-
-    return Promise.all(barcodePromises);
-  };
+  
 
   // const createTableRowITDYN = (x) => {
   //   const formattedNumber = (x - (x - 1)).toString().padStart(6, "0");
@@ -333,16 +316,8 @@ const TableDocumentCashier = () => {
     const [code] = itemsList;
 
     let countItems = 0;
-    const barcodeImages = generateBarcodes(itemsList)
-      .then((barcodeImages) => {
-        console.log("ได้รหัสบาโค้ด: ", barcodeImages);
-      })
-      .catch((err) => {
-        console.log("พัง: ", err);
-      })
-      .finally(() => {
-        console.log("จบแล้วpromise");
-      });
+    
+    
     return (
       <Document>
         {Array.from({ length: pages }).map((_, pageIndex) => {
@@ -412,7 +387,7 @@ const TableDocumentCashier = () => {
                           }
                         >
                           <Text>{item.code}</Text>
-                          {barcodeImages[index] ? <Image src={barcodeImages} /> : <Text>ไม่มี</Text>}
+                          {/* {barcodeImages[index] ? <Image src={barcodeImages} /> : <Text>ไม่มี</Text>} */}
                         </View>
 
                         <View

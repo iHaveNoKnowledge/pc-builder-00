@@ -24,6 +24,7 @@ import { ThemeProvider } from "@mui/material/styles";
 import { useSelector, useDispatch } from "react-redux";
 import "./AddSN.css";
 import { setSN } from "../../slices/reportSlice";
+import bwipjs from "bwip-js";
 
 const AddSN = () => {
   const dispatch = useDispatch();
@@ -98,6 +99,7 @@ const AddSN = () => {
 
   //* onclick เปิด Form ////////////////////////////////////////////////////////////////////
   const handleClickOpen = () => {
+    
     setOpen(true);
   };
 
@@ -106,8 +108,20 @@ const AddSN = () => {
     setOpen(false);
   };
   //* onclick สำหรับกด save  ////////////////////////////////////////////////////////////////////
-  const handleSave = () => {
+  const handleSave = async () => {
     handleClose();
+    const barcodeImages = await generateBarcodes(itemsList)
+      .then((barcodeImages) => {
+        console.log("ได้รหัสบาโค้ด: ", barcodeImages);
+        return barcodeImages
+      })
+      .catch((err) => {
+        console.log("พัง: ", err);
+      })
+      .finally(() => {
+        console.log("จบแล้วpromise");
+      });
+    console.log("ดูผี",barcodeImages)
     handlePrintClickOpen();
   };
 
@@ -183,6 +197,28 @@ const AddSN = () => {
       textFieldsRef.current[parentIndex] = [];
     }
     textFieldsRef.current[parentIndex][index] = textField;
+  };
+
+  //ทำfunction สร้าง barcode
+  const generateBarcodes = async (barcodeDataArray) => {
+    const barcodePromises = barcodeDataArray.map((barcodeData) => {
+      return new Promise((resolve, reject) => {
+        const canvas = document.createElement("canvas");
+        const options = { bcid: "code128", text: barcodeData.code }; 
+        bwipjs.toCanvas(canvas, options, (err, cvs) => {
+          if (!err) {
+            console.log("ถึงไหน3");
+            resolve(cvs.toDataURL("image/png"));
+          } else {
+            console.log("ถึงไหน4");
+            reject(err);
+          }
+          console.log("ถึงไหน5");
+        });
+      });
+    });
+
+    return Promise.all(barcodePromises);
   };
 
   return (
