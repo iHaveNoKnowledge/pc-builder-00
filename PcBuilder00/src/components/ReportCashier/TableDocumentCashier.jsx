@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Page, Text, View, Document, Image, Font } from "@react-pdf/renderer";
 import xx from "../../fonts/ChakraPetch-Regular.ttf";
 import xxx from "../../../public/images/itLogo-1.png";
@@ -6,8 +6,7 @@ import { Box } from "@mui/material";
 import { PDFViewer } from "@react-pdf/renderer";
 import { pageStyle, tableStyle } from "../ReportDocument";
 import { useSelector } from "react-redux";
-import { bwipjs } from "bwip-js";
-import Barcode from "react-barcode";
+import bwipjs from "bwip-js";
 
 Font.register({ family: "Chakra_Petch", src: xx });
 
@@ -132,129 +131,95 @@ const TableDocumentCashier = () => {
 
     return (
       <View>
-        {/* {text?.match(/\w+|\W+/g)?.map((seg, i) => {
-          if (Number(seg) / Number(seg) === 1) {
-            return (
-              <Text key={i} style={{ width: `${newLength}ch` }}>
-                {text}
-              </Text>
-            );
-          } else {
-            return (
-              <Text key={i} style={{ width: `${newLength}ch` }}>
-                {seg.toLocaleString().padEnd(newLength, " ")}
-              </Text>
-            );
-          }
-        })} */}
-        <Text style={{ width: `${newLength}ch` }}>
-          {text.toLocaleString().padEnd(newLength, " ")}
-        </Text>
+        <Text style={{ width: `${newLength}ch` }}>{text.toLocaleString().padEnd(newLength, " ")}</Text>
       </View>
     );
   };
 
-  function BarcodeGenerator() {
-    const barcodesToGenerate = ["Coa-0001", "co6-000160"];
-    const [barcodeImages, setBarcodeImages] = useState([]);
-    // https://www.npmjs.com/package/react-barcode ลองไปดูในนี้เผื่อจะง่ายขึ้น
-    useEffect(() => {
-      const generateBarcodes = async () => {
-        const images = await Promise.all(
-          barcodesToGenerate.map(async (data) => {
-            return new Promise((resolve, reject) => {
-              bwipjs.toBuffer(
-                {
-                  bcid: "code128", // ประเภทของบาร์โค้ด
-                  text: data, // ข้อมูลที่คุณต้องการสร้างเป็นบาร์โค้ด
-                  scale: 3, // ขนาดของบาร์โค้ด
-                  includetext: true, // รวมข้อความกับบาร์โค้ด
-                },
-                (err, png) => {
-                  if (err) {
-                    reject(err);
-                  } else {
-                    // แปลงรูปภาพบาร์โค้ดเป็น base64
-                    const base64 = Buffer.from(png).toString("base64");
-                    resolve("data:image/png;base64," + base64);
-                  }
-                }
-              );
-            });
-          })
-        );
-        setBarcodeImages(images);
-      };
+  //ทำfunction สร้าง barcode
+  const generateBarcodes = (barcodeDataArray) => {
+    const barcodePromises = barcodeDataArray.map((barcodeData) => {
+      return new Promise((resolve, reject) => {
+        const canvas = document.createElement("canvas");
+        const options = { bcid: "code128", text: barcodeData.code };
+        bwipjs.toCanvas(canvas, options, (err, cvs) => {
+          if (!err) {
+            resolve(cvs.toDataURL("image/png"));
+          } else {
+            reject(err);
+          }
+        });
+      });
+    });
 
-      generateBarcodes();
-    }, []);
-  }
-
-  const createTableRowITDYN = (x) => {
-    const formattedNumber = (x - (x - 1)).toString().padStart(6, "0");
-    switch (true) {
-      case x >= 1:
-        return (
-          <View style={subTableDisplay}>
-            {reportColumns()}
-
-            <View>
-              <View style={{ display: "flex", flexDirection: "row" }}>
-                <View style={{ ...inlineStyle, ...inlineOrder }}>
-                  <Text>{WrapText("1")}</Text>
-                </View>
-                <View style={{ ...inlineStyle, ...inlineCode }}>
-                  <Text>{`XXX-${formattedNumber}`}</Text>
-                </View>
-                <View style={{ ...inlineStyle, ...inlineDescr }}>
-                  <Text>{WrapText("loremfa-rotate-180")}</Text>
-                </View>
-                <View style={{ ...inlineStyle, ...inlineQTY }}>
-                  <Text>{WrapText("99")}</Text>
-                </View>
-                <View style={{ ...inlineStyle, ...inlinePrice }}>
-                  <Text>{WrapText("9999")}</Text>
-                </View>
-                <View style={{ ...inlineStyle, ...inlineTotal }}>
-                  <Text>{WrapText("99999")}</Text>
-                </View>
-              </View>
-            </View>
-
-            {[...Array(x - 1)].map((table, index) => {
-              const formattedNumberx = (index + 2).toString().padStart(6, "0");
-              return (
-                <View key={index}>
-                  <View break={true} style={{ display: "flex", flexDirection: "row" }}>
-                    <View style={{ ...inlineStyle, ...inlineOrder }}>
-                      <Text>{WrapText(`${2 + index}`)}</Text>
-                    </View>
-                    <View style={{ ...inlineStyle, ...inlineCode }}>
-                      <Text>{`XXX-${formattedNumberx}`}</Text>
-                    </View>
-                    <View style={{ ...inlineStyle, ...inlineDescr }}>
-                      <Text>{WrapText("loremfa-rotate-180asdasd")}</Text>
-                    </View>
-                    <View style={{ ...inlineStyle, ...inlineQTY }}>
-                      <Text>{WrapText("99")}</Text>
-                    </View>
-                    <View style={{ ...inlineStyle, ...inlinePrice }}>
-                      <Text>{WrapText("9999")}</Text>
-                    </View>
-                    <View style={{ ...inlineStyle, ...inlineTotal }}>
-                      <Text>{WrapText("99999")}</Text>
-                    </View>
-                  </View>
-                </View>
-              );
-            })}
-          </View>
-        );
-
-      default:
-        break;
-    }
+    return Promise.all(barcodePromises);
   };
+
+  // const createTableRowITDYN = (x) => {
+  //   const formattedNumber = (x - (x - 1)).toString().padStart(6, "0");
+  //   switch (true) {
+  //     case x >= 1:
+  //       return (
+  //         <View style={subTableDisplay}>
+  //           {reportColumns()}
+
+  //           <View>
+  //             <View style={{ display: "flex", flexDirection: "row" }}>
+  //               <View style={{ ...inlineStyle, ...inlineOrder }}>
+  //                 <Text>{WrapText("1")}</Text>
+  //               </View>
+  //               <View style={{ ...inlineStyle, ...inlineCode }}>
+  //                 <Text>{`XXX-${formattedNumber}`}</Text>
+  //               </View>
+  //               <View style={{ ...inlineStyle, ...inlineDescr }}>
+  //                 <Text>{WrapText("loremfa-rotate-180")}</Text>
+  //               </View>
+  //               <View style={{ ...inlineStyle, ...inlineQTY }}>
+  //                 <Text>{WrapText("99")}</Text>
+  //               </View>
+  //               <View style={{ ...inlineStyle, ...inlinePrice }}>
+  //                 <Text>{WrapText("9999")}</Text>
+  //               </View>
+  //               <View style={{ ...inlineStyle, ...inlineTotal }}>
+  //                 <Text>{WrapText("99999")}</Text>
+  //               </View>
+  //             </View>
+  //           </View>
+
+  //           {[...Array(x - 1)].map((table, index) => {
+  //             const formattedNumberx = (index + 2).toString().padStart(6, "0");
+  //             return (
+  //               <View key={index}>
+  //                 <View break={true} style={{ display: "flex", flexDirection: "row" }}>
+  //                   <View style={{ ...inlineStyle, ...inlineOrder }}>
+  //                     <Text>{WrapText(`${2 + index}`)}</Text>
+  //                   </View>
+  //                   <View style={{ ...inlineStyle, ...inlineCode }}>
+  //                     <Text>{`XXX-${formattedNumberx}`}</Text>
+  //                   </View>
+  //                   <View style={{ ...inlineStyle, ...inlineDescr }}>
+  //                     <Text>{WrapText("loremfa-rotate-180asdasd")}</Text>
+  //                   </View>
+  //                   <View style={{ ...inlineStyle, ...inlineQTY }}>
+  //                     <Text>{WrapText("99")}</Text>
+  //                   </View>
+  //                   <View style={{ ...inlineStyle, ...inlinePrice }}>
+  //                     <Text>{WrapText("9999")}</Text>
+  //                   </View>
+  //                   <View style={{ ...inlineStyle, ...inlineTotal }}>
+  //                     <Text>{WrapText("99999")}</Text>
+  //                   </View>
+  //                 </View>
+  //               </View>
+  //             );
+  //           })}
+  //         </View>
+  //       );
+
+  //     default:
+  //       break;
+  //   }
+  // };
 
   const lastTable = () => {
     return (
@@ -311,10 +276,7 @@ const TableDocumentCashier = () => {
             >
               <Text>
                 {itemsList
-                  .reduce(
-                    (acc, item) => acc + (item.srp - item.srp * (100 / 107)) * item.selectAmount,
-                    0
-                  )
+                  .reduce((acc, item) => acc + (item.srp - item.srp * (100 / 107)) * item.selectAmount, 0)
                   .toFixed(2)
                   .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
               </Text>
@@ -368,8 +330,19 @@ const TableDocumentCashier = () => {
   const pages = Math.ceil(itemsAmt / rowsPerPage);
 
   const FinalizedDocument = () => {
-    console.log("itemsList:", itemsList);
+    const [code] = itemsList;
+
     let countItems = 0;
+    const barcodeImages = generateBarcodes(itemsList)
+      .then((barcodeImages) => {
+        console.log("ได้รหัสบาโค้ด: ", barcodeImages);
+      })
+      .catch((err) => {
+        console.log("พัง: ", err);
+      })
+      .finally(() => {
+        console.log("จบแล้วpromise");
+      });
     return (
       <Document>
         {Array.from({ length: pages }).map((_, pageIndex) => {
@@ -393,10 +366,7 @@ const TableDocumentCashier = () => {
           console.log("itemsInPage: ", itemsInPage);
           return (
             <Page style={pageStyle} size="A4" orientation="portrait" key={pageIndex}>
-              <Text
-                style={pageDisplayStyle}
-                render={({ pageNumber, totalPages }) => `${pageNumber} / ${totalPages}`}
-              />
+              <Text style={pageDisplayStyle} render={({ pageNumber, totalPages }) => `${pageNumber} / ${totalPages}`} />
               <View style={tableStyle}>
                 <View fixed>{createMainTableHeader()}</View>
                 <View style={firstTableColStyle}>
@@ -442,7 +412,7 @@ const TableDocumentCashier = () => {
                           }
                         >
                           <Text>{item.code}</Text>
-                          <Text>อิอิ</Text>
+                          {barcodeImages[index] ? <Image src={barcodeImages} /> : <Text>ไม่มี</Text>}
                         </View>
 
                         <View
@@ -539,7 +509,6 @@ const TableDocumentCashier = () => {
 
   return (
     <Box>
-      <Barcode value="123456789" />
       <PDFViewer style={viewerStyle}> {FinalizedDocument()}</PDFViewer>
     </Box>
   );
