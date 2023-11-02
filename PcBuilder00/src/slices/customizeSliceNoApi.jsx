@@ -339,7 +339,8 @@ export const customizeSlice = createSlice({
     //actionนี้ถูกใช้หลังจากเช็คว่าไอเท็มที่แอดมา เป็น mainboard หรือไม่ ถ้ามีให้ใช้ action
     //* ทำงานจากการรับ MB แต่ Action นี้จะเปลี่ยนค่า Max ของ ram  Setmax ให้ RAM เท่านั้น ยังไม่สามารถ ใช้กับตัวอื่นได้
     setMax: (state, action) => {
-      const { mbSlot, isFromSets } = action.payload;
+      const mbSlot = action.payload?.mbSlot
+      const isFromSets = action.payload?.isFromSets;
       const index = state.partData.findIndex((item) => item.category === "ram");
       
       if (index !== -1 || isMbSelected) {

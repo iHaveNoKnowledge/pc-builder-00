@@ -32,6 +32,10 @@ const UserFilter = () => {
     ".MuiFormLabel-root": {
       zIndex: `${zIndexCollections.branchFilter + 1} !important`,
     },
+    "MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-sizeSmall MuiInputBase-adornedEnd MuiAutocomplete-inputRoot css-1e2h1oc-MuiInputBase-root-MuiInput-root":
+      {
+        height: "28.95px  !important",
+      },
     ".MuiAutocomplete-inputRoot": {
       zIndex: `${zIndexCollections.branchFilter} !important`,
       position: "absolute !important",
@@ -180,6 +184,7 @@ const UserFilter = () => {
                 onBlur={handleIsFocus}
                 style={autoCompleteInput}
                 size="small"
+                
                 multiple
                 limitTags={2}
                 // options={branches}

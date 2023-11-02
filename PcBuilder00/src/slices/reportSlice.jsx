@@ -9,6 +9,7 @@ const initialState = {
       "อาคาร ศูนย์การค้า เดอะ พาลาเดียม เวิลด์ ช็อปปิง ชั้นที่ B1,B2,5 เลขที่ 555 ถนน ราชปรารภ แขวงมักกะสัน เขตราชเทวี กรุงเทพมหานคร 10400",
   },
   sets: [],
+  SNs: [],
 };
 
 export const reportSlice = createSlice({
@@ -26,12 +27,17 @@ export const reportSlice = createSlice({
 
     saveSet: (state, action) => {
       const { updatedInputData, partData } = action.payload;
-      
+
       state.info = updatedInputData;
       state.partData = partData;
+    },
+
+    setSN: (state, action) => {
+      const snList = action.payload;
+      state.SNs = [...state.SNs , ...snList];
     },
   },
 });
 
-export const { addInfo, getPartData, saveSet } = reportSlice.actions;
+export const { addInfo, getPartData, saveSet, setSN } = reportSlice.actions;
 export default reportSlice.reducer;

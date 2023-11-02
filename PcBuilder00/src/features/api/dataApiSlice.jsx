@@ -1,6 +1,9 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-const baseUrl = "http://115.31.167.30:49152/api";
-// const baseUrl = "http://192.168.0.25:9000/api";
+const publicApi = import.meta.env.VITE_APP_DB_API_PUBLIC;
+const publicTestApi = import.meta.env.VITE_APP_DB_API_PRODUCTION_TEST;
+const testApi = import.meta.env.VITE_APP_DB_API_TEST;
+
+const baseUrl = `${publicTestApi}`;
 
 // Gets and a Delete Fetch จาก SQL server 192.168
 export const apiSliceDb = createApi({
@@ -11,8 +14,7 @@ export const apiSliceDb = createApi({
   tagTypes: ["Sets", "DbItems"],
   endpoints: (builder) => ({
     getDbItem: builder.query({
-      query: ({ dbCategory, currentPage }) =>
-        `/testProducts?category=${dbCategory}&page=${currentPage}`,
+      query: ({ dbCategory, currentPage }) => `/testProducts?category=${dbCategory}&page=${currentPage}`,
       providesTags: ["DbItems"], //Add Tag ให้กับข้อมูล]ที่ fetch มา
     }),
 
@@ -59,12 +61,7 @@ export const apiPutSets = createApi({
 });
 
 //** ดึงข้อมูล
-export const {
-  useGetDbItemQuery,
-  useGetSetsQuery,
-  useLazyGetSetsQuery,
-  useDeleteResourceMutation,
-} = apiSliceDb;
+export const { useGetDbItemQuery, useGetSetsQuery, useLazyGetSetsQuery, useDeleteResourceMutation } = apiSliceDb;
 
 //** DB DATA Create
 export const { useUpdateDataMutation } = apiPutSets;
