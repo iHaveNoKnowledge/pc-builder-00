@@ -263,7 +263,7 @@ const ReportDocument = () => {
               const formattedNumberx = (index + 2).toString().padStart(6, "0");
               // https://stackoverflow.com/questions/75039805/how-to-break-a-page-conditionally-with-react-pdf-renderer อันนี้ช่วยได้
 
-              console.log("เริ่มที่", index);
+             
               return (
                 <View
                   key={index}
@@ -552,7 +552,7 @@ const ReportDocument = () => {
   const pages = Math.ceil(itemsAmt / rowsPerPage);
 
   const FinalizedDocument = () => {
-    console.log("itemsList:", itemsList);
+  
     let countItems = 0;
     return (
       <Document>
@@ -574,7 +574,7 @@ const ReportDocument = () => {
               },
             ]); // Add empty object as a placeholder
           }
-          console.log("itemsInPage: ", itemsInPage);
+         
           return (
             <Page
               style={pageStyle}

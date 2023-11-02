@@ -141,7 +141,7 @@ export default function SetList() {
   const fetchData = async () => {
     try {
       setLoadingAxios(true);
-      const response = await axios.get(`${import.meta.env.VITE_APP_DB_API_PRODUCTION_TEST}/testProducts`);
+      const response = await axios.get(`${import.meta.env.VITE_APP_DB_API_PUBLIC}/testProducts`);
       setRawProductsData(response.data);
       setLoadingAxios(false);
     } catch (error) {

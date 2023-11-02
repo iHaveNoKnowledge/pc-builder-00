@@ -338,7 +338,7 @@ const TableDocumentCashier = () => {
               },
             ]); // Add empty object as a placeholder
           }
-          console.log("itemsInPage: ", itemsInPage);
+         
           return (
             <Page style={pageStyle} size="A4" orientation="portrait" key={pageIndex}>
               <Text style={pageDisplayStyle} render={({ pageNumber, totalPages }) => `${pageNumber} / ${totalPages}`} />

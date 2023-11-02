@@ -112,16 +112,16 @@ const AddSN = () => {
     handleClose();
     const barcodeImages = await generateBarcodes(itemsList)
       .then((barcodeImages) => {
-        console.log("ได้รหัสบาโค้ด: ", barcodeImages);
+        
         return barcodeImages
       })
       .catch((err) => {
-        console.log("พัง: ", err);
+        console.log(err);
       })
       .finally(() => {
-        console.log("จบแล้วpromise");
+        console.log("end");
       });
-    console.log("ดูผี",barcodeImages)
+
     handlePrintClickOpen();
   };
 

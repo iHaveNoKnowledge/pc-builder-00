@@ -3,7 +3,7 @@ const publicApi = import.meta.env.VITE_APP_DB_API_PUBLIC;
 const publicTestApi = import.meta.env.VITE_APP_DB_API_PRODUCTION_TEST;
 const testApi = import.meta.env.VITE_APP_DB_API_TEST;
 
-const baseUrl = `${publicTestApi}`;
+const baseUrl = `${publicApi}`;
 
 // Gets and a Delete Fetch จาก SQL server 192.168
 export const apiSliceDb = createApi({
