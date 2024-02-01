@@ -8,6 +8,7 @@ import { ApiProvider } from "@reduxjs/toolkit/dist/query/react";
 import { apiSliceDb, apiPutSets } from "./features/api/dataApiSlice";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import CssBaseline from "@mui/material/CssBaseline";
 
 import Preview from "./components/pdfTest/pdfTest";
 import PdfText2 from "./components/pdfTest/PdfText2";
@@ -25,6 +26,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <Provider store={store}>
         <ThemeProvider theme={THEME}>
           <BrowserRouter>
+            {/* <CssBaseline /> */}
             <Routes>
               <Route path="" element={<App />} />
               <Route path="/pdfTest" element={<PdfText2 />} />
