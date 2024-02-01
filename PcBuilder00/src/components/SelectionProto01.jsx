@@ -149,9 +149,7 @@ function PostCard({ items, totalRows }) {
 
   //* นำ displayed ทั้งหมดมา filter เฉพาะ ประเภทที่ user เลือก
 
-  const showProduct = combinedProduct.filter(
-    (item) => item.category.toLowerCase().replace(" ", "") === category
-  );
+  const showProduct = combinedProduct.filter((item) => item.category.toLowerCase().replace(" ", "") === category);
   let searchedShowProduct = showProduct.filter((item) => {
     return (
       item.code.toLowerCase().includes(textSearch.toLowerCase()) ||
@@ -202,10 +200,7 @@ function PostCard({ items, totalRows }) {
     dispatch(setPageNum(pageNum));
   };
 
-  const productPaginated = showProductWithFilter.slice(
-    (curPageNum2 - 1) * cardsPerPage,
-    curPageNum2 * cardsPerPage
-  );
+  const productPaginated = showProductWithFilter.slice((curPageNum2 - 1) * cardsPerPage, curPageNum2 * cardsPerPage);
   //* useEffect //ถ้าuseEffect รับ showProduct ตัวนี้ไป param2 มันจะ inf loop จนพัง
   useEffect(() => {
     dispatch(getCategorizedData({ showProduct, category }));
@@ -326,10 +321,7 @@ function PostCard({ items, totalRows }) {
                         {item.code}
                       </Typography>
 
-                      <Button
-                        sx={{ textDecoration: "underline", padding: 0 }}
-                        onClick={(e) => togglePopup(e, index)}
-                      >
+                      <Button sx={{ textDecoration: "underline", padding: 0 }} onClick={(e) => togglePopup(e, index)}>
                         Stock: {item.QTY.reduce((acc, QTYItem) => acc + QTYItem, 0)}
                       </Button>
                     </Box>
@@ -409,9 +401,7 @@ function PostCard({ items, totalRows }) {
               <h2>รายการสินค้าตามสาขา</h2>
               <div style={popupContentStyle}>
                 <table style={{ width: "100%" }}>
-                  <thead
-                    style={{ position: "sticky", top: "0", zIndex: "1", backgroundColor: "white" }}
-                  >
+                  <thead style={{ position: "sticky", top: "0", zIndex: "1", backgroundColor: "white" }}>
                     <tr>
                       <th>สาขา</th>
                       <th>จำนวน</th>
@@ -420,9 +410,7 @@ function PostCard({ items, totalRows }) {
                   <tbody style={{ maxHeight: "300px", overflow: "auto" }}>
                     {stockByBranchs.BRANCH_CODE.map((item, index) => (
                       <tr key={index}>
-                        <td style={{ ...tdBorderStyle, textAlign: "center", flexGrow: 1 }}>
-                          {item}
-                        </td>
+                        <td style={{ ...tdBorderStyle, textAlign: "center", flexGrow: 1 }}>{item}</td>
                         <td
                           style={{
                             ...tdBorderStyle,

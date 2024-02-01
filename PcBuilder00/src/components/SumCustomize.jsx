@@ -4,7 +4,7 @@ import { Box, Typography, Button, Divider, Stack } from "@mui/material";
 import { resetCustomized, updateSummations } from "../slices/customizeSliceNoApi";
 import "./SumCustomize.css";
 
-const StyledTypography = ({ children, bg, role, type }) => {
+const StyledTypography = ({ children, isLigthen = false, isMain = false, type }) => {
   const typographyStyle = {
     fontSize: "1.8rem",
     display: "flex",
@@ -12,8 +12,7 @@ const StyledTypography = ({ children, bg, role, type }) => {
     fontWeight: "bolder",
     color: "#303030",
     padding: "6px 10px",
-    background:
-      bg === "green" ? "rgba(67, 255, 38, 0.5)" : role === "sumItem" ? "" : "rgba(82, 82, 82, 0.3)",
+    background: isLigthen === true ? "rgba(67, 255, 38, 0.5)" : isMain === true ? "" : "rgba(82, 82, 82, 0.3)",
     flexGrow: type === "value" ? 0 : 1,
   };
 
@@ -47,7 +46,7 @@ const SumCustomize = () => {
       <Box>
         <Box className="mainCard">
           <Box sx={{ display: "flex", color: "#303030" }}>
-            <StyledTypography role="sumItem">สินค้ารวม : {sumAmount}</StyledTypography>
+            <StyledTypography isMain={true}>สินค้ารวม : {sumAmount}</StyledTypography>
           </Box>
 
           <Stack {...stackStyle}>
@@ -58,16 +57,14 @@ const SumCustomize = () => {
 
             <Box sx={{ display: "flex", ...itemDirection }}>
               <StyledTypography> ส่วนลด : </StyledTypography>
-              <StyledTypography type="value">
-                ฿{Math.round(sumDiscount).toLocaleString()}
-              </StyledTypography>
+              <StyledTypography type="value">฿{Math.round(sumDiscount).toLocaleString()}</StyledTypography>
             </Box>
 
             <Box sx={{ display: "flex", ...itemDirection }}>
-              <StyledTypography bg="green" variant="h4">
+              <StyledTypography isLigthen={true} variant="h4">
                 ราคาสุทธิ :
               </StyledTypography>
-              <StyledTypography bg="green" type="value">
+              <StyledTypography isLigthen={true} type="value">
                 ฿{(sum_SRP - Math.round(sumDiscount)).toLocaleString()}
               </StyledTypography>
             </Box>
