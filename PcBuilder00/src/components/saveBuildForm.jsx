@@ -17,7 +17,7 @@ import { theme } from "./SetList";
 import PopupAlert from "./generalModules/PopupAlert";
 
 export default function SaveBuildBtn() {
-  const { partData, itemsList } = useSelector((state) => state.customize);
+  const { partData, itemsList } = useSelector((state) => state.customized);
   const [updateData, { isLoading, isError, error }] = useUpdateDataMutation();
 
   const dispatch = useDispatch();
@@ -231,9 +231,7 @@ export default function SaveBuildBtn() {
           <Box sx={{ position: "relative" }}>
             {/* <Box className={!checkedItem.contactInfoBool ? "disableElement" : ""}></Box> */}
             <>
-              <DialogContent
-                sx={{ borderLeft: "10px solid #0033E6", backgroundColor: "#4141", zIndex: "-1" }}
-              >
+              <DialogContent sx={{ borderLeft: "10px solid #0033E6", backgroundColor: "#4141", zIndex: "-1" }}>
                 {checkedItem.contactInfoBool && (
                   <>
                     <Box

@@ -20,9 +20,9 @@ const StyledTypography = ({ children, isLigthen = false, isMain = false, type })
 };
 
 const SumCustomize = () => {
-  const sumAmount = useSelector((state) => state.customize.summations.sumAmount);
-  const sum_SRP = useSelector((state) => state.customize.summations.sum_SRP);
-  const sumDiscount = useSelector((state) => state.customize.summations.sumDiscount);
+  const sumAmount = useSelector((state) => state.customized.summations.sumAmount);
+  const sum_SRP = useSelector((state) => state.customized.summations.sum_SRP);
+  const sumDiscount = useSelector((state) => state.customized.summations.sumDiscount);
 
   const dispatch = useDispatch();
 

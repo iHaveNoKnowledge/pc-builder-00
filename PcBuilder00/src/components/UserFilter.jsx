@@ -52,7 +52,7 @@ const UserFilter = () => {
   const currentFilters = filtersSet.find((filterItem) => {
     return filterItem.name === currentCategory.toLowerCase();
   });
-  const parts = useSelector((state) => state.customize.partData);
+  const parts = useSelector((state) => state.customized.partData);
   const { branches, loading, plainBranches } = useSelector((state) => state.products);
 
   // สร้างออบเจกต์ Map เพื่อเก็บค่า BR_CODE ที่ไม่ซ้ำกัน
@@ -184,16 +184,13 @@ const UserFilter = () => {
                 onBlur={handleIsFocus}
                 style={autoCompleteInput}
                 size="small"
-                
                 multiple
                 limitTags={2}
                 // options={branches}
                 options={uniqueData}
                 getOptionLabel={(branch) => branch.BR_CODE}
                 // defaultValue={[Branches[0], Branches[1], Branches[2]]}
-                renderInput={(params) => (
-                  <TextField {...params} label="Branch" variant="standard" />
-                )}
+                renderInput={(params) => <TextField {...params} label="Branch" variant="standard" />}
                 isOptionEqualToValue={(option, value) =>
                   option.BR_CODE === value.BR_CODE && option.BR_NAME === value.BR_NAME
                 }

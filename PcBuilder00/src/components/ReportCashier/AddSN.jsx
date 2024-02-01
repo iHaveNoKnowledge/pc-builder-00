@@ -1,15 +1,5 @@
 import * as React from "react";
-import {
-  AppBar,
-  Toolbar,
-  Button,
-  Dialog,
-  IconButton,
-  Typography,
-  Slide,
-  Box,
-  Divider,
-} from "@mui/material";
+import { AppBar, Toolbar, Button, Dialog, IconButton, Typography, Slide, Box, Divider } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
@@ -48,8 +38,7 @@ const AddSN = () => {
           {
             id: "1",
             code: "CR6-001042",
-            description:
-              "GIGABYTE AORUS RADEON RX6900XT XTREME WATERFORCE WB 16GB GDDR6 256 bit CL 19-31/8/22",
+            description: "GIGABYTE AORUS RADEON RX6900XT XTREME WATERFORCE WB 16GB GDDR6 256 bit CL 19-31/8/22",
             selectAmount: 1,
             srp: 77900.0,
             promotionPrice: 77900.0,
@@ -99,7 +88,6 @@ const AddSN = () => {
 
   //* onclick เปิด Form ////////////////////////////////////////////////////////////////////
   const handleClickOpen = () => {
-    
     setOpen(true);
   };
 
@@ -113,7 +101,7 @@ const AddSN = () => {
     const barcodeImages = await generateBarcodes(itemsList)
       .then((barcodeImages) => {
         console.log("ได้รหัสบาโค้ด: ", barcodeImages);
-        return barcodeImages
+        return barcodeImages;
       })
       .catch((err) => {
         console.log("พัง: ", err);
@@ -121,7 +109,7 @@ const AddSN = () => {
       .finally(() => {
         console.log("จบแล้วpromise");
       });
-    console.log("ดูผี",barcodeImages)
+    console.log("ดูผี", barcodeImages);
     handlePrintClickOpen();
   };
 
@@ -139,7 +127,7 @@ const AddSN = () => {
 
   //* ทำตัวแปรสำหรับเก็บค่าเพื่อออกเอกสาร////////////////////////////////////////////////////////// itemList
   let itemList = [];
-  const { partData, itemsList } = useSelector((state) => state.customize);
+  const { partData, itemsList } = useSelector((state) => state.customized);
   console.log("partDataReport2 มีค่าว่าไร: ", itemList);
   itemList = [...itemsList];
   // itemsList.partData.map((item1) => {
@@ -204,7 +192,7 @@ const AddSN = () => {
     const barcodePromises = barcodeDataArray.map((barcodeData) => {
       return new Promise((resolve, reject) => {
         const canvas = document.createElement("canvas");
-        const options = { bcid: "code128", text: barcodeData.code }; 
+        const options = { bcid: "code128", text: barcodeData.code };
         bwipjs.toCanvas(canvas, options, (err, cvs) => {
           if (!err) {
             console.log("ถึงไหน3");
@@ -324,9 +312,7 @@ const AddSN = () => {
                                 variant="filled"
                                 sx={{ zoom: "80%", width: "450px" }}
                                 onKeyDown={(event) => handleKeyDown(event, index2, index)}
-                                inputRef={(textField) =>
-                                  handleTextFieldRef(textField, index2, index)
-                                }
+                                inputRef={(textField) => handleTextFieldRef(textField, index2, index)}
                                 {...register(`Item${index}SN${index2}`)}
                                 onChange={(event) => handleChange(event, index, index2)}
                               />
@@ -351,14 +337,8 @@ const AddSN = () => {
                   <Box>รวมทั้งสิ้น(รวมภาษี)</Box>
                 </Box>
                 <Box sx={{ flexGrow: 0.5, textAlign: "end" }}>
-                  <Box>
-                    {(totalPrice - totalPrice * (7 / 107))
-                      .toFixed(2)
-                      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-                  </Box>
-                  <Box>
-                    {(totalPrice * (7 / 107)).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-                  </Box>
+                  <Box>{(totalPrice - totalPrice * (7 / 107)).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</Box>
+                  <Box>{(totalPrice * (7 / 107)).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</Box>
                   <Box>{totalPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</Box>
                 </Box>
               </Box>
@@ -383,12 +363,7 @@ const AddSN = () => {
               <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
                 Print Cashier Report / สำหรับ แคชเชียร์
               </Typography>
-              <IconButton
-                edge="start"
-                color="inherit"
-                onClick={handlePrintClose}
-                aria-label="close"
-              >
+              <IconButton edge="start" color="inherit" onClick={handlePrintClose} aria-label="close">
                 <CloseIcon />
               </IconButton>
             </Toolbar>

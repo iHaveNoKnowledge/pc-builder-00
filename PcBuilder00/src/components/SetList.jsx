@@ -27,17 +27,8 @@ import { addInfo } from "../slices/reportSlice";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import SearchIcon from "@mui/icons-material/Search";
-import {
-  useGetDbItemQuery,
-  useLazyGetSetsQuery,
-  useDeleteResourceMutation,
-} from "../features/api/dataApiSlice";
-import {
-  addProduct,
-  resetCustomized,
-  updateSummations,
-  setMax,
-} from "../slices/customizeSliceNoApi";
+import { useGetDbItemQuery, useLazyGetSetsQuery, useDeleteResourceMutation } from "../features/api/dataApiSlice";
+import { addProduct, resetCustomized, updateSummations, setMax } from "../slices/customizeSliceNoApi";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import Pagination from "@mui/material/Pagination";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -81,7 +72,7 @@ export const theme = createTheme({
 });
 
 export default function SetList() {
-  const partData = useSelector((state) => state.customize.partData);
+  const partData = useSelector((state) => state.customized.partData);
   // const products = useSelector((state) => state.products.products);
   // const { sets, totalRows, loading } = useSelector((state) => state.sets);
 
@@ -92,8 +83,7 @@ export default function SetList() {
   let searchResult = "";
 
   //* นำ api มาใช้
-  const [lazyGetSetsData, { data: sets, error, isLoading, isSuccess, isUninitialized }] =
-    useLazyGetSetsQuery();
+  const [lazyGetSetsData, { data: sets, error, isLoading, isSuccess, isUninitialized }] = useLazyGetSetsQuery();
   const [sortedDataSets, setsortedDataSets] = useState([]);
   const [rows, setRows] = useState(0);
 
@@ -176,9 +166,7 @@ export default function SetList() {
     //* ดึงเอาข้อมูลทั่วไปของ Set ไม่รวมรายการสินค้า
     const { setName, customerName, customerTel, sellerName, sellerTel } = sortedDataSets[arrIdx];
     //* ดึงเอารายการสั่งซื้อของลูกค้าออกมา
-    const itemsSet = sortedDataSets[arrIdx].partData.flatMap((category) =>
-      category.listItems.map((item) => item)
-    );
+    const itemsSet = sortedDataSets[arrIdx].partData.flatMap((category) => category.listItems.map((item) => item));
 
     console.log("itemsSet: ", itemsSet);
 
@@ -228,9 +216,7 @@ export default function SetList() {
     setDeleteSet((prev) => {
       return {
         ...prev,
-        setName: sortedDataSets[setIdx].setName
-          ? sortedDataSets[setIdx].setName
-          : sortedDataSets[setIdx].DefaultName,
+        setName: sortedDataSets[setIdx].setName ? sortedDataSets[setIdx].setName : sortedDataSets[setIdx].DefaultName,
         id,
       };
     });
@@ -249,10 +235,7 @@ export default function SetList() {
     setOpenSubTables([]);
   };
 
-  const dataPaginated = sortedDataSets.slice(
-    (curPageNum - 1) * cardsPerPage,
-    curPageNum * cardsPerPage
-  );
+  const dataPaginated = sortedDataSets.slice((curPageNum - 1) * cardsPerPage, curPageNum * cardsPerPage);
 
   //* dataที่ใช้pagination เปลี่ยนไปต้องเกิด effect
   useEffect(() => {
@@ -387,15 +370,9 @@ export default function SetList() {
                                 </Button>
                               </Box>
                             </TableCell>
-                            <TableCell align="left">
-                              {item.setName ? item.setName : item.DefaultName}
-                            </TableCell>
-                            <TableCell align="left">
-                              {item.customerName ? item.customerName : "-"}
-                            </TableCell>
-                            <TableCell align="left">
-                              {item.customerTel ? item.customerTel : "-"}
-                            </TableCell>
+                            <TableCell align="left">{item.setName ? item.setName : item.DefaultName}</TableCell>
+                            <TableCell align="left">{item.customerName ? item.customerName : "-"}</TableCell>
+                            <TableCell align="left">{item.customerTel ? item.customerTel : "-"}</TableCell>
                             <TableCell align="right">
                               {new Date(item.timeStamp).toLocaleDateString("th-TH", {
                                 timeZone: "UTC",
@@ -423,12 +400,7 @@ export default function SetList() {
                           {/* subtableZone */}
                           <TableRow>
                             <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={8}>
-                              <Collapse
-                                in={isOpen}
-                                timeout="auto"
-                                unmountOnExit
-                                sx={isAnimating ? isTransition : {}}
-                              >
+                              <Collapse in={isOpen} timeout="auto" unmountOnExit sx={isAnimating ? isTransition : {}}>
                                 {loadingAxios ? (
                                   <Box sx={{ display: "flex", justifyContent: "center" }}>
                                     <CircularProgress />
@@ -441,10 +413,7 @@ export default function SetList() {
                                     <Table size="small" aria-label="purchases">
                                       <TableHead>
                                         <TableRow>
-                                          <TableCell
-                                            sx={{ width: 38, paddingInline: 1 }}
-                                            align="center"
-                                          >
+                                          <TableCell sx={{ width: 38, paddingInline: 1 }} align="center">
                                             No.
                                           </TableCell>
                                           <TableCell sx={{ width: 11 }}>Code</TableCell>
@@ -475,16 +444,10 @@ export default function SetList() {
                                                 >
                                                   {i}
                                                 </TableCell>
-                                                <TableCell sx={{ width: 100 }}>
-                                                  {item3.code}
-                                                </TableCell>
-                                                <TableCell sx={{ width: 580 }}>
-                                                  {item3.productDescription}
-                                                </TableCell>
+                                                <TableCell sx={{ width: 100 }}>{item3.code}</TableCell>
+                                                <TableCell sx={{ width: 580 }}>{item3.productDescription}</TableCell>
                                                 <TableCell></TableCell>
-                                                <TableCell align="right">
-                                                  {item3.selectAmount}
-                                                </TableCell>
+                                                <TableCell align="right">{item3.selectAmount}</TableCell>
                                                 <TableCell align="right">
                                                   {productsData
                                                     .find((post, postIDX) => {
@@ -509,8 +472,7 @@ export default function SetList() {
                                                   {(
                                                     productsData.find((post, postIDX) => {
                                                       if (post.id === item3.id) {
-                                                        const totalPrice =
-                                                          post.promotionPrice * item3.selectAmount;
+                                                        const totalPrice = post.promotionPrice * item3.selectAmount;
 
                                                         return totalPrice.toLocaleString();
                                                       } else {
@@ -549,20 +511,10 @@ export default function SetList() {
                         </DialogContentText>
                       </DialogContent>
                       <DialogActions>
-                        <Button
-                          onClick={() => setOpentAlert(false)}
-                          size="large"
-                          variant="contained"
-                        >
+                        <Button onClick={() => setOpentAlert(false)} size="large" variant="contained">
                           ยกเลิก
                         </Button>
-                        <Button
-                          onClick={confirmDelete}
-                          autoFocus
-                          size="large"
-                          variant="contained"
-                          color="error"
-                        >
+                        <Button onClick={confirmDelete} autoFocus size="large" variant="contained" color="error">
                           ยืนยัน
                         </Button>
                       </DialogActions>

@@ -24,7 +24,7 @@ import { setDefault } from "../slices/paginationSlice";
 
 const CustomizationProto02 = () => {
   //* useSelector ดึงค่าจาก state
-  const parts = useSelector((state) => state.customize.partData);
+  const parts = useSelector((state) => state.customized.partData);
   const currentCategory = useSelector((state) => state.category.category);
 
   //* สร้าง functiondispatch เอาไว้สั่ง ให้ slice ทำงาน sliceทำงานด้วยตัวเองไม่ได้

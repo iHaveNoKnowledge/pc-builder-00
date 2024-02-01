@@ -11,7 +11,7 @@ import setsReducer from "./slices/setsSlice";
 export const store = configureStore({
   reducer: {
     category: categoryReducer,
-    customize: noApiCustomizeReducer,
+    customized: noApiCustomizeReducer,
     [apiSliceDb.reducerPath]: apiSliceDb.reducer,
     [apiPutSets.reducerPath]: apiPutSets.reducer,
     userFilter: userFilterReducer,
@@ -20,6 +20,5 @@ export const store = configureStore({
     products: productsReducer,
     sets: setsReducer,
   },
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(apiSliceDb.middleware, apiPutSets.middleware),
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(apiSliceDb.middleware, apiPutSets.middleware),
 });

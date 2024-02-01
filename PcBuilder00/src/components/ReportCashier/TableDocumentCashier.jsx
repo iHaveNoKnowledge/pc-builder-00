@@ -7,12 +7,11 @@ import { PDFViewer } from "@react-pdf/renderer";
 import { pageStyle, tableStyle } from "../ReportDocument";
 import { useSelector } from "react-redux";
 
-
 Font.register({ family: "Chakra_Petch", src: xx });
 
 const TableDocumentCashier = () => {
-  const partDataReport2 = useSelector((state) => state.customize.partData);
-  const { partData, itemsList } = useSelector((state) => state.customize);
+  const partDataReport2 = useSelector((state) => state.customized.partData);
+  const { partData, itemsList } = useSelector((state) => state.customized);
   const { info, branch, SNs } = useSelector((state) => state.report);
   const createMainTableHeader = () => {
     return (
@@ -135,8 +134,6 @@ const TableDocumentCashier = () => {
       </View>
     );
   };
-
-  
 
   // const createTableRowITDYN = (x) => {
   //   const formattedNumber = (x - (x - 1)).toString().padStart(6, "0");
@@ -316,8 +313,7 @@ const TableDocumentCashier = () => {
     const [code] = itemsList;
 
     let countItems = 0;
-    
-    
+
     return (
       <Document>
         {Array.from({ length: pages }).map((_, pageIndex) => {

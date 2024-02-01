@@ -16,8 +16,8 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 const ReportDocument = () => {
-  const partDataReport2 = useSelector((state) => state.customize.partData);
-  const { partData, itemsList } = useSelector((state) => state.customize);
+  const partDataReport2 = useSelector((state) => state.customized.partData);
+  const { partData, itemsList } = useSelector((state) => state.customized);
   const { info, branch } = useSelector((state) => state.report);
 
   ////* Form //////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -70,9 +70,7 @@ const ReportDocument = () => {
             );
           }
         })} */}
-        <Text style={{ width: `${newLength}ch` }}>
-          {text.toLocaleString().padEnd(newLength, " ")}
-        </Text>
+        <Text style={{ width: `${newLength}ch` }}>{text.toLocaleString().padEnd(newLength, " ")}</Text>
       </View>
     );
   };
@@ -205,7 +203,7 @@ const ReportDocument = () => {
                   style={{
                     ...inlineStyle,
                     ...inlineOrder,
-                    ...celUnderline,                  
+                    ...celUnderline,
                   }}
                 >
                   <Text>{countItems}</Text>
@@ -228,13 +226,9 @@ const ReportDocument = () => {
                     ...celUnderline,
                   }}
                 >
-                  <Text
-                    style={{ whiteSpace: "nowrap" }}
-                  >{`${itemsInPagex?.productDescription}`}</Text>
+                  <Text style={{ whiteSpace: "nowrap" }}>{`${itemsInPagex?.productDescription}`}</Text>
                 </View>
-                <View
-                  style={{ flexGrow: 1, borderBottom: "1px groove rgba(130, 195, 255, 1)" }}
-                ></View>
+                <View style={{ flexGrow: 1, borderBottom: "1px groove rgba(130, 195, 255, 1)" }}></View>
                 <View
                   style={{
                     ...inlineStyle,
@@ -265,11 +259,7 @@ const ReportDocument = () => {
 
               console.log("เริ่มที่", index);
               return (
-                <View
-                  key={index}
-                  style={{ borderCollapse: "collapse" }}
-                  break={index + 1 / 20 === 1}
-                >
+                <View key={index} style={{ borderCollapse: "collapse" }} break={index + 1 / 20 === 1}>
                   <View style={{ display: "flex", flexDirection: "row" }}>
                     <View
                       style={{
@@ -489,10 +479,7 @@ const ReportDocument = () => {
             >
               <Text>
                 {itemsList
-                  .reduce(
-                    (acc, item) => acc + (item.srp - item.srp * (100 / 107)) * item.selectAmount,
-                    0
-                  )
+                  .reduce((acc, item) => acc + (item.srp - item.srp * (100 / 107)) * item.selectAmount, 0)
                   .toFixed(2)
                   .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
               </Text>
@@ -576,17 +563,8 @@ const ReportDocument = () => {
           }
           console.log("itemsInPage: ", itemsInPage);
           return (
-            <Page
-              style={pageStyle}
-              size="A4"
-              orientation="portrait"
-              ref={reportRef}
-              key={pageIndex}
-            >
-              <Text
-                style={pageDisplayStyle}
-                render={({ pageNumber, totalPages }) => `${pageNumber} / ${totalPages}`}
-              />
+            <Page style={pageStyle} size="A4" orientation="portrait" ref={reportRef} key={pageIndex}>
+              <Text style={pageDisplayStyle} render={({ pageNumber, totalPages }) => `${pageNumber} / ${totalPages}`} />
               <View style={tableStyle}>
                 <View fixed>{createMainTableHeader()}</View>
                 <View style={firstTableColStyle}>
@@ -707,13 +685,7 @@ const ReportDocument = () => {
         <PopupAlert type="select" />
       </Dialog>
 
-      <Dialog
-        sx={{ overFlow: "hidden" }}
-        fullScreen
-        open={open}
-        onClose={handleClose}
-        TransitionComponent={Transition}
-      >
+      <Dialog sx={{ overFlow: "hidden" }} fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
         <AppBar sx={{ position: "relative", backgroundColor: "#42528A" }}>
           <Toolbar style={{ minHeight: "1px !important" }}>
             <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
@@ -862,7 +834,7 @@ export const pageDisplayStyle = {
   width: "50px",
   top: "4%",
   right: "4%",
-  fontSize: ""
+  fontSize: "",
 };
 
 export default ReportDocument;

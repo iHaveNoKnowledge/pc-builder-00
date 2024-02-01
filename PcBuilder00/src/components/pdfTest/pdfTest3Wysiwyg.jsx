@@ -1,20 +1,27 @@
 import { CardContent } from "@mui/material";
 import React, { useRef } from "react";
 import { useReactToPrint } from "react-to-print";
+import { useSelector } from "react-redux";
 
 function PdfTest3Wysiwyg() {
+  //* Style Object
   const styles = {
     cardStyle: { background: "white", color: "black", padding: "20px", margin: "20px" },
     container: { width: "fitContent", height: "fitContent", boxSizing: "borderBox", margin: "60px" },
     printableArea: {},
   };
 
+  //* States Redux
+  // const data
+
+  //* Print Specific Component
   const componentRef = useRef();
 
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
   });
 
+  //* Display JSX
   return (
     <div style={styles.container}>
       <div style={styles.printableArea} id="printableArea" ref={componentRef}>
