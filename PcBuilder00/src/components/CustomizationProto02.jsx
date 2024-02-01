@@ -56,7 +56,7 @@ const CustomizationProto02 = () => {
     dispatch(updateSummations());
   };
 
-  //* style objects
+  //? optional style objects
   const styles = {
     muiList: { overflow: "auto", maxHeight: "75vh", background: "transparent", padding: 0, width: "100%" },
   };
@@ -64,7 +64,7 @@ const CustomizationProto02 = () => {
   //* return jsx
   return (
     <>
-      <Paper className="MuiPaper-elevation22">
+      <Paper sx={{ background: "transparent" }} elevation={0}>
         <List sx={{ width: "97%", paddingLeft: "8px", paddingTop: "0px" }}>
           {/* <SumCustomize /> */}
           {/* <div>ปัจจุบันเลือกไร: {currentCategory}</div> */}

@@ -1,5 +1,5 @@
 import { CardContent } from "@mui/material";
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import { useReactToPrint } from "react-to-print";
 import { useSelector } from "react-redux";
 
@@ -12,13 +12,17 @@ function PdfTest3Wysiwyg() {
   };
 
   //* States Redux
-  // const data
+  const selectItems = useSelector((state) => state.customized.itemList);
 
   //* Print Specific Component
   const componentRef = useRef();
 
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
+  });
+
+  useEffect(() => {
+    console.log("selectItems: ", selectItems);
   });
 
   //* Display JSX

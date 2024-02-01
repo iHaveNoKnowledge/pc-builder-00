@@ -10,7 +10,7 @@ import ListItemText from "@mui/material/ListItemText";
 import Box from "@mui/material/Box";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
-import { Divider, Alert } from "@mui/material";
+import { Divider, Alert, Paper } from "@mui/material";
 import { addProduct, setMax, updateSummations } from "../slices/customizeSliceNoApi";
 import "./Selection.css";
 import UserFilter from "./UserFilter";
@@ -240,200 +240,207 @@ function PostCard({ items, totalRows }) {
     }
   }, [isOpen]);
 
+  //* style
+  const styles = {
+    muiList: { overflow: "auto", maxHeight: "75vh", background: "transparent", padding: 0, width: "100%" },
+  };
+
   //** หน้าเว็บ
   return (
     <>
       {/* <UserFilter /> */}
       {/* <Bottom /> */}
-      <Grid container spacing="10" columns={{ xs: 4, sm: 12, md: 12 }}>
-        {productPaginated.map((item, index) => {
-          const pngPath = `/images/${item.compatible.toLowerCase().split(" ", 1)}.png`;
-          const jpgPath = `/images/${item.compatible.toLowerCase().split(" ", 1)}.jpg`;
-          const maxCardHeight = Math.max(...productPaginated.map((card) => card.height));
-          const isAvailable = item.QTY.reduce((acc, QTYItem) => acc + QTYItem, 0) > 0;
-          const priceDisplay = () => {
-            if (item.promotionPrice && item.srp && item.promotionPrice - item.srp !== 0) {
-              return item.promotionPrice;
-            } else if (item.promotionPrice || item.srp) {
-              return item.promotionPrice ? item.promotionPrice : item.srp;
-            } else {
-              return false;
-            }
-          };
+      <Paper style={styles.muiList}>
+        <Grid container spacing="10" columns={{ xs: 4, sm: 12, md: 12 }}>
+          {productPaginated.map((item, index) => {
+            const pngPath = `/images/${item.compatible.toLowerCase().split(" ", 1)}.png`;
+            const jpgPath = `/images/${item.compatible.toLowerCase().split(" ", 1)}.jpg`;
+            const maxCardHeight = Math.max(...productPaginated.map((card) => card.height));
+            const isAvailable = item.QTY.reduce((acc, QTYItem) => acc + QTYItem, 0) > 0;
+            const priceDisplay = () => {
+              if (item.promotionPrice && item.srp && item.promotionPrice - item.srp !== 0) {
+                return item.promotionPrice;
+              } else if (item.promotionPrice || item.srp) {
+                return item.promotionPrice ? item.promotionPrice : item.srp;
+              } else {
+                return false;
+              }
+            };
 
-          return (
-            <Grid item xs={2} sm={3} md={3} key={index}>
-              <Card
-                sx={{
-                  boxShadow: "2px 2px 2px 1px rgba(92, 92, 92, 0.5)",
-                  pointerEvents: isAvailable ? "auto" : "none",
-                  opacity: isAvailable ? "100%" : "50%",
-                }}
-              >
-                <Card>
-                  {isLoading ? (
-                    isLoading && (
+            return (
+              <Grid item xs={2} sm={3} md={3} key={index}>
+                <Card
+                  sx={{
+                    boxShadow: "2px 2px 2px 1px rgba(92, 92, 92, 0.5)",
+                    pointerEvents: isAvailable ? "auto" : "none",
+                    opacity: isAvailable ? "100%" : "50%",
+                  }}
+                >
+                  <Card>
+                    {isLoading ? (
+                      isLoading && (
+                        <CardMedia
+                          loading="lazy"
+                          component="img"
+                          src={jpgPath || pngPath}
+                          alt={item.title}
+                          title={item.title}
+                          sx={{ height: "150px", objectFit: "contain" }}
+                        />
+                      )
+                    ) : (
                       <CardMedia
                         loading="lazy"
                         component="img"
-                        src={jpgPath || pngPath}
+                        src={item.img}
                         alt={item.title}
                         title={item.title}
                         sx={{ height: "150px", objectFit: "contain" }}
+                        onLoad={handleImageLoad}
                       />
-                    )
-                  ) : (
-                    <CardMedia
-                      loading="lazy"
-                      component="img"
-                      src={item.img}
-                      alt={item.title}
-                      title={item.title}
-                      sx={{ height: "150px", objectFit: "contain" }}
-                      onLoad={handleImageLoad}
-                    />
-                  )}
-                  {!isLoading && !item.img && <span>ไม่มีภาพ</span>}
+                    )}
+                    {!isLoading && !item.img && <span>ไม่มีภาพ</span>}
 
-                  <CardContent
-                    style={{
-                      minHeight: "165px",
-                      display: "flex",
-                      flexDirection: "column",
-                      paddingBottom: "6px",
-                      flex: "auto",
-                    }}
-                  >
-                    <Box
-                      sx={{
-                        bgcolor: "background.paper",
+                    <CardContent
+                      style={{
+                        minHeight: "165px",
                         display: "flex",
+                        flexDirection: "column",
+                        paddingBottom: "6px",
+                        flex: "auto",
                       }}
                     >
-                      <Typography
-                        variant="body1"
+                      <Box
                         sx={{
-                          flexGrow: "1",
-                          fontSize: "1.1rem",
-                          fontWeight: "bolder",
+                          bgcolor: "background.paper",
+                          display: "flex",
                         }}
                       >
-                        {item.code}
-                      </Typography>
-
-                      <Button sx={{ textDecoration: "underline", padding: 0 }} onClick={(e) => togglePopup(e, index)}>
-                        Stock: {item.QTY.reduce((acc, QTYItem) => acc + QTYItem, 0)}
-                      </Button>
-                    </Box>
-                    <Typography
-                      textOverflow="clip"
-                      variant="body2"
-                      sx={{
-                        height: "auto",
-
-                        marginTop: "5px",
-                        fontSize: "1rem",
-                      }}
-                    >
-                      {item.productDescription}
-                    </Typography>
-
-                    <Box sx={{ flexGrow: 1, height: "100%" }}></Box>
-
-                    <Divider sx={{ pt: 1 }} />
-
-                    <Box
-                      sx={{
-                        display: "flex",
-                        paddingTop: "1px",
-                        minHeight: "7vh",
-                        height: "auto",
-                      }}
-                    >
-                      <ListItemText
-                        primary={
-                          <>
-                            <Typography sx={{ fontSize: "1.2rem", fontWeight: "bolder" }}>
-                              {priceDisplay() ? (
-                                "฿ " + priceDisplay().toLocaleString() + ".-"
-                              ) : (
-                                <Typography>ไม่พบราคาสินค้าในระบบ</Typography>
-                              )}
-                            </Typography>
-                          </>
-                        }
-                        secondary={
-                          <React.Fragment>
-                            <Typography
-                              sx={{ display: "inline", fontSize: "0.9rem" }}
-                              component="span"
-                              variant="caption"
-                              color="text.secondary"
-                            >
-                              {item.promotionPrice - item.srp !== 0
-                                ? `ราคาปกติ ฿
-                              ${item.srp.toLocaleString()}.-`
-                                : ""}
-                            </Typography>
-                          </React.Fragment>
-                        }
-                      />
-
-                      <Button
-                        sx={{ height: "35px", alignSelf: "center", backgroundColor: "#42528A" }}
-                        variant="contained"
-                        onClick={(e) => {
-                          handleSelect(item);
-                        }}
-                      >
-                        เลือก
-                      </Button>
-                    </Box>
-                  </CardContent>
-                </Card>
-              </Card>
-            </Grid>
-          );
-        })}
-        {isOpen && (
-          <div style={popupStyle}>
-            <div style={popupBg}>
-              <h2>รายการสินค้าตามสาขา</h2>
-              <div style={popupContentStyle}>
-                <table style={{ width: "100%" }}>
-                  <thead style={{ position: "sticky", top: "0", zIndex: "1", backgroundColor: "white" }}>
-                    <tr>
-                      <th>สาขา</th>
-                      <th>จำนวน</th>
-                    </tr>
-                  </thead>
-                  <tbody style={{ maxHeight: "300px", overflow: "auto" }}>
-                    {stockByBranchs.BRANCH_CODE.map((item, index) => (
-                      <tr key={index}>
-                        <td style={{ ...tdBorderStyle, textAlign: "center", flexGrow: 1 }}>{item}</td>
-                        <td
-                          style={{
-                            ...tdBorderStyle,
-                            textAlign: "center",
-                            flexGrow: 1,
-                            width: "45%",
+                        <Typography
+                          variant="body1"
+                          sx={{
+                            flexGrow: "1",
+                            fontSize: "1.1rem",
+                            fontWeight: "bolder",
                           }}
                         >
-                          {stockByBranchs.QTY[index]}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+                          {item.code}
+                        </Typography>
 
-              <button style={closePopupButtonStyle} onClick={togglePopup}>
-                Close
-              </button>
+                        <Button sx={{ textDecoration: "underline", padding: 0 }} onClick={(e) => togglePopup(e, index)}>
+                          Stock: {item.QTY.reduce((acc, QTYItem) => acc + QTYItem, 0)}
+                        </Button>
+                      </Box>
+                      <Typography
+                        textOverflow="clip"
+                        variant="body2"
+                        sx={{
+                          height: "auto",
+
+                          marginTop: "5px",
+                          fontSize: "1rem",
+                        }}
+                      >
+                        {item.productDescription}
+                      </Typography>
+
+                      <Box sx={{ flexGrow: 1, height: "100%" }}></Box>
+
+                      <Divider sx={{ pt: 1 }} />
+
+                      <Box
+                        sx={{
+                          display: "flex",
+                          paddingTop: "1px",
+                          minHeight: "7vh",
+                          height: "auto",
+                        }}
+                      >
+                        <ListItemText
+                          primary={
+                            <>
+                              <Typography sx={{ fontSize: "1.2rem", fontWeight: "bolder" }}>
+                                {priceDisplay() ? (
+                                  "฿ " + priceDisplay().toLocaleString() + ".-"
+                                ) : (
+                                  <Typography>ไม่พบราคาสินค้าในระบบ</Typography>
+                                )}
+                              </Typography>
+                            </>
+                          }
+                          secondary={
+                            <React.Fragment>
+                              <Typography
+                                sx={{ display: "inline", fontSize: "0.9rem" }}
+                                component="span"
+                                variant="caption"
+                                color="text.secondary"
+                              >
+                                {item.promotionPrice - item.srp !== 0
+                                  ? `ราคาปกติ ฿
+                              ${item.srp.toLocaleString()}.-`
+                                  : ""}
+                              </Typography>
+                            </React.Fragment>
+                          }
+                        />
+
+                        <Button
+                          sx={{ height: "35px", alignSelf: "center", backgroundColor: "#42528A" }}
+                          variant="contained"
+                          onClick={(e) => {
+                            handleSelect(item);
+                          }}
+                        >
+                          เลือก
+                        </Button>
+                      </Box>
+                    </CardContent>
+                  </Card>
+                </Card>
+              </Grid>
+            );
+          })}
+          {isOpen && (
+            <div style={popupStyle}>
+              <div style={popupBg}>
+                <h2>รายการสินค้าตามสาขา</h2>
+                <div style={popupContentStyle}>
+                  <table style={{ width: "100%" }}>
+                    <thead style={{ position: "sticky", top: "0", zIndex: "1", backgroundColor: "white" }}>
+                      <tr>
+                        <th>สาขา</th>
+                        <th>จำนวน</th>
+                      </tr>
+                    </thead>
+                    <tbody style={{ maxHeight: "300px", overflow: "auto" }}>
+                      {stockByBranchs.BRANCH_CODE.map((item, index) => (
+                        <tr key={index}>
+                          <td style={{ ...tdBorderStyle, textAlign: "center", flexGrow: 1 }}>{item}</td>
+                          <td
+                            style={{
+                              ...tdBorderStyle,
+                              textAlign: "center",
+                              flexGrow: 1,
+                              width: "45%",
+                            }}
+                          >
+                            {stockByBranchs.QTY[index]}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+
+                <button style={closePopupButtonStyle} onClick={togglePopup}>
+                  Close
+                </button>
+              </div>
             </div>
-          </div>
-        )}
-      </Grid>
+          )}
+        </Grid>
+      </Paper>
 
       <Stack className="pagination-card" spacing={2} alignItems="center" sx={{ mt: "6px" }}>
         {totalPages ? (
