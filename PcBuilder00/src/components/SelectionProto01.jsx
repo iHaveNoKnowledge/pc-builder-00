@@ -242,7 +242,7 @@ function PostCard({ items, totalRows }) {
 
   //* style
   const styles = {
-    muiList: { overflow: "auto", maxHeight: "75vh", background: "transparent", padding: 0, width: "100%" },
+    muiList: { overflow: "auto", maxHeight: "100vh", background: "transparent", padding: 0, width: "100%" },
   };
 
   //** หน้าเว็บ
@@ -250,7 +250,8 @@ function PostCard({ items, totalRows }) {
     <>
       {/* <UserFilter /> */}
       {/* <Bottom /> */}
-      <Paper style={styles.muiList}>
+      {/* <Paper style={styles.muiList}> */}
+      <Paper sx={{ background: "transparent" }} elevation={0}>
         <Grid container spacing="10" columns={{ xs: 4, sm: 12, md: 12 }}>
           {productPaginated.map((item, index) => {
             const pngPath = `/images/${item.compatible.toLowerCase().split(" ", 1)}.png`;
