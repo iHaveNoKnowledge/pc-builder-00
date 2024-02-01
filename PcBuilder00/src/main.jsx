@@ -11,6 +11,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Preview from "./components/pdfTest/pdfTest";
 import PdfText2 from "./components/pdfTest/PdfText2";
+import PdfTest3Wysiwyg from "./components/pdfTest/pdfTest3wysiwyg";
 
 const THEME = createTheme({
   typography: {
@@ -27,6 +28,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
             <Routes>
               <Route path="" element={<App />} />
               <Route path="/pdfTest" element={<PdfText2 />} />
+              <Route path="/pdfTest3" element={<PdfTest3Wysiwyg />} />
             </Routes>
           </BrowserRouter>
         </ThemeProvider>
