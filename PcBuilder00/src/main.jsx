@@ -27,7 +27,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           <BrowserRouter>
             <Routes>
               <Route path="" element={<App />} />
+              {/* endpoint /pdfTest ไม่ works */}
               <Route path="/pdfTest" element={<PdfText2 />} />
+              {/* endpoint /pdfTest3 อันนี้เหมือน lazada  */}
               <Route path="/pdfTest3" element={<PdfTest3Wysiwyg />} />
             </Routes>
           </BrowserRouter>

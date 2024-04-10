@@ -6,30 +6,45 @@ import { useSelector } from "react-redux";
 function PdfTest3Wysiwyg() {
   //* Style Object
   const styles = {
-    cardStyle: { background: "white", color: "black", padding: "20px", margin: "20px" },
-    container: { width: "fitContent", height: "fitContent", boxSizing: "borderBox", margin: "60px" },
-    printableArea: {},
+    cardStyle: { background: "white", color: "black", padding: "20px" },
+    container: {
+      width: "fitContent",
+      height: "fitContent",
+      boxSizing: "borderBox",
+      margin: "60px",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+    },
+    printableArea: { height: "29.7cm", width: "21cm", overflow: "hidden" },
+    printStickyBtn: { position: "-webkit-sticky", position: "sticky", top: 0 },
   };
 
   //* States Redux
   const selectItems = useSelector((state) => state.customized.itemList);
 
-  //* Print Specific Component
+  //todo Print Specific Component
+  //! ขั้นตอนสำคัญ ต้อง ref พื้นที่ แล้วใช้ printhook จาก method ของ react-to-print
   const componentRef = useRef();
 
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
   });
 
+  //* update data from redux
   useEffect(() => {
     console.log("selectItems: ", selectItems);
   });
 
   //* Display JSX
   return (
-    <div style={styles.container}>
-      <div style={styles.printableArea} id="printableArea" ref={componentRef}>
-        <div style={styles.cardStyle}>
+    <div>
+      <div style={{ ...styles.cardStyle, ...styles.printStickyBtn, textAlign: "end" }}>
+        <button onClick={handlePrint}>Print</button>
+      </div>
+      {/* ใช้ ref เพื่อเลือกบริเวณที่จะ print */}
+      <div style={styles.container}>
+        <div style={{ ...styles.printableArea, ...styles.cardStyle }} id="printableArea" ref={componentRef}>
           <div>
             <h1>pdfTest3wysiwyg</h1>
           </div>
@@ -76,10 +91,6 @@ function PdfTest3Wysiwyg() {
             </CardContent>
           </div>
         </div>
-      </div>
-
-      <div style={styles.cardStyle}>
-        <button onClick={handlePrint}>Print</button>
       </div>
     </div>
   );
