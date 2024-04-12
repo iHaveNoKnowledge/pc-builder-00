@@ -4,7 +4,7 @@ import { useReactToPrint } from "react-to-print";
 import { useSelector } from "react-redux";
 
 function PdfTest3Wysiwyg() {
-  //* Style Object
+  //* Style Object /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   const styles = {
     cardStyle: { background: "white", color: "black", padding: "20px" },
     container: {
@@ -20,10 +20,15 @@ function PdfTest3Wysiwyg() {
     printStickyBtn: { position: "-webkit-sticky", position: "sticky", top: 0 },
   };
 
-  //* States Redux
+  //* States Redux /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   const selectItems = useSelector((state) => state.customized.itemList);
 
-  //todo Print Specific Component
+  //* update data from redux /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  useEffect(() => {
+    console.log("selectItems: ", selectItems);
+  });
+
+  //* todo Print Specific Component /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //! ขั้นตอนสำคัญ ต้อง ref พื้นที่ แล้วใช้ printhook จาก method ของ react-to-print
   const componentRef = useRef();
 
@@ -31,12 +36,8 @@ function PdfTest3Wysiwyg() {
     content: () => componentRef.current,
   });
 
-  //* update data from redux
-  useEffect(() => {
-    console.log("selectItems: ", selectItems);
-  });
-
-  //* Display JSX
+  
+  //* Display JSX ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   return (
     <div>
       <div style={{ ...styles.cardStyle, ...styles.printStickyBtn, textAlign: "end" }}>
